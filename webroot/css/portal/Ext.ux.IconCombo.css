@@ -1,0 +1,22 @@
+/* Ext.ux.IconCombo mandatory styles */
+.x-icon-combo-icon {
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    width: 18px;
+    height: 14px;
+}
+
+.x-icon-combo-input {
+    padding-left: 25px !important;
+}
+
+.x-form-field-wrap .x-icon-combo-icon {
+    top: 3px;
+    left: 5px;
+}
+
+.x-icon-combo-item {
+    background-repeat: no-repeat !important;
+    background-position: 3px 50% !important;
+    padding-left: 24px;
+}

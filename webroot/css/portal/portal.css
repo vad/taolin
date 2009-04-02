@@ -1,0 +1,55 @@
+/*
+ * Ext JS Library 2.0.2
+ * Copyright(c) 2006-2008, Ext JS, LLC.
+ * licensing@extjs.com
+ * 
+ * http://extjs.com/license
+ */
+
+a {
+    color: #115393;
+}
+
+a:hover {
+    color: #002e55;
+}
+
+a:visited {
+    color: #51616f;
+}
+
+
+.x-portal .x-panel-dd-spacer {
+    margin-bottom:10px;
+}
+
+.x-portlet {
+    margin-bottom:25px;
+}
+
+/* Clean up the look of the portlets */
+.x-portlet .x-panel-ml {
+    padding-left:0px;
+}
+.x-portlet .x-panel-mr {
+    padding-right:0px;
+}
+.x-portlet .x-panel-bl {
+    padding-left:0px;
+}
+
+.x-portlet .x-panel-br {
+    padding-right:0px;
+}
+.x-portlet .x-panel-body {
+    background:white;
+}
+.x-portlet .x-panel-mc {
+    padding-top:0px;
+}
+.x-portlet .x-panel-bc .x-panel-footer {
+    padding-bottom:0px;
+}
+.x-portlet .x-panel-nofooter .x-panel-bc {
+    height:0px;
+}

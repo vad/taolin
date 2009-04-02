@@ -1,0 +1,544 @@
+/**
+* This file is part of taolin project (http://taolin.fbk.eu)
+* Copyright (C) 2008, 2009 FBK Foundation, (http://www.fbk.eu)
+* Authors: SoNet Group (see AUTHORS.txt)
+*
+* Taolin is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation version 3 of the License.
+*
+* Taolin is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with Taolin. If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
+html, body {
+    font:normal 12px verdana;
+    margin:0;
+    padding:0;
+    border:0 none;
+    overflow:hidden;
+    height:100%;
+}
+
+.x-panel-body p {
+    margin:5px;
+}
+
+.desktop .x-column-layout-ct {
+    background: transparent url(../../img/blue_curl.jpeg) repeat 50% 0;
+    overflow-x:hidden !important;
+}
+
+.desktop .x-panel-bwrap {
+    /*background: #314877;*/
+    background: lightgrey;
+}
+
+.x-border-layout-ct {
+    background:white;
+}
+
+.left-element {
+  position:fixed;
+  text-align: left;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: #005ca9;
+  padding: 0;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.right-element {
+  position:fixed;
+  right:0;
+  font-family: Arial, Sans Serif, Georgia, "Times New Roman", Times, serif;
+  padding: 5px 10px 0px 0px;
+  font-size: 13px;
+}
+
+.right-element a {
+  color:#115393;
+  font-weight: bold;
+}
+
+.right-element a:visited {
+  color:#115393;
+}
+
+textarea{
+  overflow:auto
+}
+
+/* Did You Know? Div */
+#didyouknow_div {
+    margin-top:30px;
+    margin-bottom:3px;
+}
+
+#didyouknow_div table {
+    background: #fbc77d;
+    /*border-color: #fbc77d #fbc77d #BBBBBB;
+    border-style: solid;
+    border-width: 1px;*/
+    margin:0 auto;
+    -moz-border-radius:5px;
+}
+
+#searchwidget_div {
+    margin-top:27px;
+    margin-bottom:3px;
+    float:right;
+    padding:0 5px;
+    display:none;
+}
+
+.undodel {
+    padding: 0 5px;
+    margin:auto auto;
+    text-align:center;
+    background:#fbc77d;
+    font-size: 12px;
+    font-family: verdana;
+    visibility: hidden;
+}
+
+.warning-message {
+    border: 1px solid #FED22F;
+    background-color: #FFF0A5;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.add_widgets a {
+  color: green;
+}
+
+#user_photo {
+    width:100%;
+}
+
+td {
+    white-space:normal;
+}
+
+.searchusermouseoverbg {
+    /*background:url(../../img/arrow_hover.gif) left no-repeat #f0f1f3;*/
+    background:#f0f1f3;
+    cursor: default;
+}
+
+.user-wrapper {
+    padding:7px;
+    padding-left: 6px;
+    margin: 0;
+}
+
+.user-item {
+    padding-left:26px;
+    background:url(../../js/portal/shared/icons/fam/bullet_black.png) left no-repeat;
+}
+
+.chat-title {
+    padding-left:20px;
+    background:url(../../js/portal/shared/icons/fam/bullet_black.png) left no-repeat;
+}
+
+#msg-div {
+    left:35%;
+    position:absolute;
+    top:10px;
+    width:250px;
+    z-index:20000;
+}
+
+.feedback_text {
+    margin-top:15px;
+}
+
+.buddylistjid {
+    padding-left: 20px;
+    margin-bottom: 5px;
+}
+
+.buddyliststateaway {
+    background:url(../../js/portal/shared/icons/fam/bullet_orange.png) left no-repeat ! important;
+}
+
+div.buddyliststate {
+    background:url(../../js/portal/shared/icons/fam/bullet_green.png) left no-repeat ! important;
+}
+
+.buddyliststatednd {
+    background:url(../../js/portal/shared/icons/fam/bullet_delete.png) left no-repeat ! important;
+}
+
+.buddyliststateinvisible {
+    background:url(../../js/portal/shared/icons/fam/bullet_black.png) left no-repeat ! important;
+}
+
+.add_icon {
+    background:url(../../js/portal/shared/icons/fam/add.png) left no-repeat;
+}
+
+.buddylistmessage {
+    color:#777777;
+}
+
+.buddylist-status-field {
+    background: #6A8095;
+    color:white;
+}
+
+.buddylist-status-focus {
+    background: #FFFFFF;
+    color:black;
+}
+
+#buddylist .x-grid3-row {
+    border-color: #FFFFFF #EDEDED #EDEDED;
+}
+
+
+#edit-photo-button{
+    position:absolute;
+    right:0px;
+    top:0px;
+    padding:2px;
+    z-index:1001;
+    height:auto;
+    background:white;
+    display:none;
+}
+
+#edit-photo-button img{
+    padding:2px;
+    position:absolute;
+    top:0;
+    right:0;
+}
+
+#edit-photo-button span{
+    margin-right:20px;
+    padding:2px;
+}
+
+#user-photo-container{
+    position: relative;
+}
+
+#widget-new{
+    position:absolute;
+    right:0px;
+    top:0px;
+    padding:2px;
+    z-index:1001;
+    height:auto;
+    visibility:hidden;
+    background:white;
+}
+
+/* To be applied to widget screenshots in the AddNeWidget window*/
+#widget_new img{
+    padding:2px;
+    position:absolute;
+    top:10;
+    right:0;
+}
+
+#widget_new span{
+    margin-right:20px;
+    padding:2px;
+}
+
+#widget_container{
+    position: relative;
+}
+/* End AddNewWidget */
+
+/* Window add new Windgets */
+.list-widgets-grid .x-grid3-body tr{
+    height:30px;
+}
+/* Window add new Windgets */
+.list-widgets-grid .x-grid3-body tr{
+    height:30px;
+}
+
+.list-widgets-grid .x-grid3-body td{
+    vertical-align:middle;
+}
+
+.widgets-window-intro p{
+    margin:10px;
+    margin-bottom:20px;
+    margin-top:20px;
+}
+
+/* Feed Reader */
+
+.feedreader-grid .x-grid3-row {
+    border: 0;
+}
+.feedreader-grid td.x-grid3-col{
+    height:35px;
+}
+
+.feedreader-grid td.x-grid3-td-title{
+    vertical-align:middle;
+    background:#f3f3f3;
+}
+
+.feedreader-grid div.x-grid3-row-expander{
+    margin-top:2px;
+}
+.feedreader-grid div.x-grid3-cell-inner{
+    white-space:normal;
+}
+.feedreader-grid .new-rss-item {
+    background:white !important;
+    font-weight:bold;
+}
+.feedreader-grid span.rss-item-date {
+    color: #888;
+    font-weight: normal;
+    font-size: 90% !important;
+}
+/* END Feed Reader */
+
+/* Events */
+
+.events-grid td.x-grid3-col{
+    height:50px;
+}
+
+.events-grid td.x-grid3-td-title{
+    vertical-align:middle;
+}
+
+.events-grid div.x-grid3-row-expander{
+    margin-top:2px;
+}
+
+.events-grid div.x-grid3-cell-inner{
+    white-space:normal;
+}
+.events-grid .x-grid3-cell-inner p{
+    margin:0;
+    margin-bottom:5px;
+}
+/* END Events */
+
+/* Photo Chooser and Add Widgets Window */
+div.thumb-wrap {
+    position:relative;
+    float:left;
+    height:200px;
+    width:180px;
+    text-align:center;
+    /*background:rgb(208, 208, 208) none repeat scroll 0% 0%;    */
+}
+
+div.thumb {
+    text-align:center;
+    vertical-align:middle;
+    height:160px;
+    width:160px;
+    margin: 0 auto;
+
+}
+
+div.thumb *{
+    vertical-align:middle;
+}
+/*.thumb img {
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    position:absolute;
+    margin:auto;
+}*/
+.ante {
+    background:#EEEEEE none repeat scroll 0 0;
+    border-color:#CCCCCC #CCCCCC #AAAAAA;
+    border-style:solid;
+    border-width:1px;
+    display:inline-block;
+    padding:5px;
+}
+
+/*.thumb-wrap span{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+}*/
+
+/* For IE, but i'm not so sure it works... */
+/*\*//*/
+div.thumb {
+    display: block;
+}
+/**/
+div.thumb span {
+    display: inline-block;
+    height: 100%;
+    width: 1px;
+}
+
+#wp-photos-tab div.thumb-wrap{
+    width:160px;
+    height:180px;
+}
+
+
+
+/* END Photo Chooser and Add Widgets Window */
+
+.edit_div {
+    background: #DDE4FF none repeat scroll 0 0;
+    border-color:#CCCCCC #CCCCCC #AAAAAA;
+    border-style:solid;
+    border-width:1px;
+    display:block;
+    padding:5px;
+    -moz-border-radius:5px;
+}
+#user_profile .x-panel-body{
+    border-width:0;
+}
+#settings_form .x-panel-body{
+    border-width:0;
+}
+#settings_form .x-form-item{
+    margin-bottom:10px;
+}
+#settings_form .x-form-item-label{
+    font-weight:bold;
+}
+
+/* NOTES */
+textarea.note-text-area {
+    background: transparent url(../../img/note-bg-gradient.png) repeat-x;
+    border:0;
+}
+.note-text-container{
+    margin-bottom:5px;
+    background: #FFFFE0;
+}
+.note-widget label{
+    float:left;
+}
+/* END NOTES */
+
+/* SEND-TO WINDOW */
+.sendto-window fieldset{
+    background:white;
+}
+.sendto-window div.x-panel-noborder{
+    background:transparent;
+}
+.sendto-window div.x-panel-body-noborder{
+    background:transparent;
+}
+
+/* END SEND-TO WINDOW */
+
+/* THEME HACK */
+.x-tbar-loading { 
+    background-image:url(../../ext-themes/images/default/grid/done.gif) !important; 
+}
+.x-panel-mc .x-panel-body, .x-form-item-label {
+color:black !important;
+}
+#settings_form .x-form-item-label {
+color:black;
+}
+.x-form fieldset {
+    border:0;
+}
+/* END THEME HACK */
+
+/* NEVEDE WIDGET */
+.nevede-widget li {
+    padding:7px 0;
+    display:list-item;
+    list-style-type: square;
+    color:#115393;
+}
+
+.nevede-widget ul {
+    padding:0 0 0 20px;
+}
+
+.nevede-widget .pages a, .nevede-widget .pages span {
+    margin: 0 6px;
+}
+
+.nevede-widget .pages span {
+    color:#A90A08;
+}
+
+.nevede-widget div{
+    text-align:center;
+}
+
+.nevede-widget {
+    margin:5px;
+}
+/*.nevede-widget .pages {*/
+
+/* END NEVEDE WIDGET */
+
+.x-grid3-hd-row td, .x-grid3-row td, .x-grid3-summary-row td {
+    font-size:12px !important;
+}
+
+.x-panel-mc {
+    font-size:12px !important;
+}
+
+/* west panel */
+#west-panel .x-panel-mc, #west-panel .x-panel-ml, #west-panel .x-panel-mr{
+    padding:0;
+    background:white;
+}
+#west-panel .x-panel-bl{
+    height:0;
+}
+#west-panel .x-panel-body{
+    overflow-x:hidden !important;
+}
+/* end west panel */
+
+.changeset ul{
+    margin-left:20px;
+    list-style-type:square;
+}
+.changeset li{
+    margin-bottom:5px;
+}
+
+/* remove borders */
+.x-panel-tl{
+    border:0 !important;
+}
+
+.x-toolbar{
+    border:0 !important;
+}
+
+.webcam-img {
+	width: 100%;
+}
+
+.webcam-p {
+    font-weight: bold;
+}

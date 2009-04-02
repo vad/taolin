@@ -1,0 +1,91 @@
+/**
+* This file is part of taolin project (http://taolin.fbk.eu)
+* Copyright (C) 2008, 2009 FBK Foundation, (http://www.fbk.eu)
+* Authors: SoNet Group (see AUTHORS.txt)
+*
+* Taolin is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation version 3 of the License.
+*
+* Taolin is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with Taolin. If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+
+.search {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -6px !important;
+}
+.chat {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -42px !important;
+}
+.feedback {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -78px !important;
+}
+.calculator {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -114px !important;
+}
+.note {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -150px !important;
+}
+.board {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -186px !important;
+}
+.feed {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -222px !important;
+}
+.chatwindowicon {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -258px !important;
+}
+.picture {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -294px !important;
+}
+.upload-picture {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -330px !important;
+}
+.url-link {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -366px !important;
+}
+.date {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -402px !important;
+}
+.user {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -438px !important;
+}
+.nav {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -474px !important;
+}
+.settings {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -510px !important;
+}
+.user_info {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -546px !important;
+}
+.weather {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -582px !important;
+}
+.groups {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -618px !important;
+}
+.nevede {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -654px !important;
+}
+.timeline {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -690px !important;
+}
+.map {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -726px !important;
+}
+.webcam {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -762px !important;
+}
+.google {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -798px !important;
+}
+.rememberthemilk {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -834px !important;
+}

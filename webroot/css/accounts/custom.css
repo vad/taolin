@@ -1,0 +1,99 @@
+/**
+* This file is part of taolin project (http://taolin.fbk.eu)
+* Copyright (C) 2008, 2009 FBK Foundation, (http://www.fbk.eu)
+* Authors: SoNet Group (see AUTHORS.txt)
+*
+* Taolin is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Affero General Public License as published by
+* the Free Software Foundation version 3 of the License.
+*
+* Taolin is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with Taolin. If not, see <http://www.gnu.org/licenses/>.
+*
+*/
+.back-to-top{
+float:right;
+font-size:xx-small;
+padding-left:20px;
+padding-right:20px;
+}
+
+.questions-list {
+border:2px solid #005ca9;
+padding:20px;
+margin:20px;
+}
+
+.questions-list a {
+color:#005ca9;
+}
+div.faq {
+    position:absolute;
+    right:0;
+    margin: 0px 50px 0px 0px;
+    width:45%;
+
+}
+div.help {
+float:left;
+width:90%;
+}
+
+div.login-column {
+padding-left:4%;
+font-size:large;
+position:absolute;
+left:0;
+width:40%;
+}
+div#login-form {
+padding:30px;
+padding-top: 60px;
+padding-left: 20%;
+}
+p.question {
+color: #000000;
+font-weight: bold;
+margin: 20px 0px 0px 20px;
+}
+p.faq-question {
+color:#005ca9;
+font-weight: bold;
+margin: 20px 0px 0px 20px;
+text-decoration: underline;
+padding: 0px 0px 0px 10px;
+}
+p.faq-answer {
+margin: 0px 0px 10px 40px;
+}
+p.answer {
+margin: 0px 0px 10px 40px;
+}
+p.policy {
+margin: 40px 40px 40px 40px;
+}
+p {
+    margin: 0px 0px 5px 0px;
+}
+.faqonmouseover {
+     background: url(../../img/arrow_hover.gif) no-repeat scroll left center;
+     padding: 0px 0px 0px 10px;
+}
+.faq-aq-desktop {
+padding-left:30px;
+}
+.faq-aq-desktop p {
+padding:10px;
+}
+.faq-aq-desktop li {
+list-style: square;
+margin-left:35px;
+}
+.faq-aq-desktop a {
+color:#005ca9;
+}
