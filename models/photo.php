@@ -19,7 +19,7 @@
 */
 class Photo extends AppModel
 {
-    var $name = 'Photo';
+    var $name = 'Photo'; 
     var $belongsTo = 'User';
     var $actsAs = array('SoftDeletable'); 
 }
