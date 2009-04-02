@@ -26,6 +26,7 @@ $config = array(
     'App.addtomail' => '@example.com',
     'App.defaultgroupname' => 'Group',
     'App.imagefolder' => 'YOUR_PATH/user_images', //folder must be img/user_images, update only the absolute path
+    'App.webcamfolder' => 'ONE_PATH/webcam/',
     'App.imagefoldererror' => 'ANOTHER_PATH/images_upload_error/', //folder must be img/user_images, update only the absolute path, for FBK is /www/desktop/html/images_desktop/
     'App.imagefoldername' => 'user_images/',
     'App.publications' => '1', //1 for TRUE, 0 for FALSE; used only when you have a server to show publications
