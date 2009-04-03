@@ -97,13 +97,18 @@ The following procedure is for installing Taolin on a GNU/Linux machine, running
     * Go to the folder where you have the database dump of Taolin, in sql format.
 
     * Now we want to create and populate the database with some historical characters.
-    Login to postgresql as root
+    Login to postgresql as superadmin
 
-    * Create a new database named desktopdemo:
-    CREATE DATABASE desktopdemo;
-    exit;
+    * Create a new database named taolin:
+        $ createdb -U YOUR_SUPERADMIN taolin
 
-    * Import the Taolin database into your desktopdemo database:
+    * Create plpgsql language for this db:
+        $ createlang -U YOUR_SUPERADMIN plpgsql taolin
+
+    * Import the Taolin database into your taolin database (install is in
+      taolin root)
+        $ psql -U YOUR_SUPERADMIN taolin
+        # \i install/taolin.struct.sql
 
 
 2.6 Configuring Taolin

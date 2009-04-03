@@ -11,6 +11,10 @@ Taolin relies on a 3-tier architecture: the back-end has been developed using [C
 Further information and demonstrative screenshots are available at Taolin website: [http://taolin.fbk.eu](http://taolin.fbk.eu)
 
 
+## License ##
+This software is distributed under the Affero GPL 3.0 unless otherwise specified.
+
+
 ## Authors ##
  * Marco Frassoni (lead developer)
  * Davide Setti (lead developer)
@@ -19,7 +23,6 @@ Further information and demonstrative screenshots are available at Taolin websit
  * Michele Dalla Torre
 
 
-## License ##
-This software is distributed under the Affero GPL 3.0 unless otherwise specified.
-
-
+## Contacts ##
+Please feel free to contact the developers.
+If you would like to help us in testing the system, provide feedback and give suggestion about new features, please, do send an email to sonet@fbk.eu 
