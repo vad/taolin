@@ -92,8 +92,8 @@ if ($isdebugactive == 1) {
     
     echo $javascript->link('portal/tools.js');
     
-    echo $javascript->link('portal/application.js');
     echo $javascript->link('portal/function.js');
+    echo $javascript->link('portal/application.js');
 
     echo $javascript->link('portal/usr/RowExpander.js');
     echo $javascript->link('portal/usr/Portal.js');

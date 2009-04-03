@@ -180,6 +180,8 @@ class AccountsController extends AppController {
             $response['success'] = false;
             $response['error']['champion'] = false;
         }
+
+        $response['contactus'] = Configure::read('App.contactus');
         $this->set('json', $response);
     }
 

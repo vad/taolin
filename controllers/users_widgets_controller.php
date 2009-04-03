@@ -33,6 +33,25 @@ class UsersWidgetsController extends AppController {
         $this->mrClean = new Sanitize();
     }
 
+    function getinitialconfig(){
+
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+        
+        $u_id = $this->Session->read('id');
+
+        $response['config']['addtomail'] = Configure::read('App.addtomail');
+        $response['config']['contactus'] = Configure::read('App.contactus');
+        $response['config']['imgpath'] = Configure::read('App.imagefoldername');
+        $response['config']['jabber_server'] = Configure::read('App.jabber.server');
+        $response['config']['jabber_domain'] = Configure::read('App.jabber.domain');
+
+        $response['success'] = true;
+        
+        $this->set('json', $response);
+        
+    }
+
     function getwidgetsposition($uw_id=''){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';

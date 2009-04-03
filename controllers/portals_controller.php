@@ -31,5 +31,6 @@ class PortalsController extends AppController {
     {
         $this->checkSession();
     }
+    
 }
 ?>
