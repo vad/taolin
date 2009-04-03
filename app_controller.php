@@ -70,5 +70,22 @@ class AppController extends Controller
         $controller->add($param, $date_now, $type_name);
 
     }
+
+    function beforeRender() {
+
+        $action = $this->action;
+        // override views relative dir
+        $ovrd = '..'.DS.'override'.DS.'views'.DS;
+        if ($this->params['controller'] == 'pages') {
+            $filename = $this->viewVars['page'];
+        } else {
+            $filename = $action;
+        }
+        $override_filename = VIEWS.$ovrd.$this->viewPath.DS.$filename.'.ctp';
+
+        if (file_exists($override_filename)){
+            $this->viewPath = '../override/views/pages';
+        }
+    }
 }
 ?>
