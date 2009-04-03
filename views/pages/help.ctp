@@ -53,7 +53,6 @@ The only reasonable way to do it is to ask !"),
 	array ("question" => "How can I make ".$appname." my homepage (the default page loaded by browser at startup)?", "answer" => ""),	
 	array ("question" => "I have a question which is not in this FAQ (Frequently Asked Questions). What shall I do?", "answer" => "Please, send your question by email to ".$contactus." . We will add it here, along with an answer.")
 );
-
 ?>
 
 
