@@ -32,5 +32,7 @@ $config = array(
     'App.publications' => '1', //1 for TRUE, 0 for FALSE; used only when you have a server to show publications
     'App.auth' => 'Dummy', //Choose between Dummy or Ldap
     'App.jsdebug' => '1', //used in views/portal/index.ctp
+    'App.jabber.server' => 'jabber.example.com',
+    'App.jabber.domain' => 'example.com'
 );
 ?>
