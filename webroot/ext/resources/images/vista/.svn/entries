@@ -1,0 +1,75 @@
+8
+
+dir
+768
+https://sonetlab.fbk.eu/svn/deps/trunk/ext/resources/images/vista
+https://sonetlab.fbk.eu/svn
+
+
+
+2008-08-11T07:03:10.685459Z
+469
+vad
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4e9eb16f-06da-49dd-8bec-081b4c15381a
+
+toolbar
+dir
+
+grid
+dir
+
+s.gif
+file
+
+
+
+
+2008-09-25T15:53:25.000000Z
+fc94fb0c3ed8a8f909dbc7630a0987ff
+2008-08-11T07:03:10.685459Z
+469
+vad
+has-props
+
+gradient-bg.gif
+file
+
+
+
+
+2008-09-25T15:53:25.000000Z
+e117fca9d088e4cd5bbbcec7b99a8408
+2008-08-11T07:03:10.685459Z
+469
+vad
+has-props
+
+tabs
+dir
+
+sizer
+dir
+
+layout
+dir
+
+qtip
+dir
+
+basic-dialog
+dir
+

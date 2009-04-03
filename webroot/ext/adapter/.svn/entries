@@ -1,0 +1,40 @@
+8
+
+dir
+768
+https://sonetlab.fbk.eu/svn/deps/trunk/ext/adapter
+https://sonetlab.fbk.eu/svn
+
+
+
+2008-08-11T07:03:10.685459Z
+469
+vad
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4e9eb16f-06da-49dd-8bec-081b4c15381a
+
+jquery
+dir
+
+ext
+dir
+
+prototype
+dir
+
+yui
+dir
+

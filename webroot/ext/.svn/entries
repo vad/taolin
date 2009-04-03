@@ -1,0 +1,94 @@
+8
+
+dir
+768
+https://sonetlab.fbk.eu/svn/deps/trunk/ext
+https://sonetlab.fbk.eu/svn
+
+
+
+2008-08-14T14:51:15.571520Z
+524
+vad
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4e9eb16f-06da-49dd-8bec-081b4c15381a
+
+adapter
+dir
+
+license.txt
+file
+
+
+
+
+2008-09-25T15:53:25.000000Z
+2a36fdf697092a2e6fdc646c5f34cd97
+2008-08-11T07:03:10.685459Z
+469
+vad
+
+ext-all.js
+file
+
+
+
+
+2008-09-25T15:53:25.000000Z
+e3e6fa912b1e4af01ef99c5c428a3bbc
+2008-08-11T07:03:10.685459Z
+469
+vad
+
+ext-core.js
+file
+
+
+
+
+2008-09-25T15:53:25.000000Z
+e52026ecd1cfc389496d1dde9e037765
+2008-08-11T07:03:10.685459Z
+469
+vad
+
+ext-all-debug.js
+file
+
+
+
+
+2008-09-25T15:53:25.000000Z
+e37a03b0bc2f8af66411a9182f26a4ab
+2008-08-11T07:03:10.685459Z
+469
+vad
+
+ext-core-debug.js
+file
+
+
+
+
+2008-09-25T15:53:25.000000Z
+7b1fa621de361992b8dcd0e87e1a91b4
+2008-08-11T07:03:10.685459Z
+469
+vad
+
+resources
+dir
+

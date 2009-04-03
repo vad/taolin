@@ -1,0 +1,52 @@
+8
+
+dir
+768
+https://sonetlab.fbk.eu/svn/deps/trunk/ext/adapter/jquery
+https://sonetlab.fbk.eu/svn
+
+
+
+2008-08-11T07:03:10.685459Z
+469
+vad
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4e9eb16f-06da-49dd-8bec-081b4c15381a
+
+ext-jquery-adapter.js
+file
+
+
+
+
+2008-09-25T15:53:23.000000Z
+be08857c7bccdfcefd030721e24c679c
+2008-08-11T07:03:10.685459Z
+469
+vad
+
+jquery.js
+file
+
+
+
+
+2008-09-25T15:53:23.000000Z
+78068d39f1205a62fe7470537ecbabdd
+2008-08-11T07:03:10.685459Z
+469
+vad
+

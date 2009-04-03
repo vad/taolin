@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../../lib/extjs/ext_2_2_1/resources/css/ext-all.css">
+	<link rel="stylesheet" type="text/css" href="../../../lib/extjs/custom/tbar-layout/ToolbarLayout.css">
+	<link rel="stylesheet" type="text/css" href="../../../lib/extjs/custom/formgroup/Ext.ux.FormGroup.css">
+	<link rel="stylesheet" type="text/css" href="src/css/Ext.ux.Wizard.css">
+		
+    <script type="text/javascript" src="../../../lib/extjs/ext_2_2_1/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../../lib/extjs/ext_2_2_1/ext-all-debug.js"></script>
+	
+	<script type="text/javascript" src="../../../lib/extjs/custom/tbar-layout/ToolbarLayout.js"></script>
+	<script type="text/javascript" src="../../../lib/extjs/custom/Ext.ux.SlickCardLayout.js"></script>	
+	<script type="text/javascript" src="../../../lib/extjs/custom/formgroup/Ext.ux.FormGroup.js"></script>			
+	<script type="text/javascript" src="../../../lib/extjs/custom/ux-image/Ext.ux.Image.js"></script>
+	<script type="text/javascript" src="../../../lib/extjs/custom/xmetaform/Ext.ux.form.XMetaForm.js"></script>
+	
+	<script type="text/javascript" src="src/Ext.ux.WizardWest.js"></script>
+    <script type="text/javascript" src="src/Ext.ux.WizardHeader.js"></script>
+	<script type="text/javascript" src="src/Ext.ux.BasicWizard.js"></script>	
+    <script type="text/javascript" src="src/Ext.ux.Wizard.js"></script>
+
+    <script type="text/javascript">
+    	Ext.onReady(
+			function() {			    
+				Ext.QuickTips.init();
+				Ext.BLANK_IMAGE_URL = '../../../lib/extjs/ext_2_2_1/resources/images/default/s.gif';
+				
+				var runBasicSample = function(){
+					var win = new Ext.Window({
+						 id: Ext.id(),
+						 layout:'fit',
+						 width:550,
+						 modal: true,
+						 shadow: 'frame',
+						 shadowOffset: 4,
+						 constrain: true,
+						 height: 350,
+						 center: true,
+						 title: 'Ext.ux.Wizard Example',
+						 items: {
+						 	xtype: 'wizard',
+							animate: true,
+							height: 350,
+							replayTo: 1,
+							replayBtnTxt: 'Create &amp; Continue',
+							reviewEntries: true,
+							url: 'src/php/wizardsubmit.php',
+							headerConfig: {
+								titleText: 'New Employee Wizard',
+								titleImg: 'src/imgs/wizard-wand.jpg'
+							},
+							items: [{
+								index: 0,
+								html: 'Welcome the basic usage sample for Ext.ux.Wizard. Click Continue to proceed'
+							}, {
+								index: 1,
+								trailText: 'Bio Data',	// msg to show on the trail / step when this page is active, cn also be set with title
+								layout: 'form',										
+								items: {
+									xtype: 'fieldset',
+									height: 150,
+									title: 'Personal Info',
+									defaultType: 'textfield',
+									items: [{
+										fieldLabel: 'Title',
+										allowBlank: true,
+										width: 100,
+										name: 'title'
+									}, {
+										fieldLabel: 'First Nane',
+										allowBlank: false,
+										name: 'fname'
+									}, {
+										fieldLabel: 'Last Nane',
+										allowBlank: false,
+										name: 'lname'
+									}, {
+										fieldLabel: 'Birth Date',
+										xtype: 'datefield',
+										name: 'birth-date',
+										allowBlank: false,
+										format: 'F d, Y'
+									}, {
+										fieldLabel: 'Gender',
+										// configure the text this entry is displayed against when reviewing
+										// your entries, works when reviewEntries flag on the wizard is set to true
+										reviewLabel: 'My Gender', 
+										name: 'gender',
+										xtype: 'combo',
+										allowBlank: false,
+										typeAhead: true,
+								        forceSelection: true,
+									    triggerAction: 'all',
+									    emptyText:'Select ...',
+									    selectOnFocus:true,
+										store: [['m', 'Male'], ['f', 'Female']]
+									}]											
+								}
+								
+							}, {
+								index: 2,
+								layout: 'form',
+								trailText: 'Contacts',
+								defaultType: 'textfield',
+								items: [{
+									fieldLabel: 'Phone',
+									name: 'phone',
+									xtype: 'numberfield',
+									allowNegative: false,
+									allowDecimals: false
+								}, {
+									fieldLabel: 'Email',
+									name: 'email',
+									vtype: 'email'
+								}, {
+									fieldLabel: 'Fax',
+									name: 'fax',
+									xtype: 'numberfield',
+									allowNegative: false,
+									allowDecimals: false
+								}, {
+									fieldLabel: 'Address',
+									name: 'addr',
+									xtype: 'textarea'
+								}]
+							}],
+							listeners: {
+								'help': function(activeCard){
+									Ext.Msg.alert('Card [' + activeCard.index + '] is active');
+								},
+								'finish': function(){
+									this.submit({
+										success: function(form, action, mode){
+											win.close();
+										}
+									});
+								},
+								'replay': function(index){
+									this.submit({
+										success: function(form, action, mode){
+											this.doReplay(index);
+										}
+									});
+								}
+							}
+						 }
+					});
+					win.show();
+				};
+				
+				var runMetaSample = function(){
+					var win = new Ext.Window({
+						 id: Ext.id(),
+						 layout:'fit',
+						 width:550,
+						 modal: true,
+						 shadow: 'frame',
+						 shadowOffset: 4,
+						 constrain: true,
+						 height: 350,
+						 center: true,
+						 title: 'Ext.ux.Wizard Example',
+						 items: {
+						 	xtype: 'wizard',
+							animate: true,
+							height: 350,
+							reviewEntries: true,
+							headerConfig: {
+								titleText: 'New Employee Wizard',
+								titleImg: 'src/imgs/wizard-wand.jpg'
+							},
+							autoInit: {
+								url: 'src/php/wizardconfig.php',
+								params: {
+								    query: 'get',								    
+									mode: 'userprofile'
+								}
+							},
+							listeners: {
+								'finish': function(){
+									this.submit({
+										success: function(form, action, mode){
+											win.close();
+										}
+									});
+								},
+								// load additional cards
+								'afternav': function(){	
+									var activeCard = this.getActiveCard();
+									// we should only load when going foward
+									if(this.dir === 1 && activeCard.index === 4){
+										this.cards.load({
+											url: 'src/res/php/addingcards.php'
+										});													
+									}
+								}
+							}
+						 }
+					});
+					win.show();
+				};
+				
+				Ext.get('basic').on('click', runBasicSample);
+				Ext.get('meta').on('click', runMetaSample);
+				
+			}
+		);
+	</script>
+    <title>Ext.ux.Wizard 2.0</title>
+</head>
+<body id="chalu-xtensions-page">
+	<br /><br /><br />
+	<center>
+		<button id="basic">Basic Usage</button>
+		<button id="meta">Dynamic Cards / Pages Usage</button>
+	</center>
+</body>
+</html>

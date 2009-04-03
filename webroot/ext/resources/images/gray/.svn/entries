@@ -1,0 +1,72 @@
+8
+
+dir
+768
+https://sonetlab.fbk.eu/svn/deps/trunk/ext/resources/images/gray
+https://sonetlab.fbk.eu/svn
+
+
+
+2008-08-11T07:03:10.685459Z
+469
+vad
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4e9eb16f-06da-49dd-8bec-081b4c15381a
+
+panel
+dir
+
+toolbar
+dir
+
+s.gif
+file
+
+
+
+
+2008-09-25T15:53:24.000000Z
+fc94fb0c3ed8a8f909dbc7630a0987ff
+2008-08-11T07:03:10.685459Z
+469
+vad
+has-props
+
+window
+dir
+
+gradient-bg.gif
+file
+
+
+
+
+2008-09-25T15:53:24.000000Z
+e117fca9d088e4cd5bbbcec7b99a8408
+2008-08-11T07:03:10.685459Z
+469
+vad
+has-props
+
+tabs
+dir
+
+button
+dir
+
+qtip
+dir
+

@@ -1,0 +1,37 @@
+
+body .help-btn{
+  background:url(../imgs/help.png) 0px 0px no-repeat;
+}
+
+.x-wizard-header {
+	background-color:white;
+	border-bottom:2px solid #99BBE8;
+}
+
+.x-wizard-header-title {
+	float: left;
+	padding: 7px 0px 0px 10px;
+}
+
+.x-wizard-header-title-txt {
+	font-weight: bold;
+}
+
+.x-wizard-header-step {
+	color:#767676;
+	text-align:right;
+	float:right;
+	padding:10px 10px 0px 0px;
+}
+
+.x-wizard-field-review{
+  padding:5px;
+}
+
+.x-wizard-field-review-plain{
+  background:transparent;
+}
+
+.x-wizard-field-review-gray{
+  background-color: #f6f6f6;
+}
