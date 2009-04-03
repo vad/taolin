@@ -60,9 +60,9 @@ if ($isdebugactive == 1) {
 
     <div id="container">
         <div id="content">
-
-<!-- Here's where I want my views to be displayed -->
-<?php echo $content_for_layout ?>
+    
+            <!-- Views are diplayed here -->
+            <?php echo $content_for_layout ?>
 
 
         </div>
@@ -70,7 +70,6 @@ if ($isdebugactive == 1) {
         <!--
         <div id="footer">
             footer
-
         </div>
         -->
     </div>

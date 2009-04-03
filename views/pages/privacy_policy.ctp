@@ -20,7 +20,7 @@
 ?>
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/accounts/custom.css' />
 <?php
-$appname = Configure::read('App.name');
+    $appname = Configure::read('App.name');
 ?>
 
 <div>

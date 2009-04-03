@@ -30,13 +30,13 @@ $appurl = Configure::read('App.url');
 <ul>
     <li class="faq-question-link" id="faq-question-homepage">
         <a href="#top">
-		How can I make <?php echo $appname?> my homepage (the default Web page loaded by the browser at startup)?
-	</a>
+        How can I make <?php echo $appname?> my homepage (the default Web page loaded by the browser at startup)?
+	    </a>
     </li>
 </ul>
 </div>
 
-  <div class="faq-aq-desktop">
+<div class="faq-aq-desktop">
     <p>
 	Here are some simple <b>guidelines</b> about how to set yourself up so that every time you open your browser you automatically start with <?php echo $appname?> 
     </p>
@@ -61,7 +61,7 @@ $appurl = Configure::read('App.url');
 	<br/>
 
 	Select your browser from the list below and follow the step by step instructions:
-	<br>
+	<br/>
 	<ul>
 		<li><a href="#1"> Microsoft Internet Explorer 6.x (Windows)</a></li>
 		<li><a href="#2"> Microsoft Internet Explorer 7.x (Windows)</a></li>
@@ -160,4 +160,4 @@ $appurl = Configure::read('App.url');
 	</p>
 
     </p>
-  </div>
+</div>
