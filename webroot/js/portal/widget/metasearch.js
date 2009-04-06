@@ -133,26 +133,14 @@ this.searchfield = new Ext.app.SearchField({
                         xtype:'searchusers'
                         ,hideToolbar: true
                         ,logparams: '{"source":"meta search widget"}'
-                        ,listeners:{
-                            render: function(p){
-                                p.paramName = 'query';
-                                p.view.store.parent = p;
-                            }
-                        }
                     }
-                }/*,{
+                },/*{
                     title: 'Publik'
                     ,autoHeight: true
                     ,items:{
                         xtype:'searchpublik'
                         ,hideToolbar: true
                         ,logparams: '{"source":"meta search widget"}'
-                        ,listeners:{
-                            render: function(p){
-                                p.paramName = 'query';
-                                p.view.store.parent = p;
-                            }
-                        }
                     }
                 },{
                     title: 'FBK Wiki'
@@ -164,15 +152,8 @@ this.searchfield = new Ext.app.SearchField({
                         ,dirtyUrl: true
                         ,wikiDescription: 'FBK internal wiki'
                         ,parent: this
-                        ,listeners:{
-                            render: function(p){
-                                p.view = p.items.items[0];
-                                p.paramName = 'srsearch';
-                                p.view.store.parent = p;
-                            }
-                        }
                     }
-                }*/,{
+                },*/{
                     title: 'Wikipedia'
                     ,autoHeight: true
                     ,items:{
@@ -181,13 +162,6 @@ this.searchfield = new Ext.app.SearchField({
                         ,wikiUrl: 'http://en.wikipedia.org/wiki/'
                         ,apiUrl: 'http://en.wikipedia.org/w/api.php'
                         ,parent: this
-                        ,listeners:{
-                            render: function(p){
-                                p.view = p.items.items[0];
-                                p.paramName = 'srsearch';
-                                p.view.store.parent = p;
-                            }
-                        }
                     }
                 }]
             })

@@ -26,7 +26,7 @@
  *  json.config an array of configuration
  */
 
-function getInitialConfig(){
+function setPortalConfiguration(){
     Ext.Ajax.request({
         url: 'users_widgets/getinitialconfig',
         method: 'GET',

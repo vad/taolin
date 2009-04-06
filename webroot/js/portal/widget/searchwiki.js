@@ -61,7 +61,10 @@ SearchWiki = Ext.extend(Ext.Panel, {
      * @cgf {Object} parent The parent of this object
      */
     ,parent: null
-
+    /** 
+     * @private
+     */
+    ,paramName: 'srsearch'
     /**
      * @private
      */
@@ -143,7 +146,7 @@ SearchWiki = Ext.extend(Ext.Panel, {
                 name: 'data[Search]',
                 store: this.store,
                 width: 180,
-                paramName: 'srsearch',
+                paramName: this.paramName,
                 value: this.term,
                 parent: this,
                 listeners: {

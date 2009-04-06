@@ -45,6 +45,10 @@ SearchPublik = Ext.extend(Ext.Panel, {
      */
     //,logparams: '{"source":"search user widget", "widget_id": "' + this.portlet_id + '"}'
     ,logparams: null
+    /** 
+     * @private
+     */
+    ,paramName: 'query'
     /**
      * @private
      */

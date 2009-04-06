@@ -61,6 +61,10 @@ SearchUsers = Ext.extend(Ext.Panel, {
      * @cgf {String} logparams Parameters to be logged (for research purposes). Default to null
      */
     ,logparams: null
+    /** 
+     * @private
+     */
+    ,paramName: 'query'
     /**
      * @private
      */
