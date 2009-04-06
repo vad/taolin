@@ -30,9 +30,19 @@
     </code></pre>
 */
 
+/**
+ * Nevede is an open source meeting schedulare
+ *
+ * More information at: http://bitbucket.org/vad/nevede/wiki/Home
+ */
+
+
 Nevede = function(conf, panel_conf){
     Ext.apply(this, panel_conf);
 
+    /* If nevedeUrl is not set in the widget_conf column
+     * in the widgets table of database, set it to a default value
+     */
     if (!conf.nevedeUrl)
         // Should ends with an '/'!!!
         conf.nevedeUrl = 'http://nevede.alwaysdata.net/meetings/';
