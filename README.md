@@ -1,6 +1,6 @@
 # Taolin #
 
-[Taolin](http://taolin.fbk.eu) is an open source Web desktop created in the research institute Fondazione Bruno Kessler ([FBK](http://www.fbk.eu)).
+[Taolin](http://taolin.fbk.eu) is an open source Web desktop created at the research institute Fondazione Bruno Kessler ([FBK](http://www.fbk.eu)).
 
 The web desktop consists of a personal dashboard customisable by adding micro-applications called widgets. Each widget offers a different service that can be provided as a view over internal services or repositories (e.g. access to papers repository) or as a communication service (e.g. jabber web chat) or as an external resource (e.g. Google search). 
 
