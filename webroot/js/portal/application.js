@@ -16,7 +16,6 @@
 * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-    
 
 Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
 
@@ -46,9 +45,7 @@ Ext.onReady(function(){
             ['Purple', 'ext-themes/css/xtheme-purple.css'],
 	        ['Indigo','ext-themes/css/xtheme-indigo.css'],
 	        ['Midnight','ext-themes/css/xtheme-midnight.css'],
-	        ['Silver Cherry','ext-themes/css/xtheme-silverCherry.css']/*,
-            ['Vista', 'ext-themes/css/xtheme-vista.css'],
-            ['Aero', 'ext-themes/css/xtheme-aero.css']*/
+	        ['Silver Cherry','ext-themes/css/xtheme-silverCherry.css']
         ]
       });
     comboTheme = new Ext.form.ComboBox({
@@ -117,8 +114,6 @@ Ext.onReady(function(){
             + '<a href="./pages/make_homepage_help" title="1. Drag the FBK home icon in the web address bat and drop it onto the house icon in the tool bar for the browser<br/>2. Select <i>Yes</i> from the popup window and you are done!" target="_blank">Make it your homepage!</a> | '
             + '<img src="js/portal/shared/icons/fam/new.png"/> <a href="./pages/privacy_policy" class="new-item" target="_blank">Privacy policy</a> | '
             + '<a href="./pages/help" target="_blank">Help</a> | '
-            //+ ,'<!-- <?php echo $html->link(\'Help link (with helper, target?)\',\'/help\') ?> |-->'
-            //+ '<img src="js/portal/shared/icons/fam/magnifier.png" style="cursor:pointer" onclick="$(\'#searchwidget_div\').toggle()" /> | '
             + '<a href="./accounts/logout" onclick="jabber.quit()">Logout</a>'
         + '</div>'
         + '<div class="left-element">'
