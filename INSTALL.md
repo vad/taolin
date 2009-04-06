@@ -1,4 +1,4 @@
-# INSTALLATION INSTRUCTIONS
+# Installation instructions
 
 ## Index
 
