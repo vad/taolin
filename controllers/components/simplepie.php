@@ -23,8 +23,7 @@ class SimplepieComponent extends Object {
   function feed_paginate($feed_url, $start=0, $limit=5) {
     //make the cache dir if it doesn't exist
     if (!file_exists($this->cache)) {
-      $folder = new Folder();
-      $folder->mkdirr($this->cache); 
+      $folder = new Folder($this->cache, true);
     }
 
     //include the vendor class
