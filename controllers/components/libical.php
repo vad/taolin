@@ -27,6 +27,11 @@ class LibicalComponent extends Object{
 
 
     function cache_file($url){
+        //make the cache dir if it doesn't exist
+        if (!file_exists($this->cache_dir)) {
+            $folder = new Folder($this->cache_dir, true);
+        }
+        
         //download $url to cache_dir encoding the name with md5
         $localfile = $this->cache_dir . md5($url);
         if (!file_exists($localfile)){ //if cache file doesn't exist
