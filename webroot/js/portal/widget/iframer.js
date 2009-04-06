@@ -40,16 +40,20 @@ Iframer = function(json){
     
     //if the height is NOT passed, we use a default value of 266
     if(json.height) {
-	correctHeight=json.height;
+	    correctHeight=json.height;
     } else {
-	correctHeight=266;
+	    correctHeight=266;
     }
+    
     Iframer.superclass.constructor.call(this, {
         autoHeight: true,
-	autoScroll: true,
-        defaults: { autoScroll: true },
-	html: '<iframe style="border: none;" src="'+json.iframe_src_url+'" width="100%" height="'+correctHeight+'" ></iframe>'
+        autoScroll: true,
+        defaults: {
+            autoScroll: true
+        },
+        html: '<iframe style="border: none;" src="'+json.iframe_src_url+'" width="100%" height="'+correctHeight+'" ></iframe>'
     });
+    
     /** We cannot change the height on the fly using onload and a javascript function because at run time 
      *  we cannot access contentWindow.document.body of the contained src. We can do it only if the parent document and the iframe 
      *  are in the same domain (more precisely, the scheme, hostname and port match). Otherwise the JavaScript code throws an exception: 
