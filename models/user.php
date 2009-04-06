@@ -20,7 +20,7 @@
 class User extends AppModel
 {
     var $name = 'User';
-    var $actsAs = array('SoftDeletable'); 
+    var $actsAs = array('SoftDeletable', 'Taggable'); 
     var $hasMany = array('Photo','Board','Timeline', 'UsersWidget');
     var $hasOne = array('Workplace');
     var $hasAndBelongsToMany = array('Group');
