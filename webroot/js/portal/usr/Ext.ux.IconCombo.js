@@ -1,17 +1,30 @@
+/**
+ * @class Ext.ux.form.IconCombo
+ * @extends Ext.form.ComboBox
+ *
+ * Adds icons on the left side of both the default combo textbox
+ * and dropdown list. CSS classes to be used for these icons must
+ * be in combo store to show up correctly.
+ *
+ * @author  Ing. Jozef SakÃ¡loÅ¡
+ * @copyright (c) 2008, Ing. Jozef SakÃ¡loÅ¡
+ * @version   1.0
+ * @date      19. March 2008
+ * @revision  $Id: Ext.ux.form.IconCombo.js 589 2009-02-21 23:30:18Z jozo $
+ *
+ * @license Ext.ux.form.IconCombo is licensed under the terms of
+ * the Open Source LGPL 3.0 license.  Commercial use is permitted to the extent
+ * that the code/component(s) do NOT become part of another Open Source or Commercially
+ * licensed development library or toolkit without explicit permission.
+ * 
+ * 
+ * License details: http://www.gnu.org/licenses/lgpl.html
+ */
+
 // Create user extensions namespace (Ext.ux)
 Ext.namespace('Ext.ux');
  
-/**
-  * Ext.ux.IconCombo Extension Class
-  *
-  * @author  Jozef Sakalos
-  * @version 1.0
-  *
-  * @class Ext.ux.IconCombo
-  * @extends Ext.form.ComboBox
-  * @constructor
-  * @param {Object} config Configuration options
-  */
+
 Ext.ux.IconCombo = function(config) {
  
     // call parent constructor
