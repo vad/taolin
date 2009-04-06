@@ -98,7 +98,7 @@ Nevede = function(conf, panel_conf){
                 ,'<span class="nevede-img">'
                     ,'<img src="js/portal/shared/icons/fam/email.png" onclick="Ext.getCmp(\''+this.getId()+'\').sendTo(\'{this.detailsUrl}{hidden_id}\',\'{title}\');" title="Click to email this meeting" width="12px" height="12px" style="float:right;padding:0 5px;cursor:pointer;">'
                 ,'</span>'
-                ,'<a href="{this.detailsUrl}{hidden_id}" target="_blank">{title}</a>'
+                ,'<a href="{this.detailsUrl}{hidden_id}/" target="_blank">{title}</a>'
                 ,'<span style="color:#888888;font-size:90%;">'
                     ,' - created on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]}'
                 ,'</span>'
