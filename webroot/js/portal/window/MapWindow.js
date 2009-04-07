@@ -403,6 +403,7 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
                 ,building: mw.buildingSelect.getValue()
             }
             ,success: function ( result, request ) {
+                Ext.example.msg('Workplace', 'Position saved on the map');
                 this.loadMap();
             }
         });
