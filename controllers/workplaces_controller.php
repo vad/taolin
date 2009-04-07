@@ -130,6 +130,7 @@ class WorkplacesController extends AppController {
         //$this->layout = 'image';
         //header("Pragma: no-cache");
         //header("Cache-Control: no-store, no-cache, max-age=0, must-revalidate");
+        $this->layout = 'ajax';
         header('Content-Type: image/png');
         $percent = 1.;
 
