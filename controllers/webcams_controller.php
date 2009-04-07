@@ -17,8 +17,6 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-<?php
 
 uses('sanitize');
 
@@ -85,9 +83,12 @@ class WebcamsController extends AppController {
 
 
     function getsnapshot() {
-        $webcamfolder = Configure::read('App.webcamfolder');
-        define('SNAPSHOT', $webcamfolder.'noise_cantinery.jpg');
+        Configure::write('debug', '0');
+        $this->layout = 'ajax';
         header('Content-Type: image/jpeg');
+        
+        $webcamfolder = Configure::read('App.imagefolder.webcam_fs_path');
+        define('SNAPSHOT', $webcamfolder.'noise_cantinery.jpg');
         readfile(SNAPSHOT);
     }
 

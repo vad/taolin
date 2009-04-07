@@ -73,7 +73,7 @@ class WidgetsController extends AppController {
         $results['widgets'] = $widgets;
         $results['totalCount'] = $count;
 
-        $this->set('result', $results);
+        $this->set('json', $results);
     }
 
     
@@ -83,7 +83,7 @@ class WidgetsController extends AppController {
         
         $response = array();
         $response['success'] = true;
-        $this->set('response', $response);
+        $this->set('json', $response);
     }
 
 

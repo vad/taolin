@@ -71,7 +71,7 @@ class PhotosController extends AppController
 
         $photo_ar = $this->Photo->find('all', $query);
 
-        $imagefoldername = Configure::read('App.imagefoldername');
+        $imagefoldername = Configure::read('App.imagefolder.web_path');
 
         foreach($photo_ar as $photo){
             $photo['Photo']['size'] = $photo[0]['size'];
@@ -112,7 +112,7 @@ class PhotosController extends AppController
             $params = $this->Photo->findById($p_id, array('field' =>'Photo.name','Photo.filename','Photo.width','Photo.height','Photo.caption',));
 
             // Add event to the timeline
-            $imagefoldername = Configure::read('App.imagefoldername'); 
+            $imagefoldername = Configure::read('App.imagefolder.web_path'); 
             
             $sanitized_desc = $this->san->html(str_replace('\'', '\\\'', $params['Photo']['caption']));
             $this->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$params['Photo']['filename'], "width" => $params['Photo']['width'], "height" => $params['Photo']['height'], "filename" => $params['Photo']['filename'], "caption" => $sanitized_desc, "name" => $params['Photo']['name']));
@@ -133,7 +133,7 @@ class PhotosController extends AppController
         $response['success'] = false;
 
         /* Directory into which file would be uploaded */
-        $dest_dir = Configure::read('App.imagefolder');
+        $dest_dir = Configure::read('App.imagefolder.fs_path');
 
         $user_id = $this->Session->read('id');
 
@@ -143,7 +143,7 @@ class PhotosController extends AppController
         $maxFileSizeInKb = round($maxFileSize/1024);
         
         // Directory where not correctly uploaded photos are stored
-        $error_dir = Configure::read('App.imagefoldererror');
+        $error_dir = Configure::read('App.imagefolder.error_fs_path');
         
         $params = $this->params['form'];
         $file_params = $this->params['form']['file'];

@@ -1,4 +1,3 @@
-
 <?php
 /* SVN FILE: $Id: index.php 6305 2008-01-02 02:33:56Z phpnut $ */
 /**
@@ -25,5 +24,3 @@
  */
 require 'webroot' . DIRECTORY_SEPARATOR . 'index.php';
 ?>
-
-

@@ -65,7 +65,7 @@ class WrappersController extends AppController
 			$out['items'][] = $tmp;
 		}
 
-		$this->set('out', $out);
+		$this->set('json', $out);
 	}
 
 

@@ -120,7 +120,7 @@ class UsersController extends AppController {
         $defaultgroupname = Configure::read('App.defaultgroupname'); 
         $json['user']['defaultgroupname'] = $defaultgroupname; 
 
-        $imagefoldername = Configure::read('App.imagefoldername');
+        $imagefoldername = Configure::read('App.imagefolder.web_path');
 
         if (!empty($photo['Photo'])){
             $json['user']['photo'] = Router::url('/').'img/'.$imagefoldername.'t640x480/'.$photo['Photo']['filename'];

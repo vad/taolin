@@ -17,6 +17,7 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
+ 
+ //This view is empty because the corresponding controller does everything (returns an image)
+ //This is not clean but it works
 ?>
-//This view is empty because the corresponding controller does everything (returns an image)
-//This is not clean but it works
