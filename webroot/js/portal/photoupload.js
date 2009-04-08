@@ -116,6 +116,8 @@ PhotoUpload = function(){
                             }
                             Ext.getCmp('upload-window').close();
                             Ext.getCmp('photo-chooser').store.load();
+                            if(Ext.getCmp('wp-photos-tab') && Ext.getCmp('wp-photos-tab').store && (window.thisId === westPanel.showedUser.id))
+                                Ext.getCmp('wp-photos-tab').store.load({params: {id: window.thisId}});
                             reloadTimeline();
                         },
                         failure: function(fp, o){
@@ -141,7 +143,6 @@ PhotoUpload = function(){
             scope: this
         }]
     });
-
 };
 
 Ext.extend(PhotoUpload, Ext.form.FormPanel); 
