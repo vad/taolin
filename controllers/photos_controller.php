@@ -137,7 +137,7 @@ class PhotosController extends AppController
 
         $user_id = $this->Session->read('id');
 
-        $allowedMime = array('image/jpeg','image/pjpeg','image/png','image/gif');
+        $allowedMime = array('image/jpeg','image/pjpeg','image/png','image/x-png','image/gif');
         //$maxFileSize = 2097152; //2048Kb == 2Mb
         $maxFileSize = 953250; //930Kb
         $maxFileSizeInKb = round($maxFileSize/1024);
@@ -153,6 +153,8 @@ class PhotosController extends AppController
         $desc = $this->san->escape(strip_tags($params['caption']));
 
         if(!empty($this->params)){
+
+            $this->log($this->params);
 
             // Source file, php saves it in a temporary directory
             $source = $file_params['tmp_name'];
