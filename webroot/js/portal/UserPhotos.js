@@ -66,7 +66,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                     '<div style="padding:10px;" class="thumb-wrap">',
                         /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
                         '<div class="thumb"><span></span>',
-                            '<img class="ante" style="padding:5px;cursor:pointer;" src="img/'+window.config.imgpath+'t140x140/{[this.photoExtToJpg(values.filename)]}" />',
+                            '<img class="ante" style="padding:5px;cursor:pointer;" src="'+window.config.img_path+'t140x140/{[this.photoExtToJpg(values.filename)]}" />',
                         '</div>',
                         '<span style="padding-bottom:5px;"><b>{name}</b></span><br />',
                      '</div>',

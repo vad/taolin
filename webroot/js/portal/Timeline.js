@@ -28,6 +28,7 @@
     This is a example of the json
     </code></pre>
 */
+
 timelineTemplate = new Ext.XTemplate( 
     '<div class="timeline-class">',
         '<tpl for=".">',
@@ -52,7 +53,7 @@ timelineTemplate = new Ext.XTemplate(
                         '<tpl if="(user_photo!=null && user_photo != \'\')">',
                             '<td valign=top>',
                                 '<div style="text-align:center;width:50px;cursor:pointer;" onclick=\"showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')\">',
-                                    '<img style="padding:2px 0" src="img/{img_path}t40x40/{[this.photoExtToJpg(values.user_photo)]}" />',
+                                    '<img style="padding:2px 0" src="{img_path}t40x40/{[this.photoExtToJpg(values.user_photo)]}" />',
                                 '</div>',
                             '</td>',
                         '</tpl>',

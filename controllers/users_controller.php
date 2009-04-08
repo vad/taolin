@@ -123,7 +123,7 @@ class UsersController extends AppController {
         $imagefoldername = Configure::read('App.imagefolder.web_path');
 
         if (!empty($photo['Photo'])){
-            $json['user']['photo'] = Router::url('/').'img/'.$imagefoldername.'t640x480/'.$photo['Photo']['filename'];
+            $json['user']['photo'] = Router::url('/').$imagefoldername.'t640x480/'.$photo['Photo']['filename'];
         }
         
         if (!empty($user['Workplace'])){
