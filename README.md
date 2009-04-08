@@ -10,7 +10,7 @@ Taolin relies on a 3-tier architecture: the back-end has been developed using [C
 
 Further information are available at Taolin website: [http://taolin.fbk.eu](http://taolin.fbk.eu)
 
-![Screenshot](http://lh5.ggpht.com/_2CurDthbDSw/SdyljiOKusI/AAAAAAAAAOw/BletgTTUorY/s400/screenshot_demo.png)
+[![Screenshot](http://lh5.ggpht.com/_2CurDthbDSw/SdyljiOKusI/AAAAAAAAAOw/BletgTTUorY/s800/screenshot_demo.png)](http://lh5.ggpht.com/_2CurDthbDSw/SdyljiOKusI/AAAAAAAAAOw/BletgTTUorY/s1024/screenshot_demo.png)
 
 ## License ##
 This software is distributed under the Affero GPL 3.0 unless otherwise specified.
