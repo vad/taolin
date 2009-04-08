@@ -111,7 +111,7 @@ PhotoUpload = function(){
                         success: function(fp, o){
                             Ext.example.msg('Success', o.result.message);
                             if(fp.findField('default_photo').getValue()){
-                                var url = 'img/'+window.config.imgpath+o.result.url;
+                                var url = window.config.img_path+o.result.url;
                                 Ext.getCmp('photo-chooser').setDefaultPhoto(null, url);
                             }
                             Ext.getCmp('upload-window').close();

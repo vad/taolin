@@ -362,7 +362,7 @@ PhotoChooser.prototype = {
 				'<div class="thumb-wrap" id="{filename}">',
                     /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
 				    '<div class="thumb"><span></span>',
-                        '<img class="ante" style="padding:5px;" src="img/'+window.config.imgpath+'t140x140/{[this.photoExtToJpg(values.filename)]}"></img>',
+                        '<img class="ante" style="padding:5px;" src="'+window.config.img_path+'t140x140/{[this.photoExtToJpg(values.filename)]}"></img>',
                     '</div>',
 	    			'<span style="padding:5px;"><b>{shortName}</b></span>',
                 '</div>',
@@ -378,7 +378,7 @@ PhotoChooser.prototype = {
 		this.detailsTemplate = new Ext.XTemplate(
 			'<div class="details">',
 				'<tpl for=".">',
-					'<center><div style="padding:5px;"><img class="ante" src="img/'+window.config.imgpath+'t240x240/{[this.photoExtToJpg(values.filename)]}"></center>',
+					'<center><div style="padding:5px;"><img class="ante" src="'+window.config.img_path+'t240x240/{[this.photoExtToJpg(values.filename)]}"></center>',
                     '<div class="details-info" style="padding-left:5px;">',
 					'<br /><b>Image Name: </b>',
 					'<span style="padding-right:40px">{usedName}</span><span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'name\', \'{usedName}\')">(edit)</a></span><br /><br />',
