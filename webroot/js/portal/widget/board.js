@@ -82,6 +82,8 @@ Board = function(conf, panel_conf){
                 'check': function(cb, checked){
                     /* Another bad hack, DateField is found by the position it occupies in 
                        the array of items of this form */
+                    if(!checked)
+                        cb.findParentByType().form.items.items['4'].setValue(null);
                     cb.findParentByType().form.items.items['4'].setDisabled(!checked);
                 }
             }
