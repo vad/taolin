@@ -1,8 +1,11 @@
-/tmp/cache/cake_*
+/tmp/cache/
 .project
 /config/database.php
 /config/config.php
 /controllers/components/auth/ldapauth.php
-/override/
 /tmp/logs/*.log
 /tmp/cache/rss/
+
+## overrides and local files
+/webroot/local
+/override
