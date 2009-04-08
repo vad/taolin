@@ -17,6 +17,13 @@
 *
 */
 
+/* Retrieves portal configuration as:
+ * - img path
+ * - contact email
+ * - jabber server and domain
+ */
+setPortalConfiguration();
+
 Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
 
 Ext.onReady(function(){
@@ -29,7 +36,7 @@ Ext.onReady(function(){
     
     var qtip = Ext.QuickTips.getQuickTip();
     qtip.interceptTitles = true;
-  
+    
     /*
      * Themes for Taolin gui
      */
@@ -122,13 +129,6 @@ Ext.onReady(function(){
         + '</div>'
         + '<div id="didyouknow_div"><span id="didyouknow_span"><table><tr><td style="padding:0 10px;'+(Math.random() > 0.3?'display:none;':'')+'">'+dyk+' <a href="javascript:void(0)" onclick="$(\'#didyouknow_span\').toggle();" style="margin-left:10px;font-size:xx-small;">[Hide this message]</a></td></tr></table></span></div>';
 
-    /* Retrieves portal configuration as:
-     * - img path
-     * - contact email
-     * - jabber server and domain
-     */
-    setPortalConfiguration();
-
     window.viewport = new Ext.Viewport({
         layout:'border',
         items:[{
@@ -176,6 +176,60 @@ Ext.onReady(function(){
 
     // render comboTheme
     comboTheme.render(Ext.get('exttheme'));
+
+    var dw = $("body").width();
+    var wizard_window_width = Math.round(dw*(4/5))
+    var dh = $("body").height();
+    var wizard_window_height = Math.round(dh*(4/5));
+
+    var win = new Ext.Window({
+        //id: Ext.id(),
+        layout:'fit'
+        ,width: wizard_window_width
+        ,modal: true
+        ,shadow: 'frame'
+        ,constrain: true
+        ,height: wizard_window_height
+        ,center: true
+        ,title: 'Wizard window'
+        ,items: {
+            xtype: 'basicwizard'
+            ,backBtnText: 'Previous'
+            ,endBtnText: 'Finish'
+            ,onEsc: Ext.emptyFn
+            ,onFinish: function(){
+                // When the wizard ends, close the window that contains it!
+                this.ownerCt.close();
+            }
+            ,animate: false
+            ,headerConfig: {
+                titleText: 'First login wizard'
+                ,titleImg: 'img/wizard-wand.jpg'
+            }
+            ,items: [{
+                index: 0
+                ,trailText: 'Privacy policy'
+                ,items:[{
+                    autoLoad: './pages/privacy_policy'
+                    ,style: 'font-size: 120%;border: 1px solid;padding: 20px;'
+                    ,border: false
+                },{
+                    html: '<div>RadioButton form here (accept or not?)</div>'
+                    ,border: false
+                    ,style: 'padding-top:20px;'
+                }]
+            },{ 
+                index: 1
+                ,trailText: 'Edit your settings!'
+                ,items: new Settings()
+            },{ 
+                index: 2
+                ,trailText: 'Visit FBK Wiki!'
+                ,html: '<div>Search for useful information on everyday life within FBK and contribute by improving to it, sharing your knowledge with your colleageus.</div>'
+            }]
+        }
+    });								    
+    win.show();
     
     /* Check if there's a valid session */
     var task = {

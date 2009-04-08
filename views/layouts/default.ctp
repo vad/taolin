@@ -55,7 +55,6 @@ if ($isdebugactive == 1) {
 
 
 </head>
-
 <body>
 
     <div id="container">

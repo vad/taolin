@@ -76,6 +76,10 @@ if ($isdebugactive == 1) {
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/Ext.ux.IconCombo.css' />
 <link rel='StyleSheet' href='<?php echo $this->base ?>/js/portal/usr/Multiselect/Multiselect.css' />
 
+<!-- WIZARD WINDOW -->
+<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/Ext.ux.Wizard.css' />
+<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/ToolbarLayout.css' />
+
 <script type="text/javascript">document.getElementById('loading-msg').innerHTML = 'Loading Core API...';</script>
 
 <?php
@@ -106,6 +110,13 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/usr/Ext.DataView.LabelEditor.js');
     echo $javascript->link('portal/usr/Multiselect/DDView.js');
     echo $javascript->link('portal/usr/Multiselect/Multiselect.js');
+    
+    /* WIZARD WINDOW */
+    echo $javascript->link('portal/usr/Ext.ux.WizardHeader.js');
+    echo $javascript->link('portal/usr/Ext.ux.BasicWizard.js');
+    echo $javascript->link('portal/usr/Ext.ux.SlickCardLayout.js');
+    echo $javascript->link('portal/usr/ToolbarLayout.js');
+    /* END WIZARD WINDOW */
 
     echo $javascript->link('portal/widget/users.js');
     echo $javascript->link('portal/widget/events.js');
@@ -138,7 +149,6 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/UserProfile.js');
     echo $javascript->link('portal/westpanel.js');
 
-    echo $javascript->link('portal/window/WizardWindow.js');
     echo $javascript->link('portal/window/AddWidgetsWindow.js');
     echo $javascript->link('portal/window/ChatWindow.js');
     echo $javascript->link('portal/window/GroupDetails.js');
