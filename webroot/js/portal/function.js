@@ -803,6 +803,7 @@ function gotoWidget(id, bounce, logparams) {
     );
 
     var type = bounce ? 'shake' : 'goto';
+    // Ext.getCmp(this.id).updateWidget();
     logWidget(id, type, logparams)
 }
             
