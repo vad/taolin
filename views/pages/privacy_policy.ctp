@@ -28,9 +28,11 @@
 <h1>Privacy policy</h1>
 
 <p class="policy">
-This document describes how we treat personal information when you use <?php echo $appname?> services. 
-<br/>
-This document was prepared by the <a href="http://sonet.fbk.eu">SoNet research team</a>. This summary is not necessarily definitive, authoritative, comprehensive, or current. It represents the findings, views, opinions and conclusions of the research team only.
+Desktop.fbk.eu is an experimental ongoing project of the SoNet FBK group. You are a Champion, i.e. an FBK colleague that can actively login in the system.
+</p>
+
+<p class="policy">
+This document is an agreement between us (the SoNet FBK group) and you (the Champion) and  describes how we treat personal information when you use desktop.fbk.eu services. This document is not necessarily definitive, authoritative, comprehensive, or current. It represents the findings, views, opinions and conclusions of us only.
 </p>
 
 <p class="policy">
@@ -47,11 +49,14 @@ According to art. 13 of 675/96 Italian Law about privacy of personal information
 </p>
 
 <p class="policy">
+If you agree with this document please, click the "I agree" button. If you don't agree please let us know by calling 0461/314331 or emailing Paolo at massa@fbk.eu. We appreciate any kind of feedback or question or comment about this document.
+</p>
+
+<p class="policy">
 Thanks for your contribution, Champion! 
 </p>
 
 <p class="policy">
 The <a href="http://sonet.fbk.eu">SoNet research team</a>
 </p>
-
 </div>
