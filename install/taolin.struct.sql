@@ -399,7 +399,7 @@ WHERE
 )
 ORDER BY "timelines"."date" DESC;
 
-ALTER TABLE readable_timelines OWNER TO sonetdbmgr;
+-- ALTER TABLE readable_timelines OWNER TO sonetdbmgr;
 
 --
 -- Table structure for table "users_history"
@@ -533,7 +533,7 @@ CREATE OR REPLACE VIEW widgets_skel_readable AS
    JOIN widgets ON widgets_skel.widget_id = widgets.id
   ORDER BY widgets_skel.col;
 
-ALTER TABLE widgets_skel_readable OWNER TO sonetdbmgr;
+-- ALTER TABLE widgets_skel_readable OWNER TO sonetdbmgr;
 
 
 
@@ -597,7 +597,7 @@ CREATE OR REPLACE VIEW users_widgets_readable AS
    JOIN widgets ON widgets.id = users_widgets.widget_id
   ORDER BY users.login;
 
-ALTER TABLE users_widgets_readable OWNER TO sonetdbmgr;
+-- ALTER TABLE users_widgets_readable OWNER TO sonetdbmgr;
 
 --
 -- Final view structure for view "widgets_skel_readable"
@@ -627,4 +627,4 @@ $BODY$
 $BODY$
   LANGUAGE 'sql' VOLATILE
   COST 100;
-ALTER FUNCTION set_groups_description(integer) OWNER TO sonetdbmgr;
+-- ALTER FUNCTION set_groups_description(integer) OWNER TO sonetdbmgr;
