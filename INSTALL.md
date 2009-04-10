@@ -41,12 +41,19 @@ See also http://www.mysql-apache-php.com/
 
 * Go to `http://localhost/` and if everything is working you should see "It works!"
 
+### 2.1.1 Apache modules and directives
+
+Taolin depends also on `mod_rewrite`. Make sure it's installed and enabled (google for this). You also have to check that .htaccess are enabled. Once they're available, to fully enable htaccess'es directives set `AllowOverride all` for your webroot (probably `/var/www`).
+
 
 ### 2.2 Installing PostegreSQL
     
 * Type in your terminal:
-        sudo apt-get install postgres-server postgres php5-pgsql
+        sudo apt-get install php5-pgsql postgresql-client-common postgresql-client-8.3 postgresql-8.3
   and then enter your sudo password
+
+* If you want to use password authentication, append the following line to `/etc/postgresql/8.3/main/pg_hba.conf`
+        local   all         all                               trust
 
 ### 2.3 Installing CakePHP 
 
@@ -78,16 +85,19 @@ See also http://www.mysql-apache-php.com/
 
 ### 2.5 Creating the Taolin database
 * Go to the folder where you have the database dump of Taolin, in sql format.
+* If you have no superuser, create one:
+        $ sudo su postgres
+        $ createuser -s -P YOUR_SUPERUSER
 * Create a new database named taolin:
 
-        $ createdb -U YOUR_SUPERADMIN taolin
+        $ createdb -U YOUR_SUPERUSER taolin
 
 * Create plpgsql language for this db:
 
-        $ createlang -U YOUR_SUPERADMIN plpgsql taolin
+        $ createlang -U YOUR_SUPERUSER  plpgsql taolin
 
 * Import the Taolin database into your taolin database (install is in taolin root)
-        $ psql -U YOUR_SUPERADMIN taolin
+        $ psql -U YOUR_SUPERUSER taolin
         # \i install/taolin.struct.sql
 
 
