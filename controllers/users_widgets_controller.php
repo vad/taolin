@@ -24,7 +24,7 @@ uses('sanitize');
 
 class UsersWidgetsController extends AppController {
     var $name = 'UsersWidgets';
-    //var $uses = array('UserWidget');
+
     function beforeFilter()
     {
         parent::beforeFilter();
@@ -32,6 +32,7 @@ class UsersWidgetsController extends AppController {
         $this->checkSession();
         $this->mrClean = new Sanitize();
     }
+
 
     function getinitialconfig(){
 
@@ -52,6 +53,7 @@ class UsersWidgetsController extends AppController {
         $this->set('json', $response);
         
     }
+
 
     function getwidgetsposition($uw_id=''){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
@@ -119,6 +121,7 @@ class UsersWidgetsController extends AppController {
 
         $this->set('json', "Go!");
     }
+
     
     function collapsewidget($uw_id, $type)
     {
@@ -151,6 +154,7 @@ class UsersWidgetsController extends AppController {
         $this->set('json', $response);
     }
 
+
     /*
      * $w_id: widget id in users_widgets
      */
@@ -172,6 +176,7 @@ class UsersWidgetsController extends AppController {
 
         $this->set('json', $response);
     }    
+
     
     function undoremovewidget($w_id){
 
@@ -196,6 +201,7 @@ class UsersWidgetsController extends AppController {
     
         $this->set('json', $response);
     }   
+
     
     function changeconf(){
         $DEBUG = 0;
@@ -230,6 +236,8 @@ class UsersWidgetsController extends AppController {
         //get and decode user_params, so we know how to properly handle formdata
         $user_params = json_decode($result['Widget']['user_params'], TRUE);
 
+        $this->log(print_r($formdata, TRUE));
+        $this->log(print_r($_POST, TRUE));
         //loop thorough user_params instead of formdata, because checkboxes don't
         //send anything if not checked
         foreach ($user_params as $param) {
@@ -241,6 +249,13 @@ class UsersWidgetsController extends AppController {
                     $formdata[$name] = true;
                 else
                     $formdata[$name] = false;
+            }
+            else if ($type == 'BooleanList') {
+                $len = $formdata[$name];
+                for($i=0; $i<$len; $i++){
+                    $this->log($i);
+                }
+                $this->log(print_r($formdata[$name], TRUE));
             } 
         }
         

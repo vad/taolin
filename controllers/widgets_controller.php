@@ -36,8 +36,6 @@ class WidgetsController extends AppController {
     }
 
 
-
-
     function listwidgets(){
         Configure::write('debug', '0');
         $this->layout = 'ajax';

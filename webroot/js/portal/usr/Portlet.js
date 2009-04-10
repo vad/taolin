@@ -35,26 +35,34 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
     draggable:true,
     autoDestroy:true,
     cls:'x-portlet',
+    onRender: function(){        
+        Ext.ux.Portlet.superclass.onRender.apply(this, arguments);
+        
+        var jPortlet = $('#' + this.getId());
+        var tools = jPortlet.find('.x-tool');
+        tools.css({
+            visibility: 'hidden'
+        });
+        
+        //hoverIntent provided some problems with tooltip so we
+        //decided to switch back to hover even if it doesn't
+        //completely work with IE
+        jPortlet.hover(function(){
+                tools.css({
+                    visibility: 'visible'
+                });
+            }, function(){
+                tools.css({
+                    visibility: 'hidden'
+                });
+        });        
+    },
     listeners: {
         resize: {
             fn: function(panel, panelWidth, panelHeight){ 
-                    panel.items.last().setWidth(panelWidth);
-                }, 
+                panel.items.last().setWidth(panelWidth);
+            },
             scope: this
-        }
-        ,render: function(){
-            var jPortlet = $('#'+this.getId());
-            var tools = jPortlet.find('.x-tool');
-            tools.css({visibility: 'hidden'});
-
-            //hoverIntent provided some problems with tooltip so we
-            //decided to switch back to hover even if it doesn't
-            //completely work with IE
-            jPortlet.hover(function(){
-                tools.css({visibility: 'visible'});
-                }, function(){
-                tools.css({visibility: 'hidden'});
-            });
         }
         ,expand: function(panel){
             var w = panel.getInnerWidth();
@@ -171,6 +179,38 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
                 field.anchor = '100%';
                 if (this.widgetConf[x.name])
                     field.value = this.widgetConf[x.name];
+            }
+            else if(x.type=='BooleanList') {
+                field.xtype = 'checkboxgroup';
+                field.fieldLabel = x.description ? x.description : x.name;
+                field.anchor = '100%';
+                field.items = new Array();
+                
+                var i = 0;
+                for (var k in x.values){ //create checkboxes
+                    var cb = { //checkbox
+                        xtype: 'checkbox'
+                        ,boxLabel: x.values[k].title
+                        ,inputValue: k
+                        ,name: x.name+"_"+i
+                    };
+                    
+                    field.items.push(cb);
+                    i++;
+                }
+                
+                field.items.push({
+                    xtype: 'hidden'
+                    ,name: x.name //length
+                    ,value: i
+                });
+                
+                console.log(x);
+                /*
+                 
+                if (this.widgetConf[x.name])
+                    field.value = this.widgetConf[x.name];
+                */
             }
             field.name = x.name;
             this.confForm.add(field);
