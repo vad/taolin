@@ -81,7 +81,7 @@ class TaggableBehavior extends ModelBehavior {
              
         // so we need to retrieve tags
         unset($fields[$index]);
-        $this->runtime[$model->alias] = TRUE;
+        $this->runtime[$model->alias]['taggableBeforeFind'] = TRUE;
         		
 		return $queryData;
 	}
@@ -98,11 +98,10 @@ class TaggableBehavior extends ModelBehavior {
         if (empty($results)) {
             return $results;
         }
-        if (!$this->runtime[$model->alias]){
+        if (!$this->runtime[$model->alias]['taggableBeforeFind']){
             return $results;
         }
         
-        //$this->log('tags: '.print_r($results, true));
         $joinModel = $model->alias."ContentTag";
         $runtimeModel =& $this->tagModel($model);
         

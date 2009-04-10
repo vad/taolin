@@ -17,9 +17,6 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-
-<?php
 
 uses('sanitize');
 
@@ -103,17 +100,16 @@ class AccountsController extends AppController {
     }
 
     function doconnection($myuser, $password) {
-       $this->log('AUTHMETHOD in doconnection: '.$this->authmethod['0'],LOG_DEBUG);
-       $this->log('COMPONENTS in doconnection: '.$this->components['0'],LOG_DEBUG); 
-       //$this->log('-----------------------------------------',LOG_DEBUG);
+        $this->log('AUTHMETHOD in doconnection: '.$this->authmethod['0'],LOG_DEBUG);
+        $this->log('COMPONENTS in doconnection: '.$this->components['0'],LOG_DEBUG); 
 
-       $rettemp = $this->authmethod['0'];
-       $this->log('rettemp in doconnection: '.$rettemp,LOG_DEBUG); 
-       $this->log('-----------------------------------------',LOG_DEBUG);
+        $rettemp = $this->authmethod['0'];
+        $this->log('rettemp in doconnection: '.$rettemp,LOG_DEBUG); 
+        $this->log('-----------------------------------------',LOG_DEBUG);
        
-       $ret = $this->mycomponent->connecttoserver($myuser, $password);
-       $this->log('ret in doconnection: '.$ret,LOG_DEBUG);    
-       return $ret;    
+        $ret = $this->mycomponent->connecttoserver($myuser, $password);
+        $this->log('ret in doconnection: '.$ret,LOG_DEBUG);    
+        return $ret;    
     }   
     
 
@@ -123,8 +119,8 @@ class AccountsController extends AppController {
     }   
 
     function getusergroups(){
-              $ret = $this->mycomponent->getusergroups();
-              return $ret;
+        $ret = $this->mycomponent->getusergroups();
+        return $ret;
     }
 
 
@@ -153,7 +149,6 @@ class AccountsController extends AppController {
 
             //mi connetto al db e cerco di capire se l'utente e' champion o no
             $isChampion = $this->User->findByLogin($myuser, array('id', 'active'));   
-
             // SE CHAMPION
             if ($isChampion['User']['active'] == 1) {
                 $response['error']['champion'] = true; //EXT forms need this to know if things did not work

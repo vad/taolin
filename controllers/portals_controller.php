@@ -29,6 +29,8 @@ class PortalsController extends AppController {
 
     function beforeFilter()
     {
+        parent::beforeFilter();
+
         $this->checkSession();
     }
     
