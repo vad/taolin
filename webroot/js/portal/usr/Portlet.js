@@ -184,6 +184,7 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
                 field.xtype = 'checkboxgroup';
                 field.fieldLabel = x.description ? x.description : x.name;
                 field.anchor = '100%';
+                field.columns = 2;
                 field.items = new Array();
                 
                 var i = 0;
@@ -199,13 +200,12 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
                     i++;
                 }
                 
-                field.items.push({
+                this.confForm.add({
                     xtype: 'hidden'
                     ,name: x.name //length
                     ,value: i
                 });
                 
-                console.log(x);
                 /*
                  
                 if (this.widgetConf[x.name])

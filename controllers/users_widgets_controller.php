@@ -236,8 +236,6 @@ class UsersWidgetsController extends AppController {
         //get and decode user_params, so we know how to properly handle formdata
         $user_params = json_decode($result['Widget']['user_params'], TRUE);
 
-        $this->log(print_r($formdata, TRUE));
-        $this->log(print_r($_POST, TRUE));
         //loop thorough user_params instead of formdata, because checkboxes don't
         //send anything if not checked
         foreach ($user_params as $param) {
@@ -252,10 +250,22 @@ class UsersWidgetsController extends AppController {
             }
             else if ($type == 'BooleanList') {
                 $len = $formdata[$name];
-                for($i=0; $i<$len; $i++){
-                    $this->log($i);
+                
+                for($i=0; $i<$len; $i++){ // extracts the $list of selected values for this BooleanList
+                    $key = $name.'_'.$i; // values are in form name_0, name_1, ...
+                    if (array_key_exists($key, $formdata)){
+                        $list[] = $formdata[$key];
+                        unset($formdata[$key]);
+                    }
                 }
-                $this->log(print_r($formdata[$name], TRUE));
+                
+               
+                // replace $name with the list of selected values
+                unset($formdata[$name]);
+                foreach($list as $key){
+                    $this->log($key);
+                    $formdata[$name][$key] = $param['values'][$key];
+                }
             } 
         }
         
