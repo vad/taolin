@@ -155,37 +155,6 @@ Ext.ux.fbk.sonet.MetaSearch = Ext.extend(Ext.Panel, {
                         autoScroll:true
                     },
                     items: tabs,
-                    /*[
-                    },/*{
-                        title: 'Publik'
-                        ,autoHeight: true
-                        ,items:{
-                            xtype:'searchpublik'
-                            ,hideToolbar: true
-                            ,logparams: '{"source":"meta search widget"}'
-                        }
-                    },{
-                        title: 'FBK Wiki'
-                        ,autoHeight: true
-                        ,items:{
-                            xtype:'searchwiki'
-                            ,hideToolbar: true
-                            ,wikiUrl: 'https://desktop.fbk.eu/wiki/it'
-                            ,dirtyUrl: true
-                            ,wikiDescription: 'FBK internal wiki'
-                            ,parent: this
-                        }
-                    },{
-                        title: 'Wikipedia'
-                        ,autoHeight: true
-                        ,items:{
-                            xtype:'searchwiki'
-                            ,hideToolbar: true
-                            ,wikiUrl: 'http://en.wikipedia.org/wiki/'
-                            ,apiUrl: 'http://en.wikipedia.org/w/api.php'
-                            ,parent: this
-                        }
-                    }]*/
                 })
             ],
             tbar: [
