@@ -44,7 +44,6 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
         });
     }
     ,initComponent: function() {
-        console.log('initComponent');
         var config = {
             items: [
                 {

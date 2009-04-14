@@ -109,9 +109,6 @@ Ext.ux.fbk.sonet.MetaSearch = Ext.extend(Ext.Panel, {
 
         var tabs = [];
         
-        for(var k in this.initialConfig){
-            console.log(this.initialConfig[k]);
-        }
         this.engines = this.initialConfig['engines'];
         for (var sek in this.engines){ //sek = search engine key
             var se = this.engines[sek];
@@ -134,7 +131,6 @@ Ext.ux.fbk.sonet.MetaSearch = Ext.extend(Ext.Panel, {
                 items: item 
             });
         }
-        console.log(tabs);
 
         var config = {
             items: [
