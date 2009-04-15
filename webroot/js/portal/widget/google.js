@@ -33,25 +33,51 @@ Ext.ux.fbk.sonet.GoogleWidget = function(conf, panel_conf){
     Ext.apply(this, panel_conf);
 
     var widget_id = this.getId();
+    var searches = {};
+    if ("searches" in conf)
+        searches = conf.searches;
 
     function GoogleOnLoad() {
-      // Create a search control
-      var searchControl = new google.search.SearchControl();
-      var options_o = new google.search.SearcherOptions();
-      var options_c = new google.search.SearcherOptions();
+        // Create a search control
+        var searchControl = new google.search.SearchControl();
+        var options_o = new google.search.SearcherOptions();
+        var options_c = new google.search.SearcherOptions();
+  
+        // set results appearance
+        searchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);
+        options_o.setExpandMode(google.search.SearchControl.EXPAND_MODE_OPEN);
+        options_c.setExpandMode(google.search.SearchControl.EXPAND_MODE_CLOSED);
+        
+        // Add in a full set of searchers
+        searchControl.addSearcher(new google.search.WebSearch(), options_o); // always show google web search
 
-      // set results appearance
-      searchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);
-      options_o.setExpandMode(google.search.SearchControl.EXPAND_MODE_OPEN);
-      options_c.setExpandMode(google.search.SearchControl.EXPAND_MODE_CLOSED);
-      
-      // Add in a full set of searchers
-      searchControl.addSearcher(new google.search.WebSearch(), options_o);
-      searchControl.addSearcher(new google.search.BookSearch(), options_c);
-      searchControl.addSearcher(new google.search.PatentSearch(), options_c);
-     
-      // tell the searcher to draw itself and tell it where to attach
-      searchControl.draw(document.getElementById("searchgoogle_"+widget_id));
+        // show other search engines based on configuration stored in DB
+        for (var search_name in searches) {
+            var search = {};
+            switch (search_name)
+            {
+                case 'book':
+                    search = new google.search.BookSearch();
+                    break;
+                case 'video':
+                    search = new google.search.VideoSearch();
+                    break;
+                case 'patent':
+                    search = new google.search.PatentSearch();
+                    break;
+                case 'image':
+                    search = new google.search.ImageSearch();
+                    break;
+                case 'news':
+                    search = new google.search.NewsSearch();
+                    break;
+            }
+            if (search)
+                searchControl.addSearcher(search, options_c);
+        }
+       
+        // tell the searcher to draw itself and tell it where to attach
+        searchControl.draw(document.getElementById("searchgoogle_"+widget_id));
     }
     
     google.load('search', '1.0', {callback:GoogleOnLoad});
