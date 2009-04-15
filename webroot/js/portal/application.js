@@ -221,7 +221,7 @@ Ext.onReady(function(){
             },{ 
                 index: 1
                 ,trailText: 'Edit your settings!'
-                ,items: new Settings()
+                ,items: new Ext.ux.fbk.sonet.Settings()
             },{ 
                 index: 2
                 ,trailText: 'Visit FBK Wiki!'
