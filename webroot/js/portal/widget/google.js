@@ -27,9 +27,12 @@
   * <p>A widget that improve the google search into taolin</p>
   * @note: this widget need a google key
 */
+Ext.namespace( 'Ext.ux.fbk.sonet' );
 
-GoogleWidget = function(conf, panel_conf){
+Ext.ux.fbk.sonet.GoogleWidget = function(conf, panel_conf){
     Ext.apply(this, panel_conf);
+
+    var widget_id = this.getId();
 
     function GoogleOnLoad() {
       // Create a search control
@@ -46,15 +49,15 @@ GoogleWidget = function(conf, panel_conf){
       searchControl.addSearcher(new google.search.WebSearch(), options_o);
       searchControl.addSearcher(new google.search.BookSearch(), options_c);
       searchControl.addSearcher(new google.search.PatentSearch(), options_c);
-      
+     
       // tell the searcher to draw itself and tell it where to attach
-      searchControl.draw(document.getElementById("searchgoogle"));
+      searchControl.draw(document.getElementById("searchgoogle_"+widget_id));
     }
     
     google.load('search', '1.0', {callback:GoogleOnLoad});
 
-    GoogleWidget.superclass.constructor.call(this, {
-        html:'<div id="searchgoogle">Loading</div>'
+    Ext.ux.fbk.sonet.GoogleWidget.superclass.constructor.call(this, {
+        html:'<div id="searchgoogle_'+this.getId()+'">Loading</div>'
         ,bodyStyle:'padding-left:5px;padding-right:5px;'
         ,autoHeight: true
         ,autoWidth: true
@@ -64,4 +67,4 @@ GoogleWidget = function(conf, panel_conf){
     
 };
 
-Ext.extend(GoogleWidget, Ext.Panel); 
+Ext.extend(Ext.ux.fbk.sonet.GoogleWidget, Ext.Panel); 
