@@ -40,16 +40,12 @@ Ext.ux.fbk.sonet.GoogleWidget = function(conf, panel_conf){
     function GoogleOnLoad() {
         // Create a search control
         var searchControl = new google.search.SearchControl();
-        var options_o = new google.search.SearcherOptions();
-        var options_c = new google.search.SearcherOptions();
   
         // set results appearance
         searchControl.setResultSetSize(google.search.Search.SMALL_RESULTSET);
-        options_o.setExpandMode(google.search.SearchControl.EXPAND_MODE_OPEN);
-        options_c.setExpandMode(google.search.SearchControl.EXPAND_MODE_CLOSED);
         
         // Add in a full set of searchers
-        searchControl.addSearcher(new google.search.WebSearch(), options_o); // always show google web search
+        searchControl.addSearcher(new google.search.WebSearch()); // always show google web search
 
         // show other search engines based on configuration stored in DB
         for (var search_name in searches) {
@@ -73,11 +69,20 @@ Ext.ux.fbk.sonet.GoogleWidget = function(conf, panel_conf){
                     break;
             }
             if (search)
-                searchControl.addSearcher(search, options_c);
+                searchControl.addSearcher(search);
         }
-       
+      
+        // create a drawOptions object
+        var drawOptions = new google.search.DrawOptions();
+
+        // tell the searcher to draw itself in linear mode
+        drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
+
         // tell the searcher to draw itself and tell it where to attach
-        searchControl.draw(document.getElementById("searchgoogle_"+widget_id));
+        searchControl.draw(
+            document.getElementById("searchgoogle_"+widget_id),
+            drawOptions
+        );
     }
     
     google.load('search', '1.0', {callback:GoogleOnLoad});
