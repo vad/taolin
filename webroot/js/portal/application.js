@@ -199,6 +199,10 @@ Ext.onReady(function(){
             ,endBtnText: 'Finish'
             ,onEsc: Ext.emptyFn
             ,onFinish: function(){
+                var cb = Ext.getCmp('privacy_policy_agreement_checkbox');
+                //TODO: if cb.checked==true then alert backend of user choice!
+
+			    this.fireEvent('finish');	
                 // When the wizard ends, close the window that contains it!
                 this.ownerCt.close();
             }
@@ -214,16 +218,24 @@ Ext.onReady(function(){
                     autoLoad: './pages/privacy_policy'
                     ,style: 'font-size: 120%;border: 1px solid;padding: 20px;'
                     ,border: false
-                },{
-                    html: '<div>RadioButton form here (accept or not?)</div>'
-                    ,border: false
-                    ,style: 'padding-top:20px;'
-                }]
+                }
+                    ,new Ext.form.FormPanel({
+                        bodyStyle:'padding: 20px 0 0 10px;border: none;'
+                        ,items: [{
+                            id: 'privacy_policy_agreement_checkbox',
+                            xtype:'checkbox',
+                            hideLabel: true,
+                            boxLabel: '<span style="padding: 0 5px;"><b>I read and accept the privacy policy</b></span>',
+                            name: 'privacy_policy_agreement',
+                            value: false
+                        }]
+                    })
+                ]
             },{ 
                 index: 1
                 ,trailText: 'Edit your settings!'
                 ,items: new Ext.ux.fbk.sonet.WizardSettings()
-            },{ 
+            },{     
                 index: 2
                 ,trailText: 'Visit FBK Wiki!'
                 ,html: '<div>Search for useful information on everyday life within FBK and contribute by improving to it, sharing your knowledge with your colleageus.</div>'

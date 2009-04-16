@@ -87,7 +87,6 @@ Board = function(conf, panel_conf){
                     cb.findParentByType().form.items.items['4'].setDisabled(!checked);
                 }
             }
-
         },
         new Ext.form.DateField({
             fieldLabel: 'Expires on',
