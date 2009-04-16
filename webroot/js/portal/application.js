@@ -220,7 +220,8 @@ Ext.onReady(function(){
                     ,border: false
                 }
                     ,new Ext.form.FormPanel({
-                        bodyStyle:'padding: 20px 0 0 10px;border: none;'
+                        border: false,
+                        bodyStyle:'padding: 20px 0 0 10px;'
                         ,items: [{
                             id: 'privacy_policy_agreement_checkbox',
                             xtype:'checkbox',
@@ -238,7 +239,7 @@ Ext.onReady(function(){
             },{     
                 index: 2
                 ,trailText: 'Visit FBK Wiki!'
-                ,html: '<div>Search for useful information on everyday life within FBK and contribute by improving to it, sharing your knowledge with your colleageus.</div>'
+                ,html: '<div>Search for useful information on everyday life within FBK and contribute by improving to it, sharing your knowledge with your colleagues.</div>'
             }]
         }
     });								    
