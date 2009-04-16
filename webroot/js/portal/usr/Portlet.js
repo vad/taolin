@@ -189,9 +189,14 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
                 
                 var i = 0;
                 for (var k in x.values){ //create checkboxes
+                    // use key as checkbox label unless a title has been specified
+                    var label = k;
+                    if ('title' in x.values[k])
+                        label = x.values[k].title;
+
                     var cb = { //checkbox
                         xtype: 'checkbox'
-                        ,boxLabel: x.values[k].title
+                        ,boxLabel: label
                         ,inputValue: k
                         ,name: x.name+"_"+i
                     };

@@ -183,7 +183,7 @@ Ext.onReady(function(){
     var wizard_window_height = Math.round(dh*(4/5));
 
     var win = new Ext.Window({
-        //id: Ext.id(),
+        id: 'wizard',
         layout:'fit'
         ,width: wizard_window_width
         ,modal: true
@@ -192,6 +192,7 @@ Ext.onReady(function(){
         ,height: wizard_window_height
         ,center: true
         ,title: 'Wizard window'
+        ,closable: false
         ,items: {
             xtype: 'basicwizard'
             ,backBtnText: 'Previous'
@@ -221,7 +222,7 @@ Ext.onReady(function(){
             },{ 
                 index: 1
                 ,trailText: 'Edit your settings!'
-                ,items: new Ext.ux.fbk.sonet.Settings()
+                ,items: new Ext.ux.fbk.sonet.WizardSettings()
             },{ 
                 index: 2
                 ,trailText: 'Visit FBK Wiki!'

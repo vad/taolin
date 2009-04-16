@@ -117,6 +117,8 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/usr/Ext.ux.SlickCardLayout.js');
     echo $javascript->link('portal/usr/ToolbarLayout.js');
     /* END WIZARD WINDOW */
+    
+    echo $javascript->link('portal/wizard_settings.js');
 
     echo $javascript->link('portal/widget/users.js');
     echo $javascript->link('portal/widget/events.js');
