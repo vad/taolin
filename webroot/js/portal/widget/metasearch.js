@@ -109,9 +109,6 @@ Ext.ux.fbk.sonet.MetaSearch = Ext.extend(Ext.Panel, {
 
         var tabs = [];
         
-        for(var k in this.initialConfig){
-            console.log(this.initialConfig[k]);
-        }
         this.engines = this.initialConfig['engines'];
         for (var sek in this.engines){ //sek = search engine key
             var se = this.engines[sek];
@@ -134,7 +131,6 @@ Ext.ux.fbk.sonet.MetaSearch = Ext.extend(Ext.Panel, {
                 items: item 
             });
         }
-        console.log(tabs);
 
         var config = {
             items: [
@@ -155,37 +151,6 @@ Ext.ux.fbk.sonet.MetaSearch = Ext.extend(Ext.Panel, {
                         autoScroll:true
                     },
                     items: tabs,
-                    /*[
-                    },/*{
-                        title: 'Publik'
-                        ,autoHeight: true
-                        ,items:{
-                            xtype:'searchpublik'
-                            ,hideToolbar: true
-                            ,logparams: '{"source":"meta search widget"}'
-                        }
-                    },{
-                        title: 'FBK Wiki'
-                        ,autoHeight: true
-                        ,items:{
-                            xtype:'searchwiki'
-                            ,hideToolbar: true
-                            ,wikiUrl: 'https://desktop.fbk.eu/wiki/it'
-                            ,dirtyUrl: true
-                            ,wikiDescription: 'FBK internal wiki'
-                            ,parent: this
-                        }
-                    },{
-                        title: 'Wikipedia'
-                        ,autoHeight: true
-                        ,items:{
-                            xtype:'searchwiki'
-                            ,hideToolbar: true
-                            ,wikiUrl: 'http://en.wikipedia.org/wiki/'
-                            ,apiUrl: 'http://en.wikipedia.org/w/api.php'
-                            ,parent: this
-                        }
-                    }]*/
                 })
             ],
             tbar: [

@@ -66,7 +66,7 @@ westPanel = new Ext.Panel({
              */
             /*collapse: expandUserPanel,*/
             render: function(t){
-                    t.add(new Settings());
+                t.add(new Ext.ux.fbk.sonet.Settings());
             }
         }
     }]
