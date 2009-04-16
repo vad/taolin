@@ -62,7 +62,7 @@ MathWidget = function(conf, panel_conf){
             ,anchor: '100%'
     	},{
             /* Using JQuery toggle to show/hide an originally hidden div */
-            html:  '<div style="padding:0 0 5px 5px;"><img style="vertical-align:middle;" src="img/khelpcenter.png" /> <span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'" style="text-align:left;line-height:150%;font-size:100%;font-family:Verdana;" onclick="$(\'#calcForm-math-help\').toggle(400)">Help</span></div><div id="calcForm-math-help" style="display:none;padding:5px;background:lightGray;">' + helpString
+            html:  '<div style="padding:0 0 5px 5px;"><img style="vertical-align:middle;" src="img/khelpcenter.png" /> <span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'" style="text-align:left;line-height:150%;font-size:100%;font-family:Verdana;" onclick="$(\'#calcForm-math-help_'+this.getId()+'\').toggle(400)">Help</span></div><div id="calcForm-math-help_'+this.getId()+'" style="display:none;padding:5px;background:lightGray;">' + helpString
         }
         ]
         ,keys:{
@@ -104,21 +104,21 @@ MathWidget = function(conf, panel_conf){
             ,value: '-5, 5'
             ,anchor: '100%'
         },{
-            html:  '<div style="padding:0 0 5px 5px;"><img style="vertical-align:middle;" src="img/khelpcenter.png" /> <span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'" style="text-align:left;line-height:150%;font-size:100%;font-family:Verdana;" onclick="$(\'#graphForm-math-help\').toggle(400)">Help</span></div><div id="graphForm-math-help" style="display:none;padding:5px;background:lightGray;">' + helpString
+            html:  '<div style="padding:0 0 5px 5px;"><img style="vertical-align:middle;" src="img/khelpcenter.png" /> <span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'" style="text-align:left;line-height:150%;font-size:100%;font-family:Verdana;" onclick="$(\'#graphForm-math-help_'+this.getId()+'\').toggle(400)">Help</span></div><div id="graphForm-math-help_'+this.getId()+'" style="display:none;padding:5px;background:lightGray;">' + helpString
         }
         ]
         ,plot: function(){
-                var el = document.getElementById('plot');
-                // form's width includes padding
-                var w = this.getInnerWidth();
-                var h = w * 3/4;
-                var eq = this.items.get(0).getValue();
-                var range = this.items.get(1).getValue();
-                var commaPos = range.indexOf(',');
-                var llim = parseInt(range.substr(0,commaPos));
-                var ulim = parseInt(range.substr(commaPos+1));
-                
-                this.parent.drawChart(eq, llim, ulim, 500, 2, el, w, h);
+            var el = document.getElementById('plot_'+this.parent.getId());
+            // form's width includes padding
+            var w = this.getInnerWidth();
+            var h = w * 3/4;
+            var eq = this.items.get(0).getValue();
+            var range = this.items.get(1).getValue();
+            var commaPos = range.indexOf(',');
+            var llim = parseInt(range.substr(0,commaPos));
+            var ulim = parseInt(range.substr(commaPos+1));
+            
+            this.parent.drawChart(eq, llim, ulim, 500, 2, el, w, h);
         }
         ,keys:{
             key: Ext.EventObject.ENTER
@@ -164,7 +164,7 @@ MathWidget = function(conf, panel_conf){
                     ,items: [
                         this.graphForm
                         ,{
-                            html: '<div id="plot" />'
+                            html: '<div id="plot_'+this.getId()+'" />'
                         }
                     ]
                     ,autoHeight: true
