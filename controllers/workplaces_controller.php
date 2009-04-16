@@ -62,6 +62,8 @@ class WorkplacesController extends AppController {
         $this->addtotimeline(array('building' => $data['building_id'],'coordx' => $data['x'],'coordy' => $data['y']));
 
         $this->Workplace->save($data);
+
+        $this->set('json', '');
     }
     
     
@@ -119,7 +121,7 @@ class WorkplacesController extends AppController {
         //TODO: is this good?
         $this->Session->write('buildingWP', $out);
 
-        $this->set('out', $out);
+        $this->set('json', $out);
     }
 
 
