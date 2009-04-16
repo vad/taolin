@@ -595,6 +595,7 @@ CREATE OR REPLACE VIEW users_widgets_readable AS
    FROM users_widgets
    JOIN users ON users.id = users_widgets.user_id
    JOIN widgets ON widgets.id = users_widgets.widget_id
+  WHERE users_widgets.deleted = 0
   ORDER BY users.login;
 
 -- ALTER TABLE users_widgets_readable OWNER TO sonetdbmgr;
