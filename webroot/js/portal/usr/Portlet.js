@@ -200,7 +200,13 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
                         ,inputValue: k
                         ,name: x.name+"_"+i
                     };
-                    
+                   
+                    /* If the tab is already present in the widget,
+                     * the corrisponding checkbox is checked
+                     */
+                    if(this.widgetConf[x.name][k])
+                        cb.checked = true;
+
                     field.items.push(cb);
                     i++;
                 }
