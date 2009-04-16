@@ -105,8 +105,8 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
             this.toggleCollapse(true);
 
         this.confForm = new Ext.form.FormPanel({
-            //baseCls: 'feedback_widget'
-            autoHeight: true
+            baseCls: 'portlet_conf'
+            ,autoHeight: true
             //,title: 'Change your settings'
             ,bodyStyle:'padding:10px;background:transparent'
             ,style:'background:#F5F5F5 url(img/portlet_conf_bg.png) repeat-x scroll center top;border-style:none none solid;border-width:0 0 1px; border-color: #DDDDDD'
@@ -183,8 +183,9 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
             else if(x.type=='BooleanList') {
                 field.xtype = 'checkboxgroup';
                 field.fieldLabel = x.description ? x.description : x.name;
+                field.cls = 'boolean-list';
                 field.anchor = '100%';
-                field.columns = 2;
+                field.columns = 1;
                 field.items = new Array();
                 
                 var i = 0;

@@ -35,11 +35,6 @@ html, body {
     overflow-x:hidden !important;
 }
 
-.desktop .x-panel-bwrap {
-    /*background: #314877;*/
-    background: lightgrey;
-}
-
 .x-border-layout-ct {
     background:white;
 }
@@ -542,3 +537,9 @@ color:black;
 .webcam-p {
     font-weight: bold;
 }
+
+/* portlet conf */
+.portlet_conf .x-panel-body, .portlet_conf .x-column-layout-ct {
+    background: transparent;
+}
+/* end portlet conf */
