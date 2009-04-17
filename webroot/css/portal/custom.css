@@ -409,13 +409,14 @@ div.thumb span {
 #user_profile .x-panel-body{
     border-width:0;
 }
-#settings_form .x-panel-body{
+.settings .x-panel-body{
     border-width:0;
+    padding: 5px;
 }
-#settings_form .x-form-item{
+.settings .x-form-item{
     margin-bottom:10px;
 }
-#settings_form .x-form-item-label{
+.settings .x-form-item-label{
     font-weight:bold;
 }
 

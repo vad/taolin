@@ -20,11 +20,12 @@
 Ext.namespace( 'Ext.ux.fbk.sonet' );
 
 Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
-    id: 'settings_form',
-    border: false
+    cls: 'settings'
+    ,border: false
     ,autoScroll: true
     ,labelAlign: 'top'
-    ,bodyStyle:'padding:5px; background:white;'
+    // To prevent sprited images to be shown in the background
+    ,bodyStyle:'background: white;'
     ,defaults: {
         // applied to each contained item
         autoWidth: true
@@ -126,21 +127,22 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                     buttons: [{
                         text: 'Save',
                         handler: function(){ 
-                            var t = Ext.getCmp('settings_form');
-                            t.form.submit({
+                            this.form.submit({
                                 url:'users/setusersettings',
-                                success:t.onSuccess,
-                                failure:t.onFailure,
+                                success:this.onSuccess,
+                                failure:this.onFailure,
                                 waitMsg:'Saving data...'
                             });
-                        },
-                        formBind:true
+                        }
+                        ,formBind:true
+                        ,scope: this
                     },{
                         text: 'Cancel',
                         handler: function(){
-                            Ext.getCmp('settings_form').form.load();
+                            this.form.load();
                             expandUserPanel();
                         }
+                        ,scope: this
                     }]
                 }
             ]
