@@ -202,8 +202,11 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
                         ,name: x.name+"_"+i
                     };
                    
-                    /* If the tab is already present in the widget,
-                     * the corrisponding checkbox is checked
+                    /* If the controlled item is already present in the user
+                     * parameters (i.e. the user already choose that option) 
+                     * then the corrisponding checkbox is checked.
+                     * More details about user params here: http://wiki.github.com/vad/taolin/userparams
+                     *
                      */
                     if(this.widgetConf[x.name][k])
                         cb.checked = true;
