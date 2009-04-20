@@ -862,8 +862,23 @@ function showFirstLoginWizard(){
         ,closable: false
         ,items: {
             xtype: 'basicwizard'
+            ,id: 'first_login_wizard'
             ,backBtnText: 'Previous'
             ,endBtnText: 'Finish'
+            ,listeners: {
+                'beforenav': function(dir, index){
+                    var wiz = Ext.getCmp('first_login_wizard');
+                    
+                    if ((dir == 1) && (!('next' in wiz) || (wiz.next == 0))){ // moving from card 0 to 1
+                        var cb = Ext.getCmp('privacy_policy_agreement_checkbox');
+                        
+                        if (!cb.checked) {
+                            alert("You can't go further. Accept the privacy policy or go away");
+                            return false;
+                        }
+                    }   
+                }
+            }
             ,onEsc: Ext.emptyFn
             ,onFinish: function(){
                 var cb = Ext.getCmp('privacy_policy_agreement_checkbox');
@@ -881,11 +896,14 @@ function showFirstLoginWizard(){
             ,items: [{
                 index: 0
                 ,trailText: 'Privacy policy'
-                ,items:[{
-                    autoLoad: './pages/privacy_policy'
-                    ,style: 'font-size: 120%;border: 1px solid;padding: 20px;'
-                    ,border: false
-                }
+                ,items: [
+                    {
+                        autoLoad: './pages/privacy_policy'
+                        ,style: 'font-size: 120%;border: 1px solid'
+                        ,border: false
+                        ,height: win_size[1] - 180
+                        ,autoScroll:true
+                    }
                     ,new Ext.form.FormPanel({
                         border: false,
                         bodyStyle:'padding: 20px 0 0 10px;'

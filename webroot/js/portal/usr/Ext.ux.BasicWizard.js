@@ -408,7 +408,7 @@ Ext.ux.BasicWizard = Ext.extend(Ext.Panel, {
 	 * @param {Object} index
 	 */
 	navigate: function(dir, index){
-		this.dir = dir;							
+		this.dir = dir;
 		if(this.fireEvent('beforenav', dir, index) !== false){
 			this.onNavigate(index);
 			this.fireEvent('navigate', dir, index);
