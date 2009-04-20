@@ -177,74 +177,8 @@ Ext.onReady(function(){
     // render comboTheme
     comboTheme.render(Ext.get('exttheme'));
 
-    var dw = $("body").width();
-    var wizard_window_width = Math.round(dw*(4/5))
-    var dh = $("body").height();
-    var wizard_window_height = Math.round(dh*(4/5));
-
-    var win = new Ext.Window({
-        id: 'wizard',
-        layout:'fit'
-        ,width: wizard_window_width
-        ,modal: true
-        ,shadow: 'frame'
-        ,constrain: true
-        ,height: wizard_window_height
-        ,center: true
-        ,title: 'Wizard window'
-        ,closable: false
-        ,items: {
-            xtype: 'basicwizard'
-            ,backBtnText: 'Previous'
-            ,endBtnText: 'Finish'
-            ,onEsc: Ext.emptyFn
-            ,onFinish: function(){
-                var cb = Ext.getCmp('privacy_policy_agreement_checkbox');
-                //TODO: if cb.checked==true then alert backend of user choice!
-
-			    this.fireEvent('finish');	
-                // When the wizard ends, close the window that contains it!
-                this.ownerCt.close();
-            }
-            ,animate: false
-            ,headerConfig: {
-                titleText: 'First login wizard'
-                ,titleImg: 'img/wizard-wand.jpg'
-            }
-            ,items: [{
-                index: 0
-                ,trailText: 'Privacy policy'
-                ,items:[{
-                    autoLoad: './pages/privacy_policy'
-                    ,style: 'font-size: 120%;border: 1px solid;padding: 20px;'
-                    ,border: false
-                }
-                    ,new Ext.form.FormPanel({
-                        border: false,
-                        bodyStyle:'padding: 20px 0 0 10px;'
-                        ,cls: 'settings'
-                        ,items: [{
-                            id: 'privacy_policy_agreement_checkbox',
-                            xtype:'checkbox',
-                            hideLabel: true,
-                            boxLabel: 'I read and accept the privacy policy',
-                            name: 'privacy_policy_agreement',
-                            value: false
-                        }]
-                    })
-                ]
-            },{ 
-                index: 1
-                ,trailText: 'Edit your settings!'
-                ,items: new Ext.ux.fbk.sonet.WizardSettings()
-            },{     
-                index: 2
-                ,trailText: 'Visit FBK Wiki!'
-                ,html: '<div>Search for useful information on everyday life within FBK and contribute by improving to it, sharing your knowledge with your colleagues.</div>'
-            }]
-        }
-    });								    
-    win.show();
+    // open wizard window
+    showFirstLoginWizard();
     
     /* Check if there's a valid session */
     var task = {

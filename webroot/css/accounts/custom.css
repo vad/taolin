@@ -52,43 +52,43 @@ left:0;
 width:40%;
 }
 div#login-form {
-padding:30px;
-padding-top: 60px;
-padding-left: 20%;
+    padding:30px;
+    padding-top: 60px;
+    padding-left: 20%;
 }
 p.question {
-color: #000000;
-font-weight: bold;
-margin: 20px 0px 0px 20px;
+    color: #000000;
+    font-weight: bold;
+    margin: 20px 0px 0px 20px;
 }
 p.faq-question {
-color:#005ca9;
-font-weight: bold;
-margin: 20px 0px 0px 20px;
-text-decoration: underline;
-padding: 0px 0px 0px 10px;
+    color:#005ca9;
+    font-weight: bold;
+    margin: 20px 0px 0px 20px;
+    text-decoration: underline;
+    padding: 0px 0px 0px 10px;
 }
 p.faq-answer {
-margin: 0px 0px 10px 40px;
+    margin: 0px 0px 10px 40px;
 }
 p.answer {
-margin: 0px 0px 10px 40px;
+    margin: 0px 0px 10px 40px;
 }
 p.policy {
-margin: 40px 40px 40px 40px;
+    margin: 20px;
 }
 p {
     margin: 0px 0px 5px 0px;
 }
 .faqonmouseover {
-     background: url(../../img/arrow_hover.gif) no-repeat scroll left center;
-     padding: 0px 0px 0px 10px;
+    background: url(../../img/arrow_hover.gif) no-repeat scroll left center;
+    padding: 0px 0px 0px 10px;
 }
 .faq-aq-desktop {
-padding-left:30px;
+    padding-left:   30px;
 }
 .faq-aq-desktop p {
-padding:10px;
+    padding:10px;
 }
 .faq-aq-desktop li {
 list-style: square;

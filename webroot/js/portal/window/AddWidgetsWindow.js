@@ -23,11 +23,13 @@ function openAddWidgetsModalWindow() {
         window.addwidgetwindow.show();
         return;
     }
-    var dw = $("body").width();
-    var window_width = Math.round(dw*(3/5))
-    var dh = $("body").height();
-    var window_height = Math.round(dh*(3/5));
-    window.addwidgetwindow = new AddWidgetsWindow({id:id, width:window_width, height:window_height});
+    
+    var win_size = getBodySize(3/5);
+    window.addwidgetwindow = new AddWidgetsWindow({
+        id:id
+        ,width:win_size[0]
+        ,height:win_size[1]
+    });
     window.addwidgetwindow.show();
 }
 
