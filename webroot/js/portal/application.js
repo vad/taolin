@@ -222,11 +222,12 @@ Ext.onReady(function(){
                     ,new Ext.form.FormPanel({
                         border: false,
                         bodyStyle:'padding: 20px 0 0 10px;'
+                        ,cls: 'settings'
                         ,items: [{
                             id: 'privacy_policy_agreement_checkbox',
                             xtype:'checkbox',
                             hideLabel: true,
-                            boxLabel: '<span style="padding: 0 5px;"><b>I read and accept the privacy policy</b></span>',
+                            boxLabel: 'I read and accept the privacy policy',
                             name: 'privacy_policy_agreement',
                             value: false
                         }]
