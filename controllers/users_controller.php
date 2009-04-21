@@ -154,6 +154,7 @@ class UsersController extends AppController {
         $this->User->recursive = 0;
         
         $user  = $this->User->find($condition, array(
+            'name', 'surname', 'login',
             'COALESCE(mod_personal_page, personal_page) AS personal_page', 
             'COALESCE(mod_email, email) AS email', 
             'COALESCE(mod_date_of_birth, date_of_birth) AS date_of_birth',             
@@ -164,13 +165,41 @@ class UsersController extends AppController {
             'mod_carpooling AS carpooling',
             'groups_description'
         ));
-            
+        
 		foreach ($user['User'] as $key => $userid){
 			$users[] = array('id' => $key, 'value' => $userid);
 		}
 		foreach ($user[0] as $key => $mod_defined){
 			$users[] = array('id' => $key, 'value' => $mod_defined);
 		}
+
+        /*****************************************************
+         * START RETRIEVING DEFAULT PHOTO 
+         *****************************************************/
+        $conditions = array('User.id' => $id, 'Photo.default_photo' => 1, 'Photo.is_hidden' => 0);
+
+        $fields = array('Photo.filename', 'Photo.is_hidden');
+
+        $resphoto = $this->User->Photo->find('first', array(
+            'conditions' => $conditions, 
+            'recursive' => 0,
+            'fields' => $fields
+        ));
+        
+        if (!empty($resphoto['Photo']))
+            /* Since all the photos are saved in .jpg extension, replace the
+             * original file extension with .jpg
+             */
+            $photo = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
+        else
+            $photo = null;
+           
+        // Insert the value in the third position of the array
+        array_splice($users, 2, 0, array(array('id' => 'photo', 'value' => $photo)));
+        
+        /*****************************************************
+         * END DEFAULT PHOTO RETRIEVE 
+         *****************************************************/
 		
         $json['data'] = $users;
         $json['success'] = true;

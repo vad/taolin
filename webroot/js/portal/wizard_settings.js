@@ -17,101 +17,132 @@
   *
   */
 
-Ext.namespace( 'Ext.ux.fbk.sonet' );
+Ext.namespace('Ext.ux.fbk.sonet');
 
 Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
-    id: 'wizard_settings_form',
-    border: false
+    cls: 'settings'
+    ,border: false
     ,autoScroll: true
-    ,labelAlign: 'top'
-    ,bodyStyle:'padding:5px; background:white;'
     ,defaults: {
         // applied to each contained item
         autoWidth: true
         ,msgTarget: 'side'
     }
     ,monitorValid: true
+    ,labelAlign: 'top'
     ,waitMsgTarget: true
     ,url:'users/getusersettings'
+
     ,onRender:function(){
         Ext.ux.fbk.sonet.WizardSettings.superclass.onRender.apply(this, arguments);
 
         this.form.load({
-            url: 'users/getusersettings/',
-            text: "Loading...",
-            timeout: 60,
-            scope: this
+            url: 'users/getusersettings/'
+            ,text: "Loading..."
+            ,success: this.setUserParams
+            ,timeout: 60
+            ,scope: this
         });
     }
+
     ,initComponent: function() {
+
+        //this.userParams = {};
+
+        this.view = new Ext.DataView({
+            autoHeight: true
+            ,multiSelect: false
+            ,emptyText: 'Ouch... Something wrong happened here! Please report this error to '+window.config.contactus
+            ,loadingText: 'Loading your personal information'
+            ,itemSelector: 'user-params-wrapper'
+            ,tpl: new Ext.XTemplate(
+                '<tpl for=".">'
+                    ,'<div class="user-params-wrapper" width="auto">'
+                        ,'<div><center>'
+                            ,'<div>'
+                                ,'<tpl if="photo != null">'
+                                    ,'<img class="ante" src="'+window.config.img_path+'t240x240/{photo}" />'
+                                ,'</tpl>'
+                                ,'<tpl if="photo == null">'
+                                    ,'<img class="ante" src="img/nophoto.png" height="240" />'
+                                ,'</tpl>'
+                            ,'</div>'
+                            ,'<div>'
+                                ,'<div class="user_param_wrapper" style="padding:10px; font-size: 120%; font-weight: bold;">'
+                                    ,'{name} {surname}'
+                                ,'</div>'
+                                ,'<div class="edit_div" style="font-size:120%;width: 11em;">'
+                                    ,'<div onclick="openImageChooser();">'
+                                        ,'<img src="js/portal/shared/icons/fam/image_edit.png" />'
+                                        ,'<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your photos</span>'
+                                    ,'</div>'
+                                    ,'<div onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">'
+                                       ,'<img src="js/portal/shared/icons/fam/map_edit.png" />'
+                                       ,'<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit workplace</span>'
+                                    ,'</div>'
+                                ,'</div>'  
+                            ,'</div>'
+                        ,'</center></div>'
+                    ,'</div>'
+                ,'</tpl>'
+            )
+            ,store: new Ext.data.SimpleStore({
+                fields: [
+                    {name: 'name'}, {name: 'surname'}, {name: 'photo'}
+                ]
+            })
+        });
+                
+        this.form = new Ext.form.FieldSet({
+            //title: ' Personal',
+            collapsible:false
+            ,autoHeight: true
+            ,autoWidth: true
+            ,border:false
+            ,defaultType: 'textfield'
+            ,style:'padding:5px 0 0 5px'
+            ,layoutConfig: {
+                // layout-specific configs go here
+                labelSeparator: ''
+            }
+            ,items: [{
+                    text: 'Please edit your information below, in order to make your profile more complete and to let other people know more about you!'
+                    ,xtype: 'label'
+                    ,style: 'font-weight: bold; font-size: 120%; display: block; position: relative; margin: 20px 0;'
+                }, {
+                    fieldLabel: 'Personal Page'
+                    ,name: 'personal_page'
+                    ,vtype:'url'
+                    ,maxLength: 80
+                    ,anchor: '98%'
+                }, {
+                    fieldLabel: 'Home address'
+                    ,name: 'home_address'
+                    ,maxLength: 180
+                    ,anchor: '98%'
+                }, {
+                    fieldLabel: 'Available for carpooling?'
+                    ,name: 'carpooling'
+                    ,xtype: 'checkbox'
+                    ,anchor: '98%'
+                }, {
+                    fieldLabel: 'About me <br /><span style="font-weight:normal;font-size:90%;">(Describe yourself, your interests and your work here at FBK)</span>'
+                    ,name: 'description'
+                    ,xtype: 'textarea'
+                    ,grow: true
+                    ,anchor: '98%'
+               }
+            ]
+        });
+
         var config = {
             items: [
-                {
-                    html: '' 
-                }, {
-                    items: new Ext.form.FieldSet({
-                        //title: ' Personal',
-                        layoutConfig: {
-                            // layout-specific configs go here
-                            labelSeparator: ''
-                        },
-                        collapsible:false,
-                        autoHeight: true,
-                        autoWidth: true,
-                        border:false,
-                        defaultType: 'textfield',
-                        style:'padding:5px 0 0 5px',
-                        items: [
-                            {
-                                fieldLabel: 'Personal Page',
-                                name: 'personal_page',
-                                vtype:'url',
-                                maxLength: 80,
-                                anchor: '100%'
-                            }, {
-                                fieldLabel: 'Home address',
-                                name: 'home_address',
-                                maxLength: 180,
-                                anchor: '100%'
-                            }, {
-                                fieldLabel: 'Available for carpooling?',
-                                name: 'carpooling',
-                                xtype: 'checkbox',
-                                anchor: '100%'
-                            }, {
-                                fieldLabel: 'About me <br /><span style="font-weight:normal;font-size:90%;">(Describe yourself, your interests and your work here at FBK)</span>',
-                                name: 'description',
-                                xtype: 'textarea',
-                                grow: true,
-                                anchor: '100%'
-                           }
-                        ]
-                    })
-                }/*,{
-                    buttons: [{
-                        text: 'Save',
-                        handler: function(){ 
-                            var t = Ext.getCmp('settings_form');
-                            t.form.submit({
-                                url:'users/setusersettings',
-                                success:t.onSuccess,
-                                failure:t.onFailure,
-                                waitMsg:'Saving data...'
-                            });
-                        },
-                        formBind:true
-                    },{
-                        text: 'Cancel',
-                        handler: function(){
-                            Ext.getCmp('settings_form').form.load();
-                            expandUserPanel();
-                        }
-                    }]
-                }*/
+                this.view
+                ,this.form
             ]
         };
         
-        Ext.apply(this, Ext.apply(this.initialConfig, config));
+    Ext.apply(this, Ext.apply(this.initialConfig, config));
 
         Ext.ux.fbk.sonet.WizardSettings.superclass.initComponent.apply(this, arguments);
     }
@@ -123,5 +154,16 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
             buttons: Ext.MessageBox.OK,
             icon: Ext.MessageBox.ERROR
         });
+    }
+    ,setUserParams:function(form, action){
+
+        this.userParams = [
+            action.result.data.map(function(i){
+                if(i.id)    
+                    return i.value;
+            })
+        ];
+        
+        this.view.store.loadData(this.userParams);
     }
 });
