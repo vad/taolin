@@ -20,8 +20,6 @@
 ?>
 
 <style type="text/css">
-
-
 #loading-mask{
     position:absolute;
     left:0;
@@ -53,13 +51,15 @@
 #loading-msg {
     font: normal 10px arial,tahoma,sans-serif;
 }
-
 </style>
 
 <div id="loading-mask" style=""></div>
 <div id="loading">
     <div class="loading-indicator"><img src="img/extanim32.gif" width="32" height="32" style="margin-right:8px;float:left;vertical-align:top;"/>
-    <?php echo Configure::read('App.name');?> 0.7<br /><span id="loading-msg">Loading styles and images...</span></div>
+        <?php echo Configure::read('App.name');?> 0.7
+        <br />
+        <span id="loading-msg">Loading styles and images...</span>
+    </div>
 </div>
 
 
@@ -80,14 +80,14 @@ if ($isdebugactive == 1) {
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/Ext.ux.Wizard.css' />
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/ToolbarLayout.css' />
 
-<script type="text/javascript">document.getElementById('loading-msg').innerHTML = 'Loading Core API...';</script>
+<script type="text/javascript">
+    document.getElementById('loading-msg').innerHTML = 'Loading Core API...';
+</script>
 
 <?php
     ## flush the buffers
     flush();
-?>
 
-<?
     echo $javascript->link('jquery/jquery.imagetool.js');
     echo $javascript->link('jquery/jquery-ui-personalized-1.5.3.min.js');
     
@@ -160,15 +160,20 @@ if ($isdebugactive == 1) {
 } else {
     ?>
     <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/application-all.css' />
-<script type="text/javascript">document.getElementById('loading-msg').innerHTML = 'Loading Core API...';</script>
+    
+    <script type="text/javascript">
+        document.getElementById('loading-msg').innerHTML = 'Loading Core API...';
+    </script>
+    
     <?php
     ## flush the buffers
     flush();
     echo $javascript->link('application-all.js');
 }
 
-?>
+    ?>
 
 <script type="text/javascript" src='http://www.google.com/jsapi?key=ABQIAAAAtll_c0IGkNAlp32iILQBxRTd0VjkC_00ZWjQD0rjYXEbT9OQ-RTUuv3bkIlJukEgAnOkNwab-7NEew' />
-<script type="text/javascript">document.getElementById('loading-msg').innerHTML = 'Initializing...';</script>
-
+<script type="text/javascript">
+    document.getElementById('loading-msg').innerHTML = 'Initializing...';
+</script>

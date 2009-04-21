@@ -26,13 +26,14 @@
  *  json.config an array of configuration
  */
 
-function setPortalConfiguration(){
+function setPortalConfiguration(f){
     Ext.Ajax.request({
         url: 'users_widgets/getinitialconfig',
         method: 'GET',
         success: function(result, request){
             var json_decode = Ext.util.JSON.decode(result.responseText);
             window['config'] = json_decode.config;
+            if (f) f();
         }
     });
 }

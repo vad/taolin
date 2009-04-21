@@ -22,11 +22,15 @@
  * - contact email
  * - jabber server and domain
  */
-setPortalConfiguration();
+Ext.onReady(function(){
+    setPortalConfiguration(application_init);
+});
 
 Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
 
-Ext.onReady(function(){
+
+//Ext.onReady(
+function application_init(){
 
     Ext.QuickTips.init();
     
@@ -207,7 +211,7 @@ Ext.onReady(function(){
         Ext.get('loading-mask').fadeOut({remove:true});
     }, 2000);
 
-});
+}
 
 soundManager.onload = function(){
     beep = soundManager.createSound('beep', 'sound/38868__M_RED__clock_tic.mp3');

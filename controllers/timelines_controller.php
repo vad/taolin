@@ -80,7 +80,6 @@ class TimelinesController extends AppController {
 
         foreach($events as $event){
             $event['user_photo'] = $hash_photos[$event['user_id']];
-            $event['img_path'] = Configure::read('App.imagefolder.web_path');
             $event['event'] = $this->prepareevent($event);
             unset($event['param'], $event['temp']);
             $result[] = $event;

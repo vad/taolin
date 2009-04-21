@@ -53,7 +53,7 @@ timelineTemplate = new Ext.XTemplate(
                         '<tpl if="(user_photo!=null && user_photo != \'\')">',
                             '<td valign=top>',
                                 '<div style="text-align:center;width:50px;cursor:pointer;" onclick=\"showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')\">',
-                                    '<img style="padding:2px 0" src="{img_path}t40x40/{[this.photoExtToJpg(values.user_photo)]}" />',
+                                    '<img style="padding:2px 0" src="{[window.config.img_path]}t40x40/{[this.photoExtToJpg(values.user_photo)]}" />',
                                 '</div>',
                             '</td>',
                         '</tpl>',
@@ -173,7 +173,7 @@ Timeline = Ext.extend(Ext.Panel, {
         var store = new Ext.data.JsonStore({
             url: 'timelines/gettimeline',
             root: 'timeline',
-            fields: ['id','user_id','event','name','surname','login','user_photo','icon','img_path',
+            fields: ['id','user_id','event','name','surname','login','user_photo','icon',
                     {name: 'date', type: 'date', dateFormat: 'Y-m-d H:i:s'}]
             ,baseParams: {
                 limit: this.limit
