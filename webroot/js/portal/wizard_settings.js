@@ -58,37 +58,27 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
             ,tpl: new Ext.XTemplate(
                 '<tpl for=".">'
                     ,'<div class="user-params-wrapper" width="auto">'
-                        ,'<div><center>'
-                            ,'<div>'
+                        ,'<div style="text-align:center">'
+                            ,'<span style="width: 50%;">'
                                 ,'<tpl if="photo != null">'
-                                    ,'<img class="ante" src="'+window.config.img_path+'t240x240/{photo}" />'
+                                    ,'<img class="ante" src="'+window.config.img_path+'t240x240/{photo}" style="vertical-align:top;" />'
                                 ,'</tpl>'
                                 ,'<tpl if="photo == null">'
-                                    ,'<img class="ante" src="img/nophoto.png" height="240" />'
+                                    ,'<img class="ante" src="img/nophoto.png" style="vertical-align:top;" height="240;" />'
                                 ,'</tpl>'
-                            ,'</div>'
-                            ,'<div>'
-                                ,'<div class="user_param_wrapper" style="padding:10px; font-size: 120%; font-weight: bold;">'
+                            ,'</span>'
+                            ,'<div style="display: inline">'
+                                ,'<span style="padding:10px; font-size: 120%; font-weight: bold;">'
                                     ,'{name} {surname}'
-                                ,'</div>'
-                                ,'<div class="edit_div" style="font-size:120%;width: 11em;">'
-                                    ,'<div onclick="openImageChooser();">'
-                                        ,'<img src="js/portal/shared/icons/fam/image_edit.png" />'
-                                        ,'<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your photos</span>'
-                                    ,'</div>'
-                                    ,'<div onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">'
-                                       ,'<img src="js/portal/shared/icons/fam/map_edit.png" />'
-                                       ,'<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit workplace</span>'
-                                    ,'</div>'
-                                ,'</div>'  
+                                ,'</span>'
                             ,'</div>'
-                        ,'</center></div>'
+                        ,'</div>'
                     ,'</div>'
                 ,'</tpl>'
             )
             ,store: new Ext.data.SimpleStore({
                 fields: [
-                    {name: 'name'}, {name: 'surname'}, {name: 'photo'}
+                    {name: 'name'}, {name: 'surname'}, {name: 'photo'}, null, {name: 'groups_description'}
                 ]
             })
         });
@@ -106,33 +96,32 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
                 labelSeparator: ''
             }
             ,items: [{
-                    text: 'Please edit your information below, in order to make your profile more complete and to let other people know more about you!'
+                    text: 'Please edit your information below, in order to make your profile more complete and to let other people know more about you! Fields marked with (*) are mandatory'
                     ,xtype: 'label'
-                    ,style: 'font-weight: bold; font-size: 120%; display: block; position: relative; margin: 20px 0;'
+                    ,style: 'font-size: 120%; display: block; padding: 30px 0;'
                 }, {
-                    fieldLabel: 'Personal Page'
+                    fieldLabel: 'Describe yourself with few keywords (*) <br /><span style="font-weight:normal;font-size:90%;">(Such as "Interaction design, nanotechnology, history of Germanic people, religion, media, javascript")</span>'
+                    ,name: 'description'
+                    ,xtype: 'textarea'
+                    ,grow: true
+                    ,anchor: '98%'
+               }, {
+                    fieldLabel: 'Personal Page <br /><span style="font-weight:normal;font-size:90%;">(Such as your external blog or your FBK web page)</span>'
                     ,name: 'personal_page'
                     ,vtype:'url'
                     ,maxLength: 80
                     ,anchor: '98%'
                 }, {
-                    fieldLabel: 'Home address'
-                    ,name: 'home_address'
-                    ,maxLength: 180
-                    ,anchor: '98%'
-                }, {
-                    fieldLabel: 'Available for carpooling?'
+                    fieldLabel: 'Are you available for carpooling? <br /><span style="font-weight:normal;font-size:90%;">(If you don\'t know what carpooling means, maybe you would like to take a look <a href="http://en.wikipedia.org/wiki/Carpool" target="_blank" title="What does carpool stand for?">here</a>)</span>'
                     ,name: 'carpooling'
                     ,xtype: 'checkbox'
                     ,anchor: '98%'
                 }, {
-                    fieldLabel: 'About me <br /><span style="font-weight:normal;font-size:90%;">(Describe yourself, your interests and your work here at FBK)</span>'
-                    ,name: 'description'
-                    ,xtype: 'textarea'
-                    ,grow: true
+                    fieldLabel: 'Home address <br /><span style="font-weight:normal;font-size:90%;">(if you indicate that you are available for carpooling, please insert your home location.)</span>'
+                    ,name: 'home_address'
+                    ,maxLength: 180
                     ,anchor: '98%'
-               }
-            ]
+                }]
         });
 
         var config = {
