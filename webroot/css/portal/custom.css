@@ -200,7 +200,6 @@ div.buddyliststate {
     border-color: #FFFFFF #EDEDED #EDEDED;
 }
 
-
 #edit-photo-button{
     position:absolute;
     right:0px;
@@ -224,7 +223,7 @@ div.buddyliststate {
     padding:2px;
 }
 
-#user-photo-container{
+.user-photo-container{
     position: relative;
 }
 
@@ -397,6 +396,7 @@ div.thumb span {
 
 /* END Photo Chooser and Add Widgets Window */
 
+/* Edit div ( a blue box with text and images*/
 .edit_div {
     background: #DDE4FF none repeat scroll 0 0;
     border-color:#CCCCCC #CCCCCC #AAAAAA;
@@ -405,7 +405,15 @@ div.thumb span {
     display:block;
     padding:5px;
     -moz-border-radius:5px;
+    text-align:left;
+    margin: auto auto;
+    line-height:100%;
+    font-family: Verdana;
 }
+.edit_div img{
+    padding-right: 10px;
+}
+
 #user_profile .x-panel-body{
     border-width:0;
 }

@@ -42,24 +42,24 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
             items: [{
                 border: false,
                 html: 
-                    '<div id="user-photo-container" onmouseout="if (mouseLeaves(this, event)) {$(\'#edit-photo-button\').fadeOut(\'fast\');}" onmouseover="if (Ext.getCmp(\'west-panel\').showTools){$(\'#edit-photo-button\').fadeIn(\'fast\')}">' +
+                    '<div class="user-photo-container" onmouseout="if (mouseLeaves(this, event)) {$(\'#edit-photo-button\').fadeOut(\'fast\');}" onmouseover="if (Ext.getCmp(\'west-panel\').showTools){$(\'#edit-photo-button\').fadeIn(\'fast\')}">' +
                     '<img id="user_photo" />' +
                     '<div id="edit-photo-button" onclick="openImageChooser();" style="background: #DDE4FF;">' +
                         '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Change photo</span>' +
                         '<img src="js/portal/shared/icons/fam/image_edit.png" />' +
                     '</div>' +
                 '</div>' +
-                '<div id="edit-div" class="edit_div" style="text-align:left;margin:15px;line-height:100%;font-size:100%; font-family: Verdana;">' +
+                '<div id="edit-div" class="edit_div" style="margin:15px; !important">' +
                     '<div onclick="expandSettingsPanel();">' +
-                        '<img src="js/portal/shared/icons/fam/user_edit.png" style="padding-right: 10px;" />' +
+                        '<img src="js/portal/shared/icons/fam/user_edit.png" />' +
                         '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your profile</span>' +
                     '</div>' +
                     '<div onclick="openImageChooser();">' +
-                        '<img src="js/portal/shared/icons/fam/image_edit.png" style="padding-right: 10px;" />' +
+                        '<img src="js/portal/shared/icons/fam/image_edit.png" />' +
                         '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your photos</span>' +
                     '</div>' +
                     '<div onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">' +
-                       '<img src="js/portal/shared/icons/fam/map_edit.png" style="padding-right: 10px;" />' +
+                       '<img src="js/portal/shared/icons/fam/map_edit.png" />' +
                        '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit workplace</span>' + 
                     '</div>' +
                 '</div>'  
