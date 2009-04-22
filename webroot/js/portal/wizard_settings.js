@@ -30,9 +30,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
     }
     ,monitorValid: true
     ,labelAlign: 'top'
-    ,waitMsgTarget: true
-    ,url:'users/getusersettings'
-
+    ,waitMsgTarget: false
     ,onRender:function(){
         Ext.ux.fbk.sonet.WizardSettings.superclass.onRender.apply(this, arguments);
 
@@ -44,7 +42,6 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
             ,scope: this
         });
     }
-
     ,initComponent: function() {
 
         //this.userParams = {};
@@ -73,6 +70,9 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
                                 ,'</span>'
                             ,'</div>'
                         ,'</div>'
+                        ,'<div style="font-size:120%; font-weight: bold; display: block; padding: 30px 0;">'
+                            ,'Please edit your information below, in order to make your profile more complete and to let other people know more about you! Fields marked with (*) are mandatory'
+                        ,'</div>'
                     ,'</div>'
                 ,'</tpl>'
             )
@@ -84,7 +84,6 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
         });
                 
         this.form = new Ext.form.FieldSet({
-            //title: ' Personal',
             collapsible:false
             ,autoHeight: true
             ,autoWidth: true
@@ -96,32 +95,28 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
                 labelSeparator: ''
             }
             ,items: [{
-                    text: 'Please edit your information below, in order to make your profile more complete and to let other people know more about you! Fields marked with (*) are mandatory'
-                    ,xtype: 'label'
-                    ,style: 'font-size: 120%; display: block; padding: 30px 0;'
-                }, {
-                    fieldLabel: 'Describe yourself with few keywords (*) <br /><span style="font-weight:normal;font-size:90%;">(Such as "Interaction design, nanotechnology, history of Germanic people, religion, media, javascript")</span>'
-                    ,name: 'description'
-                    ,xtype: 'textarea'
-                    ,grow: true
-                    ,anchor: '98%'
-               }, {
-                    fieldLabel: 'Personal Page <br /><span style="font-weight:normal;font-size:90%;">(Such as your external blog or your FBK web page)</span>'
-                    ,name: 'personal_page'
-                    ,vtype:'url'
-                    ,maxLength: 80
-                    ,anchor: '98%'
-                }, {
-                    fieldLabel: 'Are you available for carpooling? <br /><span style="font-weight:normal;font-size:90%;">(If you don\'t know what carpooling means, maybe you would like to take a look <a href="http://en.wikipedia.org/wiki/Carpool" target="_blank" title="What does carpool stand for?">here</a>)</span>'
-                    ,name: 'carpooling'
-                    ,xtype: 'checkbox'
-                    ,anchor: '98%'
-                }, {
-                    fieldLabel: 'Home address <br /><span style="font-weight:normal;font-size:90%;">(if you indicate that you are available for carpooling, please insert your home location.)</span>'
-                    ,name: 'home_address'
-                    ,maxLength: 180
-                    ,anchor: '98%'
-                }]
+                fieldLabel: 'Describe yourself with few keywords (*) <br /><span style="font-weight:normal;font-size:90%;">(Such as "Interaction design, nanotechnology, history of Germanic people, religion, media, javascript")</span>'
+                ,name: 'description'
+                ,xtype: 'textarea'
+                ,grow: true
+                ,anchor: '98%'
+            }, {
+                fieldLabel: 'Personal Page <br /><span style="font-weight:normal;font-size:90%;">(Such as your external blog or your FBK web page)</span>'
+                ,name: 'personal_page'
+                ,vtype:'url'
+                ,maxLength: 80
+                ,anchor: '98%'
+            }, {
+                fieldLabel: 'Are you available for carpooling? <br /><span style="font-weight:normal;font-size:90%;">(If you don\'t know what carpooling means, maybe you would like to take a look <a href="http://en.wikipedia.org/wiki/Carpool" target="_blank" title="What does carpool stand for?">here</a>)</span>'
+                ,name: 'carpooling'
+                ,xtype: 'checkbox'
+                ,anchor: '98%'
+            }, {
+                fieldLabel: 'Home address <br /><span style="font-weight:normal;font-size:90%;">(if you indicate that you are available for carpooling, please insert your home location.)</span>'
+                ,name: 'home_address'
+                ,maxLength: 180
+                ,anchor: '98%'
+            }]
         });
 
         var config = {
@@ -135,6 +130,16 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
 
         Ext.ux.fbk.sonet.WizardSettings.superclass.initComponent.apply(this, arguments);
     }
+    ,submit: function(){
+
+        // submit form values
+        this.form.submit({
+            url:'users/setusersettings'
+            //,success:this.onSuccess
+            ,failure:this.onFailure
+            //,waitMsg:'Saving data...'
+        });
+    }
     ,onFailure:function(form, action){
         Ext.Msg.show({
             title: 'Error!',
@@ -145,7 +150,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
         });
     }
     ,setUserParams:function(form, action){
-
+        // userParams are used by the DataView
         this.userParams = [
             action.result.data.map(function(i){
                 if(i.id)    
