@@ -37,15 +37,15 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
     ,onRender:function(){
         Ext.ux.fbk.sonet.Settings.superclass.onRender.apply(this, arguments);
 
-        this.form.load({
-            url: 'users/getusersettings/',
-            text: "Loading...",
-            timeout: 60,
-            scope: this
-        });
+        this.form.load();
     }
     ,initComponent: function() {
         var config = {
+            trackResetOnLoad: true,
+            url: 'users/getusersettings/',
+            text: "Loading...",
+            timeout: 60,
+            scope: this,
             items: [
                 {
                     html: '<div id="edit-div" class="edit_div">' +
@@ -139,7 +139,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                     },{
                         text: 'Cancel',
                         handler: function(){
-                            this.form.load();
+                            this.form.reset();
                             expandUserPanel();
                         }
                         ,scope: this
@@ -154,6 +154,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
     }
     ,onSuccess:function(form, action){
         Ext.example.msg('Settings', 'Your data has been saved');
+        form.load();
         showUserInfo();
     },
     onFailure:function(form, action){
