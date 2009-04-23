@@ -367,6 +367,8 @@ class UsersController extends AppController {
     function setusersettings() {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
+            
+        $response['success'] = false;
         
         //Follow the leader, follow vad teaching!
         //TODO: there's another Sanitize defined in beforeFilter!! vad didn't teach enough
@@ -426,12 +428,13 @@ class UsersController extends AppController {
         
         if($modified) {
             $this->User->save($data);
+
+            $response['success'] = true;
+            $response['error']['text'] = 'Data saved';
+
+            $this->addtotimeline(array("id" => $id));
+
         }
-
-        $response['success'] = true;
-        $response['error']['text'] = 'Data saved';
-
-        $this->addtotimeline(array("id" => $id));
 
         $this->set('json', $response);
     }
