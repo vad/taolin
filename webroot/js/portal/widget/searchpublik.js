@@ -45,6 +45,10 @@ SearchPublik = Ext.extend(Ext.Panel, {
      */
     //,logparams: '{"source":"search user widget", "widget_id": "' + this.portlet_id + '"}'
     ,logparams: null
+    /**
+     * @cfg {String} Path to banner image (height: 62px!). Default to null
+     */
+    ,banner: null
     /** 
      * @private
      */
@@ -106,7 +110,7 @@ SearchPublik = Ext.extend(Ext.Panel, {
 
             ,items: [
                 {
-                    html:'<div style="background: #DBDFDE url(img/fbk/publik.gif) no-repeat;height:62px;" />'
+                    html:'<div style="background: #DBDFDE url('+this.banner+') no-repeat;height:62px;" />'
                 },  
                 this.view
             ]
