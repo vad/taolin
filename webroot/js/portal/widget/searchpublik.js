@@ -110,7 +110,7 @@ SearchPublik = Ext.extend(Ext.Panel, {
 
             ,items: [
                 {
-                    html:'<div style="background: #DBDFDE url('+this.banner+') no-repeat;height:62px;" />'
+                    html:'<div style="background: #DBDFDE url('+this.banner+') no-repeat;height:62px;'+(!this.banner?'display:none;':'') + '" />'
                 },  
                 this.view
             ]
