@@ -41,7 +41,7 @@ Events = function(conf, panel_conf){
     var store = new Ext.data.JsonStore({
         url: 'calendars/get'
         ,root: 'events'
-        ,fields: ['end_time', 'start_time', 'summary', 'description', 'location', 'url']
+        ,fields: ['end_time', 'start_time', 'summary', 'description', 'location', 'uid']
         ,parent: this
         ,listeners: {
             load: function(store, records, options) {
@@ -64,7 +64,7 @@ Events = function(conf, panel_conf){
             ,'<tpl if="(!((description) && (description !== \'\')))">'
 		    ,'<div><p>No description available</p></div>'
             ,'</tpl>'
-            ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{url}" target="_blank">more...</a></span>'
+            ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{uid}" target="_blank">more...</a></span>'
             ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="javascript:Ext.getCmp(\''+eventId+'\').sendTo()">Email to</a> | </span>'
         )
         ,listeners: {
