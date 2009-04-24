@@ -368,8 +368,6 @@ class UsersController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
             
-        $response['success'] = false;
-        
         if (empty($this->params))
             die('Are you joking me?');
         
@@ -429,13 +427,14 @@ class UsersController extends AppController {
         if($modified) {
             $this->User->save($data);
 
-            $response['success'] = true;
             $response['text'] = 'Data saved';
 
             $this->addtotimeline(array('id' => $id));
 
         }
 
+        $response['success'] = true;
+        
         $this->set('json', $response);
     }
 
