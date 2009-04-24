@@ -20,12 +20,11 @@
 Ext.namespace( 'Ext.ux.fbk.sonet' );
 
 Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
-    cls: 'settings'
+    cls: 'form_settings'
     ,border: false
     ,autoScroll: true
     ,labelAlign: 'top'
     // To prevent sprited images to be shown in the background
-    ,bodyStyle:'background: white;'
     ,defaults: {
         // applied to each contained item
         autoWidth: true

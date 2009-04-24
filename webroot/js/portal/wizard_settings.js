@@ -20,7 +20,7 @@
 Ext.namespace('Ext.ux.fbk.sonet');
 
 Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
-    cls: 'settings'
+    cls: 'form_settings'
     ,border: false
     ,autoScroll: true
     ,defaults: {
