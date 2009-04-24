@@ -77,8 +77,8 @@ class ThumberComponent extends Object{
             case 1: $im = imagecreatefromgif($img); break;
             case 2: $im = imagecreatefromjpeg($img);  break;
             case 3: $im = imagecreatefrompng($img); break;
-            case 6: $im = imagecreatefrombmp($img); break;
-            default:  $this->log('Unknown image type E_USER_WARNING');  return false; break;
+            case 6: $im = $this->imagecreatefrombmp($img); break;
+            default:  $this->log('Unknown image type E_USER_WARNING - img: '.$img);  return false; break;
         }
 
         if(!is_resource($im)){
