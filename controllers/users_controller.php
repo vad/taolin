@@ -455,23 +455,7 @@ class UsersController extends AppController {
         
         $u_id = $this->Session->read('id');
 
-        $user = $this->User->find('first', array(
-                    'conditions' => array(
-                        'User.id' => $u_id
-                    ), 
-                    'fields' => array(
-                        'User.login',
-                        'COALESCE(mod_email, email) AS "User__email"'
-                    )
-                )
-            );
-
-        if ($user['User']['email']){
-            $sender = $user['User']['email'];
-        } else {
-            $addtomail = Configure::read('App.addtomail');
-            $sender = $user['User']['login'].$addtomail;
-        }
+        $sender = $this->User->getemail($u_id);
 
         $this->Email->from = $sender;
         $this->Email->to = $_POST['to'];
