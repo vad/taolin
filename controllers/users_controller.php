@@ -368,23 +368,19 @@ class UsersController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
             
-        $response['success'] = false;
-        
-        //Follow the leader, follow vad teaching!
-        //TODO: there's another Sanitize defined in beforeFilter!! vad didn't teach enough
-        //$mrClean = new Sanitize();
-        
         if (empty($this->params))
             die('Are you joking me?');
         
         $id = $this->Session->read('id');
-        
-        $user_com = $this->User->find("id=$id", array(
-                'User.mod_date_of_birth','User.mod_email','User.mod_personal_page',
-                'User.mod_description','User.mod_working_place','User.mod_phone',
-                'User.mod_phone2', 'mod_home_address', 'mod_carpooling'
-            ), null, -1
+
+        $condition = array('id' => $id);
+        $fields = array(
+            'mod_date_of_birth','mod_email','mod_personal_page',
+            'mod_description','mod_working_place','mod_phone',
+            'mod_phone2', 'mod_home_address', 'mod_carpooling'
         );
+        
+        $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
         
         $modified = false;
         $data['id'] = $id;
@@ -392,35 +388,37 @@ class UsersController extends AppController {
         $form = $this->params['form'];
         $user = $user_com['User'];
 
-        if(strcasecmp($form['date_of_birth'],$user['mod_date_of_birth'])!=0) {
+        if(array_key_exists('date_of_birth', $form) && (strcasecmp($form['date_of_birth'],$user['mod_date_of_birth'])!=0)) {
         	$data['mod_date_of_birth'] = str_replace('/','-',$form['date_of_birth']);
         	$modified = true;
         }
-		if(strcasecmp($form['email'],$user['mod_email'])!=0) {
+		if(array_key_exists('email', $form) && (strcasecmp($form['email'],$user['mod_email']))) {
 			$data['mod_email'] = $form['email'];
         	$modified = true;
 		}
-        if(strcasecmp($form['description'],$user['mod_description'])!=0) {
+        if(array_key_exists('description', $form) && (strcasecmp($form['description'],$user['mod_description']))) {
         	$data['mod_description'] =  $form['description'];
         	$modified = true;
         }
-        if(strcasecmp($form['personal_page'],$user['mod_personal_page'])!=0) {
+        if(array_key_exists('personal_page', $form) && (strcasecmp($form['personal_page'],$user['mod_personal_page']))) {
         	$data['mod_personal_page'] =  $form['personal_page'];
         	$modified = true;
         }
-        if(strcasecmp($form['phone'],$user['mod_phone'])!=0) {
+        if(array_key_exists('phone', $form) && (strcasecmp($form['phone'],$user['mod_phone']))) {
         	$data['mod_phone'] =  $form['phone'];
         	$modified = true;
         }
-        if(strcasecmp($form['phone2'],$user['mod_phone2'])!=0) {
+        if(array_key_exists('phone2', $form) && (strcasecmp($form['phone2'],$user['mod_phone2']))) {
         	$data['mod_phone2'] =  $form['phone2'];            
         	$modified = true;
         }
-        if(strcasecmp($form['home_address'], $user['mod_home_address'])) {
+        if(array_key_exists('home_address', $form) && (strcasecmp($form['home_address'], $user['mod_home_address']))) {
         	$data['mod_home_address'] =  $form['home_address'];            
         	$modified = true;
         }
+
         $carpooler = array_key_exists('carpooling', $form);
+
         if( $carpooler != $user['mod_carpooling']) {
         	$data['mod_carpooling'] =  $carpooler;
         	$modified = true;
@@ -429,13 +427,14 @@ class UsersController extends AppController {
         if($modified) {
             $this->User->save($data);
 
-            $response['success'] = true;
-            $response['error']['text'] = 'Data saved';
+            $response['text'] = 'Data saved';
 
-            $this->addtotimeline(array("id" => $id));
+            $this->addtotimeline(array('id' => $id));
 
         }
 
+        $response['success'] = true;
+        
         $this->set('json', $response);
     }
 

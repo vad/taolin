@@ -71,7 +71,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
                             ,'</div>'
                         ,'</div>'
                         ,'<div style="font-size:120%; font-weight: bold; display: block; padding: 30px 0;">'
-                            ,'Please edit your information below, in order to make your profile more complete and to let other people know more about you! Fields marked with (*) are mandatory'
+                            ,'Please edit your information below, in order to make your profile more complete and to let other people know more about you! The more information you provide, the easier it will be for your colleagues find useful information!<br />Fields marked with (*) are mandatory'
                         ,'</div>'
                     ,'</div>'
                 ,'</tpl>'
@@ -83,7 +83,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
             })
         });
                 
-        this.form = new Ext.form.FieldSet({
+        this.wiz_form = new Ext.form.FieldSet({
             collapsible:false
             ,autoHeight: true
             ,autoWidth: true
@@ -97,6 +97,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
             ,items: [{
                 fieldLabel: 'Describe yourself with few keywords (*) <br /><span style="font-weight:normal;font-size:90%;">(Such as "Interaction design, nanotechnology, history of Germanic people, religion, media, javascript")</span>'
                 ,name: 'description'
+                ,allowBlank: false
                 ,xtype: 'textarea'
                 ,grow: true
                 ,anchor: '98%'
@@ -120,26 +121,21 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
         });
 
         var config = {
-            items: [
+            url:'users/setusersettings'
+            ,method: 'POST'
+            ,items: [
                 this.view
-                ,this.form
-            ]
+                ,this.wiz_form
+           ]
         };
         
     Ext.apply(this, Ext.apply(this.initialConfig, config));
 
         Ext.ux.fbk.sonet.WizardSettings.superclass.initComponent.apply(this, arguments);
     }
-    ,submit: function(){
-
-        // submit form values
-        this.form.submit({
-            url:'users/setusersettings'
-            //,success:this.onSuccess
-            ,failure:this.onFailure
-            //,waitMsg:'Saving data...'
-        });
-    }
+    /*,onSuccess:function(form, action){
+        console.log('Success');
+    }*/
     ,onFailure:function(form, action){
         Ext.Msg.show({
             title: 'Error!',

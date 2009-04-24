@@ -126,13 +126,17 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                 },{
                     buttons: [{
                         text: 'Save',
-                        handler: function(){ 
-                            this.form.submit({
-                                url:'users/setusersettings',
-                                success:this.onSuccess,
-                                failure:this.onFailure,
-                                waitMsg:'Saving data...'
-                            });
+                        handler: function(){
+                            if(this.form.isDirty()){
+                                this.form.submit({
+                                    url:'users/setusersettings',
+                                    success:this.onSuccess,
+                                    failure:this.onFailure,
+                                    waitMsg:'Saving data...'
+                                });
+                            }
+                            else
+                                expandUserPanel();
                         }
                         ,formBind:true
                         ,scope: this

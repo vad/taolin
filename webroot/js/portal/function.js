@@ -868,9 +868,8 @@ function showFirstLoginWizard(){
             ,endBtnText: 'Finish'
             ,listeners: {
                 'beforenav': function(dir, index){
-                    var wiz = Ext.getCmp('first_login_wizard');
                     
-                    if ((dir == 1) && (!('next' in wiz) || (wiz.next == 0))){ // moving from card 0 to 1
+                    if ((dir == 1) && (!('next' in this) || (this.next == 0))){ // moving from card 0 to 1
                         var cb = Ext.getCmp('privacy_policy_agreement_checkbox');
                         
                         if (!cb.checked) {
@@ -878,17 +877,37 @@ function showFirstLoginWizard(){
                             return false;
                         }
                     }   
+                    else if ((dir == 1) && (this.next == 1)){ // moving from card 1 to 2
+
+                        var wizard_form = this.getCard(1).items.first().getForm();
+                        
+                        if(!wizard_form.isValid()){ // if validation of form fields fails
+                            alert('Before going on with the wizard, please complete this page in its mandatory fields and checking for any inconstency');
+                            return false;
+                        }
+
+                    }
+
+                }
+                ,'beforefinish': function(){
+               
+                    var wizard_form = this.getCard(1).items.first().getForm();
+
+                    if(wizard_form){ 
+                       
+                        wizard_form.submit({ // submitting form 
+                            success: function(){
+                                showUserInfo(null, true); // reload user info
+                                Ext.getCmp('settings').items.first().form.load(); // reload user settings
+                                this.ownerCt.close(); // close wizard window
+                            }
+                            ,scope: this
+                        });
+
+                    }
                 }
             }
             ,onEsc: Ext.emptyFn
-            ,onFinish: function(){
-                var cb = Ext.getCmp('privacy_policy_agreement_checkbox');
-                //TODO: if cb.checked==true then alert backend of user choice!
-
-                this.fireEvent('finish');   
-                // When the wizard ends, close the window that contains it!
-                this.ownerCt.close();
-            }
             ,animate: false
             ,headerConfig: {
                 titleText: 'First login wizard'
