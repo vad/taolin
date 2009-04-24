@@ -138,6 +138,8 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/widget/metasearch.js');
     echo $javascript->link('portal/widget/webcamcanteen.js');
 
+    echo $javascript->link('/fbk/js/gestint.js');
+
     echo $javascript->link('portal/jsjac.js');
     echo $javascript->link('portal/jabber.js');
     echo $javascript->link('portal/jabberui.js');
