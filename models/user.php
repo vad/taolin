@@ -49,6 +49,28 @@ class User extends AppModel
 
         return ($ret);
     }
+
+
+    function getemail($u_id){
+        $user = $this->find('first', array(
+            'conditions' => array(
+                'User.id' => $u_id
+            ), 
+            'fields' => array(
+                'User.login',
+                'COALESCE(mod_email, email) AS "User__email"'
+            )
+        ));
+
+        if ($user['User']['email']){
+            $sender = $user['User']['email'];
+        } else {
+            $addtomail = Configure::read('App.addtomail');
+            $sender = $user['User']['login'].$addtomail;
+        }
+        
+        return $sender;
+    }
 }
 
 ?>
