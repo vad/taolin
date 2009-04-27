@@ -48,6 +48,7 @@ class UsersWidgetsController extends AppController {
         $response['config']['img_path'] = Configure::read('App.imagefolder.web_path');
         $response['config']['jabber_server'] = Configure::read('App.jabber.server');
         $response['config']['jabber_domain'] = Configure::read('App.jabber.domain');
+        $response['config']['logo'] = Configure::read('App.logo.url');
 
         $response['success'] = true;
         

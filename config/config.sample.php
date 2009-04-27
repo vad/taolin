@@ -29,10 +29,12 @@ $config = array(
     'App.imagefolder.error_fs_path' => 'ANOTHER_PATH/images_upload_error/', //folder must be img/user_images, update only the absolute path, for FBK is /www/desktop/html/images_desktop/
     'App.imagefolder.web_path' => 'user_images/',
     'App.imagefolder.webcam_fs_path' => 'ONE_PATH/webcam/',
-    'App.publications' => '1', //1 for TRUE, 0 for FALSE; used only when you have a server to show publications
+    'App.publications' => '0', //1 for TRUE, 0 for FALSE; used only when you have a server to show publications
     'App.auth' => 'Dummy', //Choose between Dummy or Ldap
     'App.jsdebug' => '1', //used in views/portal/index.ctp
     'App.jabber.server' => 'jabber.example.com',
-    'App.jabber.domain' => 'example.com'
+    'App.jabber.domain' => 'example.com',
+    'App.logo.url' => 'img/logo.png',
+    //'App.favicon' => 'local/img/favicon.ico' // local path to favicon (optional)
 );
 ?>

@@ -25,8 +25,12 @@
 <?php echo Configure::read('App.name'); ?> 
 </title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="shortcut icon" href="<?php echo $this->base ?>/img/favicon.ico" type="image/x-icon" />
+<?php
+    $favicon = Configure::read('App.favicon');
+    if ($favicon)
+        echo "<link rel='shortcut icon' href='". $this->base .'/'. Configure::read('App.favicon') ."' type='image/x-icon' />";
 
+?>
 <link rel='StyleSheet' href='<?php echo $this->base ?>/webroot/ext/resources/css/ext-all.css' />
 <link rel='StyleSheet' id="theme" href='<?php echo $this->base ?>/ext-themes/css/xtheme-slate.css' />
 
