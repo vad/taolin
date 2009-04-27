@@ -51,34 +51,53 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
             ,multiSelect: false
             ,emptyText: 'Ouch... Something wrong happened here! Please report this error to '+window.config.contactus
             ,loadingText: 'Loading your personal information'
-            ,itemSelector: 'user-params-wrapper'
+            ,itemSelector: 'wizard-user-profile'
             ,tpl: new Ext.XTemplate(
                 '<tpl for=".">'
-                    ,'<div class="user-params-wrapper" width="auto">'
-                        ,'<div style="text-align:center">'
-                            ,'<span style="width: 50%;">'
+                    ,'<div class="wizard-user-profile" width="auto">'
+                        ,'<div style="text-align:center; height: 250px;">'
+                            ,'<div style="float: left; text-align: right; width: 50%;">'
                                 ,'<tpl if="photo != null">'
                                     ,'<img class="ante" src="'+window.config.img_path+'t240x240/{photo}" style="vertical-align:top;" />'
                                 ,'</tpl>'
                                 ,'<tpl if="photo == null">'
                                     ,'<img class="ante" src="img/nophoto.png" style="vertical-align:top;" height="240;" />'
                                 ,'</tpl>'
-                            ,'</span>'
-                            ,'<div style="display: inline">'
-                                ,'<span style="padding:10px; font-size: 120%; font-weight: bold;">'
+                            ,'</div>'
+                            ,'<div style="float: right; text-align: left; width: 50%;">'
+                                ,'<span style="padding-left:20px; font-size: 170%; font-weight: bold;">'
                                     ,'{name} {surname}'
                                 ,'</span>'
+                                ,'<dl style="padding-left: 20px; padding-top: 10px;">'
+                                    ,'<dt>Login</dt>'
+                                    ,'<dd>{login}</dd>'
+                                    ,'<tpl if="date_of_birth != null && date_of_birth != \'\'">'
+                                        ,'<dt>Date of birth</dt>'
+                                        ,'<dd>{[Date.parseDate(values.date_of_birth, "Y-m-d").format("d/m/Y")]}</dd>'
+                                    ,'</tpl>'
+                                    ,'<dt>Email</dt>'
+                                    ,'<tpl if="(email != null && email != \'\')">'
+                                        ,'<dd>{email}</dd>'
+                                    ,'</tpl>'
+                                    ,'<tpl if="email == null || email == \'\'">'
+                                        ,'<dd>{login}{[window.config.addtomail]}</dd>'
+                                    ,'</tpl>'
+                                    ,'<tpl if="(groups_description != null && groups_description != \'\')">'
+                                        ,'<dt>{[window.config.defaultgroupname]}</dt>'
+                                        ,'<dd>{groups_description}</dd>'
+                                    ,'</tpl>'
+                                ,'</dl>'
                             ,'</div>'
                         ,'</div>'
-                        ,'<div style="font-size:120%; font-weight: bold; display: block; padding: 30px 0;">'
-                            ,'Please edit your information below, in order to make your profile more complete and to let other people know more about you! The more information you provide, the easier it will be for your colleagues find useful information!<br />Fields marked with (*) are mandatory'
+                        ,'<div style="font-size:120%; font-weight: bold; padding: 30px 0;">'
+                            ,'Please edit your information below, in order to make your profile more complete and to let other people know more about you! The more information you provide, the easier it will be for your colleagues find useful information!<br /><br />Please note that fields marked with (*) are mandatory'
                         ,'</div>'
                     ,'</div>'
                 ,'</tpl>'
             )
             ,store: new Ext.data.SimpleStore({
                 fields: [
-                    {name: 'name'}, {name: 'surname'}, {name: 'photo'}, null, {name: 'groups_description'}
+                    {name: 'name'}, {name: 'surname'}, {name: 'photo'}, {name: 'login'}, {name: 'groups_description'}, null, null, {name: 'email'}, {name: 'date_of_birth'}
                 ]
             })
         });
@@ -153,7 +172,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
                     return i.value;
             })
         ];
-        
+
         this.view.store.loadData(this.userParams);
     }
 });
