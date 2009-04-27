@@ -44,6 +44,7 @@ class UsersWidgetsController extends AppController {
         $response['config']['addtomail'] = Configure::read('App.addtomail');
         $response['config']['appname'] = Configure::read('App.name');
         $response['config']['contactus'] = Configure::read('App.contactus');
+        $response['config']['defaultgroupname'] = Configure::read('App.defaultgroupname');
         $response['config']['img_path'] = Configure::read('App.imagefolder.web_path');
         $response['config']['jabber_server'] = Configure::read('App.jabber.server');
         $response['config']['jabber_domain'] = Configure::read('App.jabber.domain');
