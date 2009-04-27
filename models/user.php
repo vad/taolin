@@ -44,8 +44,8 @@ class User extends AppModel
         }
             
         $s_all_fields = implode(', ', $all_fields);
-        $ret['users'] = $this->query("SELECT $s_all_fields FROM users WHERE deleted = 0 AND tsv @@ to_tsquery('english', '$s') LIMIT $limit OFFSET $start");
-        $ret['count'] = $this->query("SELECT COUNT(*) FROM users WHERE deleted = 0 AND tsv @@ to_tsquery('english', '$s')");
+        $ret['users'] = $this->query("SELECT $s_all_fields FROM users WHERE deleted = 0 AND tsv @@ plainto_tsquery('english', '$s') LIMIT $limit OFFSET $start");
+        $ret['count'] = $this->query("SELECT COUNT(*) FROM users WHERE deleted = 0 AND tsv @@ plainto_tsquery('english', '$s')");
 
         return ($ret);
     }
