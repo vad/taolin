@@ -550,3 +550,12 @@ color:black;
     background: transparent;
 }
 /* end portlet conf */
+
+.x-form-text.x-form-focus, .x-form-textarea.x-form-focus {
+    background: #FFFFCC;
+    border: 1px solid #FFCC00;
+}
+
+.chat-window .x-form-textarea.x-form-focus {
+    background: #FFFFFF url(../../ext/resources/images/default/form/text-bg.gif) repeat-x;
+}
