@@ -26,7 +26,7 @@ class Photo extends AppModel
     function getdefault($u_id){
         return $this->find('first', array(
             'recursive' => -1,
-            'conditions' => array('user_id' => $u_id, 'default_photo' => 1)
+            'conditions' => array('user_id' => $u_id, 'default_photo' => 1, 'is_hidden' => 0)
         ));
     }
 }
