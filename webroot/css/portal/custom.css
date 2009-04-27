@@ -550,3 +550,14 @@ color:black;
     background: transparent;
 }
 /* end portlet conf */
+
+.wizard-user-profile dt{
+    color: #808080;
+    font-size: 110%;
+}
+
+.wizard-user-profile dd{
+    padding: 1px 0 10px !important;
+    font-size: 120%;
+    font-weight: bold;
+}
