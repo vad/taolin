@@ -890,21 +890,35 @@ function showFirstLoginWizard(){
 
                 }
                 ,'beforefinish': function(){
-               
+
                     var wizard_form = this.getCard(1).items.first().getForm();
 
                     if(wizard_form){ 
                        
                         wizard_form.submit({ // submitting form 
                             success: function(){
+                                reloadTimeline(); //reload timeline to show the latest event
                                 showUserInfo(null, true); // reload user info
                                 Ext.getCmp('settings').items.first().form.load(); // reload user settings
-                                this.ownerCt.close(); // close wizard window
                             }
                             ,scope: this
                         });
 
                     }
+                    
+                    // User ends the initial wizard. Save this in the db
+                    Ext.Ajax.request({
+                        url: 'users/saveportalconf',
+                        params: {wizard: '1'},
+                        success: function(){
+                            this.ownerCt.close(); // close wizard window
+                        }
+                        ,failure: function(){
+                            this.ownerCt.close(); // close wizard window
+                        }
+                        ,scope: this
+                    });
+               
                 }
             }
             ,onEsc: Ext.emptyFn
@@ -927,7 +941,7 @@ function showFirstLoginWizard(){
                     ,new Ext.form.FormPanel({
                         border: false,
                         bodyStyle:'padding: 20px 0 0 10px;'
-                        ,cls: 'settings'
+                        ,cls: 'form_settings'
                         ,items: [{
                             id: 'privacy_policy_agreement_checkbox',
                             xtype:'checkbox',
