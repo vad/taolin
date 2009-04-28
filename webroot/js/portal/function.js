@@ -848,6 +848,20 @@ function getBodySize(ratio){
 
 
 function showFirstLoginWizard(){
+    Ext.Ajax.request({
+        url: 'users/getprivacypolicyacceptance',
+        success: function(result, request){
+            var jsondata = Ext.util.JSON.decode(result.responseText);
+            if(!jsondata.user.privacy_policy_acceptance)
+                openFirstLoginWizard();
+        }
+        ,failure: function(){
+            openFirstLoginWizard();
+        }
+    });
+}
+
+function openFirstLoginWizard(){
     var win_size = getBodySize(4/5);
     
     var win = new Ext.Window({
@@ -908,8 +922,9 @@ function showFirstLoginWizard(){
                     
                     // User ends the initial wizard. Save this in the db
                     Ext.Ajax.request({
-                        url: 'users/saveportalconf',
-                        params: {wizard: '1'},
+                        url: 'users/setprivacypolicyacceptance',
+                        params: {accepted: '1'},
+                        method: 'POST',
                         success: function(){
                             this.ownerCt.close(); // close wizard window
                         }
