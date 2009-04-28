@@ -58,7 +58,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
                         ,'<div style="text-align:center; height: 250px;">'
                             ,'<div style="float: left; text-align: right; width: 50%;">'
                                 ,'<tpl if="photo != null">'
-                                    ,'<img class="ante" src="'+window.config.img_path+'t240x240/{photo}" style="vertical-align:top;" />'
+                                    ,'<img class="ante" src="{[window.config.img_path]}t240x240/{photo}" style="vertical-align:top;" />'
                                 ,'</tpl>'
                                 ,'<tpl if="photo == null">'
                                     ,'<img class="ante" src="img/nophoto.png" style="vertical-align:top;" height="240;" />'

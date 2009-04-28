@@ -349,14 +349,19 @@ CREATE TABLE "users" (
   UNIQUE ("login")
 );
 
+
 CREATE OR REPLACE FUNCTION users_tsv_trigger() RETURNS trigger AS $$
 begin
     new.tsv :=
         setweight(to_tsvector('english', coalesce(new.name, '')), 'A') ||
         setweight(to_tsvector('english', coalesce(new.surname, '')), 'A') ||
-        setweight(to_tsvector('english', coalesce(new.mod_description, '')), 'B') ||
-        setweight(to_tsvector('english', coalesce(new.mod_description, '')), 'B') ||
-        setweight(to_tsvector('english', coalesce(new.mod_email, new.email, '')), 'B');
+        setweight(to_tsvector('english', coalesce(new.login, '')), 'A') ||
+        setweight(to_tsvector('english', coalesce(new.mod_description, '')), 'D') ||
+        setweight(to_tsvector('english', coalesce(new.mod_phone, new.phone, '')), 'B') ||
+        setweight(to_tsvector('english', coalesce(new.mod_phone2, new.phone2, '')), 'B') ||
+        setweight(to_tsvector('english', coalesce(new.mod_email, new.email, '')), 'B') ||
+        setweight(to_tsvector('english', coalesce(new.mod_home_address, '')), 'C') ||
+        setweight(to_tsvector('english', coalesce(new.groups_description, '')), 'C');
     return new;
 end
 $$ LANGUAGE plpgsql;
