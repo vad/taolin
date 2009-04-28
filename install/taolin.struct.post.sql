@@ -3,6 +3,9 @@
 UPDATE templates SET name = 'users_widgets-changeconf' WHERE id=11;
 UPDATE templates SET name = 'users_widgets-addwidget' WHERE id=7;
 
+UPDATE widgets SET string_identifier = 'Ext.ux.fbk.sonet.GoogleWidget' WHERE id=30;
+UPDATE widgets SET string_identifier = 'Ext.ux.fbk.sonet.MetaSearch' WHERE id=51;
+
 
 
 -- STORED PROCEDURES --
