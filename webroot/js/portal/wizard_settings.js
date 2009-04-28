@@ -136,6 +136,21 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
                 ,name: 'home_address'
                 ,maxLength: 180
                 ,anchor: '98%'
+            }, {
+                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle" /> Linkedin profile',
+                name: 'linkedin',
+                vtype:'url',
+                anchor: '100%'
+            }, {
+                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle" /> Twitter profile',
+                name: 'twitter',
+                vtype:'url',
+                anchor: '100%'
+            }, {
+                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" style="vertical-align: middle" /> Facebook profile',
+                name: 'facebook',
+                vtype:'url',
+                anchor: '100%'
             }]
         });
 
