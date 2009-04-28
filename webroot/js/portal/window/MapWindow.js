@@ -85,6 +85,7 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
                     ,emptyText:'Select a building...'
                     ,selectOnFocus:true
                     ,editable:false
+                    ,width:300
                 }, {
                     border: false,
                     items: [{

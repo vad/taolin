@@ -27,8 +27,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php
     $favicon = Configure::read('App.favicon');
-    if ($favicon)
-        echo "<link rel='shortcut icon' href='". $this->base .'/'. Configure::read('App.favicon') ."' type='image/x-icon' />";
+    if ($favicon) {
+        echo "<link rel='shortcut icon' href='". $this->base .'/'. Configure::read('App.favicon') ."' type='image/gif' />";
+    }
 
 ?>
 <link rel='StyleSheet' href='<?php echo $this->base ?>/webroot/ext/resources/css/ext-all.css' />
