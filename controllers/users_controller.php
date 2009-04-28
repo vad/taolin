@@ -419,6 +419,21 @@ class UsersController extends AppController {
             $mod_fields['home address'] = $data['mod_home_address'];
         }
 
+        if(array_key_exists('facebook', $form) && (strcasecmp($form['facebook'], $user['facebook']))){
+            $data['facebook'] =  $form['facebook'];            
+            $mod_fields['facebook'] = $data['facebook'];
+        }
+
+        if(array_key_exists('linkedin', $form) && (strcasecmp($form['linkedin'], $user['linkedin']))){
+            $data['linkedin'] =  $form['linkedin'];            
+            $mod_fields['linkedin'] = $data['linkedin'];
+        }
+
+        if(array_key_exists('twitter', $form) && (strcasecmp($form['twitter'], $user['twitter']))){
+            $data['twitter'] =  $form['twitter'];            
+            $mod_fields['twitter'] = $data['twitter'];
+        }
+
         $carpooler = array_key_exists('carpooling', $form);
         if( $carpooler != $user['mod_carpooling']){
             $data['mod_carpooling'] =  $carpooler;
@@ -434,13 +449,13 @@ class UsersController extends AppController {
                 $m_fields .= ' '.$key.',';
             }
 
-            $m_fields = substr($m_fields, 0, -1);
-
             $this->User->save($data);
-
             $response['text'] = 'Data saved';
 
-            $this->addtotimeline(array('id' => $id));
+            $m_fields = substr($m_fields, 0, -1);
+            $m_fields = substr_replace($m_fields, ' and', strrpos($m_fields, ','), 1);
+
+            $this->addtotimeline(array('id' => $id, 'modfields' => $m_fields));
 
         }
 
