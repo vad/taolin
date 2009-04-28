@@ -196,16 +196,54 @@ westPanel = new Ext.Panel({
                         '<br /><br /><b>{defaultgroupname}</b>',
                         '<br />',
                         '<span style="font-family: Arial;">',
-                            '<ul style="padding: 0 0 0 20px">', 
+                            '<ul style="padding: 5px 0 0 20px">', 
                             '<tpl for="groups">',
-                                '<li style="list-style-type:square;">',
+                                '<li style="list-style-type:disc;">',
                                     '<a href="javascript:void(0)" onclick="groupDetails(\'{id}\', \'{name}\',\'{this.sourceGroupWindow}\')">{[values.description_en ? (values.description_en + \" - \") : (values.description_it ? (values.description_it + \" - \") : \"\")]}{name}</a>',
                                 '</li>',
                             '</tpl>',
                             '</ul>',
                         '</span>',
                     '</tpl>',
-                    '{[this.tagCloud(values.tags)]}',
+                    /*********************************************
+                     * START Tag cloud
+                     *********************************************/
+
+                    // Currently not working!
+                    //'{[this.tagCloud(values.tags)]}',
+
+                    /*********************************************
+                     * END Tag cloud
+                     *********************************************/
+                    
+                    /**********************************************
+                     * START Social Networking
+                     *********************************************/
+                    '<tpl if="(linkedin) || (twitter) || (facebook)">', // if one of the social network's field is present...
+                        '<br /><b>Social networking on...</b><br />',
+                        '<span style="font-family: Arial;">',
+                            '<ul style="padding: 5px 0 0 20px;">', 
+                                '<tpl if="linkedin">',
+                                    '<li style="list-style-type:disc;">',
+                                        '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle" /> <a href="{linkedin}" target="_blank">Linkedin profile</a>',
+                                    '</li>',
+                                '</tpl>',
+                                '<tpl if="twitter">',
+                                    '<li style="list-style-type:disc;">',
+                                        '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle" /> <a href="{twitter}" target="_blank">Twitter profile</a>',
+                                    '</li>',
+                                '</tpl>',
+                                '<tpl if="facebook">',
+                                    '<li style="list-style-type:disc;">',
+                                        '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" style="vertical-align: middle" /> <a href="{facebook}" target="_blank">Facebook profile</a>',
+                                    '</li>',
+                                '</tpl>',
+                            '</ul>',
+                        '</span>',
+                    '</tpl>',
+                    /**********************************************
+                     * END Social Networking
+                     *********************************************/
                     '<tpl if="mod_description">',
                         '<br /><b>About me:</b><span style="font-family: Arial;"> {this.mod_description}</span>',
                     '</tpl>',

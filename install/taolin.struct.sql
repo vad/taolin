@@ -338,9 +338,12 @@ CREATE TABLE "users" (
   "mod_phone2" varchar(15) default NULL,
   "mod_working_place" text,
   "mod_role" varchar(50) default NULL,
-  mod_home_address character varying(200) DEFAULT NULL::character varying, -- Home address
-  mod_carpooling boolean NOT NULL default false, -- Available for carpooling?
-  privacy_policy_acceptance boolean NOT NULL default false, -- 0 = privacy policy not yet accepted, show first login wizard. 1 = already accepted, everything ok!
+  "mod_home_address" character varying(200) DEFAULT NULL::character varying, -- Home address
+  "mod_carpooling" boolean NOT NULL default false, -- Available for carpooling?
+  "privacy_policy_acceptance" boolean NOT NULL default false, -- 0 = privacy policy not yet accepted, show first login wizard. 1 = already accepted, everything ok!
+  "facebook" text,
+  "linkedin" text,
+  "twitter" text,
   "active" SMALLINT NOT NULL,
   "deleted" SMALLINT NOT NULL default '0',
   "deleted_date" timestamp(0) NULL default NULL,
@@ -439,9 +442,12 @@ CREATE TABLE "users_history" (
   "mod_phone2" varchar(3) default NULL,
   "mod_working_place" text,
   "mod_role" varchar(50) default NULL,
-  mod_home_address character varying(200) DEFAULT NULL::character varying, -- Home address
-  mod_carpooling boolean NOT NULL default false, -- Available for carpooling?
-  privacy_policy_acceptance boolean NOT NULL default false, -- 0 = privacy policy not yet accepted, show first login wizard. 1 = already accepted, everything ok!
+  "mod_home_address" character varying(200) DEFAULT NULL::character varying, -- Home address
+  "mod_carpooling" boolean NOT NULL default false, -- Available for carpooling?
+  "privacy_policy_acceptance" boolean NOT NULL default false, -- 0 = privacy policy not yet accepted, show first login wizard. 1 = already accepted, everything ok!
+  "facebook" text,
+  "linkedin" text,
+  "twitter" text,
   "active" SMALLINT default NULL,
   "deleted" SMALLINT NOT NULL default '0',
   "deleted_date" timestamp(0) NULL default NULL,
