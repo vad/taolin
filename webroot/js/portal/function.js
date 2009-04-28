@@ -525,6 +525,19 @@ String.prototype.getBrightness = function () {
     return brightness;
 };
 
+/**
+ * define map() function if not already defined (like in IE7)
+ */
+if (!Array.map){
+    Array.prototype.map = function(fn, thisObj) {
+        var scope = thisObj || window;
+        var a = [];
+        for ( var i=0, j=this.length; i < j; ++i ) {
+            a.push(fn.call(scope, this[i], i, this));
+        }
+        return a;
+    };
+}
 
 function getIdFromJidNode(jidnode){
     Ext.Ajax.request({

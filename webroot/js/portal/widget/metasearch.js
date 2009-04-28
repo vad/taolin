@@ -150,7 +150,7 @@ Ext.ux.fbk.sonet.MetaSearch = Ext.extend(Ext.Panel, {
                     defaults: {
                         autoScroll:true
                     },
-                    items: tabs,
+                    items: tabs
                 })
             ],
             tbar: [
