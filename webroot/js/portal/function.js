@@ -525,6 +525,19 @@ String.prototype.getBrightness = function () {
     return brightness;
 };
 
+/**
+ * define map() function if not already defined (like in IE7)
+ */
+if (!Array.map){
+    Array.prototype.map = function(fn, thisObj) {
+        var scope = thisObj || window;
+        var a = [];
+        for ( var i=0, j=this.length; i < j; ++i ) {
+            a.push(fn.call(scope, this[i], i, this));
+        }
+        return a;
+    };
+}
 
 function getIdFromJidNode(jidnode){
     Ext.Ajax.request({
@@ -849,7 +862,21 @@ function getBodySize(ratio){
 
 function showFirstLoginWizard(){
     var win_size = getBodySize(9/10);
-    
+    Ext.Ajax.request({
+        url: 'users/getprivacypolicyacceptance',
+        success: function(result, request){
+            var jsondata = Ext.util.JSON.decode(result.responseText);
+            if(!jsondata.user.privacy_policy_acceptance)
+                openFirstLoginWizard();
+        }
+        ,failure: function(){
+            openFirstLoginWizard();
+        }
+    });
+}
+
+function openFirstLoginWizard(){
+    var win_size = getBodySize(9/10);
     var win = new Ext.Window({
         id: 'wizard',
         layout:'fit'
@@ -908,8 +935,9 @@ function showFirstLoginWizard(){
                     
                     // User ends the initial wizard. Save this in the db
                     Ext.Ajax.request({
-                        url: 'users/saveportalconf',
-                        params: {wizard: '1'},
+                        url: 'users/setprivacypolicyacceptance',
+                        params: {accepted: '1'},
+                        method: 'POST',
                         success: function(){
                             this.ownerCt.close(); // close wizard window
                         }

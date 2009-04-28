@@ -340,6 +340,7 @@ CREATE TABLE "users" (
   "mod_role" varchar(50) default NULL,
   mod_home_address character varying(200) DEFAULT NULL::character varying, -- Home address
   mod_carpooling boolean NOT NULL default false, -- Available for carpooling?
+  privacy_policy_acceptance boolean NOT NULL default false, -- 0 = privacy policy not yet accepted, show first login wizard. 1 = already accepted, everything ok!
   "active" SMALLINT NOT NULL,
   "deleted" SMALLINT NOT NULL default '0',
   "deleted_date" timestamp(0) NULL default NULL,
@@ -440,6 +441,7 @@ CREATE TABLE "users_history" (
   "mod_role" varchar(50) default NULL,
   mod_home_address character varying(200) DEFAULT NULL::character varying, -- Home address
   mod_carpooling boolean NOT NULL default false, -- Available for carpooling?
+  privacy_policy_acceptance boolean NOT NULL default false, -- 0 = privacy policy not yet accepted, show first login wizard. 1 = already accepted, everything ok!
   "active" SMALLINT default NULL,
   "deleted" SMALLINT NOT NULL default '0',
   "deleted_date" timestamp(0) NULL default NULL,

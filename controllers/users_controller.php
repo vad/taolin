@@ -36,17 +36,17 @@ class UsersController extends AppController {
     }
 
     function getidfromjidnode($jidnode){
-    	
-    	Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
-    	
-    	$login = $this->san->paranoid($jidnode);
-    	$this->User->recursive = 0;
-    	$fields = array('User.id');
+        
+        $login = $this->san->paranoid($jidnode);
+        $this->User->recursive = 0;
+        $fields = array('User.id');
         $user = $this->User->findByLogin($login, $fields);
         
         $this->set('id', $user[User][id]);
-    	
+        
     }
 
     function getinfo($id=-1) {
@@ -73,7 +73,7 @@ class UsersController extends AppController {
         );
 
         $conditions = array('User.id' => $id);
-		//$this->User->bindModel(array('hasMany' => array('ContentTag')));
+        //$this->User->bindModel(array('hasMany' => array('ContentTag')));
         $user = $this->User->find('first', array(
             'conditions' => $conditions, 
             'recursive' => 0,
@@ -82,7 +82,7 @@ class UsersController extends AppController {
         
         // move mod_* fields "created" with AS from [0] to [User]
         foreach($user[0] as $key => $mod_defined){
-        	$user['User'][$key] = $mod_defined;
+            $user['User'][$key] = $mod_defined;
         }
 
         $conditions['Photo.default_photo'] = 1;
@@ -166,25 +166,18 @@ class UsersController extends AppController {
             'groups_description'
         ));
         
-		foreach ($user['User'] as $key => $userid){
-			$users[] = array('id' => $key, 'value' => $userid);
-		}
-		foreach ($user[0] as $key => $mod_defined){
-			$users[] = array('id' => $key, 'value' => $mod_defined);
-		}
+        foreach ($user['User'] as $key => $userid){
+            $users[] = array('id' => $key, 'value' => $userid);
+        }
+        foreach ($user[0] as $key => $mod_defined){
+            $users[] = array('id' => $key, 'value' => $mod_defined);
+        }
 
         /*****************************************************
          * START RETRIEVING DEFAULT PHOTO 
          *****************************************************/
-        $conditions = array('User.id' => $id, 'Photo.default_photo' => 1, 'Photo.is_hidden' => 0);
 
-        $fields = array('Photo.filename', 'Photo.is_hidden');
-
-        $resphoto = $this->User->Photo->find('first', array(
-            'conditions' => $conditions, 
-            'recursive' => 0,
-            'fields' => $fields
-        ));
+        $resphoto = $this->User->Photo->getdefault($id);
         
         if (!empty($resphoto['Photo']))
             /* Since all the photos are saved in .jpg extension, replace the
@@ -200,7 +193,7 @@ class UsersController extends AppController {
         /*****************************************************
          * END DEFAULT PHOTO RETRIEVE 
          *****************************************************/
-		
+        
         $json['data'] = $users;
         $json['success'] = true;
         $this->set('json', $json);
@@ -258,7 +251,7 @@ class UsersController extends AppController {
         $users = $this->User->find('all',
             array(
                 'fields' => array('id', 'name', 'surname', 'login'),
-                'order' => 'RAND()',
+                'order' => 'RANDOM()',
                 'limit' => $n
             )
         );
@@ -282,7 +275,7 @@ class UsersController extends AppController {
         $users = $this->User->find('all',
             array('conditions' => $filter,
                 'fields' => array('id', 'name', 'surname', 'login'),
-                'order' => 'RAND()',
+                'order' => 'RANDOM()',
                 'limit' => $n
             )
         );
@@ -337,24 +330,27 @@ class UsersController extends AppController {
 
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
+            
+        $this->User->recursive = 0;
 
-	    $this->User->recursive = 0;
-        
         $n = $this->san->paranoid($n);
         if ($n > 30) $n = 30;
 
-	    if($photo == 'true') {
+        if($photo == 'true') {
+            $conditions = array('User.deleted' => 0);
             $queryObj = $this->User->Photo;
         } else {
+            $conditions = null;
             $queryObj = $this->User;
-	    }
+        }
 
         //TODO: and if a photo is not visible?
         $users = $queryObj->find('all',
-	        array(
-		        'fields' => array('User.id', 'User.name', 'User.surname', 'User.login'),
-		        'order' => 'User.created DESC',
-		        'limit' => $n
+            array(
+                'conditions' => $conditions,
+                'fields' => array('User.id', 'User.name', 'User.surname', 'User.login'),
+                'order' => 'User.created DESC',
+                'limit' => $n
             )
         );
 
@@ -382,49 +378,64 @@ class UsersController extends AppController {
         
         $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
         
-        $modified = false;
         $data['id'] = $id;
+        $mod_fields = array();
 
         $form = $this->params['form'];
         $user = $user_com['User'];
 
-        if(array_key_exists('date_of_birth', $form) && (strcasecmp($form['date_of_birth'],$user['mod_date_of_birth'])!=0)) {
-        	$data['mod_date_of_birth'] = str_replace('/','-',$form['date_of_birth']);
-        	$modified = true;
+        if(array_key_exists('date_of_birth', $form) && (strcasecmp($form['date_of_birth'],$user['mod_date_of_birth'])!=0)){
+            $data['mod_date_of_birth'] = str_replace('/','-',$form['date_of_birth']);
+            $mod_fields['date of birth'] = $data['mod_date_of_birth'];
         }
-		if(array_key_exists('email', $form) && (strcasecmp($form['email'],$user['mod_email']))) {
-			$data['mod_email'] = $form['email'];
-        	$modified = true;
-		}
-        if(array_key_exists('description', $form) && (strcasecmp($form['description'],$user['mod_description']))) {
-        	$data['mod_description'] =  $form['description'];
-        	$modified = true;
+
+        if(array_key_exists('email', $form) && (strcasecmp($form['email'],$user['mod_email']))){
+            $data['mod_email'] = $form['email'];
+            $mod_fields['email'] = $data['mod_email'];
         }
-        if(array_key_exists('personal_page', $form) && (strcasecmp($form['personal_page'],$user['mod_personal_page']))) {
-        	$data['mod_personal_page'] =  $form['personal_page'];
-        	$modified = true;
+
+        if(array_key_exists('description', $form) && (strcasecmp($form['description'],$user['mod_description']))){
+            $data['mod_description'] =  $form['description'];
+            $mod_fields['description'] = $data['mod_description'];
         }
-        if(array_key_exists('phone', $form) && (strcasecmp($form['phone'],$user['mod_phone']))) {
-        	$data['mod_phone'] =  $form['phone'];
-        	$modified = true;
+
+        if(array_key_exists('personal_page', $form) && (strcasecmp($form['personal_page'],$user['mod_personal_page']))){
+            $data['mod_personal_page'] =  $form['personal_page'];
+            $mod_fields['personal page'] = $data['mod_personal_page'];
         }
-        if(array_key_exists('phone2', $form) && (strcasecmp($form['phone2'],$user['mod_phone2']))) {
-        	$data['mod_phone2'] =  $form['phone2'];            
-        	$modified = true;
+
+        if(array_key_exists('phone', $form) && (strcasecmp($form['phone'],$user['mod_phone']))){
+            $data['mod_phone'] =  $form['phone'];
+            $mod_fields['internal phone'] = $data['mod_phone'];
         }
-        if(array_key_exists('home_address', $form) && (strcasecmp($form['home_address'], $user['mod_home_address']))) {
-        	$data['mod_home_address'] =  $form['home_address'];            
-        	$modified = true;
+
+        if(array_key_exists('phone2', $form) && (strcasecmp($form['phone2'],$user['mod_phone2']))){
+            $data['mod_phone2'] =  $form['phone2'];            
+            $mod_fields['secondary internal phone'] = $data['mod_phone2'];
+        }
+
+        if(array_key_exists('home_address', $form) && (strcasecmp($form['home_address'], $user['mod_home_address']))){
+            $data['mod_home_address'] =  $form['home_address'];            
+            $mod_fields['home address'] = $data['mod_home_address'];
         }
 
         $carpooler = array_key_exists('carpooling', $form);
-
-        if( $carpooler != $user['mod_carpooling']) {
-        	$data['mod_carpooling'] =  $carpooler;
-        	$modified = true;
+        if( $carpooler != $user['mod_carpooling']){
+            $data['mod_carpooling'] =  $carpooler;
+            if($carpooler)
+                $mod_fields['carpooling'] = 'available';
+            else 
+                $mod_fields['carpooling'] = 'not available';
         }
         
-        if($modified) {
+        if(!empty($mod_fields)) {
+        
+            foreach($mod_fields as $key => $field){
+                $m_fields .= ' '.$key.',';
+            }
+
+            $m_fields = substr($m_fields, 0, -1);
+
             $this->User->save($data);
 
             $response['text'] = 'Data saved';
@@ -438,6 +449,36 @@ class UsersController extends AppController {
         $this->set('json', $response);
     }
 
+    function setprivacypolicyacceptance(){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+
+        $id = $this->Session->read('id');
+        $data['id'] = $id;
+        
+        $data['privacy_policy_acceptance'] = $this->params['form']['accepted'];
+
+        $this->User->save($data);
+
+        $response['success'] = true;
+        
+        $this->set('json', $response);
+    }
+    
+    function getprivacypolicyacceptance(){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+        $this->User->recursive = -1;
+
+        $id = $this->Session->read('id');
+
+        $resuser = $this->User->find('first', array('conditions' => array('id' => $id), 'fields' => array('privacy_policy_acceptance')));
+
+        $response['success'] = true;
+        $response['user'] = $resuser['User'];
+        
+        $this->set('json', $response);
+    }
 
     function sendmail(){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax

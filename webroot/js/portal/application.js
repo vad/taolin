@@ -181,9 +181,6 @@ function application_init(){
     // render comboTheme
     comboTheme.render(Ext.get('exttheme'));
 
-    // open wizard window
-    showFirstLoginWizard();
-    
     /* Check if there's a valid session */
     var task = {
         run: function(){
@@ -203,8 +200,7 @@ function application_init(){
     };
     Ext.TaskMgr.start(task);
 
-    /* TODO: implement WizardWindow */
-    //openWizardModalWindow();
+    showFirstLoginWizard(); // check if first login wizard should be opened or not
     
     setTimeout(function(){
         Ext.get('loading').remove();
