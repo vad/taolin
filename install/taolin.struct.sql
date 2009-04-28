@@ -467,7 +467,7 @@ CREATE TABLE "users_widgets" (
   pos INTEGER NOT NULL,
   tab INTEGER default NULL,
   application_conf text,
-  widget_conf text NOT NULL,
+  widget_conf text,
   deleted smallint NOT NULL DEFAULT (0)::smallint,
   deleted_date timestamp(0) without time zone,
   PRIMARY KEY  (id)
