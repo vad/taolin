@@ -31,7 +31,7 @@ $appname = Configure::read('App.name');
 ?>
 
 <div>
- <?php echo $html->image('logoDesktop.png',array('alt'=>'logo')); ?>
+ <img src="<?php echo Configure::read('App.logo.url'); ?>" alt="logo" />
 </div>
 <br/>
 <div class="login-column">
