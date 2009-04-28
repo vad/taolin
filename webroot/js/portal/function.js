@@ -848,7 +848,7 @@ function getBodySize(ratio){
 
 
 function showFirstLoginWizard(){
-    var win_size = getBodySize(4/5);
+    var win_size = getBodySize(9/10);
     
     var win = new Ext.Window({
         id: 'wizard',
@@ -873,7 +873,7 @@ function showFirstLoginWizard(){
                         var cb = Ext.getCmp('privacy_policy_agreement_checkbox');
                         
                         if (!cb.checked) {
-                            alert("You can't go further. Accept the privacy policy or go away");
+                            alert("In order to proceed you have to accept the privacy policy. If you find any problem with it, please contact Human Resources. Otherwise please check the checkbox below near 'I read and accept the provacy policy' and then click the 'Continue' button. Thanks!");
                             return false;
                         }
                     }   
@@ -958,8 +958,9 @@ function showFirstLoginWizard(){
                 ,items: new Ext.ux.fbk.sonet.WizardSettings()
             },{     
                 index: 2
-                ,trailText: 'Visit FBK Wiki!'
-                ,html: '<div>Search for useful information on everyday life within FBK and contribute by improving to it, sharing your knowledge with your colleagues.</div>'
+                ,trailText: 'Visit the FBK WIKI or start using desktop.fbk.eu!'
+//                ,html: '<div>Almost done! You now have these 2 options: (1) search in the FBK WIKI, or (2) start using desktop.fbk.eu</div><div style="width:48%;float:left"><div>Search in and contribute to the FBK WIKI!</div><div><a href="https://desktop.fbk.eu/wiki/it/" target="_blank">https://desktop.fbk.eu/wiki/it/</a> (open in a new window)</div><div>Search for useful information on everyday life within FBK and contribute by improving to it, sharing your knowledge with your colleagues.</div><div><img src="img/fbk_wiki_screenshot.png"></div></div><div style="width:48%;float:right;"><div>Search in and contribute to the FBK WIKI!</div><div><a href="https://desktop.fbk.eu/wiki/it/"><img src="img/taolin_screenshot.png"></a></div>   
+                ,html: '<div>                <div>Almost done! You now have these 2 options: (1) search in the FBK WIKI, or (2) start using    desktop.fbk.eu</div>                <div style="width:48%;float:left">                    <div>Search in and contribute to the FBK WIKI!</div>                    <div><a href="https://desktop.fbk.eu/wiki/it/" target="_blank">https://desktop.fbk.eu/wiki/it/</a> (open in a new window)</div>                <div><a href="https://desktop.fbk.eu/wiki/it/" target="_blank"><img src="img/fbk_wiki_screenshot.png" /></a></div></div>                <div style="width:48%;float:right">                    <div>blabla su desktop</div><div><a href="./"><img src="img/taolin_screenshot.png" /></a></div>                </div></div>'
             }]
         }
     });                                 
