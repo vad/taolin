@@ -151,8 +151,8 @@ westPanel = new Ext.Panel({
                 }
 
                 var tpl = new Ext.XTemplate(
-                    '<div style="text-align:left;margin:5px;line-height:150%;font-size:100%; font-family: Verdana;">',
-                    '<br/><p><b><span style="font-size:130%;">{name} {surname}</span>',
+                    '<div class="user-profile" style="text-align:left;margin:5px;line-height:150%;font-size:100%;">',
+                    '<br/><p><b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
                     '<tpl if="((this.reqid === \'\') || (this.reqid == window.thisId))">',
                         '<span style="padding-left:10px;"><a href="javascript:expandSettingsPanel()">Edit</a></span>',
                     '</tpl>',
@@ -167,35 +167,39 @@ westPanel = new Ext.Panel({
                         '<br /><div style="text-align:left;margin:5px;font-family: Verdana;">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{this.sourceSuggestAs}\')">suggest {name} to SoNet team as a new champion!</a></div>',
                     '</tpl></p>',
                     '<br /><b>Login:</b> ',
-                    '<span style="font-family: Arial;"> {[values.login ? values.login : "unavailable"]} </span>',
+                    '<span> {[values.login ? values.login : "unavailable"]} </span>',
                     '<tpl if="email">',
-                            '<br /><b>E-mail:</b><span style="font-family: Arial;" onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{this.sourceSendMail}\')"> <img style="vertical-align:bottom;" title="Click here to email user" src="js/portal/shared/icons/fam/email.png" /> <a href="javascript:void(0)">{email}</a></span>',
+                            '<br /><b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{this.sourceSendMail}\')"> <img style="vertical-align:bottom;" title="Click here to email user" src="js/portal/shared/icons/fam/email.png" /> <a href="javascript:void(0)">{email}</a></span>',
                     '</tpl>',
                     '<tpl if="((phone) && (phone != \'0\'))">',
-                        '<br /><b>Phone:</b><span style="font-family: Arial;"> {phone}</span>',
+                        '<br /><b>Phone:</b><span> {phone}</span>',
                     '</tpl>',
                     '<tpl if="((phone2) && (phone2 != \'0\'))">',
-                        '<br /><b>Phone 2:</b><span style="font-family: Arial;"> {phone2}</span>',
+                        '<br /><b>Phone 2:</b><span> {phone2}</span>',
                     '</tpl>',
                     '<tpl if="((personal_page) && (personal_page != \'null\'))">',
-                        '<br /><b>Home page:</b> <span style="font-family: Arial;"><a href="{personal_page}" target="_blank">{[values.personal_page.substr(0,7)==="http://" ? values.personal_page.substr(7) : values.personal_page]}</a></span>',
+                        '<br /><b>Home page:</b> <span><a href="{personal_page}" target="_blank">{[values.personal_page.substr(0,7)==="http://" ? values.personal_page.substr(7) : values.personal_page]}</a></span>',
                     '</tpl>',
                     '<tpl if="building_id">',
-                        '<br /><b>Workplace:</b> <span style="font-family: Arial;"><a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow(\{buildingId:{building_id}, logparams:\'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id": "{id}"}') + '\'\})).show()">where\'s {[this.getPronoun(values.gender)]} office?</a></span>',
+                        '<br /><b>Workplace:</b> <span><a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow(\{buildingId:{building_id}, logparams:\'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id": "{id}"}') + '\'\})).show()">where\'s {[this.getPronoun(values.gender)]} office?</a></span>',
                     '</tpl>',
                     '<tpl if="date_of_birth">',
-                        '<br /><b>Date of birth:</b><span style="font-family: Arial;"> {[Date.parseDate(values.date_of_birth, "Y-m-d").format("F, d")]}</span>',
+                        '<br /><b>Date of birth:</b><span> {[Date.parseDate(values.date_of_birth, "Y-m-d").format("F, d")]}</span>',
                     '</tpl>',
                     '<tpl if="home_address">',
-                        '<br /><br /><b>Lives in:</b><span style="font-family: Arial;"> {home_address}</span>',
+                        '<br /><br /><b>Lives in:</b><span> {home_address}</span>',
                     '</tpl>',
                     '<tpl if="carpooling">',
                         '<br /><img style="vertical-align:bottom;" src="js/portal/shared/icons/fam/car.png" /> <b>Available for carpooling!</b>',
                     '</tpl>',
+
+                    /*********************************************
+                     * START Group description
+                     *********************************************/
                     '<tpl if="groups_description">',
                         '<br /><br /><b>{defaultgroupname}</b>',
                         '<br />',
-                        '<span style="font-family: Arial;">',
+                        '<span>',
                             '<ul style="padding: 5px 0 0 20px">', 
                             '<tpl for="groups">',
                                 '<li style="list-style-type:disc;">',
@@ -205,6 +209,10 @@ westPanel = new Ext.Panel({
                             '</ul>',
                         '</span>',
                     '</tpl>',
+                    /*********************************************
+                     * END Group description
+                     *********************************************/
+                    
                     /*********************************************
                      * START Tag cloud
                      *********************************************/
@@ -221,21 +229,21 @@ westPanel = new Ext.Panel({
                      *********************************************/
                     '<tpl if="(linkedin) || (twitter) || (facebook)">', // if one of the social network's field is present...
                         '<br /><b>Social networking on...</b><br />',
-                        '<span style="font-family: Arial;">',
+                        '<span>',
                             '<ul style="padding: 5px 0 0 20px;">', 
                                 '<tpl if="linkedin">',
                                     '<li style="list-style-type:disc;">',
-                                        '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle" /> <a href="{linkedin}" target="_blank">Linkedin profile</a>',
+                                        '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle; padding-right: 5px;" /><a href="{linkedin}" target="_blank">Linkedin</a>',
                                     '</li>',
                                 '</tpl>',
                                 '<tpl if="twitter">',
                                     '<li style="list-style-type:disc;">',
-                                        '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle" /> <a href="{twitter}" target="_blank">Twitter profile</a>',
+                                        '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle; padding-right: 5px;" /><a href="{twitter}" target="_blank">Twitter</a>',
                                     '</li>',
                                 '</tpl>',
                                 '<tpl if="facebook">',
                                     '<li style="list-style-type:disc;">',
-                                        '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" style="vertical-align: middle" /> <a href="{facebook}" target="_blank">Facebook profile</a>',
+                                        '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" style="vertical-align: middle; padding-right: 5px;" /><a href="{facebook}" target="_blank">Facebook</a>',
                                     '</li>',
                                 '</tpl>',
                             '</ul>',
@@ -245,7 +253,7 @@ westPanel = new Ext.Panel({
                      * END Social Networking
                      *********************************************/
                     '<tpl if="mod_description">',
-                        '<br /><b>About me:</b><span style="font-family: Arial;"> {this.mod_description}</span>',
+                        '<br /><b>About me:</b><span> {this.mod_description}</span>',
                     '</tpl>',
                     '</div>'
                     ,{
