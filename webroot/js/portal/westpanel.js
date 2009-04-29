@@ -151,7 +151,7 @@ westPanel = new Ext.Panel({
                 }
 
                 var tpl = new Ext.XTemplate(
-                    '<div class="user-profile" style="text-align:left;margin:5px;line-height:150%;font-size:100%;">',
+                    '<div style="text-align:left;margin:5px;line-height:150%;font-size:100%;">',
                     '<br/><p><b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
                     '<tpl if="((this.reqid === \'\') || (this.reqid == window.thisId))">',
                         '<span style="padding-left:10px;"><a href="javascript:expandSettingsPanel()">Edit</a></span>',

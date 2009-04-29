@@ -49,7 +49,7 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                         '<img src="js/portal/shared/icons/fam/image_edit.png" />' +
                     '</div>' +
                 '</div>' +
-                '<div id="edit-div" class="edit_div" style="margin:15px; !important">' +
+                '<div class="edit_div" style="margin:15px; !important">' +
                     '<div onclick="expandSettingsPanel();">' +
                         '<img src="js/portal/shared/icons/fam/user_edit.png" />' +
                         '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your profile</span>' +
