@@ -56,7 +56,7 @@
 <div id="loading-mask" style=""></div>
 <div id="loading">
     <div class="loading-indicator"><img src="img/extanim32.gif" width="32" height="32" style="margin-right:8px;float:left;vertical-align:top;"/>
-        <?php echo Configure::read('App.name');?> 0.7
+        <?php echo Configure::read('App.name');?> 0.8
         <br />
         <span id="loading-msg">Loading styles and images...</span>
     </div>
