@@ -167,6 +167,8 @@ function performLogin(){
 
 }
 
+//control the keycode is 13, i.e. on Windows pressing the "Enter" key is detactable as '13'
+//this function is used only to detect when the user click "Enter" in the login form page and she/he is using Windows ... or something like that ;)
 function maybePerformLogin(event) {
     if (window.event) event = window.event; // IE-specific
     if (event.keyCode == 13) {
