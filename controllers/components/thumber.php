@@ -47,9 +47,10 @@ class ThumberComponent extends Object{
      *
      */
 
-    function createthumb($filename, $path, $savetofile, $image_formats = null, $quality = 100){
+    function createthumb($filename, $path, $savetofile, $image_formats = null, $quality = 100, $file_extension){
         
-        $file_extension = 'jpg';
+        if(!$file_extension)
+            $file_extension = 'jpg';
 
         if (!$filename){
             $this->log('ERROR: filename required!');
