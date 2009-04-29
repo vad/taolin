@@ -44,14 +44,12 @@ class ThumberComponent extends Object{
      * @imageformats: array containing desired size attributes, both the max desired width and the max desired height.
      * If several formats are required, they shall be putted into nested arrays
      * @quality: integer, from 0 (lower quality) to 100 (higher quality)
+     * @forcetojpg: if the image has to be forced to be a jpg image or not
      *
      */
 
-    function createthumb($filename, $path, $savetofile, $image_formats = null, $quality = 100, $file_extension){
+    function createthumb($filename, $path, $savetofile, $image_formats = null, $quality = 100, $forcetojpg = true){
         
-        if(!$file_extension)
-            $file_extension = 'jpg';
-
         if (!$filename){
             $this->log('ERROR: filename required!');
             return false;
@@ -103,23 +101,27 @@ class ThumberComponent extends Object{
                     $folder = new Folder($img_dest_dir, true, 0777);
                 }
 
-                $file_ext = $this->PhotoUtil->getphotoext($filename);
-                
-                if($file_ext != $file_extension)
-                    $dest_file = str_replace($file_ext, '.'.$file_extension, $filename);
+                if($forcetojpg){
+                    $file_ext = $this->PhotoUtil->getphotoext($filename);
+                    
+                    if($file_ext != 'jpg')
+                        $dest_file = str_replace($file_ext, '.jpg', $filename);
+                    else
+                        $dest_file = $filename;
+                }
                 else
                     $dest_file = $filename;
 
                 $img_path = $img_dest_dir.$dest_file;
 
                  if(!file_exists($img_path))
-                     $this->thumbimage($im, $img_info, $format, $fill, $img_path, $quality);
+                     $this->thumbimage($im, $img_info, $format, $fill, $img_path, $quality, $forcetojpg);
                  else
                      $this->log("Warning! File $dest_file already exists in $img_dest_dir");
             }
         }
         else
-            $this->thumbimage($im, $img_info, $image_formats, $fill, null, $quality);
+            $this->thumbimage($im, $img_info, $image_formats, $fill, null, $quality, $forcetojpg);
         
         return true;
     }
@@ -135,10 +137,12 @@ class ThumberComponent extends Object{
      * @format: array containing desired max width and height
      * @fill: boolean
      * @new_img_dest: path to save the file to
+     * @quality: integer, from 0 (lower quality) to 100 (higher quality)
+     * @forcetojpg: if the image has to be forced to be a jpg image or not
      *
      */
 
-    function thumbimage($im, $img_info, $format, $fill, $new_img_dest, $quality){
+    function thumbimage($im, $img_info, $format, $fill, $new_img_dest, $quality, $forcetojpg){
 
         $w = $format['width'];
         $h = $format['height'];
@@ -166,11 +170,8 @@ class ThumberComponent extends Object{
         if(!$new_img_dest || $new_img_dest == null)
             header("Content-type: ". $img_info['mime']);
 
-        switch ($img_info[2]) {
-            /*case 1: imagegif($newImg, $new_img_dest, $quality); break;
-            case 2: imagejpeg($newImg, $new_img_dest, $quality); break;
-            case 3: imagepng($newImg, $new_img_dest, $quality); break;
-            case 6: imagejpeg($newImg, $new_img_dest, $quality); break;*/
+        if($forcetojpg){
+            switch ($img_info[2]) {
             case 1:
             case 2:
             case 3:
@@ -181,6 +182,18 @@ class ThumberComponent extends Object{
                 $this->log('An error occurred.');
                 break;
             }
+        }
+        else{
+            switch ($img_info[2]) {
+            case 1: imagegif($newImg, $new_img_dest, $quality); break;
+            case 2: imagejpeg($newImg, $new_img_dest, $quality); break;
+            case 3: imagepng($newImg, $new_img_dest, $quality); break;
+            case 6: imagejpeg($newImg, $new_img_dest, $quality); break;
+            default:
+                $this->log('An error occurred.');
+                break;
+            }
+        }
 
         imagedestroy($newImg);
     }

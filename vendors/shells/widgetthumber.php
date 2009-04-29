@@ -65,7 +65,7 @@ class WidgetThumberShell extends Shell {
                 );
 
         foreach($widgets as $widget) {
-            if($this->Thumber->createthumb($widget['Widget']['screenshot'], $widget_path, true, $widget_format, 9, 'png'))
+            if($this->Thumber->createthumb($widget['Widget']['screenshot'], $widget_path, true, $widget_format, 9, false))
                $total += 1;
         }
 
