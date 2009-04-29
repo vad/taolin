@@ -97,7 +97,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
             )
             ,store: new Ext.data.SimpleStore({
                 fields: [
-                    {name: 'name'}, {name: 'surname'}, {name: 'photo'}, {name: 'login'}, {name: 'groups_description'}, null, null, {name: 'email'}, {name: 'date_of_birth'}
+                    {name: 'name'}, {name: 'surname'}, {name: 'photo'}, {name: 'login'}, {name: 'groups_description'}, null, null, null, null, null, {name: 'email'}, {name: 'date_of_birth'}
                 ]
             })
         });
@@ -180,6 +180,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
         });
     }
     ,setUserParams:function(form, action){
+
         // userParams are used by the DataView
         this.userParams = [
             action.result.data.map(function(i){
