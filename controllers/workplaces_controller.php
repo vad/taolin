@@ -151,7 +151,9 @@ class WorkplacesController extends AppController {
             $x = $wp['x'] * $width + $buildingInfo['left'];
             $y = $wp['y'] * $height + $buildingInfo['top'];
 
-            switch($wp['gender']){
+            // switch user icon chose on user's gender
+
+            /*switch($wp['gender']){
                 case 1: 
                     $user_image = "../webroot/js/portal/shared/icons/fam/user.png";
                     break;
@@ -161,7 +163,9 @@ class WorkplacesController extends AppController {
                 default:
                     $user_image = "../webroot/js/portal/shared/icons/fam/user_gray.png";
                     break;
-            }
+            }*/
+            
+            $user_image = "../webroot/js/portal/shared/icons/fam/user_gray.png";
                 
             $foreground = imagecreatefrompng($user_image);
 
