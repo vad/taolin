@@ -341,6 +341,7 @@ CREATE TABLE "users" (
   "mod_home_address" character varying(200) DEFAULT NULL::character varying, -- Home address
   "mod_carpooling" boolean NOT NULL default false, -- Available for carpooling?
   "privacy_policy_acceptance" boolean NOT NULL default false, -- 0 = privacy policy not yet accepted, show first login wizard. 1 = already accepted, everything ok!
+  "facebook" varchar(120) default NULL,
   "linkedin" varchar(50) default NULL,
   "twitter" varchar(50) default NULL,
   "active" SMALLINT NOT NULL,
@@ -444,6 +445,7 @@ CREATE TABLE "users_history" (
   "mod_home_address" character varying(200) DEFAULT NULL::character varying, -- Home address
   "mod_carpooling" boolean NOT NULL default false, -- Available for carpooling?
   "privacy_policy_acceptance" boolean NOT NULL default false, -- 0 = privacy policy not yet accepted, show first login wizard. 1 = already accepted, everything ok!
+  "facebook" varchar(120) default NULL,
   "linkedin" varchar(50) default NULL,
   "twitter" varchar(50) default NULL,
   "active" SMALLINT default NULL,

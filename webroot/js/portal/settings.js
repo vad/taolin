@@ -120,15 +120,21 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                                 grow: true,
                                 anchor: '100%'
                             }, {
-                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle" /> Linkedin public-profile <br /><span style="font-weight:normal;font-size:90%;">Example: set it to <i>nickname</i> if your linkedin public profile url is <i>http://www.linkedin.com/in/nickname</i></span>',
-                                name: 'linkedin',
-                                maxLength: 50,
-                                anchor: '100%'
+                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle" /> Linkedin public-profile<br /><span style="font-weight:normal;font-size:90%;">Example: set it to <i>nickname</i> if your linkedin public profile url is <i>http://www.linkedin.com/in/nickname</i></span>'
+                                ,name: 'linkedin'
+                                ,maxLength: 50
+                                ,anchor: '100%'
                             }, {
-                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle" /> Twitter username',
-                                name: 'twitter',
-                                maxLength: 50,
-                                anchor: '100%'
+                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle" /> Twitter username'
+                                ,name: 'twitter'
+                                ,maxLength: 50
+                                ,anchor: '100%'
+                            }, {
+                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" style="vertical-align: middle" /> Facebook profile URL<br /><span style="font-weight:normal;font-size:90%;">Once logged into Facebook, click the <i>Profile</i> button and then copy here the URL of the resulting page</span>'
+                                ,name: 'facebook'
+                                ,vtype: 'url'
+                                ,maxLength: 120
+                                ,anchor: '100%'
                             }]
                     })
                 },{

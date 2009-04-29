@@ -70,7 +70,7 @@ class UsersController extends AppController {
             'mod_carpooling AS carpooling', 'gender',
             'User.groups_description', 'User.mod_description',
             'User.active', 'User.tags', 'Workplace.building_id',
-            'User.linkedin', 'User.twitter'
+            'User.facebook', 'User.linkedin', 'User.twitter'
         );
 
         $conditions = array('User.id' => $id);
@@ -165,7 +165,7 @@ class UsersController extends AppController {
             'mod_home_address AS home_address',
             'mod_carpooling AS carpooling',
             'groups_description',
-            'linkedin', 'twitter'
+            'facebook', 'linkedin', 'twitter'
         ));
         
         foreach ($user['User'] as $key => $userid){
@@ -376,7 +376,7 @@ class UsersController extends AppController {
             'mod_date_of_birth','mod_email','mod_personal_page',
             'mod_description','mod_working_place','mod_phone',
             'mod_phone2', 'mod_home_address', 'mod_carpooling',
-            'linkedin', 'twitter'
+            'facebook', 'linkedin', 'twitter'
         );
         
         $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
@@ -389,7 +389,6 @@ class UsersController extends AppController {
 
         if(array_key_exists('date_of_birth', $form) && (strcasecmp($form['date_of_birth'],$user['mod_date_of_birth'])!=0)){
             $data['mod_date_of_birth'] = str_replace('/','-',$form['date_of_birth']);
-            $mod_fields['date of birth'] = $data['mod_date_of_birth'];
         }
 
         if(array_key_exists('email', $form) && (strcasecmp($form['email'],$user['mod_email']))){
@@ -409,12 +408,10 @@ class UsersController extends AppController {
 
         if(array_key_exists('phone', $form) && (strcasecmp($form['phone'],$user['mod_phone']))){
             $data['mod_phone'] = $form['phone'];
-            $mod_fields['internal phone'] = $data['mod_phone'];
         }
 
         if(array_key_exists('phone2', $form) && (strcasecmp($form['phone2'],$user['mod_phone2']))){
             $data['mod_phone2'] = $form['phone2'];            
-            $mod_fields['secondary internal phone'] = $data['mod_phone2'];
         }
 
         if(array_key_exists('home_address', $form) && (strcasecmp($form['home_address'], $user['mod_home_address']))){
@@ -424,10 +421,17 @@ class UsersController extends AppController {
 
         if(array_key_exists('linkedin', $form) && (strcasecmp($form['linkedin'], $user['linkedin']))){
             $data['linkedin'] = $form['linkedin'];            
+            $mod_fields['linkedin'] = $data['linkedin'];
         }
 
         if(array_key_exists('twitter', $form) && (strcasecmp($form['twitter'], $user['twitter']))){
             $data['twitter'] = $form['twitter'];            
+            $mod_fields['twitter'] = $data['twitter'];
+        }
+
+        if(array_key_exists('facebook', $form) && (strcasecmp($form['facebook'], $user['facebook']))){
+            $data['facebook'] = $form['facebook'];            
+            $mod_fields['facebook'] = $data['facebook'];
         }
 
         $carpooler = array_key_exists('carpooling', $form);
