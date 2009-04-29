@@ -571,3 +571,11 @@ color:black;
 .chat-window .x-form-textarea.x-form-focus {
     background: #FFFFFF url(../../ext/resources/images/default/form/text-bg.gif) repeat-x;
 }
+/* START user profile class */
+.user-profile-class span{
+    font-family: Arial;
+}
+.user-profile-class b{
+    font-family: verdana;
+}
+/* END user profile class */
