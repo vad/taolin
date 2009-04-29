@@ -227,23 +227,18 @@ westPanel = new Ext.Panel({
                     /**********************************************
                      * START Social Networking
                      *********************************************/
-                    '<tpl if="(linkedin) || (twitter) || (facebook)">', // if one of the social network's field is present...
+                    '<tpl if="(linkedin) || (twitter)">', // if one of the social network's field is present...
                         '<br /><b>Social networking on...</b><br />',
                         '<span>',
                             '<ul style="padding: 5px 0 0 20px;">', 
                                 '<tpl if="linkedin">',
                                     '<li style="list-style-type:disc;">',
-                                        '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle; padding-right: 5px;" /><a href="{linkedin}" target="_blank">Linkedin</a>',
+                                        '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle; padding-right: 5px;" /><a href="http://www.linkedin.com/in/{linkedin}" target="_blank">Linkedin</a>',
                                     '</li>',
                                 '</tpl>',
                                 '<tpl if="twitter">',
                                     '<li style="list-style-type:disc;">',
-                                        '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle; padding-right: 5px;" /><a href="{twitter}" target="_blank">Twitter</a>',
-                                    '</li>',
-                                '</tpl>',
-                                '<tpl if="facebook">',
-                                    '<li style="list-style-type:disc;">',
-                                        '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" style="vertical-align: middle; padding-right: 5px;" /><a href="{facebook}" target="_blank">Facebook</a>',
+                                        '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle; padding-right: 5px;" /><a href="http://twitter.com/{twitter}" target="_blank">Twitter</a>',
                                     '</li>',
                                 '</tpl>',
                             '</ul>',

@@ -97,7 +97,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
             )
             ,store: new Ext.data.SimpleStore({
                 fields: [
-                    {name: 'name'}, {name: 'surname'}, {name: 'photo'}, {name: 'login'}, {name: 'groups_description'}, null, null, null, null, null, {name: 'email'}, {name: 'date_of_birth'}
+                    {name: 'name'}, {name: 'surname'}, {name: 'photo'}, {name: 'login'}, {name: 'groups_description'}, null, null, null, null, {name: 'email'}, {name: 'date_of_birth'}
                 ]
             })
         });
@@ -137,19 +137,14 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
                 ,maxLength: 180
                 ,anchor: '98%'
             }, {
-                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle" /> Linkedin profile',
+fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle" /> Linkedin public profile <br /><span style="font-weight:normal;font-size:90%;">Example: set it to<i>nickname</i> if your linkedin public profile url is <i>http://www.linkedin.com/in/nickname</i></span>',
                 name: 'linkedin',
-                vtype:'url',
+                maxLength: 50,
                 anchor: '100%'
             }, {
-                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle" /> Twitter profile',
+                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle" /> Twitter username',
                 name: 'twitter',
-                vtype:'url',
-                anchor: '100%'
-            }, {
-                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" style="vertical-align: middle" /> Facebook profile',
-                name: 'facebook',
-                vtype:'url',
+                maxLength: 50,
                 anchor: '100%'
             }]
         });

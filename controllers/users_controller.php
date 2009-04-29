@@ -70,7 +70,7 @@ class UsersController extends AppController {
             'mod_carpooling AS carpooling', 'gender',
             'User.groups_description', 'User.mod_description',
             'User.active', 'User.tags', 'Workplace.building_id',
-            'User.facebook', 'User.linkedin', 'User.twitter'
+            'User.linkedin', 'User.twitter'
         );
 
         $conditions = array('User.id' => $id);
@@ -165,7 +165,7 @@ class UsersController extends AppController {
             'mod_home_address AS home_address',
             'mod_carpooling AS carpooling',
             'groups_description',
-            'facebook', 'linkedin', 'twitter'
+            'linkedin', 'twitter'
         ));
         
         foreach ($user['User'] as $key => $userid){
@@ -376,7 +376,7 @@ class UsersController extends AppController {
             'mod_date_of_birth','mod_email','mod_personal_page',
             'mod_description','mod_working_place','mod_phone',
             'mod_phone2', 'mod_home_address', 'mod_carpooling',
-            'facebook', 'linkedin', 'twitter'
+            'linkedin', 'twitter'
         );
         
         $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
@@ -420,10 +420,6 @@ class UsersController extends AppController {
         if(array_key_exists('home_address', $form) && (strcasecmp($form['home_address'], $user['mod_home_address']))){
             $data['mod_home_address'] = $form['home_address'];            
             $mod_fields['home address'] = $data['mod_home_address'];
-        }
-
-        if(array_key_exists('facebook', $form) && (strcasecmp($form['facebook'], $user['facebook']))){
-            $data['facebook'] = $form['facebook'];            
         }
 
         if(array_key_exists('linkedin', $form) && (strcasecmp($form['linkedin'], $user['linkedin']))){
