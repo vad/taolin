@@ -60,7 +60,6 @@ class FeedbacksController extends AppController {
         $this->layout = 'ajax';
 
         $u_id = $this->Session->read('id');
-        $u_id = 652;
 
         $feedbacks = $this->Feedback->find('all', array('conditions' => array('user_id' => $u_id), 'fields' => array('text', 'created'),'limit' => $n, 'order' => 'Feedback.created DESC'));
 
