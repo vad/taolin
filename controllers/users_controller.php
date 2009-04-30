@@ -48,57 +48,6 @@ class UsersController extends AppController {
         $this->set('id', $user[User][id]);
     }
 
-    function getphotofromlogin($u_login, $u_width, $u_height){
-        
-        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
-        $this->layout = 'ajax';
-        
-        $login = $this->san->paranoid($u_login);
-
-        $this->User->recursive = 0;
-        $fields = array('User.id');
-        $user = $this->User->findByLogin($login, $fields);
-        
-        $this->getphotofromid($user['User']['id'], $u_width, $u_height);
-    }
-
-    function getphotofromid($u_id, $u_width, $u_height){
-        
-        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
-        $this->layout = 'ajax';
-        
-        $id = $this->san->paranoid($u_id);
-        $width = $this->san->paranoid($u_width);
-        $height = $this->san->paranoid($u_height);
-        
-        $resphoto = $this->User->Photo->getdefault($id);
-        
-        if (!empty($resphoto['Photo'])){
-            /* Since all the photos are saved in .jpg extension, replace the
-             * original file extension with .jpg
-             */
-            $photo_name = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
-
-            $photo_fs_dir = Configure::read('App.imagefolder.fs_path');
-
-            // building final photo web path
-            $photo = imagecreatefromjpeg($photo_fs_dir.'t'.$width.'x'.$height.'/'.$photo_name);
-        
-            header('Content-Type: image/jpeg');
-
-            imagejpeg($photo);
-            imagedestroy($photo);
-        }
-        else {
-            $photo = imagecreatefrompng("../webroot/img/nophoto.png");
-            
-            header('Content-Type: image/png');
-
-            imagepng($photo);
-            imagedestroy($photo);
-        }
-    }
-
     function getinfo($id=-1) {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
@@ -603,6 +552,60 @@ class UsersController extends AppController {
         $this->User->addTags(array($tag), $u_id);
         
         $this->set('json', '');       
+    }
+    
+    function getphotofromlogin($u_login, $u_width, $u_height){
+        
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+        
+        $login = $this->san->paranoid($u_login);
+
+        $this->User->recursive = 0;
+        $fields = array('User.id');
+        $user = $this->User->findByLogin($login, $fields);
+        
+        $this->getphotofromid($user['User']['id'], $u_width, $u_height);
+    }
+
+    function getphotofromid($u_id, $u_width, $u_height){
+        
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+        
+        $id = $this->san->paranoid($u_id);
+        $width = $this->san->paranoid($u_width);
+        $height = $this->san->paranoid($u_height);
+
+        $resphoto = $this->User->Photo->getdefault($id, array('filename'));
+
+        if (!empty($resphoto['Photo'])){
+        
+            /* Since all the photos are saved in .jpg extension, replace the
+             * original file extension with .jpg
+             */
+            $photo_name = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
+
+            $photo_fs_dir = Configure::read('App.imagefolder.fs_path');
+
+            // building final photo web path
+            $photo = imagecreatefromjpeg($photo_fs_dir.'t'.$width.'x'.$height.'/'.$photo_name);
+        
+            header('Content-Type: image/jpeg');
+
+            imagejpeg($photo);
+            imagedestroy($photo);
+        }
+        else {
+
+            $photo = imagecreatefromgif("../webroot/ext/resources/images/default/s.gif");
+            
+            header('Content-Type: image/gif');
+
+            imagegif($photo);
+            imagedestroy($photo);
+
+        }
     }
 }
 ?>
