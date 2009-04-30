@@ -210,7 +210,7 @@ BuddyList = function(conf, panel_conf) {
                             ,'</div>'
                         ,'</tpl>'
                         ,'</td><td style="width:40px;text-align:center">'
-                            ,'<img src="users/getphotofromlogin/{[values.jid._node]}/40/40"/>'
+                            ,'<img src="photos/getphotofromuserlogin/{[values.jid._node]}/40/40"/>'
                         ,'</td>'
                         ,'</tr></table>'
                     );
