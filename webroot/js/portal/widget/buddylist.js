@@ -197,9 +197,8 @@ BuddyList = function(conf, panel_conf) {
                 dataIndex: 'jid',
                 renderer: function (value, p, record) {
                     var tpl = new Ext.XTemplate(
-                        '<span style="float:right;width:50px;padding:5px;text-align:center;">'
-                            ,'<img src="users/getphotofromlogin/{[values.jid._node]}/40/40"/>'
-                        ,'</span>'
+                        '<table style="width:100%"><tr>'
+                        ,'<td style="vertical-align:middle">'
                         ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
                             ,'<tpl if="presence">'
                                 ,'<span class="buddylistmessage" style="margin-left:10px;">{presence}</span>'
@@ -210,6 +209,10 @@ BuddyList = function(conf, panel_conf) {
                                 ,'{fancyStatus}'
                             ,'</div>'
                         ,'</tpl>'
+                        ,'</td><td style="width:40px;text-align:center">'
+                            ,'<img src="users/getphotofromlogin/{[values.jid._node]}/40/40"/>'
+                        ,'</td>'
+                        ,'</tr></table>'
                     );
                     return tpl.applyTemplate(record.data);
                 }},
