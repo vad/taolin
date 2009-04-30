@@ -155,6 +155,9 @@ var rosterStore = new Ext.data.GroupingStore({
   sortInfo: {field: 'jid', direction: "ASC"},
   groupField: 'group'
 });
+rosterStore.on('load', function(store, records, options) {
+    console.log(records);
+});
 rosterStore.on('loadexception', function(proxy, store, response, e) {
     console.log('loadexception: ' + e.message);
 });
@@ -194,16 +197,19 @@ BuddyList = function(conf, panel_conf) {
                 dataIndex: 'jid',
                 renderer: function (value, p, record) {
                     var tpl = new Ext.XTemplate(
-                      '<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
-                      ,'<tpl if="presence">'
-                      ,'<span class="buddylistmessage" style="margin-left:10px;">{presence}</span>'
-                      ,'</tpl>'
-                      ,'</div>'
-                      ,'<tpl if="status">'
-                      ,'<div class="buddylistmessage" qtip="{status}">'
-                      ,'{fancyStatus}'
-                      ,'</div>'
-                      ,'</tpl>'
+                        '<span style="float:right;width:50px;padding:5px;text-align:center;">'
+                            ,'<img src="users/getphotofromlogin/{[values.jid._node]}/40/40"/>'
+                        ,'</span>'
+                        ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
+                            ,'<tpl if="presence">'
+                                ,'<span class="buddylistmessage" style="margin-left:10px;">{presence}</span>'
+                            ,'</tpl>'
+                        ,'</div>'
+                        ,'<tpl if="status">'
+                            ,'<div class="buddylistmessage" qtip="{status}" style="padding-right:2px;">'
+                                ,'{fancyStatus}'
+                            ,'</div>'
+                        ,'</tpl>'
                     );
                     return tpl.applyTemplate(record.data);
                 }},

@@ -46,7 +46,6 @@ class UsersController extends AppController {
         $user = $this->User->findByLogin($login, $fields);
         
         $this->set('id', $user[User][id]);
-        
     }
 
     function getphotofromlogin($u_login, $u_width, $u_height){
@@ -55,29 +54,12 @@ class UsersController extends AppController {
         $this->layout = 'ajax';
         
         $login = $this->san->paranoid($u_login);
-        $width = $this->san->paranoid($u_width);
-        $height = $this->san->paranoid($u_height);
 
         $this->User->recursive = 0;
         $fields = array('User.id');
         $user = $this->User->findByLogin($login, $fields);
         
-        $resphoto = $this->User->Photo->getdefault($user['User']['id']);
-        
-        if (!empty($resphoto['Photo']))
-            /* Since all the photos are saved in .jpg extension, replace the
-             * original file extension with .jpg
-             */
-            $photo_name = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
-        else
-            $photo_name = null;
-
-        $photo_web_dir = Configure::read('App.imagefolder.web_path');
-
-        // building final photo web path
-        $photo = $photo_web_dir.'t'.$width.'x'.$height.'/'.$photo_name;
-
-        $this->set('json', $photo);
+        $this->getphotofromid($user['User']['id'], $u_width, $u_height);
     }
 
     function getphotofromid($u_id, $u_width, $u_height){
@@ -91,20 +73,30 @@ class UsersController extends AppController {
         
         $resphoto = $this->User->Photo->getdefault($id);
         
-        if (!empty($resphoto['Photo']))
+        if (!empty($resphoto['Photo'])){
             /* Since all the photos are saved in .jpg extension, replace the
              * original file extension with .jpg
              */
             $photo_name = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
-        else
-            $photo_name = null;
 
-        $photo_web_dir = Configure::read('App.imagefolder.web_path');
+            $photo_fs_dir = Configure::read('App.imagefolder.fs_path');
 
-        // building final photo web path
-        $photo = $photo_web_dir.'t'.$width.'x'.$height.'/'.$photo_name;
+            // building final photo web path
+            $photo = imagecreatefromjpeg($photo_fs_dir.'t'.$width.'x'.$height.'/'.$photo_name);
+        
+            header('Content-Type: image/jpeg');
 
-        $this->set('json', $photo);
+            imagejpeg($photo);
+            imagedestroy($photo);
+        }
+        else {
+            $photo = imagecreatefrompng("../webroot/img/nophoto.png");
+            
+            header('Content-Type: image/png');
+
+            imagepng($photo);
+            imagedestroy($photo);
+        }
     }
 
     function getinfo($id=-1) {
