@@ -189,13 +189,13 @@ class UsersController extends AppController {
         $this->set(compact('json'));
     }
 
+
     /**
      * This function returns an array containing user's personal information
      * and load it in a form
      * It send an array to a view via $this->set to the view
      */
     function getusersettings() {
-        
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
         
@@ -229,14 +229,17 @@ class UsersController extends AppController {
          * START RETRIEVING DEFAULT PHOTO 
          *****************************************************/
 
-        $resphoto = $this->User->Photo->getdefault($id);
+        $resphoto = $this->User->Photo->getdefault(
+            $id,
+            array('Photo.filename')
+        );
         
-        if (!empty($resphoto['Photo']))
+        if (!empty($resphoto['Photo'])){
             /* Since all the photos are saved in .jpg extension, replace the
              * original file extension with .jpg
              */
             $photo = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
-        else
+        } else
             $photo = null;
            
         // Insert the value in the third position of the array
