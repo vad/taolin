@@ -49,12 +49,15 @@ class UsersController extends AppController {
         
     }
 
-    function getphotofromlogin($u_login){
+    function getphotofromlogin($u_login, $u_width, $u_height){
         
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
         
         $login = $this->san->paranoid($u_login);
+        $width = $this->san->paranoid($u_width);
+        $height = $this->san->paranoid($u_height);
+
         $this->User->recursive = 0;
         $fields = array('User.id');
         $user = $this->User->findByLogin($login, $fields);
@@ -65,19 +68,26 @@ class UsersController extends AppController {
             /* Since all the photos are saved in .jpg extension, replace the
              * original file extension with .jpg
              */
-            $photo = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
+            $photo_name = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
         else
-            $photo = null;
+            $photo_name = null;
 
-            $this->set('json', $photo);
+        $photo_web_dir = Configure::read('App.imagefolder.web_path');
+
+        // building final photo web path
+        $photo = $photo_web_dir.'t'.$width.'x'.$height.'/'.$photo_name;
+
+        $this->set('json', $photo);
     }
 
-    function getphotofromid($u_id){
+    function getphotofromid($u_id, $u_width, $u_height){
         
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
         
         $id = $this->san->paranoid($u_id);
+        $width = $this->san->paranoid($u_width);
+        $height = $this->san->paranoid($u_height);
         
         $resphoto = $this->User->Photo->getdefault($id);
         
@@ -85,11 +95,16 @@ class UsersController extends AppController {
             /* Since all the photos are saved in .jpg extension, replace the
              * original file extension with .jpg
              */
-            $photo = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
+            $photo_name = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
         else
-            $photo = null;
+            $photo_name = null;
 
-            $this->set('json', $photo);
+        $photo_web_dir = Configure::read('App.imagefolder.web_path');
+
+        // building final photo web path
+        $photo = $photo_web_dir.'t'.$width.'x'.$height.'/'.$photo_name;
+
+        $this->set('json', $photo);
     }
 
     function getinfo($id=-1) {
