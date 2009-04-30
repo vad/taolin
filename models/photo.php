@@ -23,11 +23,17 @@ class Photo extends AppModel
     var $belongsTo = 'User';
     var $actsAs = array('SoftDeletable'); 
 
-    function getdefault($u_id){
-        return $this->find('first', array(
+    function getdefault($u_id, $fields){
+        $opts = array(
             'recursive' => -1,
             'conditions' => array('user_id' => $u_id, 'default_photo' => 1, 'is_hidden' => 0)
-        ));
+        );
+
+        if ($fields) {
+            $opts['fields'] = $fields;
+        }
+
+        return $this->find('first', $opts);
     }
 }
 
