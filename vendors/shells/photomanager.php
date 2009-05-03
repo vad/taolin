@@ -37,8 +37,10 @@ class PhotoManagerShell extends Shell {
         
         App::import('Component','PhotoUtil');
         $this->Thumber->PhotoUtil = new PhotoUtilComponent(null);
-        
-        $dest_dir = Configure::read('App.imagefolder');
+       
+        $app_url = Configure:read('App.url');
+
+        $dest_dir = Configure::read('App.imagefolder.fs_path');
 
         //Get photos added in the last day
         $today = date('Y-m-d H:i:s');
@@ -67,7 +69,7 @@ class PhotoManagerShell extends Shell {
             if($photo['Photo']['filename']){
                 $result .= "New uploaded picture on: ".$photo['Photo']['created']."\n";
                 $result .= "Name: ".$photo['Photo']['name'].", belonging to user with id: ".$photo['Photo']['user_id']."\n";
-                $result .= "URL: http://desktop.fbk.eu/img/fbk/people/".$photo['Photo']['filename']."\n\n";
+                $result .= "URL: ".$app_url."img/fbk/people/".$photo['Photo']['filename']."\n\n";
                 $uploaded += 1;
             }
             // otherwise, create the new photo!
@@ -84,11 +86,11 @@ class PhotoManagerShell extends Shell {
                 $img_file->close();
 
                 if(file_exists($dest_file)){
-                        
+
                     if($this->Thumber->createthumb($filename, null, true)){
 
                         $result .= "Created a new picture for user with id: ".$photo['Photo']['user_id']."\n";
-                        $result .= "URL: http://desktop.fbk.eu/img/fbk/people/".$filename."\n\n";
+                        $result .= "URL: ".$app_url."img/fbk/people/".$filename."\n\n";
 
                         $data['id'] = $photo['Photo']['id'];
                         $data['user_id'] = $photo['Photo']['user_id'];
