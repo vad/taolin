@@ -594,5 +594,37 @@ class UsersController extends AppController {
         
         $this->set('json', '');       
     }
+
+    /*****************************************************
+     *****************************************************
+     * ADMIN
+     *****************************************************
+     *****************************************************/
+
+    function admin_index(){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'admin';
+        
+        $res = $this->User->find('all', array(
+            'fields' => array('id', 'name', 'surname', 'login', 'active'),
+            'order' => 'id',
+            'recursive' => -1
+        ));
+
+        $this->set('users', $res);
+        $this->set('url', $this->params['url']['url']);
+    }
+
+
+    function admin_activate($uid, $active = 1){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+
+        $this->User->findById($uid);
+        $this->User->save(array('active' => $active));
+
+        $referrer = $this->params['url']['r'];
+        if ($referrer)
+            $this->redirect($referrer);
+    }
 }
 ?>

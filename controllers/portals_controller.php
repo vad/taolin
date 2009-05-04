@@ -25,13 +25,17 @@ class PortalsController extends AppController {
     var $name = 'Portal';
     var $helpers = array('Html','Javascript');
     
-    function index(){ }
-
     function beforeFilter()
     {
         parent::beforeFilter();
 
         $this->checkSession();
+    }
+
+    function index(){ }
+
+    function admin(){
+        $this->layout = 'admin';
     }
     
 }
