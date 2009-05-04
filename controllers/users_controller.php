@@ -46,50 +46,6 @@ class UsersController extends AppController {
         $user = $this->User->findByLogin($login, $fields);
         
         $this->set('id', $user[User][id]);
-        
-    }
-
-    function getphotofromlogin($u_login){
-        
-        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
-        $this->layout = 'ajax';
-        
-        $login = $this->san->paranoid($u_login);
-        $this->User->recursive = 0;
-        $fields = array('User.id');
-        $user = $this->User->findByLogin($login, $fields);
-        
-        $resphoto = $this->User->Photo->getdefault($user['User']['id']);
-        
-        if (!empty($resphoto['Photo']))
-            /* Since all the photos are saved in .jpg extension, replace the
-             * original file extension with .jpg
-             */
-            $photo = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
-        else
-            $photo = null;
-
-            $this->set('json', $photo);
-    }
-
-    function getphotofromid($u_id){
-        
-        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
-        $this->layout = 'ajax';
-        
-        $id = $this->san->paranoid($u_id);
-        
-        $resphoto = $this->User->Photo->getdefault($id);
-        
-        if (!empty($resphoto['Photo']))
-            /* Since all the photos are saved in .jpg extension, replace the
-             * original file extension with .jpg
-             */
-            $photo = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
-        else
-            $photo = null;
-
-            $this->set('json', $photo);
     }
 
     function getinfo($id=-1) {
@@ -182,13 +138,13 @@ class UsersController extends AppController {
         $this->set(compact('json'));
     }
 
+
     /**
      * This function returns an array containing user's personal information
      * and load it in a form
      * It send an array to a view via $this->set to the view
      */
     function getusersettings() {
-        
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
         
@@ -222,14 +178,17 @@ class UsersController extends AppController {
          * START RETRIEVING DEFAULT PHOTO 
          *****************************************************/
 
-        $resphoto = $this->User->Photo->getdefault($id);
+        $resphoto = $this->User->Photo->getdefault(
+            $id,
+            array('Photo.filename')
+        );
         
-        if (!empty($resphoto['Photo']))
+        if (!empty($resphoto['Photo'])){
             /* Since all the photos are saved in .jpg extension, replace the
              * original file extension with .jpg
              */
             $photo = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
-        else
+        } else
             $photo = null;
            
         // Insert the value in the third position of the array

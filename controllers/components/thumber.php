@@ -17,8 +17,6 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-<?php
 
 class ThumberComponent extends Object{
 
@@ -299,4 +297,3 @@ class ThumberComponent extends Object{
     /************ END FUNCTIONS *************/
 }
 ?>
-

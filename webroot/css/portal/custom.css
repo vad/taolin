@@ -197,7 +197,7 @@ div.buddyliststate {
 }
 
 #buddylist .x-grid3-row {
-    border-color: #FFFFFF #EDEDED #EDEDED;
+    border-width: 0;
 }
 
 #edit-photo-button{
