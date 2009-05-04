@@ -561,7 +561,7 @@ class UsersController extends AppController {
      *****************************************************/
 
     function admin_index(){
-        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax
         $this->layout = 'admin';
         
         $res = $this->User->find('all', array(

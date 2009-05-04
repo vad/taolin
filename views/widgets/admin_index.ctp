@@ -1,3 +1,4 @@
+<!-- ex: set ts=2 softtabstop=2 shiftwidth=2: -->
 <?php
 /**
  * This file is part of taolin project (http://taolin.fbk.eu)
@@ -21,3 +22,25 @@
 echo $this->element('admin_header');
 
 ?>
+
+<div id="wrapper">
+  <div id="main">
+    <div class="block">
+
+      <table class="table">
+        <tr>
+          <th class="first">Id</th>
+          <th>Widget name</th>
+          <th class="last">Actions</th>
+        </tr>
+        <? foreach($widgets as $widget): ?>
+        <tr>
+          <td><? echo $widget['Widget']['id'] ?></td>
+          <td><? echo $widget['Widget']['name'] ?></td>
+          <td><a href='edit/<? echo $widget['Widget']['id'] ?>'>edit</a></td>
+        </tr>
+        <? endforeach ?>
+      </table>
+    </div>
+  </div>
+</div>

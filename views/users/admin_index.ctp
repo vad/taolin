@@ -18,18 +18,11 @@
  * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
+echo $this->element('admin_header');
+
 ?>
 
-<div id="header">
-  <h1><a href="<? echo $this->base ?>/admin/">Taolin administration site</a></h1>
-  <div id="main-navigation">
-    <ul>
-    <li class="first"><a href="<? echo $this->base ?>/admin/">Admin</a>
-    <li class="active"><a href="<? echo $this->base ?>/admin/users/">Users</a>
-    </ul>
-    <div class="clear"></div>
-  </div>
-</div>
 <div id="wrapper">
   <div id="main">
     <div class="block">
@@ -50,10 +43,9 @@ echo '<th class="first">'.$headers[0].'</th>';
 for ($i = 1; $i < count($headers); $i++){
     echo '<th>'.$headers[$i].'</th>';
 }
-echo '<th class="last">Actions</th>';
 
 ?>
-            
+              <th class="last">Actions</th>
             </tr>
 
 <?
@@ -83,11 +75,12 @@ foreach ($users as $user){
   </div>
 </div>
 
-<div id="sidebar">
-  <div class="block">
-    <h3>Help</h3>
-    <div class="content">
-      <p>In this page you can activate/deactivate users. Other actions will be added, if you need more please submit an Issue on <a href="http://github/vad/taolin/issues">Github</a></p>
+  <div id="sidebar">
+    <div class="block">
+      <h3>Help</h3>
+      <div class="content">
+        <p>In this page you can activate/deactivate users. Other actions will be added, if you need more please submit an Issue on <a href="http://github/vad/taolin/issues">Github</a></p>
+      </div>
     </div>
   </div>
 
