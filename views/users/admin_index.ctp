@@ -1,3 +1,4 @@
+<!-- ex: set ts=2 softtabstop=2 shiftwidth=2: -->
 <?php
 /**
  * This file is part of taolin project (http://taolin.fbk.eu)
@@ -18,23 +19,29 @@
  *
  */
 ?>
+
 <div id="header">
-<h1><a href="<? echo $this->base ?>/admin/">Taolin administration site</a></h1>
-      <div id="main-navigation">
-        <ul>
-        <li class="first"><a href="<? echo $this->base ?>/admin/">Admin</a>
-        <li class="active"><a href="<? echo $this->base ?>/admin/users/">Users</a>
-        </ul>
-        <div class="clear"></div>
-      </div>
+  <h1><a href="<? echo $this->base ?>/admin/">Taolin administration site</a></h1>
+  <div id="main-navigation">
+    <ul>
+    <li class="first"><a href="<? echo $this->base ?>/admin/">Admin</a>
+    <li class="active"><a href="<? echo $this->base ?>/admin/users/">Users</a>
+    </ul>
+    <div class="clear"></div>
+  </div>
 </div>
 <div id="wrapper">
-<div id="main">
-<div class="block">
-<div class="content">
-<div class="inner">
-<table class="table">
-<tr>
+  <div id="main">
+    <div class="block">
+      <div class="secondary-navigation">
+        <ul><li class="first active"><a href='#top'>Users list</a></li></ul>
+        <div class="clear" />
+      </div>
+      <div class="content">
+        <div class="inner">
+        <h2 class="title">Users list</h2>
+          <table class="table">
+            <tr>
 <?php
 
 //print headers
@@ -46,7 +53,8 @@ for ($i = 1; $i < count($headers); $i++){
 echo '<th class="last">Actions</th>';
 
 ?>
-</tr>
+            
+            </tr>
 
 <?
 $url = '/'.$url;
@@ -68,9 +76,18 @@ foreach ($users as $user){
     echo '</tr>';
 }
 ?>
-</table>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
-</div>
-</div>
+
+<div id="sidebar">
+  <div class="block">
+    <h3>Help</h3>
+    <div class="content">
+      <p>In this page you can activate/deactivate users. Other actions will be added, if you need more please submit an Issue on <a href="http://github/vad/taolin/issues">Github</a></p>
+    </div>
+  </div>
+
