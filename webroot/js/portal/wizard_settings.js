@@ -137,12 +137,12 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
                 ,maxLength: 180
                 ,anchor: '98%'
             }, {
-                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle" /> Linkedin public profile <br /><span style="font-weight:normal;font-size:90%;">Example: set it to<i>nickname</i> if your linkedin public profile url is <i>http://www.linkedin.com/in/nickname</i></span>'
+                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle" /> Linkedin public profile <br /><span style="font-weight:normal;font-size:90%;">Example: set it to<i>nickname</i> if your linkedin public profile url is <i>http://www.linkedin.com/in/nickname</i></span>'
                 ,name: 'linkedin'
                 ,maxLength: 50
                 ,anchor: '100%'
             }, {
-                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle" /> Twitter username'
+                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle" /> Twitter username'
                 ,name: 'twitter'
                 ,maxLength: 50
                 ,anchor: '100%'
