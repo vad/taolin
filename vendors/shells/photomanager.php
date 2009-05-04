@@ -117,10 +117,12 @@ class PhotoManagerShell extends Shell {
 
             $result .= "### Created photos: " . $newphoto . "\n"; 
             $result .= "### Uploaded photos: " . $uploaded . "\n"; 
-            $result .= "### Total photos: " . $total; 
+            $result .= "### Total photos: " . $total;
             
-            $this->Email->from = 'sonet@fbk.eu';
-            $this->Email->to = Configure::read('App.contactus');
+            $mail_to = Configure::read('App.contactus');
+            
+            $this->Email->from = $mail_to;
+            $this->Email->to = $mail_to;
             $this->Email->subject = 'Pictures uploaded in the last day';
             $this->Email->send($result);
         }
