@@ -66,6 +66,7 @@
 <body>
   <div id="container">
     <!-- Views are diplayed here -->
+
     <?php echo $content_for_layout ?>
 
   </div>

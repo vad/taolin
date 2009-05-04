@@ -26,6 +26,10 @@ class WidgetsController extends AppController {
 
     var $name = 'Widgets';
     var $uses = array('Widget','User');
+    var $paginate = array(
+        'limit' => 25,
+        'order' => 'id'
+    );
     
     function beforeFilter()
     {
@@ -110,6 +114,15 @@ class WidgetsController extends AppController {
         }
 
         $this->set('json', $response);
+    }
+
+
+
+    function admin_index(){
+        $this->layout = 'admin';
+
+        $res = $this->paginate();
+        $this->set('widgets', $res);
     }
 }
 ?>
