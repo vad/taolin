@@ -46,25 +46,27 @@ class WidgetsController extends AppController {
 
         //TODO: write a function to do this (and that sanitizes)
         $formdata = $this->params['form'];
-        $limit = 5;
+
+        // pagination
+        /*$limit = 5;
         $start = 0;
 
         if(!empty($formdata['limit']))
             $limit = $formdata['limit'];
          
         if(!empty($formdata['start']))
-            $start = $formdata['start'];
+            $start = $formdata['start'];*/
 
         $this->Widget->recursive = 0;
         $filter = array('enabled' => '1');
         $fields = array('id', 'name', 'description', 'screenshot', 'modified');
 
         $widgets = $this->Widget->find('all', array(
-            'conditions' => $filter,
-            'fields' => $fields, 
-            'order' => 'modified DESC',
-            'limit' => $limit,
-            'page' => $start/$limit + 1
+            'conditions' => $filter
+            ,'fields' => $fields 
+            ,'order' => 'modified DESC'
+            /*,'limit' => $limit
+            ,'page' => $start/$limit + 1*/
         ));
         $count = $this->Widget->find('count', array('conditions' => $filter));
         $widgets = Set::extract($widgets, '{n}.Widget');
