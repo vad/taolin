@@ -155,9 +155,6 @@ var rosterStore = new Ext.data.GroupingStore({
   sortInfo: {field: 'jid', direction: "ASC"},
   groupField: 'group'
 });
-rosterStore.on('load', function(store, records, options) {
-    console.log(records);
-});
 rosterStore.on('loadexception', function(proxy, store, response, e) {
     console.log('loadexception: ' + e.message);
 });
