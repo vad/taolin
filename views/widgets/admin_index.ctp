@@ -41,7 +41,7 @@ $url = '/'.$this->params['url']['url'];
             <tr>
               <td><? echo $widget['id'] ?></td>
               <td><? echo $widget['name'] ?></td>
-              <td><a href='edit/<? echo $widget['id'] ?>'>edit</a> | 
+              <td><a href='<? echo $this->base.'/admin/widgets/edit/'.$widget['id'] ?>'>edit</a> | 
 
               <?
                 //activate/deactivate
@@ -59,5 +59,7 @@ $url = '/'.$this->params['url']['url'];
             <? endforeach ?>
           </table>
         </div>
+      </div>
+    </div>
   </div>
 </div>

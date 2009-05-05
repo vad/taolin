@@ -26,6 +26,7 @@ class WidgetsController extends AppController {
 
     var $name = 'Widgets';
     var $uses = array('Widget','User');
+    var $helpers = array('Html', 'Form');
     var $paginate = array(
         'limit' => 25,
         'order' => 'id'
@@ -142,6 +143,23 @@ class WidgetsController extends AppController {
             $this->Session->setFlash('Widget enable status changed.', 'admin_flash_message_success');
             $this->redirect($referer);
         }
+    }
+    
+    function admin_edit($wid){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax     
+        $this->layout = 'admin';
+        $this->recursive = -1;
+        $this->Widget->id = $wid;
+
+        if (empty($this->data)) {
+            $this->data = $this->Widget->read();
+        } else {
+            if ($this->Widget->save($this->data)) {
+                $this->Session->setFlash('Your post has been updated.', 'admin_flash_message_success');
+                $this->redirect(array('action' => 'index'));
+            }
+        }
+
     }
 }
 ?>
