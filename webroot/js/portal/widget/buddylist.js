@@ -198,20 +198,21 @@ BuddyList = function(conf, panel_conf) {
                 renderer: function (value, p, record) {
                     var tpl = new Ext.XTemplate(
                         '<table style="width:100%"><tr>'
-                        ,'<td style="vertical-align:middle">'
-                        ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
-                            ,'<tpl if="presence">'
-                                ,'<span class="buddylistmessage" style="margin-left:10px;">{presence}</span>'
-                            ,'</tpl>'
-                        ,'</div>'
-                        ,'<tpl if="status">'
-                            ,'<div class="buddylistmessage" qtip="{status}" style="padding-right:2px;">'
-                                ,'{fancyStatus}'
-                            ,'</div>'
-                        ,'</tpl>'
-                        ,'</td><td style="width:40px;text-align:center">'
-                            ,'<img src="photos/getphotofromuserlogin/{[values.jid._node]}/40/40"/>'
-                        ,'</td>'
+                            ,'<td style="vertical-align:middle;">'
+                                ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
+                                    ,'<tpl if="presence">'
+                                        ,'<span class="buddylistmessage" style="margin-left:10px;">{presence}</span>'
+                                    ,'</tpl>'
+                                ,'</div>'
+                                ,'<tpl if="status">'
+                                    ,'<div class="buddylistmessage" qtip="{status}" style="padding-right:2px;">'
+                                        ,'{fancyStatus}'
+                                    ,'</div>'
+                                ,'</tpl>'
+                            ,'</td>'
+                            ,'<td style="width:40px;text-align:center;">'
+                                ,'<img src="photos/getphotofromuserlogin/{[values.jid._node]}/40/40" />'
+                            ,'</td>'
                         ,'</tr></table>'
                     );
                     return tpl.applyTemplate(record.data);
@@ -226,6 +227,7 @@ BuddyList = function(conf, panel_conf) {
                 forceFit: true,
                 scrollOffset:2,
                 showGroupName: false,
+                rowSelectorDepth: 12,
                 groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Buddies" : "Buddy"]})',
                 emptyText: 'Nobody is visible in chat at the moment'
               }),
