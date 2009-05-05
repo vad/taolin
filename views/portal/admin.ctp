@@ -18,6 +18,4 @@
  *
  */
 
-echo $this->element('admin_header');
-
 ?>

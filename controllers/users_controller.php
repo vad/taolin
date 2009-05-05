@@ -561,7 +561,7 @@ class UsersController extends AppController {
      *****************************************************/
 
     function admin_index(){
-        Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'admin';
         
         $res = $this->User->find('all', array(
@@ -578,12 +578,14 @@ class UsersController extends AppController {
     function admin_activate($uid, $active = 1){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
 
-        $this->User->findById($uid);
-        $this->User->save(array('active' => $active));
+        $this->User->save(array('id' => $uid, 'active' => $active));
 
-        $referrer = $this->params['url']['r'];
-        if ($referrer)
-            $this->redirect($referrer);
+        $referer = $this->params['url']['r'];
+
+        if ($referer) {
+            $this->Session->setFlash('User activation status changed.', 'admin_flash_message_success');
+            $this->redirect($referer);
+        }
     }
 }
 ?>

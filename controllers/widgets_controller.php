@@ -116,13 +116,32 @@ class WidgetsController extends AppController {
         $this->set('json', $response);
     }
 
-
+    
+    /*****************************************************
+     *****************************************************
+     * ADMIN
+     *****************************************************
+     *****************************************************/
 
     function admin_index(){
+        Configure::write('debug', '0');
         $this->layout = 'admin';
 
         $res = $this->paginate();
         $this->set('widgets', $res);
+    }
+    
+    
+    function admin_activate($wid, $active = 1){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->Widget->save(array('id' => $wid, 'enabled' => $active));
+
+        $referer = $this->params['url']['r'];
+
+        if ($referer) {
+            $this->Session->setFlash('Widget enable status changed.', 'admin_flash_message_success');
+            $this->redirect($referer);
+        }
     }
 }
 ?>

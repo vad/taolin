@@ -19,8 +19,7 @@
  *
  */
 
-echo $this->element('admin_header');
-
+$url = '/'.$url;
 ?>
 
 <div id="wrapper">
@@ -32,42 +31,41 @@ echo $this->element('admin_header');
       </div>
       <div class="content">
         <div class="inner">
-        <h2 class="title">Users list</h2>
+          <h2 class="title">Users list</h2>
           <table class="table">
             <tr>
-<?php
+              <?php
 
-//print headers
-$headers = array('Id', 'Name', 'Surname', 'Login', 'Active');
-echo '<th class="first">'.$headers[0].'</th>';
-for ($i = 1; $i < count($headers); $i++){
-    echo '<th>'.$headers[$i].'</th>';
-}
+              //print headers
+              $headers = array('Id', 'Name', 'Surname', 'Login', 'Active');
+              echo '<th class="first">'.$headers[0].'</th>';
+              for ($i = 1; $i < count($headers); $i++){
+                echo '<th>'.$headers[$i].'</th>';
+              }
 
-?>
+              ?>
               <th class="last">Actions</th>
             </tr>
 
-<?
-$url = '/'.$url;
+            <?
 
-foreach ($users as $user){
-    $user = $user['User'];
-    echo '<tr class="odd">';
-    foreach ($user as $field){
-        echo "<td>$field</td>";
-    }
+            foreach ($users as $user){
+              $user = $user['User'];
+              echo '<tr class="odd">';
+              foreach ($user as $field){
+                echo "<td>$field</td>";
+              }
 
-    //activate/deactivate
-    if ($user['active'])
-        $a = "<a href='".$this->base."/admin/users/activate/".$user['id']."/0?r=$url'>deactivate</a>";
-    else
-        $a = "<a href='".$this->base."/admin/users/activate/".$user['id']."?r=$url'>activate</a>";
-    echo "<td>$a</td>";
+              //activate/deactivate
+              if ($user['active'])
+                $a = "<a href='".$this->base."/admin/users/activate/".$user['id']."/0?r=$url'>deactivate</a>";
+              else
+                $a = "<a href='".$this->base."/admin/users/activate/".$user['id']."?r=$url'>activate</a>";
+              echo "<td>$a</td>";
 
-    echo '</tr>';
-}
-?>
+              echo '</tr>';
+            }
+            ?>
           </table>
         </div>
       </div>

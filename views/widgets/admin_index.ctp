@@ -19,28 +19,45 @@
  *
  */
 
-echo $this->element('admin_header');
-
+$url = '/'.$this->params['url']['url'];
 ?>
 
 <div id="wrapper">
   <div id="main">
     <div class="block">
+      <div class="content">
+        <div class="inner">
+          <h2 class="title">Widgets list</h2>
 
-      <table class="table">
-        <tr>
-          <th class="first">Id</th>
-          <th>Widget name</th>
-          <th class="last">Actions</th>
-        </tr>
-        <? foreach($widgets as $widget): ?>
-        <tr>
-          <td><? echo $widget['Widget']['id'] ?></td>
-          <td><? echo $widget['Widget']['name'] ?></td>
-          <td><a href='edit/<? echo $widget['Widget']['id'] ?>'>edit</a></td>
-        </tr>
-        <? endforeach ?>
-      </table>
-    </div>
+          <table class="table">
+            <tr>
+              <th class="first">Id</th>
+              <th>Widget name</th>
+              <th class="last">Actions</th>
+            </tr>
+            <? foreach($widgets as $widget):
+              $widget = $widget['Widget'];
+            ?>
+            <tr>
+              <td><? echo $widget['id'] ?></td>
+              <td><? echo $widget['name'] ?></td>
+              <td><a href='edit/<? echo $widget['id'] ?>'>edit</a> | 
+
+              <?
+                //activate/deactivate
+                $act = "<a href='$this->base/admin/widgets/activate/".$widget['id'];
+                if ($widget['enabled'])
+                  $act .= "/0?r=$url'>deactivate</a>";
+                else
+                  $act .= "?r=$url'>activate</a>";
+                
+                echo $act;
+              ?>
+              
+              </td>
+            </tr>
+            <? endforeach ?>
+          </table>
+        </div>
   </div>
 </div>

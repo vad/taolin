@@ -1,3 +1,4 @@
+<?php // ex: set ts=2 softtabstop=2 shiftwidth=2: ?>
 <?php
 /**
  * This file is part of taolin project (http://taolin.fbk.eu)
@@ -24,7 +25,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Taolin admin backend</title>
   <link rel="stylesheet" href="<? echo $this->base ?>/css/admin/base.css" type="text/css" media="screen" />
-  <link rel="stylesheet" id="current-theme" href="<? echo $this->base ?>/css/admin/themes/orange/style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" id="current-theme" href="<? echo $this->base ?>/css/admin/themes/kathleene/style.css" type="text/css" media="screen" />
+  <style type="text/css">
+    #flashMessage {
+      margin:10px 20px 0 20px;
+    }
+  </style>
+
+
   <script type="text/javascript" charset="utf-8" src="<? echo $this->base ?>/js/jquery/jquery-1.3.2.min.js"></script> 
   <script type="text/javascript" charset="utf-8" src="<? echo $this->base ?>/js/admin/jquery.scrollTo.js"></script>   
   <script type="text/javascript" charset="utf-8" src="<? echo $this->base ?>/js/admin/jquery.localscroll.js"></script>
@@ -66,6 +74,11 @@
 <body>
   <div id="container">
     <!-- Views are diplayed here -->
+
+    <?php echo $this->element('admin_header'); ?>
+
+    <?php $session->flash(); ?>
+    <?php //echo $this->element('admin_flash_message'); ?>
 
     <?php echo $content_for_layout ?>
 
