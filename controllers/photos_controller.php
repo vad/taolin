@@ -153,8 +153,6 @@ class PhotosController extends AppController {
 
         if(!empty($this->params)){
 
-            $this->log($this->params);
-
             // Source file, php saves it in a temporary directory
             $source = $file_params['tmp_name'];
             // Where to save the photo if upload file (for being lately checked)
@@ -212,7 +210,7 @@ class PhotosController extends AppController {
 
                         $data['0']['is_fbk_photo'] = 0;
                         
-                        if($this->Thumber->createthumb($dest_file, null, true)){
+                        if($this->Thumber->createthumb($dest_file, $dest_dir, true)){
                             $message ='File '.$name.' has been successfully uploaded!';
                             //Send back photo url in order to set default photo in the FE
                             $response['url'] = $dest_file;

@@ -91,7 +91,7 @@ class PhotoManagerShell extends Shell {
 
                 if(file_exists($dest_file)){
 
-                    if($this->Thumber->createthumb($filename, null, true)){
+                    if($this->Thumber->createthumb($filename, $dest_dir, true)){
 
                         $result .= "Created a new picture for user with id: ".$photo['Photo']['user_id']."\n";
                         $result .= "URL: ".$app_url."img/fbk/people/".$filename."\n\n";
