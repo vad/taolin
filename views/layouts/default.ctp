@@ -26,9 +26,9 @@
 </title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php
-    $favicon = Configure::read('App.favicon');
+    $favicon = $conf->get('Site.favicon');
     if ($favicon) {
-        echo "<link rel='shortcut icon' href='". $this->base .'/'. Configure::read('App.favicon') ."' type='image/gif' />";
+        echo "<link rel='shortcut icon' href='". $this->base .'/'. $conf->get('Site.favicon') ."' type='image/gif' />";
     }
 
 ?>
@@ -40,16 +40,14 @@
 <script type="text/javascript" src='<?php echo $this->base ?>/ext/adapter/jquery/ext-jquery-adapter.js'> </script>
 
 <?php
-$isdebugactive = Configure::read('App.jsdebug');
+$isdebugactive = $conf->get('Site.jsdebug');
 if ($isdebugactive == 1) {
 ?>
-    <!-- <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-all-debug.js'> </script> -->
     <script type="text/javascript" src='<?php echo $this->base ?>/ext/ext-all-debug.js'> </script>
 <?php
 } else {
 ?>
     <script type="text/javascript" src='<?php echo $this->base ?>/ext/ext-all.js'> </script>
-    <!-- <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-all.pack.js'> </script> -->
 <?php
 }
 ?>
@@ -71,11 +69,6 @@ if ($isdebugactive == 1) {
 
         </div>
         
-        <!--
-        <div id="footer">
-            footer
-        </div>
-        -->
     </div>
     </body>
 </html>

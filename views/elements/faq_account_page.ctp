@@ -17,10 +17,8 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-<?php  
-$appname = Configure::read('App.name');
-$contactus = Configure::read('App.contactus');
+$appname = $conf->get('Site.name');
+$contactus = $conf->get('Site.admin');
 ?>
 
 <p class="question">

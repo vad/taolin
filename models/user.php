@@ -50,8 +50,10 @@ class User extends AppModel
         return ($ret);
     }
 
-
-    function getemail($u_id){
+    
+    //get email address of the user with id = $u_id
+    //if the address is null, create it from login@$domain
+    function getemail($u_id, $domain){
         $user = $this->find('first', array(
             'conditions' => array(
                 'User.id' => $u_id
@@ -65,7 +67,7 @@ class User extends AppModel
         if ($user['User']['email']){
             $sender = $user['User']['email'];
         } else {
-            $addtomail = Configure::read('App.addtomail');
+            $addtomail = '@'.$domain;
             $sender = $user['User']['login'].$addtomail;
         }
         

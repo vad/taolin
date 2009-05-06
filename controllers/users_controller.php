@@ -117,10 +117,10 @@ class UsersController extends AppController {
         }
 
         //read the name for the group in the westpanel.js from the config file 
-        $defaultgroupname = Configure::read('App.defaultgroupname'); 
+        $defaultgroupname = $this->Conf->get('Site.group_name'); 
         $json['user']['defaultgroupname'] = $defaultgroupname; 
 
-        $imagefoldername = Configure::read('App.imagefolder.web_path');
+        $imagefoldername = $this->Conf->get('App.imagefolder.web_path');
 
         if (!empty($photo['Photo'])){
 
@@ -528,13 +528,13 @@ class UsersController extends AppController {
         
         $u_id = $this->Session->read('id');
 
-        $sender = $this->User->getemail($u_id);
+        $sender = $this->User->getemail($u_id, $this->Conf->get('Organization.domain'));
 
         $this->Email->from = $sender;
         $this->Email->to = $_POST['to'];
         if(!empty($_POST['cc'])) $this->Email->cc[] = $_POST['cc'];
         if(!empty($_POST['bcc'])) $this->Email->bcc[] = $_POST['bcc'];
-        $appname = Configure::read('App.name');
+        $appname = $this->Conf->get('Site.name');
         $this->Email->subject = 'Notification from '.$appname;
         $response['success'] = $this->Email->send($text);
 

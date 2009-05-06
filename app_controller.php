@@ -50,6 +50,11 @@ class AppController extends Controller
 
         //set json view as default
         $this->view = 'Json';
+
+        //workaround to pass variables to the pages_controller
+        $this->Conf->startup(&$this);
+        Configure::write('App.name', $this->Conf->get('Site.name'));
+        Configure::write('App.contactus', $this->Conf->get('Site.admin'));
     }
     
     function addtotimeline($param, $date_now = null, $type_name = null){

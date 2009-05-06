@@ -87,7 +87,7 @@ class WebcamsController extends AppController {
         $this->layout = 'ajax';
         header('Content-Type: image/jpeg');
         
-        $webcamfolder = Configure::read('App.imagefolder.webcam_fs_path');
+        $webcamfolder = $this->Conf->get('Images.webcam_fs_path');
         define('SNAPSHOT', $webcamfolder.'noise_cantinery.jpg');
         readfile(SNAPSHOT);
     }

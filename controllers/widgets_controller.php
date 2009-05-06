@@ -28,7 +28,7 @@ class WidgetsController extends AppController {
     var $uses = array('Widget','User');
     var $helpers = array('Html', 'Form');
     var $paginate = array(
-        'limit' => 25,
+        'limit' => 100,
         'order' => 'id'
     );
     

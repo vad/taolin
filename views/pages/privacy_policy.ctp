@@ -20,8 +20,8 @@
 ?>
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/accounts/custom.css' />
 <?php
-    $appname = Configure::read('App.name');
-    $contactus = Configure::read('App.contactus');
+    $appname = $conf->get('Site.name');
+    $contactus = $conf->get('Site.admin');
 ?>
 
 <div>

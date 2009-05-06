@@ -17,6 +17,8 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
+    
+    $appname = $conf->get('Site.name');
 ?>
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/accounts/custom.css' />
 
@@ -26,12 +28,9 @@ function init() {
 }
 window.onload = init;
 </script>
-<?php
-$appname = Configure::read('App.name');
-?>
 
 <div>
- <img src="<?php echo Configure::read('App.logo.url'); ?>" alt="logo" />
+ <img src="<?php echo $conf->get('Site.logo_url'); ?>" alt="logo" />
 </div>
 <br/>
 <div class="login-column">

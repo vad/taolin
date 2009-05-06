@@ -34,6 +34,8 @@ class PortalsController extends AppController {
 
     function index(){
         $this->pageTitle = $this->Conf->get('Site.name');
+        $this->set('isdebugactive', $this->Conf->get('Site.jsdebug'));
+        $this->set('screen_title', $this->Conf->get('Site.name'));
     }
 
     function admin(){

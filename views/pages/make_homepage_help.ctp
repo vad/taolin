@@ -17,12 +17,10 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
+$appname = $conf->get('Site.name');
+$appurl = $conf->get('Site.url');
 ?>
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/accounts/custom.css' />
-<?php
-$appname = Configure::read('App.name');
-$appurl = Configure::read('App.url');
-?>
 
 <a name="top"></a>
 
