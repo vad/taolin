@@ -205,9 +205,10 @@ Ext.example = function(){
     };    
 }();
 
-function logWidget(id, type, logparams){
+
+function logWidget(w_id, type, logparams){
     Ext.Ajax.request({
-            url : 'widgets/donothing/'+id+'/'+type ,
+            url : 'widgets/donothing/'+w_id+'/'+type ,
             method: 'GET',
             params: {src: logparams},
             /*success: function(result, request){
@@ -224,13 +225,36 @@ function logWidget(id, type, logparams){
     });
 }
 
-function closeWidget(id){
+
+function removeWidget(w_id){
     Ext.Ajax.request({
-            url : 'users_widgets/removewidget/'+id,
+            url : 'users_widgets/removewidget/'+w_id,
             method: 'GET',
-            /*success: function(result, request){
-                console.log('success');
-            },*/
+            success: function(result, request){
+                var w_name = Ext.util.JSON.decode(result.responseText)['widget_name'];
+                Ext.fly('didyouknow_div').update('<span id="didyouknow_span"><table><tr><td style="padding:0 10px;">Widget '+w_name+' closed. <a href="javascript:void(0)" onclick="undoRemoveWidget('+w_id+')">Undo this action</a> or <a href="javascript:void(0)" onclick="$(\'#didyouknow_span\').toggle();" style="font-size:90%;">hide this message</a></td></tr></table></span>');
+            },
+            failure: function(){
+                Ext.Msg.show({
+                    title: 'Warning!',
+                    msg: '<center>Problem found in data transmission</center>',
+                    width: 400,
+                    icon: Ext.MessageBox.WARNING
+                });
+            }
+    });
+}
+
+
+function undoRemoveWidget(w_id){
+    $('#didyouknow_span').toggle();
+    Ext.Ajax.request({
+            url : 'users_widgets/undoremovewidget/'+w_id,
+            method: 'GET',
+            success: function(result, request){
+                var conf = Ext.util.JSON.decode(result.responseText)['widget'][0];
+                createNewPortlet(conf);
+            },
             failure: function(){
                 Ext.Msg.show({
                     title: 'Warning!',
@@ -382,7 +406,8 @@ function createNewPortlet(conf){
     if (pos < -1000)
         portlet = col.insert(0, portlet);
     else
-        portlet = col.add(portlet);
+        //portlet = col.add(portlet);
+        portlet = col.insert(pos, portlet);
 
     col.doLayout();
 
