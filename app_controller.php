@@ -20,6 +20,8 @@
 
 class AppController extends Controller
 {
+    var $components = array('Conf');
+
     function checkSession()
     {
         // If the session info hasn't been set...
