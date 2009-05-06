@@ -121,7 +121,7 @@ tools = [{
         id:'close',
         handler: function(e, target, panel){
                 panel.ownerCt.remove(panel, true);
-                closeWidget(panel.el.id);
+                removeWidget(panel.el.id);
         },
         qtip: "Close this widget"
     }
