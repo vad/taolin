@@ -161,17 +161,24 @@ class UsersWidgetsController extends AppController {
     function removewidget($w_id){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
-
+        
         $user_id = $this->Session->read('id');
 
         $filter = array('UsersWidget.id'=>$w_id);
-        $res = $this->UsersWidget->find($filter,array('UsersWidget.user_id'),null,null);
-            
+        
+        $widget = $this->UsersWidget->find('first', array(
+                        'conditions' => $filter
+                        ,'fields' => array('UsersWidget.user_id','Widget.name')
+                        ,'recursive' => 1
+                    )
+                );
+
         $response['success'] = false;
 
-        if(isset($res['UsersWidget']['user_id']) && ($res['UsersWidget']['user_id'] == $user_id)){
+        if(isset($widget['UsersWidget']['user_id']) && ($widget['UsersWidget']['user_id'] == $user_id)){
             $this->UsersWidget->delete($w_id);
             $response['success'] = true;
+            $response['widget_name'] = $widget['Widget']['name'];
         }
 
         $this->set('json', $response);
@@ -182,18 +189,27 @@ class UsersWidgetsController extends AppController {
 
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
+        
+        $this->UsersWidget->recursive = -1;
 
         $user_id = $this->Session->read('id');
 
-        $filter = array('UsersWidget.id'=>$w_id);
+        $filter = array('id'=>$w_id);
 
-        $this->UsersWidget->enableSoftDeletable('find', false);
-        $res = $this->UsersWidget->find($filter,array('UsersWidget.user_id'),null,null);
+        $this->UsersWidget->enableSoftDeletable('find', false); // enable finding of already soft-deleted records too
+
+        $widget = $this->UsersWidget->find('first', array(
+                        'conditions' => $filter
+                        //,'fields' => array('user_id','col','pos','tab')
+                    )
+                );
+
         $this->UsersWidget->enableSoftDeletable('find', true);
 
-        if(isset($res['UsersWidget']['user_id']) && ($res['UsersWidget']['user_id'] == $user_id)){
+        if(isset($widget['UsersWidget']['user_id']) && ($widget['UsersWidget']['user_id'] == $user_id)){
             $this->UsersWidget->undelete($w_id);
             $response['success'] = true;
+            $response['widget'] = $this->getwidgetsposition($w_id);
         }
         else {
             $response['success'] = false;
