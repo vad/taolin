@@ -134,7 +134,7 @@ westPanel = new Ext.Panel({
                 //save in a retrievable place if this photo is user's photo
                 //and then show tools
                 westPanel.showTools = ((!reqid) || (reqid == window.thisId));
-                showText(((!reqid) || (reqid == window.thisId)), 'edit-div');
+                showText(westPanel.showTools, 'user-profile-edit-div'); // Shows tools and Edit box only if the showed profile belongs to the user
 
                 if (('photo' in jsondata.user) && (jsondata.user.photo)){
                     Ext.get("user_photo").dom.src = jsondata.user.photo;
