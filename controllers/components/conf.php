@@ -32,56 +32,57 @@ class ConfComponent extends Object
 		if(!$this->started) {
 			
 			$this->started = true;
-			if(loadModel('ConfigCategory')) {
-				// create the model first so we can use set even if the cache is active
-				$this->ccModel = & new ConfigCategory();
-				
-				if($this->cacheActive) {
-					
-					$cacheData = cache('persistent'.DS.$this->cacheFile, null, $this->cacheTime);
-					// cache file didn't expire and file isn't empty
-					if(($cacheData !== false) && ($cacheData != null)) {
-						
-						/* skip <?php die(); ?> */
-						$cacheData = substr($cacheData,strpos($cacheData,'>')+1);
-						$this->data = unserialize($cacheData);
-						return true;
-					}
-				}
-				
-				$ccs = $this->ccModel->findAll();
-				
-				if(!empty($ccs)) {
-					
-					$strToBool = array('true'=>true,'false'=>false);
-					// setup for easy/fast access
-					foreach($ccs as $cc) {
-						
-						$name = $cc['ConfigCategory']['name'];
-						$cfg    = $cc['Config'];
-						
-						$this->data[$name]['id'] = $cc['ConfigCategory']['id'];
-						$this->data[$name]['cfg'] = array();
-						
-						foreach($cfg as $c) {
-							
-							// convert 'true','false' to boolean true, false
-							if($this->getStrBool && in_array($c['value'],array('true','false'))) {
-								
-								$c['value'] = $strToBool[ $c['value'] ];
-							}
-							$this->data[$name]['cfg'][$c['key']] = array('id'=>$c['id'],'value'=>$c['value']);
-						}
-					}
-					
-					if($this->cacheActive) {
-						
-						// hide it from stalkers.
-						$cacheData = '<?php die(); ?>'.serialize($this->data);
-						cache('persistent'.DS.$this->cacheFile, $cacheData, $this->cacheTime);
-					}
-				}
-			}
+			
+            App::import('Model', 'ConfigCategory');
+
+            // create the model first so we can use set even if the cache is active
+            $this->ccModel = & new ConfigCategory();
+            
+            if($this->cacheActive) {
+                
+                $cacheData = cache('persistent'.DS.$this->cacheFile, null, $this->cacheTime);
+                // cache file didn't expire and file isn't empty
+                if(($cacheData !== false) && ($cacheData != null)) {
+                    
+                    /* skip <?php die(); ?> */
+                    $cacheData = substr($cacheData,strpos($cacheData,'>')+1);
+                    $this->data = unserialize($cacheData);
+                    return true;
+                }
+            }
+            
+            $ccs = $this->ccModel->findAll();
+            
+            if(!empty($ccs)) {
+                
+                $strToBool = array('true'=>true,'false'=>false);
+                // setup for easy/fast access
+                foreach($ccs as $cc) {
+                    
+                    $name = $cc['ConfigCategory']['name'];
+                    $cfg    = $cc['Config'];
+                    
+                    $this->data[$name]['id'] = $cc['ConfigCategory']['id'];
+                    $this->data[$name]['cfg'] = array();
+                    
+                    foreach($cfg as $c) {
+                        
+                        // convert 'true','false' to boolean true, false
+                        if($this->getStrBool && in_array($c['value'],array('true','false'))) {
+                            
+                            $c['value'] = $strToBool[ $c['value'] ];
+                        }
+                        $this->data[$name]['cfg'][$c['key']] = array('id'=>$c['id'],'value'=>$c['value']);
+                    }
+                }
+                
+                if($this->cacheActive) {
+                    
+                    // hide it from stalkers.
+                    $cacheData = '<?php die(); ?>'.serialize($this->data);
+                    cache('persistent'.DS.$this->cacheFile, $cacheData, $this->cacheTime);
+                }
+            }
 		}
 	}
 	

@@ -599,6 +599,23 @@ CREATE TABLE content_types (
   UNIQUE (table_name)
 );
 
+
+DROP TABLE IF EXISTS configs CASCADE;
+CREATE TABLE configs (
+  id SERIAL,
+  config_category_id integer NOT NULL,
+  key varchar(50) NOT NULL,
+  value varchar(50) NOT NULL,
+  PRIMARY KEY  (id)
+);
+
+DROP TABLE IF EXISTS config_categories CASCADE;
+CREATE TABLE config_categories (
+  id SERIAL,
+  name varchar(50) NOT NULL,
+  PRIMARY KEY  (id)
+);
+
 --
 -- Final view structure for view "users_widgets_readable"
 --
