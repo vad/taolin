@@ -25,26 +25,8 @@ class AccountsController extends AppController {
     var $name = 'Accounts';
     var $helpers = array('Html','Form','Javascript');
     var $uses = array('User','Widget');
-    var $authmethod = array();         
-    var $components = array();
-    var $mycomponent;
+    var $AuthComponent;
 
-    function __construct() {
-            $this->authmethod['0'] = Configure::read('App.auth').'auth';
-            $this->log('AUTHMETHOD: '.$this->authmethod['0'],LOG_DEBUG);
-            $this->components['0'] = $this->authmethod['0'];
-            $this->log('COMPONENTS: '.$this->components['0'],LOG_DEBUG);
-
-            $name = $this->components['0'];
-            App::import('Component', $name);
-            //$found = loadComponent($name);
-            $cn = $name . 'Component';
-            $this->mycomponent = new $cn();
-            //    $this->Mycomponent =& new DummyauthComponent(null); 
-            //    $this->log('MY COMP: '.$this->Mycomponent,LOG_DEBUG);
-
-            parent::__construct();
-    } 
 
     function beforeFilter()
     {
@@ -72,6 +54,13 @@ class AccountsController extends AppController {
         
         //set json view as default
         $this->view = 'Json';
+
+        //initialize auth component
+        $this->Conf->startup(&$this); //start Conf component
+        $auth_comp = $this->Conf->get('Auth.method').'auth';
+        App::import('Component', $auth_comp);
+        $cn = $auth_comp . 'Component';
+        $this->AuthComponent = new $cn();
     }
 
     function login(){
@@ -95,31 +84,24 @@ class AccountsController extends AppController {
     function logout(){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->Session->destroy();
-        $appname = Configure::read('App.name');
+        $appname = $this->Conf->get('Site.name');
         $this->flash('Thanks for using '.$appname.'!','/login');
     }
 
-    function doconnection($myuser, $password) {
-        $this->log('AUTHMETHOD in doconnection: '.$this->authmethod['0'],LOG_DEBUG);
-        $this->log('COMPONENTS in doconnection: '.$this->components['0'],LOG_DEBUG); 
 
-        $rettemp = $this->authmethod['0'];
-        $this->log('rettemp in doconnection: '.$rettemp,LOG_DEBUG); 
-        $this->log('-----------------------------------------',LOG_DEBUG);
-       
-        $ret = $this->mycomponent->connecttoserver($myuser, $password);
-        $this->log('ret in doconnection: '.$ret,LOG_DEBUG);    
+    function doconnection($myuser, $password) {
+        $ret = $this->AuthComponent->connecttoserver($myuser, $password);
         return $ret;    
     }   
     
 
     function getuserdn() {
-        $ret = $this->mycomponent->getuserdn();
+        $ret = $this->AuthComponent->getuserdn();
         return $ret;
     }   
 
     function getusergroups(){
-        $ret = $this->mycomponent->getusergroups();
+        $ret = $this->AuthComponent->getusergroups();
         return $ret;
     }
 
@@ -176,7 +158,7 @@ class AccountsController extends AppController {
             $response['error']['champion'] = false;
         }
 
-        $response['contactus'] = Configure::read('App.contactus');
+        $response['contactus'] = $this->Conf->get('Site.admin');
         $this->set('json', $response);
     }
 

@@ -109,7 +109,7 @@ class UsersController extends AppController {
             }
         }
 
-        $addtomail = Configure::read('App.addtomail');
+        $addtomail = '@'.$this->Conf->get('Organization.domain');
 
         $json['user'] = $user['User'];
         if ((!$user['User']['email']) && ($user['User']['login'])){
@@ -319,8 +319,8 @@ class UsersController extends AppController {
         foreach($users as $user){
             
             if(!$user['User']['email'] || $user['User']['email']==null || $user['User']['email']==''){
-                $addtomail = Configure::read('App.addtomail');
-                $user['User']['email'] = $user['User']['login'].$addtomail;
+                $addtomail = $this->Conf->get('Organization.domain');
+                $user['User']['email'] = $user['User']['login'].'@'.$addtomail;
             }
 
             $clean_users[] = $user['User'];

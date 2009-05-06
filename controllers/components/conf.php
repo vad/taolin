@@ -244,5 +244,24 @@ class ConfComponent extends Object
 		}	
 		return true;
 	}
+
+
+    //return an array containing all the categories
+    function listCat() {
+        return array_keys($this->data);
+    }
+
+
+    //return all the keys in the $cat category
+    function listValue($cat) {
+        if (array_key_exists($cat, $this->data)) {
+            $keys = array();
+            foreach ($this->data[$cat]['cfg'] as $k => $v){
+                $keys[$k] = $v['value'];
+            }
+            return $keys;
+        } else
+            return null;
+    }
 }
 ?>

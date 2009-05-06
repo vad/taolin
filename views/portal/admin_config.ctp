@@ -18,29 +18,34 @@
  * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-  
-  $base = $this->base;
-  $items = array('Admin' => 'admin',
-    'Users' => 'admin/users',
-    'Widgets' => 'admin/widgets',
-    'Configuration' => 'admin/portals/config'
-  );
+
 ?>
-<div id="header">
-  <h1><a href="<? echo $this->base ?>/admin/">Taolin administration site</a></h1>
-  <div id="main-navigation">
-    <ul>
-<?
-  $maybe_first = 'first';
-  foreach ($items as $name => $url){
-    $maybe_active = '';
-    if (trim($this->params['url']['url'], '/') == $url)
-      $maybe_active = 'active';
-    echo "<li class='$maybe_first $maybe_active'><a href='$base/$url'>$name</a>";
-    $maybe_first = '';
-  }
-?>
-    </ul>
-    <div class="clear"></div>
+<div id="wrapper">
+  <div id="main">
+    <div class="block">
+      <div class="content">
+        <div class="inner">
+          <h2 class="title">Settings</h2>
+            <form method=POST action="config" class="form">
+            <?
+            foreach ($configs as $cat => $keys) {
+              echo "<h3>$cat</h3>";
+              foreach ($keys as $k => $v){ ?>
+                <div class="group">
+                <label class="label"><? echo $k; ?></label>
+                <input class="text_field" name='data[<? echo $cat ?>][<? echo $k?>]' value='<? echo $v; ?>'/>
+
+                </div>
+            <?
+              }
+            }
+            ?>
+            <div class="submit">
+              <input class="button" type="submit" value="Save" />
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

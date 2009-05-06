@@ -32,11 +32,66 @@ class PortalsController extends AppController {
         $this->checkSession();
     }
 
-    function index(){ }
+    function index(){
+        $this->pageTitle = $this->Conf->get('Site.name');
+    }
 
     function admin(){
         $this->layout = 'admin';
     }
     
+    
+    function admin_config(){
+        $this->layout = 'admin';
+
+        if (!empty($this->data)){
+            //save
+            foreach ($this->data as $cat => $configs){
+                foreach ($configs as $k => $v){
+                    $this->Conf->set($cat.'.'.$k, $v);
+                }
+            }
+            $this->Session->setFlash('Settings saved',
+                'admin_flash_message_success');
+            $this->redirect('/admin/portals/config');
+        } else {
+            // show all the settings in the DB configs table
+            $cats = $this->Conf->listCat();
+            $allKeys = array();
+            foreach ($cats as $cat){
+                $cat_keys = $this->Conf->listValue($cat);
+                $allKeys[$cat] = $cat_keys;
+            }
+            $this->set('configs', $allKeys);
+        }
+    }
+    
+    
+    function admin_configPopulate(){
+        $this->layout = 'admin';
+
+        $config = array(
+            'Site.name' => 'taolin',
+            'Site.url' => 'http://taolin.fbk.eu', //used in views/pages/make_homepage_help.ctp
+            'Site.admin' => 'admin@example.com', //email address used in photos controller
+            'Site.jsdebug' => '1', //used in views/portal/index.ctp
+            'Organization.domain' => 'example.com',
+            'Organization.group_name' => 'Group',
+            'Images.people_fs_path' => 'YOUR_PATH/user_images', //folder must be img/user_images, update only the absolute path
+            'Images.error_fs_path' => 'ANOTHER_PATH/images_upload_error/', //folder must be img/user_images, update only the absolute path, for FBK is /www/desktop/html/images_desktop/
+            'Images.people_web_path' => 'user_images/',
+            'Images.webcam_fs_path' => 'ONE_PATH/webcam/',
+            'Organization.publications' => '0', //1 for TRUE, 0 for FALSE; used only when you have a server to show publications
+            'Auth.method' => 'Dummy', //Choose between Dummy or Ldap
+            'Jabber.server' => 'jabber.example.com',
+            'Jabber.domain' => 'example.com',
+            'Site.logo_url' => 'img/logo.png',
+            'Site.favicon' => 'local/img/favicon.ico' // local path to favicon (optional)
+        );
+        foreach ($config as $k => $v) {
+            if ($this->Conf->get($k, null) === null)
+                $this->Conf->set($k, $v, null, True, True);
+        }
+    }
 }
 ?>

@@ -33,6 +33,7 @@ class PhotosController extends AppController {
         $this->san = new Sanitize();
     }
 
+
     function getphotos(){
         
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
@@ -68,7 +69,7 @@ class PhotosController extends AppController {
 
         $photo_ar = $this->Photo->find('all', $query);
 
-        $imagefoldername = Configure::read('App.imagefolder.web_path');
+        $imagefoldername = $this->Conf->get('Images.people_web_path');
 
         foreach($photo_ar as $photo){
             $photo['Photo']['size'] = $photo[0]['size'];
@@ -83,6 +84,7 @@ class PhotosController extends AppController {
          
         $this->set(compact('json'));
     }
+
 
     function setdefaultphoto($p_id){
 
@@ -109,7 +111,7 @@ class PhotosController extends AppController {
             $params = $this->Photo->findById($p_id, array('field' =>'Photo.name','Photo.filename','Photo.width','Photo.height','Photo.caption',));
 
             // Add event to the timeline
-            $imagefoldername = Configure::read('App.imagefolder.web_path'); 
+            $imagefoldername = $this->Conf->get('Images.people_web_path'); 
             
             $sanitized_desc = $this->san->html(str_replace('\'', '\\\'', $params['Photo']['caption']));
             $this->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$params['Photo']['filename'], "width" => $params['Photo']['width'], "height" => $params['Photo']['height'], "filename" => $params['Photo']['filename'], "caption" => $sanitized_desc, "name" => $params['Photo']['name']));
@@ -130,7 +132,7 @@ class PhotosController extends AppController {
         $response['success'] = false;
 
         /* Directory into which file would be uploaded */
-        $dest_dir = Configure::read('App.imagefolder.fs_path');
+        $dest_dir = $this->Conf->get('Images.people_fs_path');
 
         $user_id = $this->Session->read('id');
 
@@ -140,7 +142,7 @@ class PhotosController extends AppController {
         $maxFileSizeInKb = round($maxFileSize/1024);
         
         // Directory where not correctly uploaded photos are stored
-        $error_dir = Configure::read('App.imagefolder.error_fs_path');
+        $error_dir = $this->Conf->get('Images.error_fs_path');
         
         $params = $this->params['form'];
         $file_params = $this->params['form']['file'];
@@ -261,8 +263,8 @@ class PhotosController extends AppController {
             if ($user['User']['email']){
                 $sender = $user['User']['email'];
             } else {
-                $addtomail = Configure::read('App.addtomail');
-                $sender = $user['User']['login'].$addtomail;
+                $addtomail = $this->Conf->get('Organization.domain');
+                $sender = $user['User']['login'].'@'.$addtomail;
             }
 
             $username = $user['User']['name'].' '.$user['User']['surname'];
@@ -270,8 +272,8 @@ class PhotosController extends AppController {
             $type = $file_params['type'];
 
             $this->Email->from = $sender;
-            $this->Email->to =  Configure::read('App.contactus');
-            $appname = Configure::read('App.name');
+            $this->Email->to =  $this->Conf->get('Site.admin');
+            $appname = $this->Conf->get('Site.name');
             $this->Email->subject = $appname.' notification: error in photo upload';
             $this->Email->send("$username ($sender) couldn't upload a photo (name=$name - size in Kb=$size - type=$type - desc=$desc). This is the text of the message received with the notification of the error: $message\n\n#########################################\n\nSomeone of us wants to get in touch with $username ($sender) either via chat, email or telephone in order to understand what the problem was and how to solve it together!!!");
         }
@@ -383,7 +385,7 @@ class PhotosController extends AppController {
              */
             $photo_name = substr_replace($resphoto['Photo']['filename'], '.jpg', strrpos($resphoto['Photo']['filename'], '.'));
 
-            $photo_fs_dir = Configure::read('App.imagefolder.fs_path');
+            $photo_fs_dir = $this->Conf->get('Images.people_fs_path');
 
             // building final photo web path
             $photo = imagecreatefromjpeg($photo_fs_dir.'t'.$width.'x'.$height.'/'.$photo_name);

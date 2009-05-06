@@ -17,8 +17,6 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-<?php
 
 uses('sanitize');
 
@@ -41,14 +39,14 @@ class UsersWidgetsController extends AppController {
         
         $u_id = $this->Session->read('id');
 
-        $response['config']['addtomail'] = Configure::read('App.addtomail');
-        $response['config']['appname'] = Configure::read('App.name');
-        $response['config']['contactus'] = Configure::read('App.contactus');
-        $response['config']['defaultgroupname'] = Configure::read('App.defaultgroupname');
-        $response['config']['img_path'] = Configure::read('App.imagefolder.web_path');
-        $response['config']['jabber_server'] = Configure::read('App.jabber.server');
-        $response['config']['jabber_domain'] = Configure::read('App.jabber.domain');
-        $response['config']['logo'] = Configure::read('App.logo.url');
+        $response['config']['addtomail'] = $this->Conf->get('Organization.domain');
+        $response['config']['appname'] = $this->Conf->get('Site.name');
+        $response['config']['contactus'] = $this->Conf->get('Site.admin');
+        $response['config']['defaultgroupname'] = $this->Conf->get('Organization.group_name');
+        $response['config']['img_path'] = $this->Conf->get('Images.people_web_path');
+        $response['config']['jabber_server'] = $this->Conf->get('Jabber.server');
+        $response['config']['jabber_domain'] = $this->Conf->get('Jabber.domain');
+        $response['config']['logo'] = $this->Conf->get('Site.logo_url');
 
         $response['success'] = true;
         
