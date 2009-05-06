@@ -38,7 +38,7 @@ class PhotoManagerShell extends Shell {
         App::import('Component','PhotoUtil');
         $this->Thumber->PhotoUtil = new PhotoUtilComponent(null);
        
-        $app_url = Configure:read('App.url');
+        $app_url = Configure::read('App.url');
 
         $dest_dir = Configure::read('App.imagefolder.fs_path');
 
