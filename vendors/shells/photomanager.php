@@ -23,9 +23,13 @@ class PhotoManagerShell extends Shell {
     var $uses = array('Photo');
     
     function main() {
-
+        
         // Importing components to be used
            
+        App::import('Component','Conf');
+        $this->Conf =& new ConfComponent(null);
+        $this->Conf->startup($this->Controller);
+
         App::import('Component','PhotoUtil');
         $this->PhotoUtil = new PhotoUtilComponent(null); 
 
@@ -37,14 +41,15 @@ class PhotoManagerShell extends Shell {
         
         App::import('Component','PhotoUtil');
         $this->Thumber->PhotoUtil = new PhotoUtilComponent(null);
-       
-        $app_url = Configure::read('App.url');
 
-        $dest_dir = Configure::read('App.imagefolder.fs_path');
+        $app_url = $this->Conf->get('Site.url');
+        $dest_dir = $this->Conf->get('Images.people_fs_path');
+        $web_path = $this->Conf->get('Images.people_web_path');
 
         //Get photos added in the last day
         $today = date('Y-m-d H:i:s');
         $day_ago = date('Y-m-d H:i:s', strtotime('-1 day'));
+        
         $photos = $this->Photo->find('all', array(
                     'conditions'=>array(
                         'created >= \''.$day_ago.'\''
@@ -69,7 +74,7 @@ class PhotoManagerShell extends Shell {
             if($photo['Photo']['filename']){
                 $result .= "New uploaded picture on: ".$photo['Photo']['created']."\n";
                 $result .= "Name: ".$photo['Photo']['name'].", belonging to user with id: ".$photo['Photo']['user_id']."\n";
-                $result .= "URL: ".$app_url."img/fbk/people/".$photo['Photo']['filename']."\n\n";
+                $result .= "URL: ".$app_url.$web_path.$photo['Photo']['filename']."\n\n";
                 $uploaded += 1;
             }
             // otherwise, create the new photo!
@@ -87,10 +92,10 @@ class PhotoManagerShell extends Shell {
 
                 if(file_exists($dest_file)){
 
-                    if($this->Thumber->createthumb($filename, null, true)){
+                    if($this->Thumber->createthumb($filename, $dest_dir, true)){
 
                         $result .= "Created a new picture for user with id: ".$photo['Photo']['user_id']."\n";
-                        $result .= "URL: ".$app_url."img/fbk/people/".$filename."\n\n";
+                        $result .= "URL: ".$app_url.$web_path.$filename."\n\n";
 
                         $data['id'] = $photo['Photo']['id'];
                         $data['user_id'] = $photo['Photo']['user_id'];
@@ -119,8 +124,8 @@ class PhotoManagerShell extends Shell {
             $result .= "### Uploaded photos: " . $uploaded . "\n"; 
             $result .= "### Total photos: " . $total;
             
-            $mail_to = Configure::read('App.contactus');
-            
+            $mail_to = $this->Conf->get('Site.admin');
+
             $this->Email->from = $mail_to;
             $this->Email->to = $mail_to;
             $this->Email->subject = 'Pictures uploaded in the last day';

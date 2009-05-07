@@ -55,10 +55,7 @@ class ThumberComponent extends Object{
 
         if(!$image_formats)
             $image_formats = $this->image_formats;
-
-        if (!$path)
-            $path = Configure::read('App.imagefolder.fs_path');
-
+        
         $img = $path.$filename;
 
         $fill = false;

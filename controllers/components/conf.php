@@ -84,8 +84,8 @@ class ConfComponent extends Object
                 }
             }
 
-            // make this component available from the views
-            $controller->set('conf', $this);
+            if($controller)
+                $controller->set('conf', $this); // make this component available from the views
         }
     }
     
