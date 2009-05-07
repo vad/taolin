@@ -197,7 +197,7 @@ westPanel = new Ext.Panel({
                      * START Group description
                      *********************************************/
                     '<tpl if="groups_description">',
-                        '<br /><br /><b>{defaultgroupname}</b>',
+                        '<br /><br /><b>{[window.config.defaultgroupname]}</b>',
                         '<br />',
                         '<span>',
                             '<ul style="padding: 5px 0 0 20px">', 
