@@ -44,6 +44,7 @@ class PhotoManagerShell extends Shell {
 
         $app_url = $this->Conf->get('Site.url');
         $dest_dir = $this->Conf->get('Images.people_fs_path');
+        $web_path = $this->Conf->get('Images.people_web_path');
 
         //Get photos added in the last day
         $today = date('Y-m-d H:i:s');
@@ -73,7 +74,7 @@ class PhotoManagerShell extends Shell {
             if($photo['Photo']['filename']){
                 $result .= "New uploaded picture on: ".$photo['Photo']['created']."\n";
                 $result .= "Name: ".$photo['Photo']['name'].", belonging to user with id: ".$photo['Photo']['user_id']."\n";
-                $result .= "URL: ".$app_url."img/fbk/people/".$photo['Photo']['filename']."\n\n";
+                $result .= "URL: ".$app_url.$web_path.$photo['Photo']['filename']."\n\n";
                 $uploaded += 1;
             }
             // otherwise, create the new photo!
@@ -94,7 +95,7 @@ class PhotoManagerShell extends Shell {
                     if($this->Thumber->createthumb($filename, $dest_dir, true)){
 
                         $result .= "Created a new picture for user with id: ".$photo['Photo']['user_id']."\n";
-                        $result .= "URL: ".$app_url."img/fbk/people/".$filename."\n\n";
+                        $result .= "URL: ".$app_url.$web_path.$filename."\n\n";
 
                         $data['id'] = $photo['Photo']['id'];
                         $data['user_id'] = $photo['Photo']['user_id'];
