@@ -120,7 +120,7 @@ class UsersController extends AppController {
         $defaultgroupname = $this->Conf->get('Site.group_name'); 
         $json['user']['defaultgroupname'] = $defaultgroupname; 
 
-        $imagefoldername = $this->Conf->get('App.imagefolder.web_path');
+        $imagefoldername = $this->Conf->get('Images.people_web_path');
 
         if (!empty($photo['Photo'])){
 
