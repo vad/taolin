@@ -18,7 +18,7 @@
  * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-  
+
   $base = $this->base;
   $items = array('Admin' => 'admin',
     'Users' => 'admin/users',
@@ -28,6 +28,12 @@
 ?>
 <div id="header">
   <h1><a href="<? echo $this->base ?>/admin/">Taolin administration site</a></h1>
+  <div id="user-navigation">
+    <ul>
+      <li><a href="<? echo $conf->get('Site.url') ?>">Back to <? echo $conf->get('Site.name') ?></a></li>
+    </ul>
+    <div class="clear"></div>
+  </div>
   <div id="main-navigation">
     <ul>
 <?
