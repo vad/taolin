@@ -428,7 +428,7 @@ div.thumb span {
 
 /* NOTES */
 textarea.note-text-area {
-    background: transparent url(../../img/note-bg-gradient.png) repeat-x;
+    background: transparent url(../../img/note-bg-gradient.png) repeat-x !important;
     border:0;
 }
 .note-text-container{
