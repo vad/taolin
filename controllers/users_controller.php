@@ -587,5 +587,23 @@ class UsersController extends AppController {
             $this->redirect($referer);
         }
     }
+    
+    function admin_create_aros($uid, $active = 1){
+        Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax
+
+        $aro = new Aro();
+
+        $champions = $this->User->find('all', array(
+            'fields' => array('id', 'active'),
+            'conditions' => array('active' => 1)
+            ));
+
+        foreach ($champions as $champion) {
+            //$aro->create();
+            //$aro->save(array('model' => 'User', 'foreign_key' => $champion['User']['id'], 'parent_id' => 1));
+        }
+
+        $this->set('json', 'a');
+    }
 }
 ?>

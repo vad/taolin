@@ -20,7 +20,7 @@
 
 class AppController extends Controller
 {
-    var $components = array('Conf');
+    var $components = array('Conf', 'Acl');
 
     function checkSession()
     {
@@ -31,6 +31,13 @@ class AppController extends Controller
             $this->redirect('/login');
             exit();
         }
+        
+        if (($this->params['admin']) || ($this->params['action'] == 'admin')){
+            if (!$this->Acl->check(array('model' => 'User', 'foreign_key' => $this->Session->read('id')), 'admin')){
+                echo 'Not allowed';
+                exit();
+            }
+        };
     }
 
     function beforeFilter()
