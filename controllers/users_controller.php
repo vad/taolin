@@ -26,6 +26,10 @@ class UsersController extends AppController {
     var $name = 'Users';
     var $helpers = array('Html','Form','Javascript');
     var $components = array('Email');
+    var $paginate = array(
+        'limit' => 50,
+        'order' => 'User.surname'
+    );
 
     function beforeFilter()
     {
@@ -564,13 +568,22 @@ class UsersController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'admin';
         
-        $res = $this->User->find('all', array(
-            'fields' => array('id', 'name', 'surname', 'login', 'active'),
+        /*$users = $this->User->find('all', array(
+            'fields' => array('id', 'name', 'surname', 'login'),
             'order' => 'id',
             'recursive' => -1
-        ));
+        ));*/
+        $this->paginate['fields'] = array('id', 'name', 'surname', 'login');
+        $users = $this->paginate();
 
-        $this->set('users', $res);
+        foreach ($users as &$user) {
+            $user['User']['active'] = $this->Acl->check(
+                array('model' => 'User', 'foreign_key' => $user['User']['id']),
+                'site'
+            );
+        }
+
+        $this->set('users', $users);
         $this->set('url', $this->params['url']['url']);
     }
 
@@ -578,7 +591,35 @@ class UsersController extends AppController {
     function admin_activate($uid, $active = 1){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
 
-        $this->User->save(array('id' => $uid, 'active' => $active));
+        $aro = new Aro();
+
+        //find the id of this user's aco
+        $aro->create();
+        $user_aro = $aro->find('first', array(
+            'conditions' => array(
+                'model' => 'User',
+                'foreign_key' => $uid
+            ),
+            'fields' => array('id')
+        ));
+        
+        $new_aro = array('model' => 'User', 'foreign_key' => $uid);
+        if ($user_aro)
+            $new_aro['id'] = $user_aro['Aro']['id'];
+
+        if ($active){ // add this user to the users Aro group
+            // find the id of the users group
+            $aro->create();
+            $users_aro = $aro->findByAlias('users');
+            $users_aro_id = $users_aro['Aro']['id'];
+        
+            $new_aro['parent_id'] = $users_aro_id;
+
+        } else {
+            $new_aro['parent_id'] = NULL;
+        }
+
+        $aro->save($new_aro);
 
         $referer = $this->params['url']['r'];
 
@@ -587,7 +628,8 @@ class UsersController extends AppController {
             $this->redirect($referer);
         }
     }
-    
+   
+
     function admin_create_aros($uid, $active = 1){
         Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax
 
@@ -596,7 +638,7 @@ class UsersController extends AppController {
         $champions = $this->User->find('all', array(
             'fields' => array('id', 'active'),
             'conditions' => array('active' => 1)
-            ));
+        ));
 
         foreach ($champions as $champion) {
             //$aro->create();

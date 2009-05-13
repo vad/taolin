@@ -67,10 +67,24 @@ $url = '/'.$url;
             }
             ?>
           </table>
+          <div class="actions-bar">
+            <div class="pagination">
+              <?php 
+                echo $paginator->prev('« Previous', array('tag' => 'span', 'class' => 'prev_page'),
+                  null, array('tag' => 'a', 'class' => 'disabled prev_page'));
+              
+                echo $paginator->numbers(array('separator' => ''));
+                echo $paginator->next('Next »', array('tag' => 'span', 'class' => 'next_page'),
+                  null, array('tag' => 'a', 'class' => 'disabled next_page'));
+              ?>
+            </div>
+            <div class="clear" />
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 
   <div id="sidebar">
