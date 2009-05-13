@@ -64,9 +64,8 @@ class AccountsController extends AppController {
     }
 
     function login(){
-        if ($this->Session->check('id'))
-        {
-            // Force the user to login
+        if ($this->Session->check('id')) {
+            // if session is ok, redirect the user to the portal page
             $this->redirect('/');
             exit();
         } 
@@ -130,17 +129,24 @@ class AccountsController extends AppController {
             $response['success'] = true;
 
             //mi connetto al db e cerco di capire se l'utente e' champion o no
-            $isChampion = $this->User->findByLogin($myuser, array('id', 'active'));   
+            $user = $this->User->findByLogin($myuser, array('id'));
+            $uid = $user['User']['id'];
+            $active = $this->Acl->check(
+                array('model' => 'User', 'foreign_key' => $uid),
+                'site'
+            );
+            $this->log('frassoni: '.print_r($active, TRUE));
+
             // SE CHAMPION
-            if ($isChampion['User']['active'] == 1) {
+            if ($active) {
                 $response['error']['champion'] = true; //EXT forms need this to know if things did not work
 
                 $this->Session->write('logged', true);
-                $this->Session->write('id', $isChampion['User']['id']);
+                $this->Session->write('id', $uid);
                 $this->Session->write('login', $myuser);
                 $this->Session->write('password', $password);
                 
-                $this->Widget->is_user_already_present($isChampion['User']['id']);
+                $this->Widget->is_user_already_present($uid);
                 
                 //find user's dn
                 $member_dn = $this->getuserdn(); 

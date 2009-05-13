@@ -32,7 +32,7 @@ class AppController extends Controller
             exit();
         }
         
-        if (($this->params['admin']) || ($this->params['action'] == 'admin')){
+        if ((array_key_exists('admin', $this->params)) || ($this->params['action'] == 'admin')){
             if (!$this->Acl->check(array('model' => 'User', 'foreign_key' => $this->Session->read('id')), 'admin')){
                 echo 'Not allowed';
                 exit();
