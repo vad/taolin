@@ -135,7 +135,6 @@ class AccountsController extends AppController {
                 array('model' => 'User', 'foreign_key' => $uid),
                 'site'
             );
-            $this->log('frassoni: '.print_r($active, TRUE));
 
             // SE CHAMPION
             if ($active) {
