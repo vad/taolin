@@ -30,26 +30,25 @@ function second_step_main(){
 
   $db = database_connection($db_config['host'], $db_config['database'], $db_config['login'], $db_config['password']);
 
-  foreach($sql_scripts as $sql_script){
-    echo "<div style='text-align:center'><h3>Processing file $sql_script</h3></div>";
-    echo "<div height='300px'>";
-    execute_sql_script($db, $sql_scripts_path.$sql_script);
-    echo "</div>";
+  if($db){
+    foreach($sql_scripts as $sql_script){
+      echo "<div style='text-align:center'><h3>Processing file $sql_script</h3></div>";
+      execute_sql_script($db, $sql_scripts_path.$sql_script);
+    }
+  
+    ?>
+        <hr />
+        <div id='second-step-bottom'>
+          <h3>Database structure created.</h3>
+          <form method="POST" class="form" action="install.php?step=2" >
+            <div class="group navform" style="padding-top:20px">
+              <input type="submit" class="button" value="Next step" />  
+            </div>
+          </form>
+        </div>
+      </div> 
+    <?
   }
-
-  ?>
-      <hr />
-      <div id='second-step-bottom'>
-        <h3>Database structure created.</h3>
-        <form method="POST" class="form" action="install.php?step=2" >
-          <div class="group navform" style="padding-top:20px">
-            <input type="submit" class="button" value="Next step" />  
-          </div>
-        </form>
-      </div>
-    </div> 
-  <?
-
 }
 
 

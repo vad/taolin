@@ -22,9 +22,15 @@
 function database_connection($host, $dbname, $user, $password){
 
     $db = pg_connect("host=$host port=5432 dbname=$dbname user=$user password=$password");
+    
     if(!$db){
+    
       notice_message("<b>ERROR! Can not connect to the database <i>$dbname</i> on host <i>$host</i></b>", "error");
-      die('<h3>What can you do now?</h3><ul style="padding-left:20px"><li>You can <a href="install.php">go back to step 1</a> and configure your database properly</li><li>If the error persists, check your database or submit an issue to Taolin on github.</li></ul></div>');
+      
+      echo '<h3>What can you do now?</h3><ul style="padding-left:20px"><li>You can <a href="install.php">go back to step 1</a> and configure your database properly</li><li>If the error persists, check your database or submit an issue to Taolin on github.</li></ul></div>';
+
+      return null;
+
     }
 
     return $db;
