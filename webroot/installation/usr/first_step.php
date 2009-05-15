@@ -22,8 +22,7 @@
 
 function first_step_main(){
 
-  //if(!file_exists(DB_CONFIG_FILE))
-  if(file_exists(DB_CONFIG_FILE))
+  if(!file_exists(DB_CONFIG_FILE))
     db_configuration_form();
   else
     print_database_config(DB_CONFIG_FILE);
@@ -37,7 +36,7 @@ function db_configuration_form(){
   <div class="inner">
     <p class="first">
       Please check <a href="http://book.cakephp.org/view/40/Database-Configuration" target="_blank">CakePhp Cookbook</a> for an exhaustive explanation of how to configure correctly your database connection.</p>
-    <p>You could change this settings anytime by editing file <i>database.php</i> placed under <i>./config/</i> directory.</p>
+    <p>You could change this settings anytime by editing file <span class="hightlight"><i>database.php</i></span> placed under <span class="hightlight"><i>config/</i></span> directory.</p>
     <form action="install.php?step=1" method="POST" class="form">
       <label class="label" for="post_title">login</label>
       <input type="text" class="text_field" name="login" value="sonetdbmgr" />
@@ -56,8 +55,11 @@ function db_configuration_form(){
       <span class="description">The database server’s hostname (or IP address)</span>
 
       <label class="label" for="post_title">persistent</label>
-      <input type="text" class="text_field" name="persistent" />
+      <input type="text" class="text_field" name="persistent" value="false" />
       <span class="description">True to use a persistent connection to the database. Otherwise false</span>
+      
+      <label class="label" for="post_title">encoding</label>
+      <input type="text" class="text_field" name="encoding" value="utf-8" />
 
       <div class="group navform" style="padding-top:20px">
         <input type="submit" class="button" value="Save" />

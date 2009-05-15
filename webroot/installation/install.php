@@ -19,7 +19,12 @@
  *
  */
 
+
+// defining global value 
+
 define("DB_CONFIG_FILE", "../../config/database.php");
+
+// including files
 
 require_once('usr/install_fun.php');
 require_once('usr/first_step.php');
@@ -38,7 +43,8 @@ else
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Installation</title>
   <link rel="stylesheet" href="../css/admin/base.css" type="text/css" media="screen" />
-  <link rel="stylesheet" id="current-theme" href="../css/admin/themes/kathleene/style.css" type="text/css" media="screen" />
+  <!--<link rel="stylesheet" id="current-theme" href="../css/admin/themes/kathleene/style.css" type="text/css" media="screen" />-->
+  <link rel="stylesheet" id="current-theme" href="../css/admin/themes/djime-cerulean/style.css" type="text/css" media="screen" />
   <style type="text/css">
     #flashMessage {
       margin:10px 20px 0 20px;
@@ -120,30 +126,9 @@ else
           <div class="clear"></div>
         </div>
         <div class="block" id="block-forms">
-          <div class="content">           
+          <div class="content">          
           <?php 
-            switch($step){
-              case 0:
-              ?>
-                <h2 class="title">Step 1: Database configuration</h2>
-              <?
-                first_step_main();
-                break;
-              case 1:
-              ?>
-                <h2 class="title">Step 2: Creating database structure</h2>
-              <?
-                second_step_main();
-                break;
-              case 2:
-              ?>
-                <h2 class="title">Step 3: Site administrator</h2>
-              <?
-                third_step_main();
-                break;
-              default:
-                die("<div class='flash'><div class='message error'><p><b>ERROR! Follow the right path!</b></p></div></div>");
-            }
+            wizard_body($step);
            ?> 
           </div>
         </div>
@@ -154,27 +139,17 @@ else
         </div>
       </div>
       <div id="sidebar">
-        <div class="block">
-          <h3>Installation wizard help</h3>
+        <div class="block notice">
           <div class="content">
-            <p>This wizard will guide you through the Taolin installation process. Visit <a href="http://taolin.fbk.eu" target="_blank">Taolin Wiki</a> for help on this wizard. For any troubleshoot please submit an Issue on <a href="http://github/vad/taolin/issues" target="_blank">Github</a></p> 
-            <hr />
-      <?php
-        switch($step){
-          case 0: 
-            first_step_help();
-            break;
-          case 1:
-            second_step_help();
-            break;
-          case 2:
-            third_step_help();
-            break;
-          default:
-            echo 'Wrong path, ya?';
-        }
-      ?>
+          <?php
+            wizard_step_helper($step);
+          ?>
           </div>
+        </div>
+        <div class="block">
+          <?php
+            print_wizard_help();
+          ?>
         </div>
       </div>
       <div class="clear"></div>      

@@ -19,6 +19,74 @@
  *
  */
 
+
+function print_wizard_help(){
+
+  ?>
+
+  <h3>Installation wizard help</h3>
+  <div class="content">
+    <p>This wizard will guide you through the Taolin installation process. Visit <a href="http://taolin.fbk.eu" target="_blank">Taolin Wiki</a> for help on this wizard. For any troubleshoot please submit an Issue on <a href="http://github/vad/taolin/issues" target="_blank">Github</a></p> 
+  </div>
+
+  <?php
+}
+
+
+function wizard_body($step){
+
+  step_switcher($step);
+
+}
+
+
+function wizard_step_helper($step){
+
+  switch($step){
+    case 0: 
+      first_step_help();
+      break;
+    case 1:
+      second_step_help();
+      break;
+    case 2:
+      third_step_help();
+      break;
+    default:
+      echo 'Wrong path, ya?';
+  }
+
+}
+
+
+function step_switcher($step){
+
+  switch($step){
+    case 0:
+    ?>
+      <h2 class="title">Step 1: Database configuration</h2>
+    <?
+      first_step_main();
+      break;
+    case 1:
+    ?>
+      <h2 class="title">Step 2: Creating database structure</h2>
+    <?
+      second_step_main();
+      break;
+    case 2:
+    ?>
+      <h2 class="title">Step 3: Site administrator</h2>
+    <?
+      third_step_main();
+      break;
+    default:
+      die("<div class='flash'><div class='message error'><p><b>ERROR! Follow the right path!</b></p></div></div>");
+  }
+
+}
+
+
 function database_connection($host, $dbname, $user, $password){
 
     $db = pg_connect("host=$host port=5432 dbname=$dbname user=$user password=$password");

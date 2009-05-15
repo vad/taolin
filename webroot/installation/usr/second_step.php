@@ -25,6 +25,7 @@ function second_step_main(){
   $sql_scripts = array("taolin.struct.sql", "taolin.struct.post.sql");
 
   echo "<div class='inner'>";
+  echo "<p>Processing SQL scripts in order to create database structure. Once finished, click on the link placed at the bottom of the page to go to the next step.</p>";
   
   $db_config = $_POST;
 
@@ -32,19 +33,25 @@ function second_step_main(){
 
   if($db){
     foreach($sql_scripts as $sql_script){
-      echo "<div style='text-align:center'><h3>Processing file $sql_script</h3></div>";
+      echo "<h3>Processing file $sql_script</h3>";
       execute_sql_script($db, $sql_scripts_path.$sql_script);
     }
   
     ?>
         <hr />
         <div id='second-step-bottom'>
-          <h3>Database structure created.</h3>
-          <form method="POST" class="form" action="install.php?step=2" >
-            <div class="group navform" style="padding-top:20px">
-              <input type="submit" class="button" value="Next step" />  
-            </div>
-          </form>
+          <h2>Execution result</h2>
+          <div class='flash'>
+            <div class='message notice'><p><b>Database structure created</b></p></div>
+          </div>
+          <div class='inner'>
+            <p>Database structure has been created. To continue with this wizard, click on the button below and browse to the next step.</p>
+            <form method="POST" class="form" action="install.php?step=2" >
+              <div class="group navform" style="padding-top:20px">
+                <input type="submit" class="button" value="Next step" />  
+              </div>
+            </form>
+          </div>
         </div>
       </div> 
     <?
