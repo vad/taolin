@@ -1,5 +1,8 @@
--- STORED PROCEDURES --
-CREATE FUNCTION set_groups_description(integer) RETURNS void AS $$
+-- 
+-- STORED PROCEDURES
+--
+
+CREATE OR REPLACE FUNCTION set_groups_description(integer) RETURNS void AS $$
     UPDATE users SET groups_description = 
         (SELECT array_to_string(ARRAY(SELECT name FROM groups WHERE groups.id IN 
             (SELECT groups_users.group_id FROM groups_users WHERE groups_users.user_id = users.id)), ','))
@@ -68,8 +71,12 @@ CREATE OR REPLACE FUNCTION insert_into_users_widgets_history() RETURNS trigger A
 $insert_into_users_widgets_history$ LANGUAGE plpgsql;
 
 
--- INDEXES --
--- full text search index
+-- #### --
+
+--
+-- INDEXES
+--
+
 CREATE INDEX users_tsv_idx ON users USING gin (tsv);
 
 CREATE INDEX photos_user_id_idx ON photos USING btree (user_id);
@@ -77,12 +84,18 @@ CREATE INDEX photos_user_id_idx ON photos USING btree (user_id);
 CREATE INDEX timelines_user_id_idx ON timelines USING btree (user_id);
 
 CREATE INDEX users_widgets_user_id_idx ON users_widgets (user_id);
+
 CREATE INDEX groups_users_user_id_idx ON groups_users (user_id);
+
 CREATE INDEX content_types__table_name__idx ON content_types (table_name);
 
 
+-- #### --
 
--- TRIGGERS --
+--
+-- TRIGGERS
+--
+
 -- === users ===
 CREATE TRIGGER users_trigger AFTER UPDATE OR DELETE ON users
 FOR EACH ROW EXECUTE PROCEDURE insert_into_users_history(); 
@@ -104,7 +117,12 @@ FOR EACH ROW EXECUTE PROCEDURE insert_new_event_into_timeline();
 --FOR EACH ROW EXECUTE PROCEDURE on_delete_photo(); 
 
 
--- SET SEQUENCES --
+-- #### --
+
+--
+-- SET SEQUENCES
+--
+
 SELECT SETVAL('boards_id_seq', (select MAX(id) from boards)+1);
 SELECT SETVAL('buildings_id_seq', (select MAX(id) from buildings)+1);
 SELECT SETVAL('calendars_id_seq', (select MAX(id) from calendars)+1);
@@ -124,4 +142,3 @@ SELECT SETVAL('users_widgets_history_id_seq', (select MAX(id) from users_widgets
 SELECT SETVAL('widgets_id_seq', (select MAX(id) from widgets)+1);
 SELECT SETVAL('widgets_skel_id_seq', (select MAX(id) from widgets_skel)+1);
 SELECT SETVAL('workplaces_id_seq', (select MAX(id) from workplaces)+1);
-

@@ -1,0 +1,181 @@
+<?php // ex: set ts=2 softtabstop=2 shiftwidth=2: ?>
+<?php
+/**
+ * This file is part of taolin project (http://taolin.fbk.eu)
+ * Copyright (C) 2008, 2009 FBK Foundation, (http://www.fbk.eu)
+ * Authors: SoNet Group (see AUTHORS.txt)
+ *
+ * Taolin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation version 3 of the License.
+ *
+ * Taolin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+define("DB_CONFIG_FILE", "../../config/database.php");
+
+//require_once('usr/install_fun.php');
+require_once('usr/first_step.php');
+require_once('usr/second_step.php');
+
+if (isset($_GET['step']))
+  $step = $_GET['step'];
+else
+  $step = 0;
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Installation</title>
+  <link rel="stylesheet" href="../css/admin/base.css" type="text/css" media="screen" />
+  <link rel="stylesheet" id="current-theme" href="../css/admin/themes/kathleene/style.css" type="text/css" media="screen" />
+  <style type="text/css">
+    #flashMessage {
+      margin:10px 20px 0 20px;
+    }
+  </style>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery/jquery-1.3.2.min.js"></script> 
+  <script type="text/javascript" charset="utf-8" src="../js/admin/jquery.scrollTo.js"></script>   
+  <script type="text/javascript" charset="utf-8" src="../js/admin/jquery.localscroll.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    // <![CDATA[
+    var Theme = {
+      activate: function(name) {
+        window.location.hash = 'themes/' + name
+        Theme.loadCurrent();
+      },
+      
+      loadCurrent: function() {
+        var hash = window.location.hash;
+        if (hash.length > 0) {
+          matches = hash.match(/^#themes\/([a-z0-9\-_]+)$/);
+          if (matches && matches.length > 1) {
+            $('#current-theme').attr('href', 'css/themes/' + matches[1] + '/style.css');
+          } else {
+            alert('theme not valid');
+          }
+        }
+      }
+    }            
+    
+    $(document).ready(function() {
+      Theme.loadCurrent();
+      $.localScroll();      
+      $('.table :checkbox.toggle').each(function(i, toggle) {
+        $(toggle).change(function(e) {
+          $(toggle).parents('table:first').find(':checkbox:not(.toggle)').each(function(j, checkbox) {
+            checkbox.checked = !checkbox.checked;            
+          })          
+        });1
+      });
+    });
+    // ]]>    
+  </script> 
+</head>
+<body>
+  <div id="container">
+    <div id="header">
+      <h1 style="color:white">Taolin, Open Source Enterprise 2.0 web desktop</h1>
+      <div id="user-navigation">
+        <ul>
+          <li><a href="http://taolin.fbk.eu" target="_blank" >Taolin website</a></li>
+          <li><a href="http://github.com/vad/taolin/issues" target="_blank" >Taolin issues</a></li>
+        </ul>
+        <div class="clear"></div>
+      </div>      
+      <div id="main-navigation">
+        <ul>
+          <li class="active first"><a href="javascript:void(0)">Installation wizard</a></li>
+        </ul>
+        <div class="clear"></div>
+      </div>
+    </div>    
+    <div id="wrapper">
+      <div id="main">
+        <div class="block" id="block-text">
+          <div class="secondary-navigation">
+            <ul>
+              <li class="<? if($step == 0) echo "active" ?> first"><a href="javascript:void(0)">Step 1</a></li>
+              <li class="<? if($step == 1) echo "active" ?>"><a href="javascript:void(0)">Step 2</a></li>
+              <li class="<? if($step == 2) echo "active" ?>"><a href="javascript:void(0)">Step 3</a></li>
+            </ul>
+            <div class="clear"></div>
+          </div>          
+        </div>          
+        <div class="flash" style="padding-bottom:20px;">
+          <div id="flashMessage" style="display:none;">
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="block" id="block-forms">
+          <div class="content">           
+          <?php 
+            switch($step){
+              case 0:
+              ?>
+                <h2 class="title">Step 1: Database configuration</h2>
+              <?
+                first_step_main(DB_CONFIG_FILE);
+                break;
+              case 1:
+              ?>
+                <h2 class="title">Step 2: Creating database structure</h2>
+              <?
+                second_step_main();
+                break;
+              case 2:
+              ?>
+                <h2 class="title">Step 3: Site administrator</h2>
+              <?
+                echo 'Fuffa';
+                break;
+              default:
+                die("<div class='flash'><div class='message error'><p><b>ERROR! Follow the right path!</b></p></div></div>");
+            }
+           ?> 
+          </div>
+        </div>
+        <div id="footer">
+          <div class="block">
+            <p><a href="http://taolin.fbk.eu" target="_blank">Taolin</a>, open source Enterprise 2.0 web desktop. &copy; 2009 <a href="http://taolin.fbk.eu" target="_blank">SoNet</a>.</p>
+          </div>      
+        </div>
+      </div>
+      <div id="sidebar">
+        <div class="block">
+          <h3>Installation wizard help</h3>
+          <div class="content">
+            <p>This wizard will guide you through the Taolin installation process. Visit <a href="http://taolin.fbk.eu" target="_blank">Taolin Wiki</a> for help on this wizard. For any troubleshoot please submit an Issue on <a href="http://github/vad/taolin/issues" target="_blank">Github</a></p> 
+            <hr />
+      <?php
+        switch($step){
+          case 0: 
+            //first_step_help();
+            echo 'Merda';
+            break;
+          case 1:
+            //second_step_help();
+            break;
+          case 2:
+            break;
+      }
+      ?>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>      
+    </div>    
+  </div>
+</body>
+</html>

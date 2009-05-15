@@ -1,15 +1,3 @@
--- MySQL dump 10.11
---
--- Host: localhost    Database: desktop
--- ------------------------------------------------------
--- Server version	5.0.45
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO,POSTGRESQL' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 --
 -- Table structure for table "acos"
 --
@@ -25,6 +13,8 @@ CREATE TABLE "acos" (
   "rght" INTEGER default NULL,
   PRIMARY KEY  ("id")
 );
+
+-- #### --
 
 --
 -- Table structure for table "aros"
@@ -42,6 +32,8 @@ CREATE TABLE "aros" (
   PRIMARY KEY  ("id")
 );
 
+-- #### --
+
 --
 -- Table structure for table "aros_acos"
 --
@@ -58,6 +50,8 @@ CREATE TABLE "aros_acos" (
   PRIMARY KEY  ("id"),
    UNIQUE ("aro_id","aco_id")
 );
+
+-- #### --
 
 --
 -- Table structure for table "boards"
@@ -77,6 +71,8 @@ CREATE TABLE "boards" (
   PRIMARY KEY  ("id")
 );
 
+-- #### --
+
 --
 -- Table structure for table "buildings"
 --
@@ -94,6 +90,8 @@ CREATE TABLE "buildings" (
   PRIMARY KEY  ("id")
 );
 
+-- #### --
+
 --
 -- Table structure for table "cake_sessions"
 --
@@ -105,6 +103,8 @@ CREATE TABLE "cake_sessions" (
   "expires" INTEGER default NULL,
   PRIMARY KEY  ("id")
 );
+
+-- #### --
 
 --
 -- Table structure for table "calendars"
@@ -121,6 +121,8 @@ CREATE TABLE "calendars" (
   "name" varchar(100) default NULL
 );
 
+-- #### --
+
 --
 -- Table structure for table "checked_users"
 --
@@ -130,6 +132,8 @@ CREATE TABLE "checked_users" (
   "user_id" INTEGER NOT NULL,
    UNIQUE ("user_id")
 );
+
+-- #### --
 
 --
 -- Table structure for table "events"
@@ -153,6 +157,7 @@ CREATE TABLE "events" (
    --KEY "start_time" ("start_time","end_time")
 );
 
+-- #### --
 
 --
 -- Table structure for table "feedbacks"
@@ -168,6 +173,8 @@ CREATE TABLE "feedbacks" (
   PRIMARY KEY  ("id")
 );
 
+-- #### --
+
 --
 -- Table structure for table "groups"
 --
@@ -181,6 +188,8 @@ CREATE TABLE "groups" (
   "url" varchar(100) default NULL,
   PRIMARY KEY  ("id")
 );
+
+-- #### --
 
 --
 -- Table structure for table "groups_users"
@@ -197,6 +206,7 @@ CREATE TABLE "groups_users" (
    PRIMARY KEY(group_id, user_id)
 );
 
+-- #### --
 
 --
 -- Table structure for table "groups_users_history"
@@ -212,6 +222,8 @@ CREATE TABLE "groups_users_history" (
   PRIMARY KEY  ("id")
 );
 
+-- #### --
+
 --
 -- Table structure for table "identities"
 --
@@ -225,6 +237,8 @@ CREATE TABLE "identities" (
    UNIQUE ("user_id")
 );
 
+-- #### --
+
 --
 -- Table structure for table "institutes"
 --
@@ -237,6 +251,8 @@ CREATE TABLE "institutes" (
   PRIMARY KEY  ("id")
 );
 
+-- #### --
+
 --
 -- Table structure for table "logs"
 --
@@ -248,6 +264,8 @@ CREATE TABLE "logs" (
   "created" TIMESTAMP(0) NOT NULL default now(),
   PRIMARY KEY  ("id")
 );
+
+-- #### --
 
 --
 -- Table structure for table "photos"
@@ -273,6 +291,7 @@ CREATE TABLE "photos" (
   PRIMARY KEY  ("id")
 );
 
+-- #### --
 
 --
 -- Table structure for table "templates"
@@ -287,6 +306,8 @@ CREATE TABLE "templates" (
   "is_unique" SMALLINT NOT NULL default '0',
   PRIMARY KEY  ("id")
 );
+
+-- #### --
 
 --
 -- Table structure for table "timelines"
@@ -306,6 +327,8 @@ CREATE TABLE "timelines" (
   "deleted_date" timestamp(0) NULL default NULL,
   PRIMARY KEY  ("id")
 );
+
+-- #### --
 
 --
 -- Table structure for table "users"
@@ -353,6 +376,14 @@ CREATE TABLE "users" (
   UNIQUE ("login")
 );
 
+-- #### --
+
+--
+-- Trigger functions
+--
+
+DROP LANGUAGE if exists plpgsql CASCADE;
+CREATE LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION users_tsv_trigger() RETURNS trigger AS $$
 begin
@@ -373,8 +404,10 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER usertsvupdate BEFORE INSERT OR UPDATE
 ON users FOR EACH ROW EXECUTE PROCEDURE users_tsv_trigger();
 
+-- #### --
+
 --
--- Temporary table structure for view "readable_timelines"
+-- Final view structure for view "readable_timeline"
 --
 
 CREATE OR REPLACE VIEW readable_timelines AS
@@ -409,6 +442,8 @@ WHERE
 ORDER BY "timelines"."date" DESC;
 
 -- ALTER TABLE readable_timelines OWNER TO sonetdbmgr;
+
+-- #### --
 
 --
 -- Table structure for table "users_history"
@@ -454,6 +489,8 @@ CREATE TABLE "users_history" (
   PRIMARY KEY  ("id")
 );
 
+-- #### --
+
 --
 -- Table structure for table "users_widgets"
 --
@@ -473,6 +510,8 @@ CREATE TABLE "users_widgets" (
   PRIMARY KEY  (id)
 );
 
+-- #### --
+
 --
 -- Table structure for table "users_widgets_history"
 --
@@ -491,6 +530,8 @@ CREATE TABLE "users_widgets_history" (
   "modified" timestamp(0) NOT NULL default CURRENT_TIMESTAMP(0),
   PRIMARY KEY  ("id")
 );
+
+-- #### --
 
 --
 -- Table structure for table "widgets"
@@ -512,6 +553,8 @@ CREATE TABLE "widgets" (
   PRIMARY KEY  ("id")
 );
 
+-- #### --
+
 --
 -- Table structure for table "widgets_skel"
 --
@@ -526,19 +569,11 @@ CREATE TABLE "widgets_skel" (
   PRIMARY KEY  ("id")
 );
 
---
--- Temporary table structure for view "widgets_skel_readable"
---
+-- #### --
 
---DROP TABLE IF EXISTS "widgets_skel_readable";
-/*!50001 DROP VIEW "widgets_skel_readable"*/;
-/*!50001 CREATE TABLE "widgets_skel_readable" (
-  "name" varchar(50),
-  "id" SERIAL,
-  "pos" INTEGER unsigned,
-  "col" INTEGER unsigned,
-  "tab" INTEGER unsigned
-) */;
+--
+-- Final view structure for view "widgets_skel_readable"
+--
 
 CREATE OR REPLACE VIEW widgets_skel_readable AS 
  SELECT widgets.name, widgets_skel.id, widgets_skel.pos, widgets_skel.col, widgets_skel.tab
@@ -548,9 +583,7 @@ CREATE OR REPLACE VIEW widgets_skel_readable AS
 
 -- ALTER TABLE widgets_skel_readable OWNER TO sonetdbmgr;
 
-
-
-
+-- #### --
 
 --
 -- Table structure for table "workplaces"
@@ -568,12 +601,24 @@ CREATE TABLE "workplaces" (
   PRIMARY KEY  ("id")
 );
 
+-- #### --
+
+--
+-- Table structure for table "tags"
+--
+
 DROP TABLE IF EXISTS tags CASCADE;
 CREATE TABLE tags (
   tag varchar(100) NOT NULL PRIMARY KEY,
   created timestamp(0) without time zone NOT NULL DEFAULT now(),
   modified timestamp(0) without time zone
 );
+
+-- #### --
+
+--
+-- Table structure for table "content_tags"
+--
 
 DROP TABLE IF EXISTS content_tags CASCADE;
 CREATE TABLE content_tags (
@@ -588,6 +633,12 @@ CREATE TABLE content_tags (
   deleted_date timestamp(0) NULL default NULL
 );
 
+-- #### --
+
+--
+-- Table structure for table "content_types"
+--
+
 DROP TABLE IF EXISTS content_types CASCADE;
 CREATE TABLE content_types (
   id SERIAL NOT NULL PRIMARY KEY,
@@ -599,6 +650,11 @@ CREATE TABLE content_types (
   UNIQUE (table_name)
 );
 
+-- #### --
+
+--
+-- Table structure for table "configs"
+--
 
 DROP TABLE IF EXISTS configs CASCADE;
 CREATE TABLE configs (
@@ -609,12 +665,20 @@ CREATE TABLE configs (
   PRIMARY KEY  (id)
 );
 
+-- #### --
+
+--
+-- Table structure for table "config_categories"
+--
+
 DROP TABLE IF EXISTS config_categories CASCADE;
 CREATE TABLE config_categories (
   id SERIAL,
   name varchar(50) NOT NULL,
   PRIMARY KEY  (id)
 );
+
+-- #### --
 
 --
 -- Final view structure for view "users_widgets_readable"
@@ -630,19 +694,19 @@ CREATE OR REPLACE VIEW users_widgets_readable AS
 
 -- ALTER TABLE users_widgets_readable OWNER TO sonetdbmgr;
 
+-- #### --
+
 --
--- Final view structure for view "widgets_skel_readable"
+-- Taolin defined function
 --
 
-
--- SONET DEFINED FUNCTIONS
-drop function ifnull (text, text);
+drop function if exists ifnull (text, text);
 create function ifnull (text, text) returns text AS '
 select coalesce($1, $2) as result
 ' language 'sql';
 
 
-drop function ifnull (int4, int4);
+drop function if exists ifnull (int4, int4);
 create function ifnull (int4, int4) returns int4 as '
 select coalesce($1, $2) as result
 ' language 'sql';
