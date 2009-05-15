@@ -1,0 +1,8 @@
+.table .active {
+    background: #bbffb6;
+}
+
+.table .notActive {
+    background: #ffdddd;
+}
+

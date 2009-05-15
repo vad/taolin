@@ -34,27 +34,22 @@ $url = '/'.$url;
           <h2 class="title">Users list</h2>
           <table class="table">
             <tr>
-              <?php
-
-              //print headers
-              $headers = array('Id', 'Name', 'Surname', 'Login', 'Active');
-              echo '<th class="first">'.$headers[0].'</th>';
-              for ($i = 1; $i < count($headers); $i++){
-                echo '<th>'.$headers[$i].'</th>';
-              }
-
-              ?>
+              <th class="first">Id</th>
+              <th>Name</th>
+              <th>Surname</th>
+              <th>Login</th>
               <th class="last">Actions</th>
             </tr>
 
             <?
-
             foreach ($users as $user){
               $user = $user['User'];
-              echo '<tr class="odd">';
-              foreach ($user as $field){
-                echo "<td>$field</td>";
-              }
+              echo '<tr class="'.(($user['active'])?"active":"notActive").'">';
+
+              echo "<td>".$user['id']."</td>";
+              echo "<td>".$user['name']."</td>";
+              echo "<td>".$user['surname']."</td>";
+              echo "<td>".$user['login']."</td>";
 
               //activate/deactivate
               if ($user['active'])
