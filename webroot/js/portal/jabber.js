@@ -68,12 +68,11 @@ var jabber = {
       oArgs.domain = window.config.jabber_domain;
       oArgs.server = window.config.jabber_server;
       oArgs.username = username;
-      oArgs.resource = 'Home';
       oArgs.pass = password;
       oArgs.register = false;
       //oArgs.authtype = 'nonsasl';
-	  this.u_n = username;
-	  this.p_w = password;
+      this.u_n = username;
+      this.p_w = password;
       this.myJid = oArgs.username + oArgs.domain;
       
       this.con.connect(oArgs);
@@ -265,7 +264,7 @@ var jabber = {
 
         
         // add message to the chat window
-	    jabberui.addMsg(aJSJaCPacket.getFromJID().removeResource(), aJSJaCPacket.getBody(), timestamp);
+      jabberui.addMsg(aJSJaCPacket.getFromJID().removeResource(), aJSJaCPacket.getBody(), timestamp);
     },
     
     presence: function(aJSJaCPacket){
@@ -273,11 +272,11 @@ var jabber = {
       from.setResource(new String());
       var presence = aJSJaCPacket.getShow();
       
-	  var type = '';
-	  if (aJSJaCPacket.getType()) {
+      var type = '';
+      if (aJSJaCPacket.getType()) {
         type = aJSJaCPacket.getType();
       }
-	  var status = '';
+      var status = '';
       if (aJSJaCPacket.getStatus()) {
         status = aJSJaCPacket.getStatus();
       }      
@@ -419,8 +418,8 @@ var Buddy = function(jid, subscription, name, group, presence, status, type){
   this.type = type;
 
   for (var el in this) {
-  	if (typeof(this[el]) == 'undefined') 
-  		this[el] = '';
+    if (typeof(this[el]) == 'undefined') 
+      this[el] = '';
   }
 };
 /**
