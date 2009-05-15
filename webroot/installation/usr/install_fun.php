@@ -53,9 +53,9 @@ function execute_sql_script($db, $sql_file) {
     }
     else
       echo "<b><span style='color:green'>SUCCESS</span></b><br /></p>";
-
   }
 }
+
 
 /* Prints out a notice message.
  * message: string, message to be printed  
@@ -72,6 +72,5 @@ function notice_message($message, $type = 'notice'){
     <?
   }
 }
-
 
 ?>

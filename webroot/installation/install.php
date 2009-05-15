@@ -21,9 +21,10 @@
 
 define("DB_CONFIG_FILE", "../../config/database.php");
 
-//require_once('usr/install_fun.php');
+require_once('usr/install_fun.php');
 require_once('usr/first_step.php');
 require_once('usr/second_step.php');
+require_once('usr/third_step.php');
 
 if (isset($_GET['step']))
   $step = $_GET['step'];
@@ -126,7 +127,7 @@ else
               ?>
                 <h2 class="title">Step 1: Database configuration</h2>
               <?
-                first_step_main(DB_CONFIG_FILE);
+                first_step_main();
                 break;
               case 1:
               ?>
@@ -138,7 +139,7 @@ else
               ?>
                 <h2 class="title">Step 3: Site administrator</h2>
               <?
-                echo 'Fuffa';
+                third_step_main();
                 break;
               default:
                 die("<div class='flash'><div class='message error'><p><b>ERROR! Follow the right path!</b></p></div></div>");
@@ -161,15 +162,17 @@ else
       <?php
         switch($step){
           case 0: 
-            //first_step_help();
-            echo 'Merda';
+            first_step_help();
             break;
           case 1:
-            //second_step_help();
+            second_step_help();
             break;
           case 2:
+            third_step_help();
             break;
-      }
+          default:
+            echo 'Wrong path, ya?';
+        }
       ?>
           </div>
         </div>

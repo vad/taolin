@@ -32,7 +32,9 @@ function second_step_main(){
 
   foreach($sql_scripts as $sql_script){
     echo "<div style='text-align:center'><h3>Processing file $sql_script</h3></div>";
-    //execute_sql_script($db, $sql_scripts_path.$sql_script);
+    echo "<div height='300px'>";
+    execute_sql_script($db, $sql_scripts_path.$sql_script);
+    echo "</div>";
   }
 
   ?>

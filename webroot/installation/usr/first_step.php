@@ -20,20 +20,18 @@
  */
 
 
-function first_step_main($config_file){
+function first_step_main(){
 
-  echo $config_file;
-
-  //if(!file_exists($config_file))
-  /*if(file_exists($config_file))
+  //if(!file_exists(DB_CONFIG_FILE))
+  if(file_exists(DB_CONFIG_FILE))
     db_configuration_form();
   else
-    print_database_config($config_file);*/
+    print_database_config(DB_CONFIG_FILE);
   
 }
 
 
-/*function db_configuration_form(){
+function db_configuration_form(){
 
 ?>
   <div class="inner">
@@ -67,14 +65,14 @@ function first_step_main($config_file){
     </form>
   </div>
 <?
-}*/
+}
 
 
 function print_database_config($fileName){
 
   $lines = file($fileName);
 
-  notice_message("File config/database.php already exists. Please delete it before proceeding with this wizard.", 'warning')
+  notice_message("File config/database.php already exists. Please delete it before proceeding with this wizard.", 'warning');
 
   echo "<div class='inner'><p>";
 
