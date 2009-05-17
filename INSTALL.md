@@ -106,12 +106,6 @@ Taolin depends also on `mod_rewrite`. Make sure it's installed and enabled (goog
 * Make tmp folder and its subdirectories writable:
         sudo chmod 777 tmp/*
 
-* Create the `config.php` file from the sample one into the config folder, then 
-open it with your favourite text editor (Vim, Nano, Pico, Gedit, Kate, ...) and 
-complete it following the comments written in the file, then save it:
-        sudo cp config/config.sample.php config/config.php
-        gedit config/config.php
-
 * Create the database.php file from the sample one into the config folder:
         sudo cp config/database.php.default config/database.php
 
