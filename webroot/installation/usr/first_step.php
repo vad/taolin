@@ -74,16 +74,26 @@ function print_database_config($fileName){
 
   $lines = file($fileName);
 
-  notice_message("File config/database.php already exists. Please delete it before proceeding with this wizard.", 'warning');
+  notice_message("File <i>config/database.php</i> already exists. Please delete it before proceeding with this wizard.", 'warning');
 
-  echo "<div class='inner'><p>";
+  ?>
+    <div>
+      <p style="margin-left:10px;">This is the configuration contained in your <i>config/database.php</i> file:</p>
+      <div class='inner' style='border: 1px solid; background: lightGray; margin: 20px;'>
+        <p><pre>
+  <?php
 
   foreach ($lines as $line_number => $line) {
     if(substr(trim($line), 0, 2) != '/*' && substr(trim($line), 0, 2) != '*/' && substr(trim($line), 0, 1) != '*' && substr(trim($line), 0, 2) != '?>' && substr(trim($line), 0, 2) != '<?')
       echo "$line<br />";
   }
 
-  echo "</p></div>";
+  ?>
+        </pre></p>
+      </div>
+      <p style="margin-left:10px;">Before proceeding with the installation process you should delete this file since it would be regenerated with configuration settings entered.</p><br />
+    </div>
+  <?php
 
 }
 
@@ -91,7 +101,7 @@ function print_database_config($fileName){
 function first_step_help(){
   ?>
     <h4><b>Step 1: Database configuration</b></h4>
-    <p>Fill this form with your database connection settings.<br />More information and examples on <a href="http://book.cakephp.org/view/40/Database-Configuration" target="_blank">CakePhp Cookbook</a></p>
+    <p>Fill this form with your database connection settings. This will be the database used for installing and running Taolin.<br /><br />More information and examples about how to configure properly database connection available at the <a href="http://book.cakephp.org/view/40/Database-Configuration" target="_blank">CakePhp Cookbook</a></p>
   <?
 }
 
