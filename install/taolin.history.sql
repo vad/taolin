@@ -82,10 +82,124 @@ CREATE TABLE "users_widgets_history" (
 );
 
 
--- #### --
 
--- Users history populating tringger
+-- #### -- Create table acos_history
+CREATE TABLE acos_history
+(
+  history_id serial PRIMARY KEY,
+  history_operation char(1) NOT NULL,
+  history_created timestamp(0) NOT NULL,
+  history_user text NOT NULL,
+  id integer,
+  parent_id integer,
+  model character varying(255),
+  foreign_key integer,
+  alias character varying(255),
+  lft integer,
+  rght integer
+) WITH (OIDS=FALSE);
 
+-- #### -- Create trigger to populate acos_history
+CREATE OR REPLACE FUNCTION insert_into_acos_history() RETURNS trigger AS $insert_into_acos_history$
+  BEGIN
+    IF (TG_OP = 'DELETE') THEN
+      INSERT INTO acos_history VALUES (DEFAULT, 'D', now(), user, OLD.*);
+      RETURN OLD;
+    ELSIF (TG_OP = 'UPDATE') THEN
+      INSERT INTO acos_history VALUES (DEFAULT, 'U', now(), user, NEW.*);
+      RETURN NEW;
+    ELSIF (TG_OP = 'INSERT') THEN
+      INSERT INTO acos_history VALUES (DEFAULT, 'I', now(), user, NEW.*);
+      RETURN NEW;
+    END IF;
+    RETURN NULL; -- result is ignored since this is an AFTER trigger
+  END;
+$insert_into_acos_history$ LANGUAGE plpgsql;
+
+-- # Create acos_history_trigger
+CREATE TRIGGER acos_history_trigger AFTER UPDATE OR DELETE ON acos
+FOR EACH ROW EXECUTE PROCEDURE insert_into_acos_history(); 
+
+
+-- # Create table aros_history
+CREATE TABLE aros_history
+(
+  history_id serial PRIMARY KEY,
+  history_operation char(1) NOT NULL,
+  history_created timestamp(0) NOT NULL,
+  history_user text NOT NULL,
+  id integer,
+  parent_id integer,
+  model character varying(255),
+  foreign_key integer,
+  alias character varying(255),
+  lft integer,
+  rght integer
+) WITH (OIDS=FALSE);
+
+-- #### -- Create trigger to populate aros_history
+CREATE OR REPLACE FUNCTION insert_into_aros_history() RETURNS trigger AS $insert_into_aros_history$
+  BEGIN
+    IF (TG_OP = 'DELETE') THEN
+      INSERT INTO aros_history VALUES (DEFAULT, 'D', now(), user, OLD.*);
+      RETURN OLD;
+    ELSIF (TG_OP = 'UPDATE') THEN
+      INSERT INTO aros_history VALUES (DEFAULT, 'U', now(), user, NEW.*);
+      RETURN NEW;
+    ELSIF (TG_OP = 'INSERT') THEN
+      INSERT INTO aros_history VALUES (DEFAULT, 'I', now(), user, NEW.*);
+      RETURN NEW;
+    END IF;
+    RETURN NULL; -- result is ignored since this is an AFTER trigger
+  END;
+$insert_into_aros_history$ LANGUAGE plpgsql;
+
+-- #### -- Create aros_history_trigger
+CREATE TRIGGER aros_history_trigger AFTER UPDATE OR DELETE ON aros
+FOR EACH ROW EXECUTE PROCEDURE insert_into_aros_history(); 
+
+
+-- # Create table aros_acos_history
+CREATE TABLE aros_acos_history
+(
+  history_id serial PRIMARY KEY,
+  history_operation char(1) NOT NULL,
+  history_created timestamp(0) NOT NULL,
+  history_user text NOT NULL,
+  id integer,
+  aro_id integer,
+  aco_id integer,
+  _create character varying(2),
+  _read character varying(2),
+  _update character varying(2),
+  _delete character varying(2)
+) WITH (OIDS=FALSE);
+
+
+-- #### -- Create trigger to populate aros_acos_history
+CREATE OR REPLACE FUNCTION insert_into_aros_acos_history() RETURNS trigger AS $insert_into_aros_acos_history$
+  BEGIN
+    IF (TG_OP = 'DELETE') THEN
+      INSERT INTO aros_acos_history VALUES (DEFAULT, 'D', now(), user, OLD.*);
+      RETURN OLD;
+    ELSIF (TG_OP = 'UPDATE') THEN
+      INSERT INTO aros_acos_history VALUES (DEFAULT, 'U', now(), user, NEW.*);
+      RETURN NEW;
+    ELSIF (TG_OP = 'INSERT') THEN
+      INSERT INTO aros_acos_history VALUES (DEFAULT, 'I', now(), user, NEW.*);
+      RETURN NEW;
+    END IF;
+    RETURN NULL; -- result is ignored since this is an AFTER trigger
+  END;
+$insert_into_aros_acos_history$ LANGUAGE plpgsql;
+
+-- #### -- Create aros_history_trigger
+CREATE TRIGGER aros_acos_history_trigger AFTER UPDATE OR DELETE ON aros_acos
+FOR EACH ROW EXECUTE PROCEDURE insert_into_aros_acos_history(); 
+
+
+
+-- #### -- Users history populating trigger function
 CREATE OR REPLACE FUNCTION insert_into_users_history() RETURNS trigger AS $insert_into_users_history$
   BEGIN
     -- insert record into users_history table
@@ -100,7 +214,13 @@ CREATE OR REPLACE FUNCTION insert_into_users_history() RETURNS trigger AS $inser
   END;
 $insert_into_users_history$ LANGUAGE plpgsql;
 
--- #### --
+-- #### -- Create users_trigger
+CREATE TRIGGER users_trigger AFTER UPDATE OR DELETE ON users
+FOR EACH ROW EXECUTE PROCEDURE insert_into_users_history(); 
+
+
+
+-- #### -- Create Users Widgets's history trigger function
 
 CREATE OR REPLACE FUNCTION insert_into_users_widgets_history() RETURNS trigger AS $insert_into_users_widgets_history$
   BEGIN
@@ -111,11 +231,6 @@ CREATE OR REPLACE FUNCTION insert_into_users_widgets_history() RETURNS trigger A
 $insert_into_users_widgets_history$ LANGUAGE plpgsql;
 
 
--- #### -- Create users_trigger
-
--- === users ===
-CREATE TRIGGER users_trigger AFTER UPDATE OR DELETE ON users
-FOR EACH ROW EXECUTE PROCEDURE insert_into_users_history(); 
 
 -- #### -- Create users_widgets_trigger
 
