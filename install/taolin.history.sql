@@ -1,8 +1,4 @@
--- #### --
-
---
--- Table structure for table "groups_users_history"
---
+-- # Table structure for table "groups_users_history"
 
 DROP TABLE IF EXISTS "groups_users_history" CASCADE;
 CREATE TABLE "groups_users_history" (
@@ -14,11 +10,7 @@ CREATE TABLE "groups_users_history" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "users_history"
---
+-- # Table structure for table "users_history"
 
 DROP TABLE IF EXISTS "users_history" CASCADE;
 CREATE TABLE "users_history" (
@@ -60,11 +52,7 @@ CREATE TABLE "users_history" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "users_widgets_history"
---
+-- # Table structure for table "users_widgets_history"
 
 DROP TABLE IF EXISTS "users_widgets_history" CASCADE;
 CREATE TABLE "users_widgets_history" (
@@ -81,9 +69,8 @@ CREATE TABLE "users_widgets_history" (
   PRIMARY KEY  ("id")
 );
 
+-- # Create table acos_history
 
-
--- #### -- Create table acos_history
 CREATE TABLE acos_history
 (
   history_id serial PRIMARY KEY,
@@ -99,7 +86,8 @@ CREATE TABLE acos_history
   rght integer
 ) WITH (OIDS=FALSE);
 
--- #### -- Create trigger to populate acos_history
+-- # Create trigger to populate acos_history
+
 CREATE OR REPLACE FUNCTION insert_into_acos_history() RETURNS trigger AS $insert_into_acos_history$
   BEGIN
     IF (TG_OP = 'DELETE') THEN
@@ -117,11 +105,12 @@ CREATE OR REPLACE FUNCTION insert_into_acos_history() RETURNS trigger AS $insert
 $insert_into_acos_history$ LANGUAGE plpgsql;
 
 -- # Create acos_history_trigger
+
 CREATE TRIGGER acos_history_trigger AFTER INSERT OR UPDATE OR DELETE ON acos
 FOR EACH ROW EXECUTE PROCEDURE insert_into_acos_history(); 
 
-
 -- # Create table aros_history
+
 CREATE TABLE aros_history
 (
   history_id serial PRIMARY KEY,
@@ -137,7 +126,8 @@ CREATE TABLE aros_history
   rght integer
 ) WITH (OIDS=FALSE);
 
--- #### -- Create trigger to populate aros_history
+-- # Create trigger to populate aros_history
+
 CREATE OR REPLACE FUNCTION insert_into_aros_history() RETURNS trigger AS $insert_into_aros_history$
   BEGIN
     IF (TG_OP = 'DELETE') THEN
@@ -154,12 +144,13 @@ CREATE OR REPLACE FUNCTION insert_into_aros_history() RETURNS trigger AS $insert
   END;
 $insert_into_aros_history$ LANGUAGE plpgsql;
 
--- #### -- Create aros_history_trigger
+-- # Create aros_history_trigger
+
 CREATE TRIGGER aros_history_trigger AFTER INSERT OR UPDATE OR DELETE ON aros
 FOR EACH ROW EXECUTE PROCEDURE insert_into_aros_history(); 
 
-
 -- # Create table aros_acos_history
+
 CREATE TABLE aros_acos_history
 (
   history_id serial PRIMARY KEY,
@@ -175,8 +166,8 @@ CREATE TABLE aros_acos_history
   _delete character varying(2)
 ) WITH (OIDS=FALSE);
 
+-- # Create trigger to populate aros_acos_history
 
--- #### -- Create trigger to populate aros_acos_history
 CREATE OR REPLACE FUNCTION insert_into_aros_acos_history() RETURNS trigger AS $insert_into_aros_acos_history$
   BEGIN
     IF (TG_OP = 'DELETE') THEN
@@ -193,13 +184,13 @@ CREATE OR REPLACE FUNCTION insert_into_aros_acos_history() RETURNS trigger AS $i
   END;
 $insert_into_aros_acos_history$ LANGUAGE plpgsql;
 
--- #### -- Create aros_history_trigger
+-- # Create aros_history_trigger
+
 CREATE TRIGGER aros_acos_history_trigger AFTER INSERT OR UPDATE OR DELETE ON aros_acos
 FOR EACH ROW EXECUTE PROCEDURE insert_into_aros_acos_history(); 
 
+-- # users_history populating trigger function
 
-
--- #### -- Users history populating trigger function
 CREATE OR REPLACE FUNCTION insert_into_users_history() RETURNS trigger AS $insert_into_users_history$
   BEGIN
     -- insert record into users_history table
@@ -214,13 +205,12 @@ CREATE OR REPLACE FUNCTION insert_into_users_history() RETURNS trigger AS $inser
   END;
 $insert_into_users_history$ LANGUAGE plpgsql;
 
--- #### -- Create users_trigger
+-- # Create users_trigger
+
 CREATE TRIGGER users_trigger AFTER UPDATE OR DELETE ON users
 FOR EACH ROW EXECUTE PROCEDURE insert_into_users_history(); 
 
-
-
--- #### -- Create Users Widgets's history trigger function
+-- # Create users_widgets history trigger function
 
 CREATE OR REPLACE FUNCTION insert_into_users_widgets_history() RETURNS trigger AS $insert_into_users_widgets_history$
   BEGIN
@@ -230,16 +220,14 @@ CREATE OR REPLACE FUNCTION insert_into_users_widgets_history() RETURNS trigger A
   END;
 $insert_into_users_widgets_history$ LANGUAGE plpgsql;
 
-
-
--- #### -- Create users_widgets_trigger
+-- # Create users_widgets_trigger
 
 -- === users_widgets ===
 CREATE TRIGGER users_widgets_trigger AFTER UPDATE OR DELETE ON users_widgets
 FOR EACH ROW EXECUTE PROCEDURE insert_into_users_widgets_history(); 
 
+-- # History tables indexes
 
--- #### -- History tables indexes
 SELECT SETVAL('groups_users_history_id_seq', (select MAX(id) from groups_users_history)+1);
 SELECT SETVAL('users_history_id_seq', (select MAX(id) from users_history)+1);
 SELECT SETVAL('users_widgets_history_id_seq', (select MAX(id) from users_widgets_history)+1);
