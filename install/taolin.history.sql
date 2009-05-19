@@ -117,7 +117,7 @@ CREATE OR REPLACE FUNCTION insert_into_acos_history() RETURNS trigger AS $insert
 $insert_into_acos_history$ LANGUAGE plpgsql;
 
 -- # Create acos_history_trigger
-CREATE TRIGGER acos_history_trigger AFTER UPDATE OR DELETE ON acos
+CREATE TRIGGER acos_history_trigger AFTER INSERT OR UPDATE OR DELETE ON acos
 FOR EACH ROW EXECUTE PROCEDURE insert_into_acos_history(); 
 
 
@@ -155,7 +155,7 @@ CREATE OR REPLACE FUNCTION insert_into_aros_history() RETURNS trigger AS $insert
 $insert_into_aros_history$ LANGUAGE plpgsql;
 
 -- #### -- Create aros_history_trigger
-CREATE TRIGGER aros_history_trigger AFTER UPDATE OR DELETE ON aros
+CREATE TRIGGER aros_history_trigger AFTER INSERT OR UPDATE OR DELETE ON aros
 FOR EACH ROW EXECUTE PROCEDURE insert_into_aros_history(); 
 
 
@@ -194,7 +194,7 @@ CREATE OR REPLACE FUNCTION insert_into_aros_acos_history() RETURNS trigger AS $i
 $insert_into_aros_acos_history$ LANGUAGE plpgsql;
 
 -- #### -- Create aros_history_trigger
-CREATE TRIGGER aros_acos_history_trigger AFTER UPDATE OR DELETE ON aros_acos
+CREATE TRIGGER aros_acos_history_trigger AFTER INSERT OR UPDATE OR DELETE ON aros_acos
 FOR EACH ROW EXECUTE PROCEDURE insert_into_aros_acos_history(); 
 
 
