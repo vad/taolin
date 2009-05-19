@@ -71,7 +71,8 @@ CREATE TABLE "users_widgets_history" (
 
 -- # Create table acos_history
 
-CREATE TABLE acos_history
+DROP TABLE IF EXISTS "acos_history" CASCADE;
+CREATE TABLE "acos_history"
 (
   history_id serial PRIMARY KEY,
   history_operation char(1) NOT NULL,
@@ -111,6 +112,7 @@ FOR EACH ROW EXECUTE PROCEDURE insert_into_acos_history();
 
 -- # Create table aros_history
 
+DROP TABLE IF EXISTS "aros_history" CASCADE;
 CREATE TABLE aros_history
 (
   history_id serial PRIMARY KEY,
@@ -151,6 +153,7 @@ FOR EACH ROW EXECUTE PROCEDURE insert_into_aros_history();
 
 -- # Create table aros_acos_history
 
+DROP TABLE IF EXISTS "aros_acos_history" CASCADE;
 CREATE TABLE aros_acos_history
 (
   history_id serial PRIMARY KEY,
