@@ -10,19 +10,6 @@ CREATE OR REPLACE FUNCTION set_groups_description(integer) RETURNS void AS $$
 $$ LANGUAGE SQL;
 
 
-CREATE OR REPLACE FUNCTION insert_into_users_history() RETURNS trigger AS $insert_into_users_history$
-  BEGIN
-    -- insert record into users_history table
-    INSERT INTO users_history (user_id,login,name,surname,date_of_birth,gender,email,fbk_unit,groups_description,personal_page,phone,phone2,working_place,publik_id,registration_date,role,mod_date_of_birth,mod_email,mod_description,mod_personal_page,mod_phone,mod_phone2,mod_working_place,mod_role,mod_home_address,mod_carpooling,privacy_policy_acceptance,facebook,linkedin,twitter,deleted,deleted_date, active) VALUES (OLD.id,OLD.login,OLD.name,OLD.surname,OLD.date_of_birth,OLD.gender,OLD.email,OLD.fbk_unit,OLD.groups_description,OLD.personal_page,OLD.phone,OLD.phone2,OLD.working_place,OLD.publik_id,OLD.created,OLD.role,OLD.mod_date_of_birth,OLD.mod_email,OLD.mod_description,OLD.mod_personal_page,OLD.mod_phone,OLD.mod_phone2,OLD.mod_working_place,OLD.mod_role,OLD.mod_home_address,OLD.mod_carpooling,OLD.privacy_policy_acceptance,OLD.facebook,OLD.linkedin,OLD.twitter,OLD.deleted,OLD.deleted_date,OLD.active);
-    -- if is a new champion, insert into timeline
-    IF TG_OP != 'DELETE' THEN 
-        IF NEW.active = 1 AND NEW.active != OLD.active THEN 
-            INSERT INTO timelines (user_id, login, template_id, date) VALUES (NEW.id, NEW.login, 12, NOW());
-        END IF;
-    END IF;
-    RETURN NULL;
-  END;
-$insert_into_users_history$ LANGUAGE plpgsql;
 
 
 CREATE OR REPLACE FUNCTION groups_users_trigger_fun() RETURNS trigger AS $groups_users_trigger_fun$
@@ -62,15 +49,6 @@ CREATE OR REPLACE FUNCTION on_delete_photo() RETURNS trigger AS $on_delete_photo
 $on_delete_photo$ LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE FUNCTION insert_into_users_widgets_history() RETURNS trigger AS $insert_into_users_widgets_history$
-  BEGIN
-    -- insert record into users_widgets_history table
-    INSERT INTO users_widgets_history (user_widget_id, widget_id, user_id, col, pos, tab, widget_conf) VALUES (OLD.id,OLD.widget_id,OLD.user_id, OLD.col, OLD.pos, OLD.tab, OLD.widget_conf);
-    RETURN NEW;
-  END;
-$insert_into_users_widgets_history$ LANGUAGE plpgsql;
-
-
 -- #### --
 
 --
@@ -96,13 +74,6 @@ CREATE INDEX content_types__table_name__idx ON content_types (table_name);
 -- TRIGGERS
 --
 
--- === users ===
-CREATE TRIGGER users_trigger AFTER UPDATE OR DELETE ON users
-FOR EACH ROW EXECUTE PROCEDURE insert_into_users_history(); 
-
--- === users_widgets ===
-CREATE TRIGGER users_widgets_trigger AFTER UPDATE OR DELETE ON users_widgets
-FOR EACH ROW EXECUTE PROCEDURE insert_into_users_widgets_history(); 
 
 -- === groups_users ===
 CREATE TRIGGER groups_users_trigger AFTER INSERT OR UPDATE OR DELETE ON groups_users
@@ -129,16 +100,13 @@ SELECT SETVAL('calendars_id_seq', (select MAX(id) from calendars)+1);
 SELECT SETVAL('events_id_seq', (select MAX(id) from events)+1);
 SELECT SETVAL('feedbacks_id_seq', (select MAX(id) from feedbacks)+1);
 SELECT SETVAL('groups_id_seq', (select MAX(id) from groups)+1);
-SELECT SETVAL('groups_users_history_id_seq', (select MAX(id) from groups_users_history)+1);
 SELECT SETVAL('institutes_id_seq', (select MAX(id) from institutes)+1);
 SELECT SETVAL('logs_id_seq', (select MAX(id) from logs)+1);
 SELECT SETVAL('photos_id_seq', (select MAX(id) from photos)+1);
 SELECT SETVAL('templates_id_seq', (select MAX(id) from templates)+1);
 SELECT SETVAL('timelines_id_seq', (select MAX(id) from timelines)+1);
 SELECT SETVAL('users_id_seq', (select MAX(id) from users)+1);
-SELECT SETVAL('users_history_id_seq', (select MAX(id) from users_history)+1);
 SELECT SETVAL('users_widgets_id_seq', (select MAX(id) from users_widgets)+1);
-SELECT SETVAL('users_widgets_history_id_seq', (select MAX(id) from users_widgets_history)+1);
 SELECT SETVAL('widgets_id_seq', (select MAX(id) from widgets)+1);
 SELECT SETVAL('widgets_skel_id_seq', (select MAX(id) from widgets_skel)+1);
 SELECT SETVAL('workplaces_id_seq', (select MAX(id) from workplaces)+1);

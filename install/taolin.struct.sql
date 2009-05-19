@@ -206,21 +206,6 @@ CREATE TABLE "groups_users" (
    PRIMARY KEY(group_id, user_id)
 );
 
--- #### --
-
---
--- Table structure for table "groups_users_history"
---
-
-DROP TABLE IF EXISTS "groups_users_history" CASCADE;
-CREATE TABLE "groups_users_history" (
-  "id" SERIAL,
-  "group_id" INTEGER NOT NULL,
-  "user_id" INTEGER NOT NULL,
-  "created_on" TIMESTAMP(0) default NULL,
-  "created" TIMESTAMP(0) default now(),
-  PRIMARY KEY  ("id")
-);
 
 -- #### --
 
@@ -446,52 +431,6 @@ ORDER BY "timelines"."date" DESC;
 -- #### --
 
 --
--- Table structure for table "users_history"
---
-
-DROP TABLE IF EXISTS "users_history" CASCADE;
-CREATE TABLE "users_history" (
-  "id" SERIAL,
-  "user_id" INTEGER NOT NULL,
-  "created" TIMESTAMP(0) NOT NULL default now(),
-  "login" varchar(50) default NULL,
-  "name" varchar(50) default NULL,
-  "surname" varchar(50) default NULL,
-  "date_of_birth" date default NULL,
-  "gender" INTEGER NOT NULL,
-  "email" varchar(50) default NULL,
-  "fbk_unit" varchar(100) default NULL,
-  "groups_description" varchar(50) default NULL,
-  "personal_page" varchar(80) default NULL,
-  "phone" varchar(15) default NULL,
-  "phone2" varchar(15) default NULL,
-  "working_place" text,
-  "publik_id" INTEGER default NULL,
-  "registration_date" TIMESTAMP(0) default NULL,
-  "role" varchar(50) default NULL,
-  "mod_date_of_birth" date default NULL,
-  "mod_email" varchar(50) default NULL,
-  "mod_description" text,
-  "mod_personal_page" varchar(80) default NULL,
-  "mod_phone" varchar(3) default NULL,
-  "mod_phone2" varchar(3) default NULL,
-  "mod_working_place" text,
-  "mod_role" varchar(50) default NULL,
-  "mod_home_address" character varying(200) DEFAULT NULL::character varying, -- Home address
-  "mod_carpooling" boolean NOT NULL default false, -- Available for carpooling?
-  "privacy_policy_acceptance" boolean NOT NULL default false, -- 0 = privacy policy not yet accepted, show first login wizard. 1 = already accepted, everything ok!
-  "facebook" varchar(120) default NULL,
-  "linkedin" varchar(50) default NULL,
-  "twitter" varchar(50) default NULL,
-  "active" SMALLINT default NULL,
-  "deleted" SMALLINT NOT NULL default '0',
-  "deleted_date" timestamp(0) NULL default NULL,
-  PRIMARY KEY  ("id")
-);
-
--- #### --
-
---
 -- Table structure for table "users_widgets"
 --
 
@@ -508,27 +447,6 @@ CREATE TABLE "users_widgets" (
   deleted smallint NOT NULL DEFAULT (0)::smallint,
   deleted_date timestamp(0) without time zone,
   PRIMARY KEY  (id)
-);
-
--- #### --
-
---
--- Table structure for table "users_widgets_history"
---
-
-DROP TABLE IF EXISTS "users_widgets_history" CASCADE;
-CREATE TABLE "users_widgets_history" (
-  "id" SERIAL,
-  "user_widget_id" INTEGER NOT NULL,
-  "widget_id" INTEGER NOT NULL,
-  "user_id" INTEGER NOT NULL,
-  "col" INTEGER NOT NULL,
-  "pos" INTEGER NOT NULL,
-  "tab" INTEGER default NULL,
-  "widget_conf" text,
-  "application_conf" text,
-  "modified" timestamp(0) NOT NULL default CURRENT_TIMESTAMP(0),
-  PRIMARY KEY  ("id")
 );
 
 -- #### --
