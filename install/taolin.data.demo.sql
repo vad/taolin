@@ -1,3 +1,5 @@
+-- # Importing demo data into database
+
 INSERT INTO "boards" ("id", "user_id", "text", "email", "expire_date", "created", "modified", "deleted", "deleted_date") VALUES (1,909,'Looking for a bike','platone@platone.com',NULL,'2009-04-08 14:53:47','2009-04-08 14:53:47',0,NULL);
 INSERT INTO "buildings" ("id", "name", "description", "imagepath", "top", "left", "bottom", "right") VALUES (1,'Map of Ancient Greece',NULL,'webroot/img/building/GreeceNumberedPerepheries.png',0,0,500,500);
 INSERT INTO "buildings" ("id", "name", "description", "imagepath", "top", "left", "bottom", "right") VALUES (2,'Map of Ancient Rome',NULL,'webroot/img/building/800px-RomanEmpire_117.svg.png',149,52,911,1192);

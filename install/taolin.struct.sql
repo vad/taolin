@@ -1,6 +1,5 @@
---
--- Table structure for table "acos"
---
+-- # Table structure for table "acos"
+
 
 DROP TABLE IF EXISTS "acos";
 CREATE TABLE "acos" (
@@ -14,11 +13,7 @@ CREATE TABLE "acos" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "aros"
---
+-- # Table structure for table "aros"
 
 DROP TABLE IF EXISTS "aros" CASCADE;
 CREATE TABLE "aros" (
@@ -32,11 +27,7 @@ CREATE TABLE "aros" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "aros_acos"
---
+-- # Table structure for table "aros_acos"
 
 DROP TABLE IF EXISTS "aros_acos" CASCADE;
 CREATE TABLE "aros_acos" (
@@ -51,11 +42,7 @@ CREATE TABLE "aros_acos" (
    UNIQUE ("aro_id","aco_id")
 );
 
--- #### --
-
---
--- Table structure for table "boards"
---
+-- # Table structure for table "boards"
 
 DROP TABLE IF EXISTS "boards" CASCADE;
 CREATE TABLE "boards" (
@@ -71,11 +58,7 @@ CREATE TABLE "boards" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "buildings"
---
+-- # Table structure for table "buildings"
 
 DROP TABLE IF EXISTS "buildings" CASCADE;
 CREATE TABLE "buildings" (
@@ -90,11 +73,7 @@ CREATE TABLE "buildings" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "cake_sessions"
---
+-- # Table structure for table "cake_sessions"
 
 DROP TABLE IF EXISTS "cake_sessions" CASCADE;
 CREATE TABLE "cake_sessions" (
@@ -104,11 +83,7 @@ CREATE TABLE "cake_sessions" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "calendars"
---
+-- # Table structure for table "calendars"
 
 DROP TABLE IF EXISTS "calendars" CASCADE;
 CREATE TABLE "calendars" (
@@ -121,11 +96,7 @@ CREATE TABLE "calendars" (
   "name" varchar(100) default NULL
 );
 
--- #### --
-
---
--- Table structure for table "checked_users"
---
+-- # Table structure for table "checked_users"
 
 DROP TABLE IF EXISTS "checked_users" CASCADE;
 CREATE TABLE "checked_users" (
@@ -133,11 +104,7 @@ CREATE TABLE "checked_users" (
    UNIQUE ("user_id")
 );
 
--- #### --
-
---
--- Table structure for table "events"
---
+-- # Table structure for table "events"
 
 DROP TABLE IF EXISTS "events" CASCADE;
 CREATE TABLE "events" (
@@ -157,11 +124,7 @@ CREATE TABLE "events" (
    --KEY "start_time" ("start_time","end_time")
 );
 
--- #### --
-
---
--- Table structure for table "feedbacks"
---
+-- # Table structure for table "feedbacks"
 
 DROP TABLE IF EXISTS "feedbacks" CASCADE;
 CREATE TABLE "feedbacks" (
@@ -173,11 +136,7 @@ CREATE TABLE "feedbacks" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "groups"
---
+-- # Table structure for table "groups"
 
 DROP TABLE IF EXISTS "groups" CASCADE;
 CREATE TABLE "groups" (
@@ -189,11 +148,7 @@ CREATE TABLE "groups" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "groups_users"
---
+-- # Table structure for table "groups_users"
 
 DROP TABLE IF EXISTS "groups_users" CASCADE;
 CREATE TABLE "groups_users" (
@@ -207,11 +162,7 @@ CREATE TABLE "groups_users" (
 );
 
 
--- #### --
-
---
--- Table structure for table "identities"
---
+-- # Table structure for table "identities"
 
 DROP TABLE IF EXISTS "identities" CASCADE;
 CREATE TABLE "identities" (
@@ -222,11 +173,7 @@ CREATE TABLE "identities" (
    UNIQUE ("user_id")
 );
 
--- #### --
-
---
--- Table structure for table "institutes"
---
+-- # Table structure for table "institutes"
 
 DROP TABLE IF EXISTS "institutes" CASCADE;
 CREATE TABLE "institutes" (
@@ -236,11 +183,7 @@ CREATE TABLE "institutes" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "logs"
---
+-- # Table structure for table "logs"
 
 DROP TABLE IF EXISTS "logs" CASCADE;
 CREATE TABLE "logs" (
@@ -250,11 +193,7 @@ CREATE TABLE "logs" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "photos"
---
+-- # Table structure for table "photos"
 
 DROP TABLE IF EXISTS "photos" CASCADE;
 CREATE TABLE "photos" (
@@ -276,11 +215,7 @@ CREATE TABLE "photos" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "templates"
---
+-- # Table structure for table "templates"
 
 DROP TABLE IF EXISTS "templates" CASCADE;
 CREATE TABLE "templates" (
@@ -292,11 +227,7 @@ CREATE TABLE "templates" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "timelines"
---
+-- # Table structure for table "timelines"
 
 DROP TABLE IF EXISTS "timelines" CASCADE;
 CREATE TABLE "timelines" (
@@ -313,11 +244,7 @@ CREATE TABLE "timelines" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "users"
---
+-- # Table structure for table "users"
 
 DROP TABLE IF EXISTS "users" CASCADE;
 CREATE TABLE "users" (
@@ -361,11 +288,7 @@ CREATE TABLE "users" (
   UNIQUE ("login")
 );
 
--- #### --
-
---
--- Trigger functions
---
+-- # Trigger functions
 
 DROP LANGUAGE if exists plpgsql CASCADE;
 CREATE LANGUAGE plpgsql;
@@ -389,11 +312,7 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER usertsvupdate BEFORE INSERT OR UPDATE
 ON users FOR EACH ROW EXECUTE PROCEDURE users_tsv_trigger();
 
--- #### --
-
---
--- Final view structure for view "readable_timeline"
---
+-- # Final view structure for view "readable_timeline"
 
 CREATE OR REPLACE VIEW readable_timelines AS
 SELECT "timelines"."id" AS "id" , "timelines"."user_id" AS "user_id" , "users"."name" AS "name" , "users"."surname" AS "surname" , "timelines"."login" AS "login" , "users"."gender" AS "gender" , "timelines"."template_id" AS "template_id" , "timelines"."param" AS "param" , "timelines"."date" AS "date" , "templates"."temp" AS "temp" , "templates"."icon" AS "icon"
@@ -428,11 +347,7 @@ ORDER BY "timelines"."date" DESC;
 
 -- ALTER TABLE readable_timelines OWNER TO sonetdbmgr;
 
--- #### --
-
---
--- Table structure for table "users_widgets"
---
+-- # Table structure for table "users_widgets"
 
 DROP TABLE IF EXISTS "users_widgets" CASCADE;
 CREATE TABLE "users_widgets" (
@@ -449,11 +364,7 @@ CREATE TABLE "users_widgets" (
   PRIMARY KEY  (id)
 );
 
--- #### --
-
---
--- Table structure for table "widgets"
---
+-- # Table structure for table "widgets"
 
 DROP TABLE IF EXISTS "widgets" CASCADE;
 CREATE TABLE "widgets" (
@@ -471,11 +382,7 @@ CREATE TABLE "widgets" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "widgets_skel"
---
+-- # Table structure for table "widgets_skel"
 
 DROP TABLE IF EXISTS "widgets_skel" CASCADE;
 CREATE TABLE "widgets_skel" (
@@ -487,11 +394,7 @@ CREATE TABLE "widgets_skel" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Final view structure for view "widgets_skel_readable"
---
+-- # Final view structure for view "widgets_skel_readable"
 
 CREATE OR REPLACE VIEW widgets_skel_readable AS 
  SELECT widgets.name, widgets_skel.id, widgets_skel.pos, widgets_skel.col, widgets_skel.tab
@@ -501,11 +404,7 @@ CREATE OR REPLACE VIEW widgets_skel_readable AS
 
 -- ALTER TABLE widgets_skel_readable OWNER TO sonetdbmgr;
 
--- #### --
-
---
--- Table structure for table "workplaces"
---
+-- # Table structure for table "workplaces"
 
 DROP TABLE IF EXISTS "workplaces" CASCADE;
 CREATE TABLE "workplaces" (
@@ -519,11 +418,7 @@ CREATE TABLE "workplaces" (
   PRIMARY KEY  ("id")
 );
 
--- #### --
-
---
--- Table structure for table "tags"
---
+-- # Table structure for table "tags"
 
 DROP TABLE IF EXISTS tags CASCADE;
 CREATE TABLE tags (
@@ -532,11 +427,7 @@ CREATE TABLE tags (
   modified timestamp(0) without time zone
 );
 
--- #### --
-
---
--- Table structure for table "content_tags"
---
+-- # Table structure for table "content_tags"
 
 DROP TABLE IF EXISTS content_tags CASCADE;
 CREATE TABLE content_tags (
@@ -551,11 +442,7 @@ CREATE TABLE content_tags (
   deleted_date timestamp(0) NULL default NULL
 );
 
--- #### --
-
---
--- Table structure for table "content_types"
---
+-- # Table structure for table "content_types"
 
 DROP TABLE IF EXISTS content_types CASCADE;
 CREATE TABLE content_types (
@@ -568,11 +455,7 @@ CREATE TABLE content_types (
   UNIQUE (table_name)
 );
 
--- #### --
-
---
--- Table structure for table "configs"
---
+-- # Table structure for table "configs"
 
 DROP TABLE IF EXISTS configs CASCADE;
 CREATE TABLE configs (
@@ -583,11 +466,7 @@ CREATE TABLE configs (
   PRIMARY KEY  (id)
 );
 
--- #### --
-
---
--- Table structure for table "config_categories"
---
+-- # Table structure for table "config_categories"
 
 DROP TABLE IF EXISTS config_categories CASCADE;
 CREATE TABLE config_categories (
@@ -596,11 +475,7 @@ CREATE TABLE config_categories (
   PRIMARY KEY  (id)
 );
 
--- #### --
-
---
--- Final view structure for view "users_widgets_readable"
---
+-- # Final view structure for view "users_widgets_readable"
 
 CREATE OR REPLACE VIEW users_widgets_readable AS 
  SELECT users.login, users_widgets.user_id, widgets.string_identifier, users_widgets.widget_id, users_widgets.pos, users_widgets.col, users_widgets.tab, users_widgets.application_conf, users_widgets.widget_conf
@@ -612,11 +487,7 @@ CREATE OR REPLACE VIEW users_widgets_readable AS
 
 -- ALTER TABLE users_widgets_readable OWNER TO sonetdbmgr;
 
--- #### --
-
---
--- Taolin defined function
---
+-- # Taolin defined function
 
 drop function if exists ifnull (text, text);
 create function ifnull (text, text) returns text AS '

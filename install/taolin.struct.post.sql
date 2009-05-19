@@ -1,6 +1,4 @@
--- 
--- STORED PROCEDURES
---
+-- # STORED PROCEDURES
 
 CREATE OR REPLACE FUNCTION set_groups_description(integer) RETURNS void AS $$
     UPDATE users SET groups_description = 
@@ -49,11 +47,7 @@ CREATE OR REPLACE FUNCTION on_delete_photo() RETURNS trigger AS $on_delete_photo
 $on_delete_photo$ LANGUAGE plpgsql;
 
 
--- #### --
-
---
--- INDEXES
---
+-- # TABLE INDEXES
 
 CREATE INDEX users_tsv_idx ON users USING gin (tsv);
 
@@ -68,12 +62,7 @@ CREATE INDEX groups_users_user_id_idx ON groups_users (user_id);
 CREATE INDEX content_types__table_name__idx ON content_types (table_name);
 
 
--- #### --
-
---
--- TRIGGERS
---
-
+-- # TRIGGERS
 
 -- === groups_users ===
 CREATE TRIGGER groups_users_trigger AFTER INSERT OR UPDATE OR DELETE ON groups_users
@@ -88,11 +77,7 @@ FOR EACH ROW EXECUTE PROCEDURE insert_new_event_into_timeline();
 --FOR EACH ROW EXECUTE PROCEDURE on_delete_photo(); 
 
 
--- #### --
-
---
--- SET SEQUENCES
---
+-- # SET SEQUENCES
 
 SELECT SETVAL('boards_id_seq', (select MAX(id) from boards)+1);
 SELECT SETVAL('buildings_id_seq', (select MAX(id) from buildings)+1);
