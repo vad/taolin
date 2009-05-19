@@ -23,6 +23,7 @@
 // defining global value 
 
 define("DB_CONFIG_FILE", "../../config/database.php");
+define("INSTALL_REPORT_FILE", "../../config/INSTALLED.txt");
 
 // including files
 
@@ -30,6 +31,7 @@ require_once('usr/install_fun.php');
 require_once('usr/first_step.php');
 require_once('usr/second_step.php');
 require_once('usr/third_step.php');
+require_once('usr/fourth_step.php');
 
 if (isset($_GET['step']))
   $step = $_GET['step'];
@@ -43,8 +45,7 @@ else
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Installation</title>
   <link rel="stylesheet" href="../css/admin/base.css" type="text/css" media="screen" />
-  <!--<link rel="stylesheet" id="current-theme" href="../css/admin/themes/kathleene/style.css" type="text/css" media="screen" />-->
-  <link rel="stylesheet" id="current-theme" href="../css/admin/themes/djime-cerulean/style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" id="current-theme" href="../css/admin/themes/kathleene/style.css" type="text/css" media="screen" />
   <style type="text/css">
     #flashMessage {
       margin:10px 20px 0 20px;
@@ -109,6 +110,23 @@ else
       </div>
     </div>    
     <div id="wrapper">
+      <div id="sidebar">
+        <div class="block notice">
+          <div class="content">
+          <?php
+            if(!file_exists(INSTALL_REPORT_FILE))
+              wizard_step_helper($step);
+            else
+              echo "<h2 class='title'>Taolin already installed</h2><div class='inner'><p>By proceeding with this wizard the installation previously made will be erased and all your data saved in the database will be lost.</p><p>If you want to go further, please delete <span class='hightlight'>".INSTALL_REPORT_FILE."</span> file from your filesystem</p></div>";
+          ?>
+          </div>
+        </div>
+        <div class="block">
+          <?php
+            print_wizard_help();
+          ?>
+        </div>
+      </div>
       <div id="main">
         <div class="block" id="block-text">
           <div class="secondary-navigation">
@@ -116,6 +134,7 @@ else
               <li class="<? if($step == 0) echo "active" ?> first"><a href="javascript:void(0)">Step 1</a></li>
               <li class="<? if($step == 1) echo "active" ?>"><a href="javascript:void(0)">Step 2</a></li>
               <li class="<? if($step == 2) echo "active" ?>"><a href="javascript:void(0)">Step 3</a></li>
+              <li class="<? if($step == 3) echo "active" ?>"><a href="javascript:void(0)">Step 4</a></li>
             </ul>
             <div class="clear"></div>
           </div>          
@@ -126,9 +145,13 @@ else
           <div class="clear"></div>
         </div>
         <div class="block" id="block-forms">
-          <div class="content">          
+          <div class="content">
+          <!-- Switch through the different steps -->
           <?php 
-            wizard_body($step);
+            if(!file_exists(INSTALL_REPORT_FILE))
+              wizard_body($step);
+            else
+              echo "<h2 class='title'>Taolin already installed</h2><div class='inner'><p>By proceeding with this wizard the installation previously made will be erased and all your data saved in the database will be lost.</p><p>If you want to go further, please delete <span class='hightlight'>".INSTALL_REPORT_FILE."</span> file from your filesystem.</p><p>Then <a href='install.php'>start again</a> with this wizard!</p></div>";
            ?> 
           </div>
         </div>
@@ -136,20 +159,6 @@ else
           <div class="block">
             <p><a href="http://taolin.fbk.eu" target="_blank">Taolin</a>, open source Enterprise 2.0 web desktop. &copy; 2009 <a href="http://taolin.fbk.eu" target="_blank">SoNet</a>.</p>
           </div>      
-        </div>
-      </div>
-      <div id="sidebar">
-        <div class="block notice">
-          <div class="content">
-          <?php
-            wizard_step_helper($step);
-          ?>
-          </div>
-        </div>
-        <div class="block">
-          <?php
-            print_wizard_help();
-          ?>
         </div>
       </div>
       <div class="clear"></div>      
