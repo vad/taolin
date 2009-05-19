@@ -26,7 +26,7 @@ function print_wizard_help(){
 
   <h3>Installation wizard help</h3>
   <div class="content">
-    <p>This wizard will guide you through the Taolin installation process. Visit <a href="http://taolin.fbk.eu" target="_blank">Taolin Wiki</a> for help on this wizard. For any troubleshoot please submit an Issue on <a href="http://github/vad/taolin/issues" target="_blank">Github</a></p> 
+    <p>This wizard will guide you through the Taolin installation process. You can visit the <a href="http://taolin.fbk.eu" target="_blank">Taolin Wiki</a> if you need help with this installation wizard.<br /><br />For any troubleshoot please submit an Issue on <a href="http://github/vad/taolin/issues" target="_blank">Github</a></p> 
   </div>
 
   <?php
@@ -52,8 +52,11 @@ function wizard_step_helper($step){
     case 2:
       third_step_help();
       break;
+    case 3:
+      fourth_step_help();
+      break;
     default:
-      echo 'Wrong path, ya?';
+      echo "<b>Nothing here, sorry!</b>";
   }
 
 }
@@ -80,8 +83,15 @@ function step_switcher($step){
     <?
       third_step_main();
       break;
+    case 3:
+    ?>
+      <h2 class="title">Step 4: Installation complete!</h2>
+    <?
+      fourth_step_main();
+      break;
     default:
-      die("<div class='flash'><div class='message error'><p><b>ERROR! Follow the right path!</b></p></div></div>");
+      notice_message("<b>ERROR! Follow the right path! Please start from <a href='install.php'>the first step</a> of this wizard</b>", "error");
+      die();
   }
 
 }
@@ -95,7 +105,7 @@ function database_connection($host, $dbname, $user, $password){
     
       notice_message("<b>ERROR! Can not connect to the database <i>$dbname</i> on host <i>$host</i></b>", "error");
       
-      echo '<h3>What can you do now?</h3><ul style="padding-left:20px"><li>You can <a href="install.php">go back to step 1</a> and configure your database properly</li><li>If the error persists, check your database or submit an issue to Taolin on github.</li></ul></div>';
+      echo '<h4><b>Uops! Unfortunately something went wrong and connection failed! What can you do now?</b></h4><ul style="padding-left:20px;"><li><a href="install.php">Go back to step 1</a> and re-configure your database properly</li><li>If this error persists, check your database (users, grants..) or submit an issue to Taolin on github.</li></ul></div>';
 
       return null;
 
@@ -105,29 +115,56 @@ function database_connection($host, $dbname, $user, $password){
 }
 
 
+/* Executes an SQL script file outputting operations performed
+ * db: connection to the database, obtained via pg_connect or similar...  
+ * sql_file: the path of a well formatted SQL script file
+ */
+
 function execute_sql_script($db, $sql_file) {
 
+  // load SQL script file and save all the content in a variable
   $statements = file_get_contents($sql_file);
-  $statements = explode('-- #### --', $statements);
 
+  // Explode file content separating pieces of text contained between '-- #'
+  $statements = preg_split("/(^|\n)-- #/", $statements, -1, PREG_SPLIT_NO_EMPTY);
+
+  echo "<pre>";
+
+  // iterate through the statements
   foreach ($statements as $statement) {
 
-    $comments = explode('--', $statement);
-    echo "<p>processing: <b>".$comments[2]."</b>";
-    echo "<br />executing query to the database ... ";
-    $result = pg_query($db, $statement);
+    list($comment, $query) = preg_split("/\n/", $statement, 2, PREG_SPLIT_NO_EMPTY);
+
+    echo "<p>processing: <b>$comment</b><br />";
+
+    // output current action and then the result as well
+    echo "executing query to the database ... ";
+
+    $result = pg_query($db, $query);
+
     if(!$result) {
 
       $error = pg_last_error($db);
+
       if($error != ''){
-        echo "<b><span style='color:red'>FAILED</span></b><br /></p>";
+
+        echo "<b><span style='color:red'>FAILED</span></b><br /></p></pre>";
         echo "<div class='flash'><div class='message error'><p><b>$error</b></p></div></div>";
+        echo "<div><h4>Please get back to the <a href='install.php'>previous step</a> and check either your database settings or user's grants on the configured database.</h4></div>";
         die('</div>');
+
       }
+
     }
-    else
+    else{
+
       echo "<b><span style='color:green'>SUCCESS</span></b><br /></p>";
+
+    }
   }
+
+  // close <pre> tag opened before
+  echo "</pre>";
 }
 
 
@@ -145,6 +182,11 @@ function notice_message($message, $type = 'notice'){
       </script>
     <?
   }
+}
+
+
+function create_installation_file(){
+  file_put_contents(INSTALL_REPORT_FILE, "Taolin installed on: ".date('Y-m-d, H:i:s'));
 }
 
 ?>
