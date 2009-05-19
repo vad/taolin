@@ -22,7 +22,8 @@
 
 function first_step_main(){
 
-  if(!file_exists(DB_CONFIG_FILE))
+  //if(!file_exists(DB_CONFIG_FILE))
+  if(file_exists(DB_CONFIG_FILE))
     db_configuration_form();
   else
     print_database_config(DB_CONFIG_FILE);
@@ -43,7 +44,7 @@ function db_configuration_form(){
       <span class="description">The username for the account</span>
 
       <label class="label" for="post_title">password</label>
-      <input type="password" class="text_field" name="password" value="db2k9sonet!" />
+      <input type="password" class="text_field" name="password" value="" />
       <span class="description">The password for the account</span>
 
       <label class="label" for="post_title">database</label>
@@ -78,7 +79,7 @@ function print_database_config($fileName){
 
   ?>
     <div>
-      <p style="margin-left:10px;">This is the configuration contained in your <i>config/database.php</i> file:</p>
+      <p style="margin-left:10px;">This is the configuration contained in your <span class="hightlight"><i>config/database.php</i></span> file:</p>
       <div class='inner' style='border: 1px solid; background: lightGray; margin: 20px;'>
         <p><pre>
   <?php
