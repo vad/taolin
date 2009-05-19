@@ -19,7 +19,6 @@
  *
  */
 
-
 // defining global value 
 
 define("DB_CONFIG_FILE", "../../config/database.php");

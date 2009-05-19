@@ -26,7 +26,12 @@ function print_wizard_help(){
 
   <h3>Installation wizard help</h3>
   <div class="content">
-    <p>This wizard will guide you through the Taolin installation process. You can visit the <a href="http://taolin.fbk.eu" target="_blank">Taolin Wiki</a> if you need help with this installation wizard.<br /><br />For any troubleshoot please submit an Issue on <a href="http://github/vad/taolin/issues" target="_blank">Github</a></p> 
+    <p>
+      This wizard will guide you through the Taolin installation process. You can visit the <a href="http://taolin.fbk.eu" target="_blank">Taolin Wiki</a> if you need help with this installation wizard.
+    </p>
+    <p>
+      For any troubleshoot please submit an Issue on <a href="http://github/vad/taolin/issues" target="_blank">Github</a>
+    </p>
   </div>
 
   <?php
@@ -67,7 +72,7 @@ function step_switcher($step){
   switch($step){
     case 0:
     ?>
-      <h2 class="title">Step 1: Database configuration</h2>
+      <h2 class="title">Step 1: Configure your database</h2>
     <?
       first_step_main();
       break;
@@ -94,6 +99,23 @@ function step_switcher($step){
       die();
   }
 
+}
+
+
+/* Prints out a notice message.
+ * message: string, message to be printed  
+ * type: string, could be 'notice', 'warning', 'error'
+ */
+
+function notice_message($message, $type = 'notice'){
+
+  if($message != ''){
+    ?>
+      <script>
+        $('#flashMessage').addClass('message <? echo $type ?>').append("<p><? echo $message ?></p>").show();
+      </script>
+    <?
+  }
 }
 
 
@@ -135,7 +157,7 @@ function execute_sql_script($db, $sql_file) {
 
     list($comment, $query) = preg_split("/\n/", $statement, 2, PREG_SPLIT_NO_EMPTY);
 
-    echo "<p>processing: <b>$comment</b><br />";
+    echo "<p>processing: <b>".trim($comment)."</b><br />";
 
     // output current action and then the result as well
     echo "executing query to the database ... ";
@@ -147,11 +169,13 @@ function execute_sql_script($db, $sql_file) {
       $error = pg_last_error($db);
 
       if($error != ''){
-
+        
         echo "<b><span style='color:red'>FAILED</span></b><br /></p></pre>";
+        echo '</div><br />';
         echo "<div class='flash'><div class='message error'><p><b>$error</b></p></div></div>";
         echo "<div><h4>Please get back to the <a href='install.php'>previous step</a> and check either your database settings or user's grants on the configured database.</h4></div>";
-        die('</div>');
+        echo '</div>';
+        die();
 
       }
 
@@ -167,26 +191,5 @@ function execute_sql_script($db, $sql_file) {
   echo "</pre>";
 }
 
-
-/* Prints out a notice message.
- * message: string, message to be printed  
- * type: string, could be 'notice', 'warning', 'error'
- */
-
-function notice_message($message, $type = 'notice'){
-
-  if($message != ''){
-    ?>
-      <script>
-        $('#flashMessage').addClass('message <? echo $type ?>').append("<p><? echo $message ?></p>").show();
-      </script>
-    <?
-  }
-}
-
-
-function create_installation_file(){
-  file_put_contents(INSTALL_REPORT_FILE, "Taolin installed on: ".date('Y-m-d, H:i:s'));
-}
 
 ?>

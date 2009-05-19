@@ -20,7 +20,6 @@
  */
 
 function fourth_step_main(){
-  create_installation_file();
   ?>
     <div class="inner">
       <p>What's more? Browse to <a href="../admin/portals/config">Taolin admin panel</a> to configure Taolin settings and starting using it!</p>
