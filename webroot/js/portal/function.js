@@ -1012,8 +1012,13 @@ function openFirstLoginWizard(){
                 ,items: new Ext.ux.fbk.sonet.WizardSettings()
             },{     
                 index: 2
-                ,trailText: 'Visit the FBK WIKI or start using desktop.fbk.eu!'
-                ,html: '<div>                <p>Almost done! You now have these 2 options:</p>                <div style="width:48%;float:left">                    <p>(1) Search in and contribute to the FBK WIKI!</p>                    <p><strong>You find it at <a href="https://desktop.fbk.eu/wiki/it/" target="_blank">https://desktop.fbk.eu/wiki/it/</a> (open in a new window) and as a link on the top bar of desktop.fbk.eu</strong></p>                <p><a href="https://desktop.fbk.eu/wiki/it/" target="_blank"><img src="img/fbk_wiki_screenshot.png" width="100%" /></a></p></div>                <div style="width:48%;float:right">                    <p><strong>(2) Start using desktop.fbk.eu (click on the "Finish" button below)</strong></p><p><img width="100%" src="img/taolin_screenshot.png" /></p>                </div></div>'
+                ,trailText: 'Further information about '+window.config.appname+'!'
+                ,items: 
+                    {
+                        autoLoad: './pages/welcome_wizard_last_step'
+                        ,style: 'font-size: 120%;'
+                        ,border: false
+                    }
             }]
         }
     });                                 
