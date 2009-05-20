@@ -22,3 +22,8 @@ INSERT INTO config_categories VALUES (2, 'organization');
 INSERT INTO config_categories VALUES (3, 'images');
 INSERT INTO config_categories VALUES (4, 'jabber');
 INSERT INTO config_categories VALUES (5, 'auth');
+
+-- # Fix configs and config_categories id sequences
+SELECT SETVAL('config_categories_id_seq', (select MAX(id) from config_categories));
+SELECT SETVAL('configs_id_seq', (select MAX(id) from configs));
+
