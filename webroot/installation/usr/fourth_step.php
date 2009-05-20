@@ -31,6 +31,7 @@ function fourth_step_main(){
 function fourth_step_help(){
   ?>
     <h4><b>Step 4: Installation complete!</b></h4>
+    <p>Move to Taolin administration portal to configure your own settings.</p>
   <?
 }
 ?>

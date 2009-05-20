@@ -87,19 +87,6 @@ function print_database_config($fileName){
 
   ?>
     <div>
-      <p style="margin-left:10px;">This is the configuration contained in your <span class="hightlight"><i>config/database.php</i></span> file:</p>
-      <div class='inner' style='border: 1px solid; background: lightGray; margin: 20px;'>
-        <p><pre>
-  <?php
-
-  foreach ($lines as $line_number => $line) {
-    if(substr(trim($line), 0, 2) != '/*' && substr(trim($line), 0, 2) != '*/' && substr(trim($line), 0, 1) != '*' && substr(trim($line), 0, 2) != '?>' && substr(trim($line), 0, 2) != '<?')
-      echo "$line<br />";
-  }
-
-  ?>
-        </pre></p>
-      </div>
       <p style="margin-left:10px;">Before proceeding with the installation process you should delete this file since it would be regenerated with configuration settings entered.</p><br />
     </div>
   <?php
