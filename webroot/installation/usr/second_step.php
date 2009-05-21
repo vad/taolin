@@ -31,11 +31,11 @@ function second_step_main(){
       ,"taolin.configs.sql"
       ,"taolin.data.sql"
     );
-  
-  $db_config = $_POST;
+
+  $db_config = $_POST['db'];
 
   // if the user chose to import demo data, process that file as well
-  if(isset($db_config['import_demo_data']))
+  if(isset($_POST['import_demo_data']))
     $sql_scripts[] = "taolin.data.demo.sql";
 
   $db = database_connection($db_config['host'], $db_config['database'], $db_config['login'], $db_config['password']);
