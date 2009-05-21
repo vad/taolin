@@ -64,7 +64,7 @@ class AppController extends Controller
         Configure::write('App.contactus', $this->Conf->get('Site.admin'));
     }
     
-    function addtotimeline($param, $date_now = null, $type_name = null){
+    function addtotimeline($param, $date_now = null, $type_name = null, $uid = null){
 
         // If $date_now is not defined, save this event with current datetime
         if($date_now == null) 
@@ -79,7 +79,7 @@ class AppController extends Controller
         $controller = new TimelinesController;
         $controller->constructClasses();
         // Invoking addtimeline() method in TimelinesController
-        $controller->add($param, $date_now, $type_name);
+        $controller->add($param, $date_now, $type_name, $uid);
 
     }
 

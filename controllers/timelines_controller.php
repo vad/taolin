@@ -104,7 +104,7 @@ class TimelinesController extends AppController {
      *        format 'YYYY-MM-DD HH:MM:SS'
      */
 
-    function add($param, $date, $type_name){
+    function add($param, $date, $type_name, $uid){
         
         // Encoding parameters into json
         if(!empty($param) && ($param != null))
@@ -121,7 +121,11 @@ class TimelinesController extends AppController {
         ));
         $tltype = $type['Template']['id'];
 
-        $data['user_id'] = $this->Session->read('id');
+        if($uid)
+            $data['user_id'] = $uid;
+        else
+            $data['user_id'] = $this->Session->read('id');
+
         $data['param'] = $param;
         $data['date'] = $date;
         $data['template_id'] = $tltype;
