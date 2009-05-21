@@ -143,10 +143,7 @@ else
           <div class="content">
           <!-- Switch through the different steps -->
           <?php 
-            if(!file_exists(INSTALL_REPORT_FILE))
               wizard_body($step);
-            else
-              echo "<h2 class='title'>Taolin already installed</h2><div class='inner'><p>By proceeding with this wizard the installation previously made will be erased and all your data saved in the database will be lost.</p><p>If you want to go further, please delete <span class='hightlight'>".INSTALL_REPORT_FILE."</span> file from your filesystem.</p><p>Then <a href='install.php'>start again</a> with this wizard!</p></div>";
            ?> 
           </div>
         </div>
