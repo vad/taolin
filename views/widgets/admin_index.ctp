@@ -33,6 +33,7 @@ $url = '/'.$this->params['url']['url'];
             <tr>
               <th class="first">Id</th>
               <th>Widget name</th>
+              <th>Count</th>
               <th class="last">Actions</th>
             </tr>
             <? foreach($widgets as $widget):
@@ -41,6 +42,7 @@ $url = '/'.$this->params['url']['url'];
             <tr>
               <td><? echo $widget['id'] ?></td>
               <td><? echo $widget['name'] ?></td>
+              <td><? echo $widget['count'] ?></td>
               <td><a href='<? echo $this->base.'/admin/widgets/edit/'.$widget['id'] ?>'>edit</a> | 
 
               <?

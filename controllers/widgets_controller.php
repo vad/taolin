@@ -130,6 +130,9 @@ class WidgetsController extends AppController {
         Configure::write('debug', '0');
         $this->layout = 'admin';
 
+        $this->paginate['fields'] = array('id', 'name', 'enabled',
+            'getWidgetCount(id) AS "Widget__count"');
+        $this->paginate['order'] = array('Widget__count DESC');
         $res = $this->paginate();
         $this->set('widgets', $res);
     }
