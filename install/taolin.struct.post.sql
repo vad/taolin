@@ -8,7 +8,16 @@ CREATE OR REPLACE FUNCTION set_groups_description(integer) RETURNS void AS $$
 $$ LANGUAGE SQL;
 
 
+CREATE OR REPLACE FUNCTION getWidgetCount(integer) RETURNS bigint AS $$
+    SELECT COUNT(*) AS result
+        FROM users_widgets
+            JOIN users ON users.id = user_id
+        WHERE
+            widget_id = $1 AND users.deleted = 0;
+$$ LANGUAGE SQL;
 
+
+-- # Stored procedures for triggers
 
 CREATE OR REPLACE FUNCTION groups_users_trigger_fun() RETURNS trigger AS $groups_users_trigger_fun$
     BEGIN
@@ -57,9 +66,12 @@ CREATE INDEX timelines_user_id_idx ON timelines USING btree (user_id);
 
 CREATE INDEX users_widgets_user_id_idx ON users_widgets (user_id);
 
+CREATE INDEX users_widgets_widget_id_idx ON users_widgets USING btree (widget_id);
+
 CREATE INDEX groups_users_user_id_idx ON groups_users (user_id);
 
 CREATE INDEX content_types__table_name__idx ON content_types (table_name);
+
 
 
 -- # TRIGGERS
