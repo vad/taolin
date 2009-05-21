@@ -160,6 +160,7 @@ class TimelinesController extends AppController {
             $template = str_replace('_'.strtoupper($key).'_', $param, $template);
         }
         $template = str_replace('_TIMELINEID_', $event['id'], $template);
+        $template = str_replace('_SITENAME_', $this->Conf->get('Site.name'), $template);
 
         return $template;
     }

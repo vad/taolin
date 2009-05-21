@@ -29,6 +29,7 @@ function second_step_main(){
       ,"taolin.struct.post.sql"
       ,"taolin.history.sql"
       ,"taolin.configs.sql"
+      ,"taolin.data.sql"
     );
   
   $db_config = $_POST;

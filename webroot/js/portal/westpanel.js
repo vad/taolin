@@ -113,6 +113,10 @@ westPanel = new Ext.Panel({
                  * western panel and accordion panel containing 'user_image' div
                  */
                 westPanel.expand();
+
+                // Show user info (aka first tab of tabpanel)
+                Ext.getCmp('user_profile').items.items[1].setActiveTab(0);
+
                 if(!hidePanel) expandUserPanel();
                 var jsondata = Ext.util.JSON.decode(result.responseText);
                 westPanel.showedUser = jsondata.user;
