@@ -614,6 +614,8 @@ class UsersController extends AppController {
             $users_aro_id = $users_aro['Aro']['id'];
         
             $new_aro['parent_id'] = $users_aro_id;
+            
+            $this->addtotimeline(null, null, null, $uid);
 
         } else {
             $new_aro['parent_id'] = NULL;
