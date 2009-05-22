@@ -569,8 +569,10 @@ class UsersController extends AppController {
         $this->layout = 'admin';
         
         $url = $this->params['url'];
-        if (array_key_exists('q', $url)) { //check for a 'q' get param
-            $this->paginate['conditions'] = array("tsv @@ plainto_tsquery('english', '".$url['q']."')");
+        if (array_key_exists('q', $url) && $url['q']) { //check for a 'q' GET param
+            $q = $url['q'];
+            $this->paginate['conditions'] = array("tsv @@ plainto_tsquery('english', '$q')");
+            $this->set('query', $this->san->html($q));
         }
 
         $this->paginate['fields'] = array('id', 'name', 'surname', 'login');

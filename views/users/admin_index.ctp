@@ -34,7 +34,9 @@ $url = '/'.$url;
           <h2 class="title">Users list</h2>
           <div style="margin-bottom:20px">
             <form class="form" action="<? echo $this->base ?>/admin/users" method="GET">
-              <input name="q" class="text_field" style="width: 200px" />
+              <input name="q" class="text_field" style="width: 200px"
+                <? echo isset($query) ? "value='$query'" : '' ?>
+              />
               <input type="submit" class="button" value="Search" />
             </form>
           </div>
