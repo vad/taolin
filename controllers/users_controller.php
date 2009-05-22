@@ -568,11 +568,11 @@ class UsersController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'admin';
         
-        /*$users = $this->User->find('all', array(
-            'fields' => array('id', 'name', 'surname', 'login'),
-            'order' => 'id',
-            'recursive' => -1
-        ));*/
+        $url = $this->params['url'];
+        if (array_key_exists('q', $url)) { //check for a 'q' get param
+            $this->paginate['conditions'] = array("tsv @@ plainto_tsquery('english', '".$url['q']."')");
+        }
+
         $this->paginate['fields'] = array('id', 'name', 'surname', 'login');
         $users = $this->paginate();
 
@@ -631,6 +631,35 @@ class UsersController extends AppController {
         }
     }
    
+
+    function admin_create_basic_acl(){
+        Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax
+        die('not now!');
+        $aco = new Aco();
+        $aro = new Aro();
+        /*
+        $aro->create();
+        $aro->save(array('alias' => 'users'));
+        $aro->create();
+        $aro->save(array('alias' => 'admins', 'parent_id' => 1));
+
+        $aco->create();
+        $aco->save(array('alias' => 'admin'));
+        $aco->create();
+        $aco->save(array('alias' => 'site', 'parent_id' => 1));
+        */
+
+        //$this->Acl->grant(array('alias' => 'users'), array('alias' => 'site'));
+        $rr = $aro->findByAlias('users');
+        $rc = $aco->findByAlias('site');
+        print_r($rr);
+        $this->Acl->grant(array('Aro' => array('alias' => 'users')),
+            array('Aco' => array('alias' => 'site')), '*');
+        //$this->Acl->grant(2, 1);
+        //$this->Acl->grant(array('alias' => 'admins'), array('alias' => 'admin'));
+
+        $this->set('json', 'a');
+    }
 
     function admin_create_aros($uid, $active = 1){
         Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax

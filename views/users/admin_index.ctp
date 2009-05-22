@@ -32,6 +32,12 @@ $url = '/'.$url;
       <div class="content">
         <div class="inner">
           <h2 class="title">Users list</h2>
+          <div style="margin-bottom:20px">
+            <form class="form" action="<? echo $this->base ?>/admin/users" method="GET">
+              <input name="q" class="text_field" style="width: 200px" />
+              <input type="submit" class="button" value="Search" />
+            </form>
+          </div>
           <table class="table">
             <tr>
               <th class="first">Id</th>
