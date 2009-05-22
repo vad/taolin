@@ -24,7 +24,8 @@ class PortalsController extends AppController {
 
     var $name = 'Portal';
     var $helpers = array('Html','Javascript');
-    
+
+
     function beforeFilter()
     {
         parent::beforeFilter();
@@ -32,11 +33,36 @@ class PortalsController extends AppController {
         $this->checkSession();
     }
 
+
+    function getinitialconfig(){
+
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+        
+        $u_id = $this->Session->read('id');
+
+        $response['config']['addtomail'] = $this->Conf->get('Organization.domain');
+        $response['config']['appname'] = $this->Conf->get('Site.name');
+        $response['config']['contactus'] = $this->Conf->get('Site.admin');
+        $response['config']['defaultgroupname'] = $this->Conf->get('Organization.group_name');
+        $response['config']['img_path'] = $this->Conf->get('Images.people_web_path');
+        $response['config']['jabber_server'] = $this->Conf->get('Jabber.server');
+        $response['config']['jabber_domain'] = $this->Conf->get('Jabber.domain');
+        $response['config']['logo'] = $this->Conf->get('Site.logo_url');
+
+        $response['success'] = true;
+        
+        $this->set('json', $response);
+        
+    }
+
+
     function index(){
         $this->pageTitle = $this->Conf->get('Site.name');
         $this->set('isdebugactive', $this->Conf->get('Site.jsdebug'));
         $this->set('screen_title', $this->Conf->get('Site.name'));
     }
+
 
     function admin(){
         $this->layout = 'admin';

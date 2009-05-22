@@ -32,29 +32,6 @@ class UsersWidgetsController extends AppController {
     }
 
 
-    function getinitialconfig(){
-
-        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
-        $this->layout = 'ajax';
-        
-        $u_id = $this->Session->read('id');
-
-        $response['config']['addtomail'] = $this->Conf->get('Organization.domain');
-        $response['config']['appname'] = $this->Conf->get('Site.name');
-        $response['config']['contactus'] = $this->Conf->get('Site.admin');
-        $response['config']['defaultgroupname'] = $this->Conf->get('Organization.group_name');
-        $response['config']['img_path'] = $this->Conf->get('Images.people_web_path');
-        $response['config']['jabber_server'] = $this->Conf->get('Jabber.server');
-        $response['config']['jabber_domain'] = $this->Conf->get('Jabber.domain');
-        $response['config']['logo'] = $this->Conf->get('Site.logo_url');
-
-        $response['success'] = true;
-        
-        $this->set('json', $response);
-        
-    }
-
-
     function getwidgetsposition($uw_id=''){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
