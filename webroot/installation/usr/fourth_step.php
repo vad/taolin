@@ -21,6 +21,7 @@
 
 function fourth_step_main(){
   ?>
+    <h2 class="title">Step 4: Installation complete!</h2>
     <div class="inner">
       <p>What's more? Browse to <a href="../admin/portals/config">Taolin admin panel</a> to configure Taolin settings and starting using it!</p>
     </div>

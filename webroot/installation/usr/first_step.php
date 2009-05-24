@@ -21,6 +21,10 @@
 
 
 function first_step_main(){
+    
+  ?>
+    <h2 class="title">Step 1: Configure your database</h2>
+  <?
 
   if(!file_exists(DB_CONFIG_FILE))
     db_configuration_form();
@@ -92,7 +96,7 @@ function print_database_config($fileName){
       <h3>Warning!</h3>
       <p>It seems that your database configuration file (located at <i>config/database.php</i>) already exists. Does it means that Taolin is already installed in this location? Proceeding with the installation will delete an existant database losing all the data contained.</p><br />
       <h3>Proceeding with Taolin installation</h3>
-      <p>Before proceeding with the installation process you should delete this file since it would be regenerated with the configuration settings entered. Once done you can continue with this wizard.</p>
+      <p>Before proceeding with the installation process you should delete this file since it would be regenerated with the configuration settings entered. Then you can continue with this wizard.</p>
       <form method="POST" class="form" action="install.php?step=0" >
         <div class="group navform" style="padding-top:20px">
           <input type="submit" class="button" value="Go to step 1 >>" />  

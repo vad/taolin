@@ -21,8 +21,6 @@
 
 function second_step_main(){
 
-  echo "<div class='inner'>";
-
   $sql_scripts_path = "../../install/";
   $sql_scripts = array(
       "taolin.struct.sql"
@@ -31,6 +29,11 @@ function second_step_main(){
       ,"taolin.configs.sql"
       ,"taolin.data.sql"
     );
+    
+  ?>
+    <h2 class="title">Step 2: Creating database structure</h2>
+    <div class='inner'>
+  <?
 
   $db_config = $_POST['db'];
 

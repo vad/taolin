@@ -110,11 +110,9 @@ else
     <div id="wrapper">
       <div id="sidebar">
         <div class="block notice">
-          <div class="content">
           <?php
               wizard_step_helper($step);
           ?>
-          </div>
         </div>
         <div class="block">
           <?php
