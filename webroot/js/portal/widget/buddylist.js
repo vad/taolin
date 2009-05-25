@@ -354,6 +354,7 @@ BuddyList = function(conf, panel_conf) {
                         jabber.setPresence(presence, status);
                     }
                     ,render: function(t){
+
                         var presence, status, type;
                         var cPresence = Ext.getCmp('presence');
                         
@@ -367,6 +368,9 @@ BuddyList = function(conf, panel_conf) {
                         status = t.value ? t.value : '';
 
                         jabberui.init(presence, status, type);
+                    }
+                    ,beforedestroy: function(t){
+                        jabber.quit();
                     }
                   }
                 })]

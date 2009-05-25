@@ -365,20 +365,15 @@ var jabber = {
     },
 
     iqRoster: function(iq){
-      //console.profile('jq');
+      //console.log('iqRoster');
       var q = iq.getQuery();
-      var add = !roster.roster.length; //boolean
+      roster.clear(); //i hope the new roster replaces the old one...
       $(q).find('item').each(function(){
         var t = $(this);
         var b = new Buddy(t.attr('jid'), t.attr('subscription'),
           t.attr('name'), t.find('group').text());
-        if (add) {
-          roster.roster.push(b);
-        } else {
-          roster.update(b);
-        }
+        roster.roster.push(b);
       });
-      //console.profileEnd('jq');
 
       roster.flushPresence();
     },
