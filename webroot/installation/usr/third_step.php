@@ -20,6 +20,11 @@
  */
 
 function third_step_main(){
+
+  ?>
+    <h2 class="title">Step 3: Site administrator</h2>
+  <?
+
   echo 'Dunno';
 }
 

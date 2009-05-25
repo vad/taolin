@@ -21,6 +21,10 @@
 
 
 function first_step_main(){
+    
+  ?>
+    <h2 class="title">Step 1: Configure your database</h2>
+  <?
 
   if(!file_exists(DB_CONFIG_FILE))
     db_configuration_form();
@@ -41,31 +45,33 @@ function db_configuration_form(){
       <h3>Database configuration</h3>
       <div class="group">
         <label class="label" for="post_title">login</label>
-        <input type="text" class="text_field" name="login" />
+        <input type="text" class="text_field" name="db[login]" />
         <span class="description">The username for the account</span>
 
         <label class="label" for="post_title">password</label>
-        <input type="password" class="text_field" name="password" />
+        <input type="password" class="text_field" name="db[password]" />
         <span class="description">The password for the account</span>
 
         <label class="label" for="post_title">database</label>
-        <input type="text" class="text_field" name="database" />
+        <input type="text" class="text_field" name="db[database]" />
         <span class="description">The name of the database</span>
 
         <label class="label" for="post_title">host</label>
-        <input type="text" class="text_field" name="host" />
+        <input type="text" class="text_field" name="db[host]" />
         <span class="description">The database server’s hostname (or IP address)</span>
 
         <label class="label" for="post_title">persistent</label>
-        <input type="text" class="text_field" name="persistent" />
+        <input type="text" class="text_field" name="db[persistent]" />
         <span class="description">True to use a persistent connection to the database. Otherwise false</span>
         
         <label class="label" for="post_title">encoding</label>
-        <input type="text" class="text_field" name="encoding" value="utf-8" />
+        <input type="text" class="text_field" name="db[encoding]" value="utf-8" />
       </div>
       
       <h3>Import demo data in taolin</h3>
-      <p>Check this button to populate your database with demonstrative data (be carefully to not switch authentication type to something different from 'Dummy' when you will configure your Taolin settings)</p>
+      <p>Check this button to populate your database with demonstrative data (be carefully to choose 'Dummy' as authentication type while configuring your Taolin settings in the next steps)<br />
+      Importing these data you will set up the demonstrative version of Taolin.</p>
+      <p>User credential required to log in will be <i>platone</i> (as username and password too)</p>
       <div class="group">
           <input type="checkbox" name="import_demo_data" id="checkbox_1" class="checkbox" value="0" /> <label for="checkbox_1" class="label" style="display: inline !important;">Import demo data</label>
       </div>
@@ -86,8 +92,16 @@ function print_database_config($fileName){
   notice_message("File <i>config/database.php</i> already exists. Please delete it before proceeding with this wizard.", 'warning');
 
   ?>
-    <div>
-      <p style="margin-left:10px;">Before proceeding with the installation process you should delete this file since it would be regenerated with configuration settings entered.</p><br />
+    <div class="inner">
+      <h3>Warning!</h3>
+      <p>It seems that your database configuration file (located at <i>config/database.php</i>) already exists. Does it means that Taolin is already installed in this location? Proceeding with the installation will delete an existant database losing all the data contained.</p><br />
+      <h3>Proceeding with Taolin installation</h3>
+      <p>Before proceeding with the installation process you should delete this file since it would be regenerated with the configuration settings entered. Then you can continue with this wizard.</p>
+      <form method="POST" class="form" action="install.php?step=0" >
+        <div class="group navform" style="padding-top:20px">
+          <input type="submit" class="button" value="Go to step 1 >>" />  
+        </div>
+      </form>
     </div>
   <?php
 

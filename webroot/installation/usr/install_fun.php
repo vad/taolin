@@ -30,7 +30,7 @@ function print_wizard_help(){
       This wizard will guide you through the Taolin installation process. You can visit the <a href="http://taolin.fbk.eu" target="_blank">Taolin Wiki</a> if you need help with this installation wizard.
     </p>
     <p>
-      For any troubleshoot please submit an Issue on <a href="http://github/vad/taolin/issues" target="_blank">Github</a>
+      For any troubleshoot please submit an issue on <a href="http://github/vad/taolin/issues" target="_blank">Github</a>
     </p>
   </div>
 
@@ -49,19 +49,20 @@ function wizard_step_helper($step){
 
   switch($step){
     case 0: 
-      first_step_help();
-      break;
+      first_step_help();break;
     case 1:
-      second_step_help();
-      break;
+      second_step_help();break;
     case 2:
-      third_step_help();
-      break;
+      third_step_help();break;
     case 3:
-      fourth_step_help();
-      break;
+      fourth_step_help();break;
     default:
-      echo "<b>Nothing here, sorry!</b>";
+      ?>
+        <h4><b>Nothing to see here, sorry!</b></h4>
+          <div class="inner">
+            <p>If you want to install taolin maybe you should start from the <a href="install.php">first step</a></p>
+          </div>
+      <?
   }
 
 }
@@ -71,29 +72,13 @@ function step_switcher($step){
 
   switch($step){
     case 0:
-    ?>
-      <h2 class="title">Step 1: Configure your database</h2>
-    <?
-      first_step_main();
-      break;
+      first_step_main();break;
     case 1:
-    ?>
-      <h2 class="title">Step 2: Creating database structure</h2>
-    <?
-      second_step_main();
-      break;
+      second_step_main();break;
     case 2:
-    ?>
-      <h2 class="title">Step 3: Site administrator</h2>
-    <?
-      third_step_main();
-      break;
+      third_step_main();break;
     case 3:
-    ?>
-      <h2 class="title">Step 4: Installation complete!</h2>
-    <?
-      fourth_step_main();
-      break;
+      fourth_step_main();break;
     default:
       notice_message("<b>ERROR! Follow the right path! Please start from <a href='install.php'>the first step</a> of this wizard</b>", "error");
       die();

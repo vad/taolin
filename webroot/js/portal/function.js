@@ -28,7 +28,7 @@
 
 function setPortalConfiguration(f){
     Ext.Ajax.request({
-        url: 'users_widgets/getinitialconfig',
+        url: 'portals/getinitialconfig',
         method: 'GET',
         success: function(result, request){
             var json_decode = Ext.util.JSON.decode(result.responseText);

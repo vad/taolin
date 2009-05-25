@@ -21,8 +21,6 @@
 
 function second_step_main(){
 
-  echo "<div class='inner'>";
-
   $sql_scripts_path = "../../install/";
   $sql_scripts = array(
       "taolin.struct.sql"
@@ -31,11 +29,16 @@ function second_step_main(){
       ,"taolin.configs.sql"
       ,"taolin.data.sql"
     );
-  
-  $db_config = $_POST;
+    
+  ?>
+    <h2 class="title">Step 2: Creating database structure</h2>
+    <div class='inner'>
+  <?
+
+  $db_config = $_POST['db'];
 
   // if the user chose to import demo data, process that file as well
-  if(isset($db_config['import_demo_data']))
+  if(isset($_POST['import_demo_data']))
     $sql_scripts[] = "taolin.data.demo.sql";
 
   $db = database_connection($db_config['host'], $db_config['database'], $db_config['login'], $db_config['password']);
