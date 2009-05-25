@@ -35,16 +35,12 @@ var jabber = {
     con.registerHandler('message', jabber.handle.message);
     con.registerHandler('presence', jabber.handle.presence);
     con.registerHandler('onconnect', jabber.handle.connected);
-    con.registerHandler('onerror', jabber.handle.error);
-    con.registerHandler('status_changed', jabber.handle.statusChanged);
     con.registerHandler('ondisconnect', jabber.handle.disconnected);
     con.registerHandler('failure', jabber.handle.failure);
     con.registerIQGet('query', NS_VERSION, jabber.handle.iqVersion);
     con.registerIQGet('query', NS_TIME, jabber.handle.iqTime);
     con.registerIQSet('query', NS_ROSTER, jabber.handle.iqRosterSet);
     con.registerHandler('iq', 'query', NS_ROSTER, jabber.handle.iqRoster);
-    con.registerHandler('iq', 'query', NS_DISCO_ITEMS, jabber.handle.iqDiscoItems);
-    //con.registerHandler('iq', 'query', NS_REGISTER, jabber.handle.iqRegister);
     con.registerHandler('iq', jabber.handle.iq);
   },
   
@@ -131,15 +127,6 @@ var jabber = {
     return buddy.jid;
   },
 
-  discoverItems: function(){
-    var iq = new JSJaCIQ();
-    iq.setTo('squall.cs.umn.edu');
-    iq.setType('get');
-    iq.setID('get_items');
-    iq.setQuery(NS_DISCO_ITEMS);
-    this.send(iq);
-  },
-
   getRegFields: function(to){
     var iq = new JSJaCIQ();
     iq.setTo(to);
@@ -188,14 +175,6 @@ var jabber = {
         setChatStatus(status.htmlEnc().smilize().urlize());
     }
   },
-
-/*  setVisibility: function(show, status) {
-    var presence = new JSJaCPresence();
-    presence.setShow(show);
-    presence.setStatus(status);
-    this.send(presence);
-  },
-*/
 
   subscribe: function(jid){
     this.__subscription(jid, 'subscribe');
@@ -282,44 +261,9 @@ var jabber = {
       }      
       //console.log(from + presence + status + type);
       roster.setPresence(from, presence, status, type);
-
-      if (type == "subscribe") {
-        if (from.getDomain() == 'aim.squall.cs.umn.edu' ||
-            from.getDomain() == 'icq.squall.cs.umn.edu' ||
-            from.getDomain() == 'msn.squall.cs.umn.edu' ||
-            from.getDomain() == 'yahoo.squall.cs.umn.edu') {
-          jabber.allowSubscription(from.toString());
-          return;
-        }
-        if (!Ext.MessageBox.isVisible()) {
-          Ext.MessageBox.confirm("Subscription request",
-            "Approve subscription request from " + from.toString() + "?",
-            function (approve) {
-              //console.log(approve);
-              if (approve == 'yes')
-                jabber.allowSubscription(from.toString());
-              else
-                jabber.denySubscription(from.toString());
-          });
-        }
-        else {
-          if (confirm ("Approve subscription request from " + from.toString() + "?"))
-            jabber.allowSubscription(from.toString());
-          else
-            jabber.denySubscription(from.toString());
-        }
-      }
+      
     },
 
-    error: function(aJSJaCPacket){
-      if (jabber.con.connected()) 
-        jabber.con.disconnect();
-    },
-    
-    statusChanged: function(status){
-      //oDbg.log("status changed: " + status);
-    },
-    
     connected: function(){
       Ext.getCmp('buddylist').items.first().view.emptyText = 'Nobody';
       jabber.getRoster();
@@ -377,18 +321,9 @@ var jabber = {
 
       roster.flushPresence();
     },
+    
     iqRosterSet: function(iq){
       jabber.handle.iqRoster(iq);
-    },
-
-    iqDiscoItems: function(iq){
-      alert(iq.xml());
-    },
-
-    iqRegister: function(iq){
-      if (iq.isError())
-        Ext.MessageBox.alert('Error registering', 'Incorrect username or password?');
-      //console.log(iq.xml());
     }
   }
 };
