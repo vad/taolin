@@ -60,7 +60,11 @@ class AccountsController extends AppController {
         $auth_comp = $this->Conf->get('Auth.method').'auth';
         App::import('Component', $auth_comp);
         $cn = $auth_comp . 'Component';
+
         $this->AuthComponent = new $cn();
+        
+        $this->AuthComponent->startup(&$this); //start AuthComponent component
+
     }
 
     function login(){

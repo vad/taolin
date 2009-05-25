@@ -15,6 +15,10 @@ INSERT INTO configs VALUES (11, 3, 'webcam_fs_path', 'ONE_PATH/webcam/');
 INSERT INTO configs VALUES (13, 4, 'server', 'jabber.example.com');
 INSERT INTO configs VALUES (14, 4, 'domain', 'example.com');
 INSERT INTO configs VALUES (12, 5, 'method', 'Dummy');
+INSERT INTO configs VALUES (18, 6, 'host', 'localhost');
+INSERT INTO configs VALUES (19, 6, 'port', '1234');
+INSERT INTO configs VALUES (20, 6, 'dn', 'EXAMPLE_DN');
+INSERT INTO configs VALUES (21, 6, 'domain', 'EXAMPLE_DOMAIN');
 
 -- # Insert Config categories
 INSERT INTO config_categories VALUES (1, 'site');
@@ -22,6 +26,7 @@ INSERT INTO config_categories VALUES (2, 'organization');
 INSERT INTO config_categories VALUES (3, 'images');
 INSERT INTO config_categories VALUES (4, 'jabber');
 INSERT INTO config_categories VALUES (5, 'auth');
+INSERT INTO config_categories VALUES (6, 'ldap');
 
 -- # Fix configs and config_categories id sequences
 SELECT SETVAL('config_categories_id_seq', (select MAX(id) from config_categories));
