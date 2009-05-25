@@ -2,7 +2,6 @@
 .project
 /config/database.php
 /config/config.php
-/controllers/components/auth/ldapauth.php
 /tmp/logs/*.log
 /tmp/cache/rss/
 
