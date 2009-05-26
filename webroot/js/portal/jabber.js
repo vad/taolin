@@ -226,24 +226,28 @@ var jabber = {
     },
     
     message: function(aJSJaCPacket){
-
-        // set current timestamp
-        var x;
-        var timestamp;
-        for (var i=0; i<aJSJaCPacket.getNode().getElementsByTagName('x').length; i++)
-            if (aJSJaCPacket.getNode().getElementsByTagName('x').item(i).getAttribute('xmlns') == 'jabber:x:delay') {
-                x = aJSJaCPacket.getNode().getElementsByTagName('x').item(i);
-                break;
+      // set current timestamp
+      var x;
+      var timestamp;
+      var node = aJSJaCPacket.getNode();
+      
+      $(node).find('x').each(function(){
+        x = $(this);
+        if (x.attr('xmlns') == 'jabber:x:delay'){
+          return false;
         }
+      });
 
-        if (x) {
-            var stamp = x.getAttribute('stamp');
-            timestamp = new Date(Date.UTC(stamp.substring(0,4),stamp.substring(4,6)-1,stamp.substring(6,8),stamp.substring(9,11),stamp.substring(12,14),stamp.substring(15,17)));
-        } else
-            timestamp = new Date();
+      if (x) {
+        var s = x.attr('stamp');
+        timestamp = new Date(Date.UTC(stamp.substring(0,4),stamp.substring(4,6)-1,
+          stamp.substring(6,8), stamp.substring(9,11), stamp.substring(12,14),
+          stamp.substring(15,17)
+        ));
+      } else
+        timestamp = new Date();
 
-        
-        // add message to the chat window
+      // add message to the chat window
       jabberui.addMsg(aJSJaCPacket.getFromJID().removeResource(), aJSJaCPacket.getBody(), timestamp);
     },
     
