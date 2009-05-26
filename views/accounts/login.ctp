@@ -44,7 +44,7 @@ If you are not a Champion, please read the rest of the page.
 
 <?php echo $javascript->link('portal/function.js'); ?>
 <?php //echo $javascript->link('portal/login.js'); ?>
-          <div style="width: 300px;" id="login_form" class=
+          <div id="login_form" class=
           "x-panel x-form-label-left">
             <div class="x-panel-tl">
               <div class="x-panel-tr">

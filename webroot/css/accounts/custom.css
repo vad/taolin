@@ -17,20 +17,20 @@
 *
 */
 .back-to-top{
-float:right;
-font-size:xx-small;
-padding-left:20px;
-padding-right:20px;
+    float:right;
+    font-size:xx-small;
+    padding-left:20px;
+    padding-right:20px;
 }
 
 .questions-list {
-border:2px solid #005ca9;
-padding:20px;
-margin:20px;
+    border:2px solid #005ca9;
+    padding:20px;
+    margin:20px;
 }
 
 .questions-list a {
-color:#005ca9;
+    color:#005ca9;
 }
 div.faq {
     position:absolute;
@@ -40,21 +40,26 @@ div.faq {
 
 }
 div.help {
-float:left;
-width:90%;
+    float:left;
+    width:90%;
 }
 
 div.login-column {
-padding-left:4%;
-font-size:large;
-position:absolute;
-left:0;
-width:40%;
+    padding-left:4%;
+    font-size:large;
+    position:absolute;
+    left:0;
+    width:40%;
 }
-div#login-form {
+/*#login-form {
     padding:30px;
     padding-top: 60px;
     padding-left: 20%;
+}*/
+#login_form {
+    width: 300px;
+    margin: auto auto;
+    padding-top: 60px;
 }
 p.question {
     color: #000000;
@@ -91,9 +96,9 @@ p {
     padding:10px;
 }
 .faq-aq-desktop li {
-list-style: square;
-margin-left:35px;
+    list-style: square;
+    margin-left:35px;
 }
 .faq-aq-desktop a {
-color:#005ca9;
+    color:#005ca9;
 }
