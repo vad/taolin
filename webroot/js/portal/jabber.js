@@ -3,7 +3,6 @@ var jabber = {
   u_n: '',
   p_w: '',
   con: new JSJaCHttpBindingConnection(),
-  roster: [],
   myJid: '',
   nTrials: 0,
   maxTrials: 1,
@@ -66,15 +65,17 @@ var jabber = {
       oArgs.username = username;
       oArgs.pass = password;
       oArgs.register = false;
+      oArgs.resource = Math.ceil(Math.random()*Math.pow(10,10));
       //oArgs.authtype = 'nonsasl';
       this.u_n = username;
       this.p_w = password;
       this.myJid = oArgs.username + oArgs.domain;
+      this.resource = oArgs.resource;
       
       this.con.connect(oArgs);
     } 
     catch (e) {
-      alert(e.toString());
+      console.log(e.toString());
     }
     finally {
       return false;
@@ -248,6 +249,13 @@ var jabber = {
     
     presence: function(aJSJaCPacket){
       var from = new JSJaCJID(aJSJaCPacket.getFrom());
+
+      if ((from.getNode() == jabber.u_n) && (from.getResource() != jabber.resource) && (aJSJaCPacket.getType() == 'unavailable')) {
+        // if a disconnection message comes from another resource of this user, discard this message.
+        // This check prevents that the users seems to be offline 30s after page refresh
+        return false;
+      }
+
       from.setResource(new String());
       var presence = aJSJaCPacket.getShow();
       
@@ -259,9 +267,8 @@ var jabber = {
       if (aJSJaCPacket.getStatus()) {
         status = aJSJaCPacket.getStatus();
       }      
-      //console.log(from + presence + status + type);
+
       roster.setPresence(from, presence, status, type);
-      
     },
 
     connected: function(){
