@@ -582,7 +582,7 @@ function getIdFromJidNode(jidnode){
  * @addon
  */
 String.prototype.urlize = function() {
-    return this.replace(/(https?:\/\/[a-zA-Z0-9\-\/\~\_\.\?\&\=\#\+\:\%\;]+)/g, '<a target="_blank" href="$1">$1</a>');
+    return this.replace(/(https?:\/\/[a-zA-Z0-9\-\/\~\_\.\?\&\=\#\+\:\%\;\!]+)/g, '<a target="_blank" href="$1">$1</a>');
 }
 
 /*
