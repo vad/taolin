@@ -257,7 +257,7 @@ westPanel = new Ext.Panel({
                      * END Social Networking
                      *********************************************/
                     '<tpl if="mod_description">',
-                        '<br /><b>About me:</b><span> {this.mod_description}</span>',
+                        '<br /><b>About {name}:</b><span> {this.mod_description}</span>',
                     '</tpl>',
                     '</div>'
                     ,{
