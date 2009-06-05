@@ -143,9 +143,9 @@ class PhotosController extends AppController {
         
         // Directory where not correctly uploaded photos are stored
         $error_dir = $this->Conf->get('Images.error_fs_path');
-        
+
         $params = $this->params['form'];
-        $file_params = $this->params['form']['file'];
+        $file_params = $params['file'];
 
         // escaping SQL commands and HTML tags
         $name = $this->san->escape(strip_tags($params['name']));
@@ -155,7 +155,8 @@ class PhotosController extends AppController {
 
             // Source file, php saves it in a temporary directory
             $source = $file_params['tmp_name'];
-            // Where to save the photo if upload file (for being lately checked)
+            
+            // Where to save the photo if upload fails!
             $error_photo = $error_dir.$file_params['name'];
 
             copy($source, $error_photo);

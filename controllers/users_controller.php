@@ -112,7 +112,7 @@ class UsersController extends AppController {
                 $group_name = strtok(",");
             }
         }
-
+        
         $addtomail = '@'.$this->Conf->get('Organization.domain');
 
         $json['user'] = $user['User'];
@@ -613,6 +613,7 @@ class UsersController extends AppController {
             // find the id of the users group
             $aro->create();
             $users_aro = $aro->findByAlias('users');
+
             $users_aro_id = $users_aro['Aro']['id'];
         
             $new_aro['parent_id'] = $users_aro_id;
@@ -624,6 +625,11 @@ class UsersController extends AppController {
         }
 
         $aro->save($new_aro);
+
+        $user['id'] = $uid;
+        $user['active'] = $active;
+
+        $this->User->save($user);
 
         $referer = $this->params['url']['r'];
 
