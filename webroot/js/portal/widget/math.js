@@ -62,7 +62,7 @@ MathWidget = function(conf, panel_conf){
             ,anchor: '100%'
     	},{
             /* Using JQuery toggle to show/hide an originally hidden div */
-            html:  '<div style="padding:0 0 5px 5px;"><img style="vertical-align:middle;" src="img/khelpcenter.png" /> <span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'" style="text-align:left;line-height:150%;font-size:100%;font-family:Verdana;" onclick="$(\'#calcForm-math-help_'+this.getId()+'\').toggle(400)">Help</span></div><div id="calcForm-math-help_'+this.getId()+'" style="display:none;padding:5px;background:lightGray;">' + helpString
+            html:  '<div style="padding:0 0 5px 5px;"><img style="vertical-align:middle;" src="img/khelpcenter.png" width=18 height=18 /> <span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'" style="text-align:left;line-height:150%;font-size:100%;font-family:Verdana;" onclick="$(\'#calcForm-math-help_'+this.getId()+'\').toggle(400)">Help</span></div><div id="calcForm-math-help_'+this.getId()+'" style="display:none;padding:5px;background:lightGray;">' + helpString
         }
         ]
         ,keys:{

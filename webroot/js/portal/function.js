@@ -501,7 +501,7 @@ String.prototype.multiReplace = function ( hash ) {
 };
 
 /* smilize */
-var hi = "<img src='js/portal/shared/icons/fam/";
+var hi = "<img class='size16x16' src='js/portal/shared/icons/fam/";
 var fi = "'>";
 hSmile = {
     ':-?\\)': hi+'emoticon_smile.png'+fi,

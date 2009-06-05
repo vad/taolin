@@ -49,15 +49,15 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                 {
                     html: '<div id="edit-div" class="edit_div">' +
                             '<div onclick="showUserInfo(null, null, \'' + Ext.util.Format.htmlEncode('{"source": "edit profile"}') + '\');" style="padding:1px 0;">' +
-                                '<img src="js/portal/shared/icons/fam/user_comment.png" />' +
+                                '<img src="js/portal/shared/icons/fam/user_comment.png" class="size16x16"/>' +
                                 '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">View your profile</span>' +
                             '</div>' +
                             '<div onclick="openImageChooser();" style="padding:1px 0;">' +
-                                '<img src="js/portal/shared/icons/fam/image_edit.png" />' +
+                                '<img src="js/portal/shared/icons/fam/image_edit.png" class="size16x16" />' +
                                 '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your photos</span>' +
                             '</div>' +
                             '<div id="edit_workplace" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "edit profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">' +
-                                '<img src="js/portal/shared/icons/fam/map_edit.png" />' +
+                                '<img src="js/portal/shared/icons/fam/map_edit.png" class="size16x16"/>' +
                                 '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit workplace</span>' +
                             '</div>' +
                         '</div>' 
@@ -120,17 +120,17 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                                 grow: true,
                                 anchor: '100%'
                             }, {
-                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" style="vertical-align: middle" /> Linkedin public-profile<br /><span style="font-weight:normal;font-size:90%;">Example: set it to <i>nickname</i> if your linkedin public profile url is <i>http://www.linkedin.com/in/nickname</i></span>'
+                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" class="size16x16" style="vertical-align: middle" /> Linkedin public-profile<br /><span style="font-weight:normal;font-size:90%;">Example: set it to <i>nickname</i> if your linkedin public profile url is <i>http://www.linkedin.com/in/nickname</i></span>'
                                 ,name: 'linkedin'
                                 ,maxLength: 50
                                 ,anchor: '100%'
                             }, {
-                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=twitter.com" style="vertical-align: middle" /> Twitter username'
+                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=twitter.com" class="size16x16" style="vertical-align: middle" /> Twitter username'
                                 ,name: 'twitter'
                                 ,maxLength: 50
                                 ,anchor: '100%'
                             }, {
-                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" style="vertical-align: middle" /> Facebook profile Web address<br /><span style="font-weight:normal;font-size:90%;">Once logged into Facebook, click the <i>Profile</i> button and then copy here the Web address of the resulting page</span>'
+                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16" style="vertical-align: middle" /> Facebook profile Web address<br /><span style="font-weight:normal;font-size:90%;">Once logged into Facebook, click the <i>Profile</i> button and then copy here the Web address of the resulting page</span>'
                                 ,name: 'facebook'
                                 ,vtype: 'url'
                                 ,maxLength: 120

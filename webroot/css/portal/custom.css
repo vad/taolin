@@ -579,3 +579,8 @@ color:black;
     font-family: verdana;
 }
 /* END user profile class */
+
+.size16x16 {
+    width:16px;
+    height:16px;
+}

@@ -46,20 +46,20 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                     '<img id="user_photo" />' +
                     '<div id="edit-photo-button" onclick="openImageChooser();" style="background: #DDE4FF;">' +
                         '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Change photo</span>' +
-                        '<img src="js/portal/shared/icons/fam/image_edit.png" />' +
+                        '<img src="js/portal/shared/icons/fam/image_edit.png" class="size16x16" />' +
                     '</div>' +
                 '</div>' +
                 '<div id="user-profile-edit-div" class="edit_div" style="margin:15px; !important">' +
                     '<div onclick="expandSettingsPanel();">' +
-                        '<img src="js/portal/shared/icons/fam/user_edit.png" />' +
+                        '<img src="js/portal/shared/icons/fam/user_edit.png" class="size16x16"/>' +
                         '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your profile</span>' +
                     '</div>' +
                     '<div onclick="openImageChooser();">' +
-                        '<img src="js/portal/shared/icons/fam/image_edit.png" />' +
+                        '<img src="js/portal/shared/icons/fam/image_edit.png" class="size16x16"/>' +
                         '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your photos</span>' +
                     '</div>' +
                     '<div onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">' +
-                       '<img src="js/portal/shared/icons/fam/map_edit.png" />' +
+                       '<img src="js/portal/shared/icons/fam/map_edit.png" class="size16x16"/>' +
                        '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit workplace</span>' + 
                     '</div>' +
                 '</div>'  
