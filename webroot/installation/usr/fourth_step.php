@@ -21,9 +21,9 @@
 
 function fourth_step_main(){
   ?>
-    <h2 class="title">Step 4: Installation complete!</h2>
+    <h2 class="title">Step 4: Create a site administrator</h2>
     <div class="inner">
-      <p>What's more? Browse to <a href="../admin/portals/config">Taolin admin panel</a> to configure Taolin settings and starting using it!</p>
+      <p class="first">Installation is almost over! Create a site administrator filling the form below.</p>
     </div>
   <?
 }
@@ -31,7 +31,7 @@ function fourth_step_main(){
 
 function fourth_step_help(){
   ?>
-    <h4><b>Step 4: Installation complete!</b></h4>
+    <h4><b>Step 4: Create a site administrator</b></h4>
     <p>Move to Taolin administration portal to configure your own settings.</p>
   <?
 }
