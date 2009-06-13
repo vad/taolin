@@ -130,7 +130,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                                 ,maxLength: 50
                                 ,anchor: '100%'
                             }, {
-                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16" style="vertical-align: middle" /> Facebook profile Web address<br /><span style="font-weight:normal;font-size:90%;">Once logged into Facebook, click the <i>Profile</i> button and then copy here the Web address of the resulting page</span>'
+                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16" style="vertical-align: middle" /> Facebook profile Web address<br /><span style="font-weight:normal;font-size:90%;">If you have a facebook username, enter http://www.facebook.com/ followed by your username (eg: <i>http://www.facebook.com/foousername</i>). Otherwise, once logged into Facebook, click the <i>Profile</i> button and then copy here the Web address of the resulting page</span>'
                                 ,name: 'facebook'
                                 ,vtype: 'url'
                                 ,maxLength: 120
