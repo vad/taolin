@@ -22,17 +22,49 @@
 function third_step_main(){
 
   ?>
-    <h2 class="title">Step 3: Site administrator</h2>
+    <h2 class="title">Step 3: Configure taolin settings</h2>
   <?
 
-  echo 'Dunno';
+  //site_settings();
+  ldap_settings_form();
 }
 
+function ldap_settings_form(){
+
+?>
+  <div class="inner">
+    <form action="install.php?step=3" method="POST" class="form">
+      <h3>Ldap configuration</h3>
+      <div class="group">
+
+        <label class="label" for="post_title">host</label>
+        <input type="text" class="text_field" name="ldap[host]" />
+
+        <label class="label" for="post_title">port</label>
+        <input type="text" class="text_field" name="ldap[port]" />
+
+        <label class="label" for="post_title">dn</label>
+        <input type="text" class="text_field" name="ldap[dn]" />
+
+        <label class="label" for="post_title">domain</label>
+        <input type="text" class="text_field" name="ldap[domain]" />
+      </div>
+    
+      <p class="first">
+      Test this settings</p>
+
+      <div class="group navform" style="padding-top:20px">
+        <input type="submit" class="button" value="Save" />
+      </div>
+    </form>
+  </div>
+<?
+}
 
 function third_step_help(){
   ?>
-    <h4><b>Step 3: Site administrator</b></h4>
-    <p>Create a super user for your site. An administrator is required to access the administrative part of the site and properly configure it.</p>
+    <h4><b>Step 3: Configure taolin settings</b></h4>
+    <p>Configure this installation of taolin editing this settings.</p>
   <?
 }
 ?>

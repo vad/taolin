@@ -237,9 +237,9 @@ var jabber = {
           return false;
         }
       });
-
+    
       if (x) {
-        var s = x.attr('stamp');
+        var stamp = x.attr('stamp');
         timestamp = new Date(Date.UTC(stamp.substring(0,4),stamp.substring(4,6)-1,
           stamp.substring(6,8), stamp.substring(9,11), stamp.substring(12,14),
           stamp.substring(15,17)

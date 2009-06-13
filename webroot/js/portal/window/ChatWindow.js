@@ -183,6 +183,26 @@ ChatWindow = Ext.extend(Ext.Window, {
         chat.update(lMsg, this);
         var panel = Ext.getCmp('chatpanel'+this.getId());
         panel.body.scroll('down', 5000, true);
+        
+        // play sounds
+        var tm = msg.trim();
+        if ((soundManager.enabled) && (tm.split(' ', 1)[0] == '/play')){
+            var i = tm.indexOf(' ');
+            var sound = tm.substring(i).trim();
+            
+            if (sound == 'trombone') {
+                soundManager.play('trombone', 'sound/sad_trombone.mp3');
+            }
+            else if (sound == 'moo') {
+                soundManager.play('moo', 'sound/cow.mp3');
+            }
+            else if (sound == 'cheer') {
+                soundManager.play('cheer', 'sound/cheer.mp3');
+            }
+            else if (sound == 'fart') {
+                soundManager.play('fart', 'sound/fartus_tubartus.mp3');
+            }
+        }
 
         /* now do show signals if the message comes from another user */
         if (userName == this.user) return;

@@ -60,6 +60,10 @@ function db_configuration_form(){
         <input type="text" class="text_field" name="db[host]" />
         <span class="description">The database server’s hostname (or IP address)</span>
 
+        <label class="label" for="post_title">port</label>
+        <input type="text" class="text_field" name="db[port]" />
+        <span class="description">(Optional) The TCP port or Unix socket used to connect to the server</span>
+
         <label class="label" for="post_title">persistent</label>
         <input type="text" class="text_field" name="db[persistent]" />
         <span class="description">True to use a persistent connection to the database. Otherwise false</span>
@@ -69,9 +73,9 @@ function db_configuration_form(){
       </div>
       
       <h3>Import demo data in taolin</h3>
-      <p>Check this button to populate your database with demonstrative data (be carefully to choose 'Dummy' as authentication type while configuring your Taolin settings in the next steps)<br />
+      <p>Check this button to populate your database with demonstrative data (be carefully to choose 'Dummy' as authentication type while configuring your Taolin settings in the next steps!!!)<br />
       Importing these data you will set up the demonstrative version of Taolin.</p>
-      <p>User credential required to log in will be <i>platone</i> (as username and password too)</p>
+      <p>User credential required to log in will be <i>platone</i> (both as username and password)</p>
       <div class="group">
           <input type="checkbox" name="import_demo_data" id="checkbox_1" class="checkbox" value="0" /> <label for="checkbox_1" class="label" style="display: inline !important;">Import demo data</label>
       </div>
@@ -89,15 +93,15 @@ function print_database_config($fileName){
 
   $lines = file($fileName);
 
-  notice_message("File <i>config/database.php</i> already exists. Please delete it before proceeding with this wizard.", 'warning');
+  notice_message("File <i>config/database.php</i> already exists. Please delete it before proceeding with this wizard", 'warning');
 
   ?>
     <div class="inner">
       <h3>Warning!</h3>
-      <p>It seems that your database configuration file (located at <i>config/database.php</i>) already exists. Does it means that Taolin is already installed in this location? Proceeding with the installation will delete an existant database losing all the data contained.</p><br />
+      <p>Database configuration file <i>config/database.php</i> found. Is taolin already installed in this location? Proceeding with the installation will delete an existant database losing all the data contained.</p><br />
       <h3>Proceeding with Taolin installation</h3>
-      <p>Before proceeding with the installation process you should delete this file since it would be regenerated with the configuration settings entered. Then you can continue with this wizard.</p>
-      <form method="POST" class="form" action="install.php?step=0" >
+      <p>Before proceeding with the installation process you should delete the database configuration file since it would be regenerated with the configuration settings entered. Then you can continue with this wizard.</p>
+      <form method="POST" class="form" action="install.php" >
         <div class="group navform" style="padding-top:20px">
           <input type="submit" class="button" value="Go to step 1 >>" />  
         </div>
@@ -111,7 +115,7 @@ function print_database_config($fileName){
 function first_step_help(){
   ?>
     <h4><b>Step 1: Configure your database</b></h4>
-    <p>Fill this form with your database connection settings. This will be the database used for installing and running Taolin.<br /><br />More information and examples about how to configure properly database connection available at the <a href="http://book.cakephp.org/view/40/Database-Configuration" target="_blank">CakePhp Cookbook</a></p>
+    <p>Fill the form with your database connection settings. This will be the database used for installing and running Taolin.<br /><br />More information and examples about how to configure properly database connection available at the <a href="http://book.cakephp.org/view/40/Database-Configuration" target="_blank">CakePhp Cookbook</a></p>
   <?
 }
 

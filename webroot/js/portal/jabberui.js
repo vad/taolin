@@ -89,7 +89,7 @@ jabberui = function () {
                 var newChatWindow = jabberui.createNewChatWindow(chatId);
                 newChatWindow.addMsg(chatId, msg, timestamp);
             }
-            
+
             if (!document.hasFocus()) {
                 beep.play();
             }

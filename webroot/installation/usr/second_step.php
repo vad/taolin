@@ -22,6 +22,7 @@
 function second_step_main(){
 
   $sql_scripts_path = "../../install/";
+  
   $sql_scripts = array(
       "taolin.struct.sql"
       ,"taolin.struct.post.sql"
@@ -41,11 +42,11 @@ function second_step_main(){
   if(isset($_POST['import_demo_data']))
     $sql_scripts[] = "taolin.data.demo.sql";
 
-  $db = database_connection($db_config['host'], $db_config['database'], $db_config['login'], $db_config['password']);
+  $db = database_connection($db_config['host'], $db_config['database'], $db_config['port'], $db_config['login'], $db_config['password']);
   
   if($db){
 
-    echo "<p>Processing SQL scripts in order to create database structure. Once finished, click on the link placed at the bottom of the page to go to the next step.</p>";
+    echo "<p>Processing SQL scripts in order to create database structure. Once finished, click on the link placed at the bottom of the page in order to go to the next step.</p>";
 
     echo "<div style='height:400px;overflow-y:auto;border: 1px solid; background: lightGray;'>";
 
@@ -70,6 +71,12 @@ function second_step_main(){
       </div> 
     <?
   }
+  else {
+      notice_message("<b>ERROR! Can not connect to the database <i>$dbname</i> on host <i>$host</i></b>", "error");
+        
+      echo '<h4><b>Uops! Unfortunately something went wrong and connection failed! What can you do now?</b></h4><ul style="padding-left:20px;"><li><a href="install.php">Go back to step 1</a> and re-configure your database properly</li><li>If this error persists, check your database (users, grants..) or submit an issue to Taolin on github.</li></ul></div>';
+  }
+
 }
 
 

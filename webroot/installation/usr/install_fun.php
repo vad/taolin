@@ -103,26 +103,26 @@ function notice_message($message, $type = 'notice'){
   }
 }
 
+/* Perform a database connection. If the connection fails return null.
+ *
+ * host: database host
+ * dbname: database name
+ * user: user with grant for the database
+ * password: password for the specified user
+ */
 
-function database_connection($host, $dbname, $user, $password){
+function database_connection($host, $dbname, $dbport, $user, $password){
 
-    $db = pg_connect("host=$host port=5432 dbname=$dbname user=$user password=$password");
+    $db = pg_connect("host=$host port=$dbport dbname=$dbname user=$user password=$password");
     
-    if(!$db){
-    
-      notice_message("<b>ERROR! Can not connect to the database <i>$dbname</i> on host <i>$host</i></b>", "error");
-      
-      echo '<h4><b>Uops! Unfortunately something went wrong and connection failed! What can you do now?</b></h4><ul style="padding-left:20px;"><li><a href="install.php">Go back to step 1</a> and re-configure your database properly</li><li>If this error persists, check your database (users, grants..) or submit an issue to Taolin on github.</li></ul></div>';
-
-      return null;
-
-    }
+    if(!$db) return null;
 
     return $db;
 }
 
 
 /* Executes an SQL script file outputting operations performed
+ *
  * db: connection to the database, obtained via pg_connect or similar...  
  * sql_file: the path of a well formatted SQL script file
  */
