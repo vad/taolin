@@ -116,8 +116,7 @@ function showUserInfo(reqid, hidePanel, logparams){
 }
 
 function performLogin(){
-
-     Ext.Ajax.request({
+    Ext.Ajax.request({
         url:'accounts/checkuser',
         method: 'POST',
         params: {
@@ -164,7 +163,7 @@ function performLogin(){
             });
         }
     });
-
+    return false;
 }
 
 //control the keycode is 13, i.e. on Windows pressing the "Enter" key is detactable as '13'
@@ -172,7 +171,7 @@ function performLogin(){
 function maybePerformLogin(event) {
     if (window.event) event = window.event; // IE-specific
     if (event.keyCode == 13) {
-        performLogin();
+        return performLogin();
     }
 }
 
