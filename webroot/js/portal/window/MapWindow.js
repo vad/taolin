@@ -39,8 +39,10 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
     ,autoShow:true
     ,iconCls: 'map'
     ,buildingId:1
+    ,userId:null
     ,selectedUsers:Array()
     ,logparams: null
+    ,draggable:false
     /**
       * @private
       */
@@ -139,7 +141,10 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
       */
     ,listeners: {
         show: function(t) {
-            t.loadMap(t.buildingId, this.logparams);
+            t.loadMap({
+                buildingId: t.buildingId,
+                userId: t.userId
+            }, this.logparams);
         }
     }
     /**
@@ -159,14 +164,16 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
       * }
       * </code></pre>
       */
-    ,loadMap: function(buildingId, logparams){
-        if (!buildingId)
-            buildingId = this.buildingSelect.getValue();
+    ,loadMap: function(req, logparams){
+
+        if (!req.buildingId)
+            req.buildingId = this.buildingSelect.getValue();
+        req.src = logparams;
 
         Ext.Ajax.request({
-            url: 'workplaces/getinbuilding/'+buildingId
+            url: 'workplaces/getinbuilding/'
             ,scope: this
-            ,params: {src: logparams}
+            ,params: req
             ,success: function (result, request) {
                 var data = Ext.util.JSON.decode(result.responseText);
                 var bi = data.buildingInfo;

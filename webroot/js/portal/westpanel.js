@@ -185,7 +185,7 @@ westPanel = new Ext.Panel({
                         '<br /><b>Home page:</b> <span><a href="{personal_page}" target="_blank">{[values.personal_page.substr(0,7)==="http://" ? values.personal_page.substr(7) : values.personal_page]}</a></span>',
                     '</tpl>',
                     '<tpl if="building_id">',
-                        '<br /><b>Workplace:</b> <span><a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow(\{buildingId:{building_id}, logparams:\'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id": "{id}"}') + '\'\})).show()">where\'s {[this.getPronoun(values.gender)]} office?</a></span>',
+                        '<br /><b>Workplace:</b> <span><a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow(\{buildingId:{building_id}, userId: {id}, logparams:\'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id": "{id}"}') + '\'\})).show()">where\'s {[this.getPronoun(values.gender)]} office?</a></span>',
                     '</tpl>',
                     '<tpl if="date_of_birth">',
                         '<br /><b>Date of birth:</b><span> {[Date.parseDate(values.date_of_birth, "Y-m-d").format("F, d")]}</span>',

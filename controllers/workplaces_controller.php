@@ -17,8 +17,6 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-<?php
 
 uses('sanitize');
 
@@ -84,12 +82,14 @@ class WorkplacesController extends AppController {
         return $background;
     }
 
-    function getinbuilding($building){
+    function getinbuilding(){
         Configure::write('debug', '0');
         $this->layout = 'ajax';
 
-        if (!isset($building))
-            die('Missing $building parameter');
+        $f = $this->params['form'];
+        if (!isset($f['buildingId']))
+            die('Missing buildingId parameter');
+        $building = $f['buildingId'];
 
         $out = array();
         $res = $this->Workplace->Building->find('all', array(
@@ -102,7 +102,8 @@ class WorkplacesController extends AppController {
         $res = $this->Workplace->find('all', array(
                 'conditions' => array('building_id' => $building)
                 ,'fields' => array('Workplace.x', 'Workplace.y',
-                    'Workplace.user_id', 'User.name', 'User.surname', 'User.gender', 'User.phone')
+                    'Workplace.user_id', 'User.name', 'User.surname', 'User.gender', 'User.phone'
+                )
             )
         );
 
@@ -120,6 +121,9 @@ class WorkplacesController extends AppController {
 
         //TODO: is this good?
         $this->Session->write('buildingWP', $out);
+
+        if (isset($f['userId']))
+            $this->Session->write('buildingUserId', $f['userId']);
 
         $this->set('json', $out);
     }
@@ -164,8 +168,12 @@ class WorkplacesController extends AppController {
                     $user_image = "../webroot/js/portal/shared/icons/fam/user_gray.png";
                     break;
             }*/
-            
-            $user_image = "../webroot/js/portal/shared/icons/fam/user_gray.png";
+           
+            //echo $this->Session->read('buildingUserId').' '.$wp['user_id'];
+            if ($this->Session->check('buildingUserId') && ($this->Session->read('buildingUserId') == $wp['user_id']))
+                $user_image = "../webroot/js/portal/shared/icons/fam/user_red.png";
+            else
+                $user_image = "../webroot/js/portal/shared/icons/fam/user_gray.png";
                 
             $foreground = imagecreatefrompng($user_image);
 
