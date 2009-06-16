@@ -148,7 +148,18 @@ class WorkplacesController extends AppController {
         $width = $buildingInfo['right'] - $buildingInfo['left'];
         $height = $buildingInfo['bottom'] - $buildingInfo['top'];
 
-        $background = imagecreatefrompng("../".$buildingInfo['imagepath']);
+        $fn = "../".$buildingInfo['imagepath'];
+        $background = imagecreatefrompng($fn);
+        
+        if (!imageistruecolor($background)) {
+            $imgtc = imagecreatetruecolor(
+                $buildingInfo['width'],
+                $buildingInfo['height']
+            );
+            
+            imagecopymerge($imgtc, $background, 0, 0, 0, 0, $buildingInfo['width'], $buildingInfo['height'], 100);
+            $background = $imgtc;
+        }
 
         foreach($workplaces as $wp) {
 
@@ -157,7 +168,7 @@ class WorkplacesController extends AppController {
 
             // switch user icon chose on user's gender
 
-            /*switch($wp['gender']){
+            switch($wp['gender']){
                 case 1: 
                     $user_image = "../webroot/js/portal/shared/icons/fam/user.png";
                     break;
@@ -167,14 +178,15 @@ class WorkplacesController extends AppController {
                 default:
                     $user_image = "../webroot/js/portal/shared/icons/fam/user_gray.png";
                     break;
-            }*/
+            }
            
             //echo $this->Session->read('buildingUserId').' '.$wp['user_id'];
-            if ($this->Session->check('buildingUserId') && ($this->Session->read('buildingUserId') == $wp['user_id']))
-                $user_image = "../webroot/js/portal/shared/icons/fam/user_red.png";
-            else
-                $user_image = "../webroot/js/portal/shared/icons/fam/user_gray.png";
-                
+            if ($this->Session->check('buildingUserId') && ($this->Session->read('buildingUserId') == $wp['user_id'])) {
+                $user_image = "../webroot/js/portal/shared/icons/fam/user_green.png";
+                $percent = 2.;
+            } else {
+                $percent = 1.;
+            }
             $foreground = imagecreatefrompng($user_image);
 
             $background = $this->image_overlap($background, $foreground,$x,
