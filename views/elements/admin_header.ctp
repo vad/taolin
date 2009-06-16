@@ -20,10 +20,11 @@
  */
 
   $base = $this->base;
-  $items = array('Admin' => 'admin',
-    'Users' => 'admin/users',
-    'Widgets' => 'admin/widgets',
-    'Configuration' => 'admin/portals/config'
+  $items = array('Admin' => 'admin'
+    ,'Configuration' => 'admin/portals/config'
+    ,'Timeline' => 'admin/templates'
+    ,'Users' => 'admin/users'
+    ,'Widgets' => 'admin/widgets'
   );
 ?>
 <div id="header">

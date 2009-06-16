@@ -22,6 +22,38 @@
 
 class TemplatesController extends AppController {
     var $name = 'Templates';
+    var $paginate = array(
+        'limit' => 100,
+        'order' => 'id'
+    );
+    
+
+    function admin_index(){
+        Configure::write('debug', '0');
+        $this->layout = 'admin';
+
+        $this->paginate['fields'] = array('id', 'name', 'temp', 'icon');
+        $res = $this->paginate();
+        $this->set('templates', $res);
+    }
+   
+
+    function admin_edit($tid){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax     
+        $this->layout = 'admin';
+        $this->recursive = -1;
+        $this->Template->id = $tid;
+
+        if (empty($this->data)) {
+            $this->Session->setFlash('Please be careful while editing the template\'s name, because changing that value may broke templates\' retrievial by the timeline.', 'admin_flash_message_warning');
+            $this->data = $this->Template->read();
+        } else {
+            if ($this->Template->save($this->data)) {
+                $this->Session->setFlash('Template updated.', 'admin_flash_message_success');
+                $this->redirect(array('action' => 'index'));
+            }
+        }
+    }
 }
 
 ?>

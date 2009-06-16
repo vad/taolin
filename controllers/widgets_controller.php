@@ -160,7 +160,7 @@ class WidgetsController extends AppController {
             $this->data = $this->Widget->read();
         } else {
             if ($this->Widget->save($this->data)) {
-                $this->Session->setFlash('Your post has been updated.', 'admin_flash_message_success');
+                $this->Session->setFlash('Widget updated.', 'admin_flash_message_success');
                 $this->redirect(array('action' => 'index'));
             }
         }
