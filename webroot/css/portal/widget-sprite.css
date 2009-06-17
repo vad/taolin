@@ -74,3 +74,12 @@
 .evernote {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -870px !important;
 }
+.drill {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -906px !important;
+}
+.disk {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -942px !important;
+}
+.secretariats {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -978px !important;
+}
