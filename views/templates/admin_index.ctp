@@ -50,8 +50,8 @@ $url = '/'.$url;
               echo "<td>".$template['id']."</td>";
               echo "<td>".$template['name']."</td>";
               echo "<td><code>".$template['temp']."</code></td>";
-              echo "<td  width='20px' style='text-align: center;'><img src='../js/portal/shared/icons/fam/".$template['icon']."' class='size16x16' /></td>";
-              echo "<td style='text-align: center'><a href='".$this->base."/admin/templates/edit/".$template['id']."' >edit</a></td>";
+              echo "<td width='20px' style='text-align: center;'><img src='../".$template['icon']."' class='size16x16' /></td>";
+              echo "<td width='30px'style='text-align: center'><a href='".$this->base."/admin/templates/edit/".$template['id']."' >edit</a></td>";
 
               echo '</tr>';
             }

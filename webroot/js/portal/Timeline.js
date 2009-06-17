@@ -44,7 +44,7 @@ timelineTemplate = new Ext.XTemplate(
                 '</tpl>',
                 '<span style="color:#888888;font-size:90%;text-align:right;margin-left:5px;">',
                     '<tpl if="(icon != null)">',
-                        '<img src="js/portal/shared/icons/fam/{icon}" class="size16x16" /> ',
+                        '<img src="{icon}" class="size16x16" /> ',
                     '</tpl>',
                     '{[values.date.format("M, d H:i")]}',
                 '</span><br />',
