@@ -500,16 +500,20 @@ String.prototype.multiReplace = function ( hash ) {
 };
 
 /* smilize */
-var hi = "<img class='size16x16' src='js/portal/shared/icons/fam/";
+var hi = "<img class='size16x16' src='img/icons/fugue/";
 var fi = "'>";
 hSmile = {
-    ':-?\\)': hi+'emoticon_smile.png'+fi,
-    ':-?P': hi+'emoticon_tongue.png'+fi,
-    ':-?D': hi+'emoticon_happy.png'+fi,
-    ':-?\\(': hi+'emoticon_unhappy.png'+fi,
-    ':-?\\o': hi+'emoticon_surprised.png'+fi,
-    'x-?D': hi+'emoticon_evilgrin.png'+fi,
-    '\\;-?\\)': hi+'emoticon_wink.png'+fi
+    ':-?\\)': hi+'smiley.png'+fi,
+    ':-?P': hi+'smiley-razz.png'+fi,
+    ':-?D': hi+'smiley-lol.png'+fi,
+    ':-?\\[': hi+'smiley-red.png'+fi,
+    ':-?\\(': hi+'smiley-sad.png'+fi,
+    ':\'-?\\(': hi+'smiley-cry.png'+fi,
+    ':-?\\o': hi+'smiley-surprise.png'+fi,
+    ':-?\\|': hi+'smiley-neutral.png'+fi,
+    ':-?S': hi+'smiley-confuse.png'+fi,
+    'x-?D': hi+'smiley-evil.png'+fi,
+    '\\;-?\\)': hi+'smiley-wink.png'+fi
 };
 
 /**
