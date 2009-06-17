@@ -87,8 +87,9 @@ Feedback = function(conf, panel_conf){
     this.view = new Ext.DataView({
         tpl: new Ext.XTemplate(
             '<tpl for=".">',
-                '<div class="user-wrapper" style="background:{[xindex % 2 === 0 ? "white" : "#EEEEEE"]}">',
-                    '<div>{[values.text.urlize().smilize()]}</div><br /><span style="color:#777777;">Left on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]}</span>',
+                '<hr style="border: 1px solid #ccc;width:80%;" />',
+                '<div class="user-wrapper" style="padding: 10px 10px;">',
+                    '<div><span style="color:#777777;">{[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]}: </span>{[values.text.urlize().smilize()]}</div>',
                 '</div>',
             '</tpl>'
         ),
@@ -107,12 +108,12 @@ Feedback = function(conf, panel_conf){
 
         if(this.view.hidden){
             this.view.store.load();
-            Ext.get(this.view.id + '-img-view-detail').dom.src = 'js/portal/shared/icons/fam/arrow_down.png';
+            Ext.get(this.view.id + '-img-view-detail').dom.src = 'img/icons/fugue/chevron-collapse.png';
             Ext.get(this.view.id + '-view-detail').dom.innerHTML = 'Hide your 5 latest feedbacks';
             this.view.show();
         }
         else {
-            Ext.get(this.view.id + '-img-view-detail').dom.src = 'js/portal/shared/icons/fam/arrow_right.png';
+            Ext.get(this.view.id + '-img-view-detail').dom.src = 'img/icons/fugue/chevron.png';
             Ext.get(this.view.id + '-view-detail').dom.innerHTML = 'See your 5 latest feedbacks';
             this.view.hide();
         }
@@ -127,7 +128,7 @@ Feedback = function(conf, panel_conf){
         },{
             style: 'padding:5px'
         },{
-            html: '<div style="padding-left:15px;"><img id="'+this.view.id+'-img-view-detail" style="vertical-align:middle;" src="js/portal/shared/icons/fam/arrow_right.png" /> <span id="'+this.view.id+'-view-detail" onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'" style="text-align:left;line-height:150%;font-size:100%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId() +'\').viewFeedbacks()">See your 5 latest feedbacks</span></div>'
+            html: '<div style="padding-left:15px;"><img id="'+this.view.id+'-img-view-detail" style="vertical-align:middle;cursor:pointer;" src="img/icons/fugue/chevron.png" /> <span id="'+this.view.id+'-view-detail" onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'none\'" style="text-align:left;line-height:150%;font-size:100%;font-family:Verdana;cursor:pointer;" onclick="Ext.getCmp(\''+this.getId() +'\').viewFeedbacks()">See your 5 latest feedbacks</span></div>'
         },{
             style: 'padding:5px'
         },{

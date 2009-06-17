@@ -58,6 +58,7 @@ class FeedbacksController extends AppController {
     function getuserfeedbacks($n=5){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
+        $this->recursive = -1;
 
         $u_id = $this->Session->read('id');
 
