@@ -20,7 +20,7 @@
 westPanel = new Ext.Panel({
     region:'west',
     id:'west-panel',
-    title:'Manager Panel',
+    title:'Social Bar',
     split:true,
     width: 220,
     minSize: 220,
