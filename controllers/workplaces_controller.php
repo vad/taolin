@@ -124,6 +124,8 @@ class WorkplacesController extends AppController {
 
         if (isset($f['userId']))
             $this->Session->write('buildingUserId', $f['userId']);
+        else
+            $this->Session->write('buildingUserId', NULL);
 
         $this->set('json', $out);
     }
@@ -184,9 +186,9 @@ class WorkplacesController extends AppController {
             if ($this->Session->check('buildingUserId') && ($this->Session->read('buildingUserId') == $wp['user_id'])) {
                 $user_image = "../webroot/js/portal/shared/icons/fam/user_green.png";
                 $percent = 2.;
-            } else {
+            } else
                 $percent = 1.;
-            }
+            
             $foreground = imagecreatefrompng($user_image);
 
             $background = $this->image_overlap($background, $foreground,$x,

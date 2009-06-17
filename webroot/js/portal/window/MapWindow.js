@@ -165,6 +165,7 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
       * </code></pre>
       */
     ,loadMap: function(req, logparams){
+        if (!req) req = {};
 
         if (!req.buildingId)
             req.buildingId = this.buildingSelect.getValue();
