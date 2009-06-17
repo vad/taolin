@@ -39,7 +39,7 @@ class UsersWidget extends AppModel
                 'Widget.widget_conf'
             ),
             'conditions' => $conditions,
-            'order' => array('col', 'pos'),
+            'order' => array('col', 'pos DESC'),
             'recursive' => 1
         ));
         return $ret;

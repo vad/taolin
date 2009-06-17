@@ -252,7 +252,7 @@ function undoRemoveWidget(w_id){
             method: 'GET',
             success: function(result, request){
                 var conf = Ext.util.JSON.decode(result.responseText)['widget'][0];
-                createNewPortlet(conf);
+                createNewPortlet(conf, true);
             },
             failure: function(){
                 Ext.Msg.show({
@@ -279,7 +279,6 @@ function addwidget(w_id, logparams){
             params: {src: logparams},
             success: function(result, request){
                 var conf = Ext.util.JSON.decode(result.responseText)[0];
-                conf.pos = -2000; // force this widget to be the very first
                 createNewPortlet(conf);
                 reloadTimeline();
                 gotoWidget(w_id, false, logparams);
@@ -368,7 +367,15 @@ function getWidgetsPosition(){
     });
 }
 
-function createNewPortlet(conf){
+
+/*
+ * Creates a new portlet containing a widget
+ * Parameters:
+ * conf: widget configuration
+ * defined_position: boolean, if true insert the portlet at the position defined in the conf
+ */
+
+function createNewPortlet(conf, defined_position){
     var pc = Ext.getCmp('portal_central');
     var col, widget;
 
@@ -402,11 +409,10 @@ function createNewPortlet(conf){
 
     col = pc.items.items[column];
 
-    if (pos < -1000)
-        portlet = col.insert(0, portlet);
+    if(defined_position)
+        portlet = col.insert(pos, portlet); // insert the portlet at the defined position
     else
-        //portlet = col.add(portlet);
-        portlet = col.insert(pos, portlet);
+        portlet = col.insert(0, portlet); // insert the portlet at the first place in the column
 
     col.doLayout();
 
