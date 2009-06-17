@@ -53,7 +53,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                                 '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">View your profile</span>' +
                             '</div>' +
                             '<div onclick="openImageChooser();" style="padding:1px 0;">' +
-                                '<img src="js/portal/shared/icons/fam/image_edit.png" class="size16x16" />' +
+                                '<img src="img/icons/fugue/image--pencil.png" class="size16x16" />' +
                                 '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your photos</span>' +
                             '</div>' +
                             '<div id="edit_workplace" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "edit profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">' +
