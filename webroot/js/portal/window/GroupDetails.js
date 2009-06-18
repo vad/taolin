@@ -94,7 +94,6 @@ GroupDetails.prototype = {
 		    
             this.viewGroup = new Ext.DataView({
 				tpl: this.groupTemplate,
-                style:"background:#F0F1F3;",
                 overClass:'searchusermouseoverbg',
 				itemSelector: 'div.group-desc',
                 loadingText: 'Loading group details, please wait...',
