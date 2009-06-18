@@ -31,10 +31,49 @@ class TimelinesController extends AppController {
 
         $this->checkSession();
     }
-
-    /* gettimeline function retrieves events out of readable_timelines table
-     */
     
+    
+    /* 
+     * add an event to timelines table
+     * Params:  
+     * @param: parameters to be displayed in the timeline 
+     * @type: foreign key on types table, containing template to render those parameters
+     * @date: date of the event, format datetime, 
+     *        format 'YYYY-MM-DD HH:MM:SS'
+     */
+    function add($param, $date, $type_name, $uid){
+        
+        // Encoding parameters into json
+        if(!empty($param) && ($param != null))
+            $param = json_encode($param);
+
+        $type = $this->Timeline->Template->find('first', array(
+            'conditions' => array(
+                'Template.name' => $type_name
+            ),
+            'fields' => array(
+                'Template.id'
+            ),
+            'recursive' => 0
+        ));
+        $tltype = $type['Template']['id'];
+
+        if($uid)
+            $data['user_id'] = $uid;
+        else
+            $data['user_id'] = $this->Session->read('id');
+
+        $data['param'] = $param;
+        $data['date'] = $date;
+        $data['template_id'] = $tltype;
+
+        $this->Timeline->save($data);
+    }
+
+   
+    /* 
+     * gettimeline function retrieves events out of readable_timelines table
+     */
     function gettimeline(){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
@@ -81,7 +120,7 @@ class TimelinesController extends AppController {
         foreach($events as $event){
             $event['user_photo'] = $hash_photos[$event['user_id']];
             $event['event'] = $this->prepareevent($event);
-            unset($event['param'], $event['temp']);
+            unset($event['param'], $event['temp']); // no need to send this parameter, hence unset it
             $result[] = $event;
         }
 
@@ -96,46 +135,9 @@ class TimelinesController extends AppController {
     }
 
 
-    /* This function add an event to timelines table
-     * Params:  
-     * @param: parameters to be displayed in the timeline 
-     * @type: foreign key on types table, containing template to render those parameters
-     * @date: date of the event, format datetime, 
-     *        format 'YYYY-MM-DD HH:MM:SS'
+    /* 
+     * Format timeline event applying parameters to template
      */
-
-    function add($param, $date, $type_name, $uid){
-        
-        // Encoding parameters into json
-        if(!empty($param) && ($param != null))
-            $param = json_encode($param);
-
-        $type = $this->Timeline->Template->find('first', array(
-            'conditions' => array(
-                'Template.name' => $type_name
-            ),
-            'fields' => array(
-                'Template.id'
-            ),
-            'recursive' => 0
-        ));
-        $tltype = $type['Template']['id'];
-
-        if($uid)
-            $data['user_id'] = $uid;
-        else
-            $data['user_id'] = $this->Session->read('id');
-
-        $data['param'] = $param;
-        $data['date'] = $date;
-        $data['template_id'] = $tltype;
-
-        $this->Timeline->save($data);
-    }
-
-    /* Format an event applying parameters to template
-     */
-
     function prepareevent($event){
 
         $template = $event['temp'];
@@ -169,6 +171,10 @@ class TimelinesController extends AppController {
         return $template;
     }
 
+
+    /*
+     * Delete timeline event
+     */
     function deleteevent($e_id = -1){
         
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
@@ -189,7 +195,11 @@ class TimelinesController extends AppController {
     
         $this->set('json', $response);
     }           
-    
+
+
+    /*
+     * Undelete timeline event
+     */
     function undodeleteevent($e_id){
 
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
