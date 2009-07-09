@@ -97,6 +97,7 @@ Feedback = function(conf, panel_conf){
 	    itemSelector: 'span:first-child',
         hidden: true,
         loadingText: 'Loading feedbacks, please wait...',
+        emptyText: 'Nothing here, looks like you\'ve never sent a feedback before!',
 	    store: new Ext.data.JsonStore({
             url: 'feedbacks/getuserfeedbacks',
             root: 'feedbacks',
