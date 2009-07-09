@@ -21,15 +21,6 @@ class Widget extends AppModel
 {
     var $name = 'Widget';
     var $hasMany = 'UsersWidget';
-                                    
-    function is_user_already_present($u_id){
-        
-        $ret = $this->query('SELECT COUNT(*) AS count FROM users_widgets WHERE user_id = '.$u_id);
-            
-        if ($ret[0][0]['count'] == '0') {
-            $this->query('INSERT INTO users_widgets (widget_id,col,pos,tab,user_id) SELECT widget_id,col,pos,tab,'.$u_id.' FROM widgets_skel');
-        }
-    }
 }
 
 ?>
