@@ -209,7 +209,7 @@ class PhotosController extends AppController {
                         else
                             $data['0']['default_photo'] = 0;
 
-                        $data['0']['is_fbk_photo'] = 0;
+                        $data['0']['is_corporate_photo'] = 0;
                         
                         if($this->Thumber->createthumb($dest_file, $dest_dir, true)){
                             $message ='File '.$name.' has been successfully uploaded!';

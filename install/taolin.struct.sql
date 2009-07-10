@@ -211,7 +211,7 @@ CREATE TABLE "photos" (
   "deleted_date" timestamp(0) NULL default NULL,
   "default_photo" SMALLINT NOT NULL,
   "is_hidden" SMALLINT NOT NULL,
-  "is_fbk_photo" SMALLINT NOT NULL,
+  "is_corporate_photo" SMALLINT NOT NULL,
   PRIMARY KEY  ("id")
 );
 
@@ -255,7 +255,7 @@ CREATE TABLE "users" (
   "date_of_birth" date default NULL,
   "gender" INTEGER NOT NULL,
   "email" varchar(50) default NULL,
-  "fbk_unit" varchar(100) default NULL,
+  "corporate_unit" varchar(100) default NULL,
   "groups_description" TEXT,
   "personal_page" varchar(80) default NULL,
   "phone" varchar(15) default NULL,
