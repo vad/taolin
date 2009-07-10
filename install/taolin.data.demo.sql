@@ -45,6 +45,24 @@ INSERT INTO "users" ("id", "login", "name", "surname", "date_of_birth", "email",
 INSERT INTO "users" ("id", "login", "name", "surname", "date_of_birth", "email", "groups_description", "personal_page", "phone", "phone2", "working_place", "publik_id", "created", "modified", "role", "mod_date_of_birth", "mod_email", "mod_description", "mod_personal_page", "mod_phone", "mod_phone2", "mod_working_place", "mod_role", "active", "deleted", "deleted_date", "content", "gender") VALUES (910,'sallustio','Gaio','Sallustio Crispo','0086-10-01','sallustio@sallustio.com',NULL,NULL,NULL,NULL,NULL,NULL,NOW(),NOW(),NULL,NULL,NULL,'Rome, history, ',NULL,NULL,NULL,NULL,NULL,1,0,'2008-12-04 16:10:00','0086-10-01 sallustio@sallustio.com Rome, history, ',1);
 
 
+-- # Importing demo user data into database: photos table
+
+INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (903,'School of Athens','6377290584976622.jpg',NULL,308,400,NOW(),1,0,1);
+INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (909,'School of Athens','2552712494672352.jpg','Thank you Raphael for this amazing portrait!',242,262,NOW(),1,0,1);
+INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (907,'Profile painting','5351810515047707.jpg',NULL,304,473,NOW(),1,0,1);
+INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (905,'Bust','9295310224773761.jpg',NULL,600,800,NOW(),1,0,1);
+INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (901,'SoNet','9579849431102744.png',NULL,266,129,NOW(),1,0,1);
+INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (906,'Me!','3169448776261409.jpg',NULL,709,953,NOW(),1,0,1);
+INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (908,'Painting','0578920928306838.jpg','By Rubens',400,576,NOW(),1,0,1);
+
+
+-- # Updating tables: widgets and widgets_skel
+
+UPDATE "widgets" SET "user_params"='[{"name": "items", "description": "Number of items to display", "type": "integer"}, {"name": "autoExpand", "type": "boolean", "description": "Auto expand news"}]', "widget_conf"='{"engines":{"users":{"title":"User"},"wikipedia":{"title":"Wikipedia","xtype":"searchwiki","wikiUrl":"http:\/\/en.wikipedia.org\/wiki\/","wikiDescription":"Wikipedia (en)","apiUrl":"http:\/\/en.wikipedia.org\/w\/api.php"}}}' WHERE "string_identifier"='Ext.ux.fbk.sonet.MetaSearch';
+UPDATE "widgets_skel" SET "widget_id"=29 WHERE  "id"=4;
+INSERT INTO "widgets_skel" ("id","widget_id","col","pos","tab") VALUES (5, 30, 2, 1, 0); 
+
+
 -- # Importing demo user data into database: users_widgets table
 
 INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1025,1,901,1,0,0,'{}','{}');
