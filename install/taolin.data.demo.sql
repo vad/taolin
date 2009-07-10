@@ -54,13 +54,35 @@ INSERT INTO "photos" ("user_id","name","filename","caption","width","height","cr
 INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (901,'SoNet','9579849431102744.png',NULL,266,129,NOW(),1,0,1);
 INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (906,'Me!','3169448776261409.jpg',NULL,709,953,NOW(),1,0,1);
 INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (908,'Painting','0578920928306838.jpg','By Rubens',400,576,NOW(),1,0,1);
+INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (909,'Bust','be2166eea5c7caae.jpg',NULL,306,402,'2009-07-10 15:20:27',0,0,0);
+
+
+-- # Importing demo user data into database: timelines table
+
+INSERT INTO timelines VALUES (1, 909, NULL, 5, '{"id":"909","modfields":" modifying  personal page and carpooling"}', '2009-07-09 17:13:07', '2009-07-09 17:13:07', '2009-07-09 17:13:07', 0, NULL);
+INSERT INTO timelines VALUES (2, 909, NULL, 1, NULL, '2009-07-09 17:13:32', '2009-07-09 17:13:32', '2009-07-09 17:13:32', 0, NULL);
+INSERT INTO timelines VALUES (3, 909, NULL, 6, NULL, '2009-07-09 18:27:22', '2009-07-09 18:27:22', '2009-07-09 18:27:22', 0, NULL);
+INSERT INTO timelines VALUES (4, 909, NULL, 6, NULL, '2009-07-09 18:28:16', '2009-07-09 18:28:16', '2009-07-09 18:28:16', 0, NULL);
+INSERT INTO timelines VALUES (5, 909, NULL, 6, NULL, '2009-07-09 18:28:30', '2009-07-09 18:28:30', '2009-07-09 18:28:30', 0, NULL);
+INSERT INTO timelines VALUES (6, 909, NULL, 6, NULL, '2009-07-09 18:29:21', '2009-07-09 18:29:21', '2009-07-09 18:29:21', 0, NULL);
+INSERT INTO timelines VALUES (7, 909, NULL, 6, NULL, '2009-07-09 18:29:25', '2009-07-09 18:29:25', '2009-07-09 18:29:25', 0, NULL);
+INSERT INTO timelines VALUES (18, 909, NULL, 7, '{"name":"Math helper","w_id":"44"}', '2009-07-10 11:33:46', '2009-07-10 11:33:46', '2009-07-10 11:33:46', 0, NULL);
+INSERT INTO timelines VALUES (19, 905, NULL, 5, '{"id":"905","modfields":" modifying  description and personal page"}', '2009-07-10 11:46:48', '2009-07-10 11:46:48', '2009-07-10 11:46:48', 0, NULL);
+INSERT INTO timelines VALUES (20, 910, NULL, 5, '{"id":"910","modfields":" modifying  email and carpooling"}', '2009-07-10 13:00:11', '2009-07-10 13:00:11', '2009-07-10 13:00:11', 0, NULL);
+INSERT INTO timelines VALUES (21, 910, NULL, 7, '{"name":"Google","w_id":"30"}', '2009-07-10 13:02:03', '2009-07-10 13:02:03', '2009-07-10 13:02:03', 0, NULL);
+INSERT INTO timelines VALUES (22, 908, NULL, 5, '{"id":"908","modfields":" modifying  description"}', '2009-07-10 14:45:20', '2009-07-10 14:45:20', '2009-07-10 14:45:20', 0, NULL);
+INSERT INTO timelines VALUES (23, 903, NULL, 7, '{"name":"Board announcements","w_id":"43"}', '2009-07-10 14:50:43', '2009-07-10 14:50:43', '2009-07-10 14:50:43', 0, NULL);
+INSERT INTO timelines VALUES (24, 906, NULL, 12, NULL, '2009-07-10 14:51:53', '2009-07-10 14:51:53', '2009-07-10 14:51:53', 0, NULL);
+INSERT INTO timelines VALUES (28, 909, NULL, 4, '{"url":"\\/sonet\\/cake\\/taolin\\/img\\/be2166eea5c7caae.JPG","width":306,"height":402,"filename":"be2166eea5c7caae.JPG","caption":"","name":"Bust"}', '2009-07-10 15:20:27', '2009-07-10 15:20:27', '2009-07-10 15:20:27', 0, NULL);
+INSERT INTO timelines VALUES (29, 909, NULL, 7, '{"name":"Google","w_id":"30"}', '2009-07-10 15:21:01', '2009-07-10 15:21:01', '2009-07-10 15:21:01', 0, NULL);
 
 
 -- # Updating tables: widgets and widgets_skel
 
 UPDATE "widgets" SET "user_params"='[{"name": "items", "description": "Number of items to display", "type": "integer"}, {"name": "autoExpand", "type": "boolean", "description": "Auto expand news"}]', "widget_conf"='{"engines":{"users":{"title":"User"},"wikipedia":{"title":"Wikipedia","xtype":"searchwiki","wikiUrl":"http:\/\/en.wikipedia.org\/wiki\/","wikiDescription":"Wikipedia (en)","apiUrl":"http:\/\/en.wikipedia.org\/w\/api.php"}}}' WHERE "string_identifier"='Ext.ux.fbk.sonet.MetaSearch';
 UPDATE "widgets_skel" SET "widget_id"=29 WHERE  "id"=4;
-INSERT INTO "widgets_skel" ("id","widget_id","col","pos","tab") VALUES (5, 30, 2, 1, 0); 
+INSERT INTO "widgets_skel" ("id","widget_id","col","pos","tab") VALUES (5, 30, 2, 1, 0);
+UPDATE configs SET value='img/user_images/' WHERE key='people_web_path';
 
 
 -- # Importing demo user data into database: users_widgets table
