@@ -1,6 +1,7 @@
 -- # Importing demo user data into database: boards table
 
-INSERT INTO "boards" ("id", "user_id", "text", "email", "expire_date", "created", "modified", "deleted", "deleted_date") VALUES (1,909,'Looking for a bike','platone@platone.com',NULL,'2009-04-08 14:53:47','2009-04-08 14:53:47',0,NULL);
+INSERT INTO "boards" ("id", "user_id", "text", "email", "expire_date", "created", "modified", "deleted", "deleted_date") VALUES (1,909,'Did you see me being portrayed on The School of Athens by Raphael?','platone@platone.com',NULL,'2009-04-08 14:53:47','2009-07-08 14:53:47',0,NULL);
+INSERT INTO "boards" ("id", "user_id", "text", "email", "expire_date", "created", "modified", "deleted", "deleted_date") VALUES (1,909,'Quo usque tandem abutere, Catilina, patientia nostra?','cicerone@cicerone.com',NULL,'2009-07-10 16:53:47','2009-07-10 16:53:47',0,NULL);
 
 
 -- # Importing demo user data into database: buildings table
@@ -95,14 +96,12 @@ INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", 
 INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1031,3,901,1,2,0,'{}','{\"showPhoto\":false}');
 INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1041,32,901,2,0,NULL,'{}','{}');
 INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1034,27,901,0,1,0,'{}','{\"term\":\"Philosphy\"}');
-INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1061,43,909,1,3,NULL,'{}','{}');
+INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1061,43,909,2,0,NULL,'{}','{}');
 INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1062,45,909,0,2,NULL,'{}','{}');
-INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1067,53,909,0,3,NULL,'{}','{\"height\":\"100\"}');
-INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1064,30,909,1,2,NULL,'{}','{}');
+INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1064,30,909,2,1,NULL,'{}','{}');
 INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1056,7,909,1,0,0,'{}','{}');
-INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1058,29,909,0,0,NULL,'{}','{}');
-INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1068,44,909,2,0,NULL,'{}','{}');
-INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1054,51,909,1,1,0,'{}','{}');
+INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1058,29,909,1,1,0,'{}','{}');
+INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1054,51,909,0,0,0,'{}','{}');
 INSERT INTO "users_widgets" ("id", "widget_id", "user_id", "col", "pos", "tab", "application_conf", "widget_conf") VALUES (1055,3,909,0,1,0,'{}','{}');
 
 
