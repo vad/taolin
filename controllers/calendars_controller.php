@@ -115,8 +115,15 @@ class CalendarsController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
         
-        $limit = 5;
-        $start = 0;
+        if(!empty($this->params['form']['limit'])) 
+            $limit =$this->params['form']['limit'];
+        else
+            $limit = 5;
+        
+        if(!empty($this->params['form']['start'])) 
+            $start = $this->params['form']['start'];
+        else
+            $start = 0;
 
         $urls = array(
             "http://www.fbk.eu/event.ics",
@@ -140,13 +147,6 @@ class CalendarsController extends AppController {
         $res = $this->Calendar->Event->find('all', $params);
         $events = Set::extract($res, '{n}.Event');
 
-        /*if(!empty($this->params['form']['limit'])) {
-            $limit = $mrClean->paranoid($this->params['form']['limit']);
-        }
-            
-        if(!empty($this->params['form']['start'])) {
-            $start = $mrClean->paranoid($this->params['form']['start']);
-        }*/
         $out = array();
         $out['totalCount'] = $events_cnt;
         $out['events'] = $events;

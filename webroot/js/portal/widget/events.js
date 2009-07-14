@@ -34,6 +34,9 @@
 Events = function(conf, panel_conf){
     Ext.apply(this, panel_conf);
     
+    var limit = conf.items ? conf.items : 3;
+    this.currentPage = 1;
+    
     this.autoExpand = conf.autoExpand;
 
     eventId = this.getId();
