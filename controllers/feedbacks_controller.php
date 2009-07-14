@@ -39,14 +39,14 @@ class FeedbacksController extends AppController {
     function add() {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
-        
+       
         if (!empty($this->params['form']['text'])){
             // a quanto pare qui l'escape viene fatto automaticamente dalla $this->save()
             $data['text'] = $this->params['form']['text'];
             $data['user_id'] = $this->Session->read('id');
             $this->Feedback->save($data);
             $response['success'] = true;
-            $this->addtotimeline();
+            $this->addtotimeline(null);
             
         } else {
             $response['success'] = false;
