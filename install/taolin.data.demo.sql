@@ -1,7 +1,7 @@
 -- # Importing demo user data into database: boards table
 
 INSERT INTO "boards" ("id", "user_id", "text", "email", "expire_date", "created", "modified", "deleted", "deleted_date") VALUES (1,909,'Did you see me being portrayed on The School of Athens by Raphael?','platone@platone.com',NULL,'2009-04-08 14:53:47','2009-07-08 14:53:47',0,NULL);
-INSERT INTO "boards" ("id", "user_id", "text", "email", "expire_date", "created", "modified", "deleted", "deleted_date") VALUES (2,909,'Quo usque tandem abutere, Catilina, patientia nostra?','cicerone@cicerone.com',NULL,'2009-07-10 16:53:47','2009-07-10 16:53:47',0,NULL);
+INSERT INTO "boards" ("id", "user_id", "text", "email", "expire_date", "created", "modified", "deleted", "deleted_date") VALUES (2,906,'Quo usque tandem abutere, Catilina, patientia nostra?','cicerone@cicerone.com',NULL,'2009-07-10 16:53:47','2009-07-10 16:53:47',0,NULL);
 
 
 -- # Importing demo user data into database: buildings table
