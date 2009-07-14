@@ -23,7 +23,7 @@ CREATE TABLE "users_history" (
   "date_of_birth" date default NULL,
   "gender" INTEGER NOT NULL,
   "email" varchar(50) default NULL,
-  "fbk_unit" varchar(100) default NULL,
+  "corporate_unit" varchar(100) default NULL,
   "groups_description" varchar(50) default NULL,
   "personal_page" varchar(80) default NULL,
   "phone" varchar(15) default NULL,
@@ -197,7 +197,7 @@ FOR EACH ROW EXECUTE PROCEDURE insert_into_aros_acos_history();
 CREATE OR REPLACE FUNCTION insert_into_users_history() RETURNS trigger AS $insert_into_users_history$
   BEGIN
     -- insert record into users_history table
-    INSERT INTO users_history (user_id,login,name,surname,date_of_birth,gender,email,fbk_unit,groups_description,personal_page,phone,phone2,working_place,publik_id,registration_date,role,mod_date_of_birth,mod_email,mod_description,mod_personal_page,mod_phone,mod_phone2,mod_working_place,mod_role,mod_home_address,mod_carpooling,privacy_policy_acceptance,facebook,linkedin,twitter,deleted,deleted_date, active) VALUES (OLD.id,OLD.login,OLD.name,OLD.surname,OLD.date_of_birth,OLD.gender,OLD.email,OLD.fbk_unit,OLD.groups_description,OLD.personal_page,OLD.phone,OLD.phone2,OLD.working_place,OLD.publik_id,OLD.created,OLD.role,OLD.mod_date_of_birth,OLD.mod_email,OLD.mod_description,OLD.mod_personal_page,OLD.mod_phone,OLD.mod_phone2,OLD.mod_working_place,OLD.mod_role,OLD.mod_home_address,OLD.mod_carpooling,OLD.privacy_policy_acceptance,OLD.facebook,OLD.linkedin,OLD.twitter,OLD.deleted,OLD.deleted_date,OLD.active);
+    INSERT INTO users_history (user_id,login,name,surname,date_of_birth,gender,email,corporate_unit,groups_description,personal_page,phone,phone2,working_place,publik_id,registration_date,role,mod_date_of_birth,mod_email,mod_description,mod_personal_page,mod_phone,mod_phone2,mod_working_place,mod_role,mod_home_address,mod_carpooling,privacy_policy_acceptance,facebook,linkedin,twitter,deleted,deleted_date, active) VALUES (OLD.id,OLD.login,OLD.name,OLD.surname,OLD.date_of_birth,OLD.gender,OLD.email,OLD.corporate_unit,OLD.groups_description,OLD.personal_page,OLD.phone,OLD.phone2,OLD.working_place,OLD.publik_id,OLD.created,OLD.role,OLD.mod_date_of_birth,OLD.mod_email,OLD.mod_description,OLD.mod_personal_page,OLD.mod_phone,OLD.mod_phone2,OLD.mod_working_place,OLD.mod_role,OLD.mod_home_address,OLD.mod_carpooling,OLD.privacy_policy_acceptance,OLD.facebook,OLD.linkedin,OLD.twitter,OLD.deleted,OLD.deleted_date,OLD.active);
     RETURN NULL;
   END;
 $insert_into_users_history$ LANGUAGE plpgsql;

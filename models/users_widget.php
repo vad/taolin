@@ -22,6 +22,17 @@ class UsersWidget extends AppModel
     var $name = 'UsersWidget';
     var $belongsTo = array('User','Widget');
     var $actsAs = array('SoftDeletable'); 
+                                    
+    function is_user_already_present($u_id){
+        
+        $query = "SELECT COUNT(*) AS count FROM users_widgets WHERE user_id = $u_id AND deleted = 0";
+
+        $ret = $this->query($query);
+            
+        if ($ret[0][0]['count'] == '0') {
+            $this->query('INSERT INTO users_widgets (widget_id,col,pos,tab,user_id) SELECT widget_id,col,pos,tab,'.$u_id.' FROM widgets_skel');
+        }
+    }
     
     function getwidgetsposition($u_id, $uw_id=''){
         $conditions = array();

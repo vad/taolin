@@ -24,7 +24,7 @@ class AccountsController extends AppController {
 
     var $name = 'Accounts';
     var $helpers = array('Html','Form','Javascript');
-    var $uses = array('User','Widget');
+    var $uses = array('User','UsersWidget');
     var $AuthComponent;
 
 
@@ -149,7 +149,7 @@ class AccountsController extends AppController {
                 $this->Session->write('login', $myuser);
                 $this->Session->write('password', $password);
                 
-                $this->Widget->is_user_already_present($uid);
+                $this->UsersWidget->is_user_already_present($uid);
                 
                 //find user's dn
                 $member_dn = $this->getuserdn(); 

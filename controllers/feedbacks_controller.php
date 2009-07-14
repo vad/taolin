@@ -64,6 +64,8 @@ class FeedbacksController extends AppController {
 
         $feedbacks = $this->Feedback->find('all', array('conditions' => array('user_id' => $u_id), 'fields' => array('text', 'created'),'limit' => $n, 'order' => 'Feedback.created DESC'));
 
+        $response['feedbacks'] = array(); 
+
         foreach($feedbacks as $feedback){
             $response['feedbacks'][] = $feedback['Feedback'];
         }
