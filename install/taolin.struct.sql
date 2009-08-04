@@ -201,7 +201,7 @@ CREATE TABLE "photos" (
   "user_id" INTEGER NOT NULL,
   "photo" bytea,
   "filename" text,
-  "name" varchar(100) default NULL,
+  "name" varchar(100),
   "caption" text,
   "width" INTEGER default NULL,
   "height" INTEGER default NULL,
