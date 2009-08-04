@@ -45,7 +45,7 @@ function application_init(){
      * Themes for Taolin gui
      */
     
-    var themeData = new Ext.data.SimpleStore({
+    /*var themeData = new Ext.data.SimpleStore({
         fields: ['display', 'value'],
         data: [
             ['(Default) Slate', 'ext-themes/css/xtheme-slate.css'],
@@ -78,11 +78,11 @@ function application_init(){
     }); 
       
     comboTheme.on('select', 
-        function(combo){ 
+        function(combo){
             Ext.util.CSS.swapStyleSheet('theme', combo.getValue()); 
         }
         , this);
-
+    */
     
     var numColumns = 3;
         var columns = new Array();
@@ -119,7 +119,7 @@ function application_init(){
      */
     var clear_html = 
         '<div id="logout_div" class="right-element">'
-            + '<span id="exttheme" style="float:left;padding-right:5px;"></span> | '
+            //+ '<span id="exttheme" style="float:left;padding-right:5px;"></span> | '
             + '<span id="logged_as_username"></span> '
             + '(<a href="javascript:void(0)" onclick="expandSettingsPanel()">edit profile</a>) | '
             + '<span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span> | '
@@ -179,7 +179,7 @@ function application_init(){
     showUserInfo(null, true);
 
     // render comboTheme
-    comboTheme.render(Ext.get('exttheme'));
+    //comboTheme.render(Ext.get('exttheme'));
 
     /* Check if there's a valid session */
     var task = {
