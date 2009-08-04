@@ -170,7 +170,7 @@ function application_init(){
             // Setting desktop background
             listeners:{
                 afterlayout: function(){
-                    $('.desktop .x-column-layout-ct').css('background','transparent url('+window.config.background+') repeat scroll 50% 0');
+                    $('.desktop .x-column-layout-ct').css('background','transparent url('+window.config.background+') repeat scroll 50% 50%');
                 }
             }
         }, westPanel]
