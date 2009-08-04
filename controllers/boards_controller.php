@@ -25,6 +25,16 @@ uses('sanitize');
 class BoardsController extends AppController {
     var $name = 'Boards';
     var $helpers = array('Html','Form','Javascript');
+    var $paginate = array(
+            'limit' => 5
+            ,'page' => 1
+            ,'conditions' => null
+            ,'fields' => array('id', 'user_id', 'text', 'email', 'Board.created','expire_date','User.name','User.surname')
+            ,'order' => array(
+               'Board.created' => 'desc'
+            )
+            ,'recursive' => 1
+        );
 
     function beforeFilter()
     {
@@ -64,29 +74,24 @@ class BoardsController extends AppController {
         $this->layout = 'ajax';
 
         if(!empty($this->params['form']['limit'])) 
-            $limit =$this->params['form']['limit'];
-        else
-            $limit = 5;
+            $limit = $this->params['form']['limit'];
+            $this->paginate['limit'] = $limit;
         
         if(!empty($this->params['form']['start'])) 
             $page = $this->params['form']['start'] / $limit;
-        else
-            $page = 0;
 
         if(!empty($this->params['form']['show_expired']) && ($this->params['form']['show_expired'] == 1)){
             $conditions = null;
         }else{
             $today = date("Y-m-d");
             $conditions = "(expire_date >= '$today' OR expire_date IS NULL)";
+            $this->paginate['conditions'] = $conditions;
         }
 
-        $resboards = $this->Board->find('all', array(
-            'conditions' => $conditions,
-            'fields' => array('id', 'user_id', 'text', 'email', 'Board.created','expire_date','User.name', 'User.surname'),
-            'limit' => $limit,
-            'page' => $page,
-            'order' => 'Board.created DESC', 'recursive' => 1
-        ));
+        if($page)
+            $this->paginate['page'] = $page + 1;
+        
+        $resboards = $this->paginate('Board');
 
         $totalCount = $this->Board->find('count', array('conditions' => $conditions));
 
@@ -159,8 +164,6 @@ class BoardsController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
         
-        //$this->log($this->params);
-
         $id = $this->params['form']['ads_id'];
         $value = $this->params['form']['value'];
 
