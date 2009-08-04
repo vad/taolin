@@ -49,6 +49,7 @@ class PortalsController extends AppController {
         $response['config']['jabber_server'] = $this->Conf->get('Jabber.server');
         $response['config']['jabber_domain'] = $this->Conf->get('Jabber.domain');
         $response['config']['logo'] = $this->Conf->get('Site.logo_url');
+        $response['config']['background'] = $this->Conf->get('Site.background');
 
         $response['success'] = true;
         
