@@ -31,7 +31,6 @@ html, body {
 }
 
 .desktop .x-column-layout-ct {
-    background: transparent url(../../img/blue_curl.jpeg) repeat 50% 0;
     overflow-x:hidden !important;
 }
 

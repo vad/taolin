@@ -28,7 +28,6 @@ Ext.onReady(function(){
 
 Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
 
-
 //Ext.onReady(
 function application_init(){
 
@@ -167,7 +166,13 @@ function application_init(){
             /* Here we define three different column for our portal. If you change the number of
              * the column please check the database for any inconsistency
              */
-            items: columns
+            items: columns,
+            // Setting desktop background
+            listeners:{
+                afterlayout: function(){
+                    $('.desktop .x-column-layout-ct').css('background','transparent url('+window.config.background+') repeat scroll 50% 0');
+                }
+            }
         }, westPanel]
     });   
 
@@ -179,7 +184,8 @@ function application_init(){
     showUserInfo(null, true);
 
     // render comboTheme
-    //comboTheme.render(Ext.get('exttheme'));
+    /*comboTheme.render(Ext.get('exttheme'));
+    */
 
     /* Check if there's a valid session */
     var task = {
