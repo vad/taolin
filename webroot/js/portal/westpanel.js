@@ -156,7 +156,8 @@ westPanel = new Ext.Panel({
 
                 var tpl = new Ext.XTemplate(
                     '<div class="user-profile-class" style="text-align:left;margin:5px;line-height:150%;font-size:100%;">',
-                    '<br/><p><b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
+                    '<br/><b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
+                    /* if own profile, prompt a shortcut to edit the profile */
                     '<tpl if="((this.reqid === \'\') || (this.reqid == window.thisId))">',
                         '<span style="padding-left:10px;"><a href="javascript:expandSettingsPanel()">Edit</a></span>',
                     '</tpl>',
@@ -164,16 +165,14 @@ westPanel = new Ext.Panel({
                     '<span id="user-status"></span>',
                     /* check if the user is "chattable" */
                     '<tpl if="((this.reqid !== \'\') && (login) && (jabber.u_n !== login) && (active === \'1\'))">',
-                        '<br /><div class="user-item user-{login}"><a href="javascript:void(0)" onclick=\'jabberui.createNewChatWindow(new JSJaCJID("{login}@fbk.eu"))\'>Chat with {name} {surname}</a></div>',
-                    '</tpl></p>',
+                        '<div class="user-item user-{login}" style="margin:10px"><a href="javascript:void(0)" onclick=\'jabberui.createNewChatWindow(new JSJaCJID("{login}@fbk.eu"))\'>Chat with {name} {surname}</a></div>',
+                    '</tpl>',
                     /* if s/he is not a champion, suggest as a champion! */
                     '<tpl if="((this.reqid !== \'\') && (active !== \'1\'))">',
-                        '<br /><div style="text-align:left;margin:5px;font-family: Verdana;">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{this.sourceSuggestAs}\')">suggest {name} to SoNet team as a new champion!</a></div>',
-                    '</tpl></p>',
-                    '<br /><b>Login:</b> ',
-                    '<span> {[values.login ? values.login : "unavailable"]} </span>',
+                        '<div class="warning-message" style="text-align:left">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{this.sourceSuggestAs}\')">suggest {name} as a new {[window.config.appname]} champion!</a></div><br />',
+                    '</tpl>',
                     '<tpl if="email">',
-                            '<br /><b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{this.sourceSendMail}\')"> <img style="vertical-align:bottom;" title="Click here to email user" src="js/portal/shared/icons/fam/email.png" class="size16x16"/> <a href="javascript:void(0)">{email}</a></span>',
+                        '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{this.sourceSendMail}\')"> <img style="vertical-align:bottom;" title="Click here to email user" src="js/portal/shared/icons/fam/email.png" class="size16x16"/> <a href="javascript:void(0)">{email}</a></span>',
                     '</tpl>',
                     '<tpl if="((phone) && (phone != \'0\'))">',
                         '<br /><b>Phone:</b><span> {phone}</span>',
@@ -217,41 +216,22 @@ westPanel = new Ext.Panel({
                      * END Group description
                      *********************************************/
                     
-                    /*********************************************
-                     * START Tag cloud
-                     *********************************************/
-
-                    // Currently not working!
-                    //'{[this.tagCloud(values.tags)]}',
-
-                    /*********************************************
-                     * END Tag cloud
-                     *********************************************/
-                    
                     /**********************************************
                      * START Social Networking
                      *********************************************/
                     '<tpl if="(linkedin) || (twitter) || (facebook)">', // if one of the social network's field is present...
-                        '<br /><b>Social networking on...</b><br />',
-                        '<span>',
-                            '<ul style="padding: 5px 0 0 20px;">', 
-                                '<tpl if="linkedin">',
-                                    '<li style="list-style-type:disc;">',
-                                        '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" class="size16x16" style="vertical-align: middle; padding-right: 5px;" /><a href="http://www.linkedin.com/in/{linkedin}" target="_blank">Linkedin</a>',
-                                    '</li>',
-                                '</tpl>',
-                                '<tpl if="twitter">',
-                                    '<li style="list-style-type:disc;">',
-                                        '<img src="http://www.google.com/s2/favicons?domain=twitter.com" class="size16x16" style="vertical-align: middle; padding-right: 5px;" /><a href="http://twitter.com/{twitter}" target="_blank">Twitter</a>',
-                                    '</li>',
-                                '</tpl>',
-                                '<tpl if="facebook">',
-                                    '<li style="list-style-type:disc;">',
-                                        '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16" style="vertical-align: middle; padding-right: 5px;" /><a href="{facebook}" target="_blank">Facebook</a>',
-                                    '</li>',
-                                '</tpl>',
-                            '</ul>',
-                        '</span>',
+                        '<br /><b>Social networking on:</b><br />',
+                        '<span style="padding-left:10px">',
+                            '<tpl if="linkedin">',
+                                '<a href="http://www.linkedin.com/in/{linkedin}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="linkedin"/></a>',
+                            '</tpl>',
+                            '<tpl if="twitter">',
+                                '<a href="http://twitter.com/{twitter}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=twitter.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="twitter" /></a>',
+                            '</tpl>',
+                            '<tpl if="facebook">',
+                                '<a href="{facebook}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="facebook"/></a>',
+                            '</tpl>',
+                        '</span><br />',
                     '</tpl>',
                     /**********************************************
                      * END Social Networking
