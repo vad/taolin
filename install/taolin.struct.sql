@@ -96,14 +96,6 @@ CREATE TABLE "calendars" (
   "name" varchar(100) default NULL
 );
 
--- # Table structure for table "checked_users"
-
-DROP TABLE IF EXISTS "checked_users" CASCADE;
-CREATE TABLE "checked_users" (
-  "user_id" INTEGER NOT NULL,
-   UNIQUE ("user_id")
-);
-
 -- # Table structure for table "events"
 
 DROP TABLE IF EXISTS "events" CASCADE;
