@@ -100,7 +100,7 @@ class WorkplacesController extends AppController {
         $out['buildingInfo'] = $res[0]['Building'];
 
         $res = $this->Workplace->find('all', array(
-                'conditions' => array('building_id' => $building)
+                'conditions' => array('building_id' => $building, 'User.deleted' => 0)
                 ,'fields' => array('Workplace.x', 'Workplace.y',
                     'Workplace.user_id', 'User.name', 'User.surname', 'User.gender', 'User.phone'
                 )
@@ -193,6 +193,7 @@ class WorkplacesController extends AppController {
 
             $background = $this->image_overlap($background, $foreground,$x,
                 $y,$percent);
+
         }
         imagepng($background);
         //imagejpeg($foreground);
