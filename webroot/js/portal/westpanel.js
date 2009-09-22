@@ -22,8 +22,8 @@ westPanel = new Ext.Panel({
     id:'west-panel',
     title:'Social Bar',
     split:true,
-    width: 320,
-    minSize: 220,
+    width: 400,
+    minSize: 400,
     maxSize: 600,
     /* This panel should not be closed, only collapsed */
     margins:'5 0 5 5',
