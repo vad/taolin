@@ -125,7 +125,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                                 ,maxLength: 50
                                 ,anchor: '100%'
                             }, {
-                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=twitter.com" class="size16x16" style="vertical-align: middle" /> Twitter username'
+                                fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.twitter.com" class="size16x16" style="vertical-align: middle" /> Twitter username'
                                 ,name: 'twitter'
                                 ,maxLength: 50
                                 ,anchor: '100%'

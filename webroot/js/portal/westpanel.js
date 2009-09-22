@@ -226,7 +226,7 @@ westPanel = new Ext.Panel({
                                 '<a href="http://www.linkedin.com/in/{linkedin}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="linkedin"/></a>',
                             '</tpl>',
                             '<tpl if="twitter">',
-                                '<a href="http://twitter.com/{twitter}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=twitter.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="twitter" /></a>',
+                                '<a href="http://twitter.com/{twitter}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.twitter.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="twitter" /></a>',
                             '</tpl>',
                             '<tpl if="facebook">',
                                 '<a href="{facebook}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="facebook"/></a>',
