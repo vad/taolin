@@ -18,7 +18,7 @@
  *
  */
 ?>
-
+<!--
 <style type="text/css">
 #loading-mask{
     position:absolute;
@@ -52,6 +52,7 @@
     font: normal 10px arial,tahoma,sans-serif;
 }
 </style>
+-->
 
 <div id="loading-mask" style=""></div>
 <div id="loading">
@@ -111,14 +112,16 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/usr/Multiselect/Multiselect.js');
     
     /* WIZARD WINDOW */
+    
     echo $javascript->link('portal/usr/Ext.ux.WizardHeader.js');
     echo $javascript->link('portal/usr/Ext.ux.BasicWizard.js');
     echo $javascript->link('portal/usr/Ext.ux.SlickCardLayout.js');
-    echo $javascript->link('portal/usr/ToolbarLayout.js');
-    /* END WIZARD WINDOW */
+    //echo $javascript->link('portal/usr/ToolbarLayout.js');
     
+    /* END WIZARD WINDOW */
     echo $javascript->link('portal/wizard_settings.js');
 
+    echo $javascript->link('portal/widget/htmlincluder.js');
     echo $javascript->link('portal/widget/users.js');
     echo $javascript->link('portal/widget/events.js');
     echo $javascript->link('portal/widget/searchusers.js');
@@ -127,7 +130,6 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/widget/feedback.js');
     echo $javascript->link('portal/widget/feedreader.js');
     echo $javascript->link('portal/widget/groups.js');
-    echo $javascript->link('portal/widget/htmlincluder.js');
     echo $javascript->link('portal/widget/iframer.js');
     echo $javascript->link('portal/widget/note.js');
     echo $javascript->link('portal/widget/google.js');
@@ -146,6 +148,7 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/photoupload.js');    
     
     echo $javascript->link('portal/widget/buddylist.js');
+    
     echo $javascript->link('portal/Timeline.js');
     echo $javascript->link('portal/UserPublications.js');
     echo $javascript->link('portal/UserPhotos.js');
@@ -158,6 +161,8 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/window/MapWindow.js');
     echo $javascript->link('portal/window/PhotoChooser.js');
     echo $javascript->link('portal/window/SendToWindow.js');
+    
+  
 } else {
     ?>
     <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/application-all.css' />

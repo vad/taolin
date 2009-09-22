@@ -91,7 +91,7 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
                 }, {
                     border: false,
                     items: [{
-                        html:'<div id="building-maps"><img class="map" src="ext/resources/images/default/s.gif" /></div>'
+                        html:'<div id="building-maps"><img class="map" src="extjs/resources/images/default/s.gif" /></div>'
                     },{
                         html:'<div id="map-window-map" style="height:0"></div>'
                     }]

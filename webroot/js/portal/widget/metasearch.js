@@ -42,7 +42,7 @@ Ext.ux.fbk.sonet.MetaSearch = Ext.extend(Ext.Panel, {
         autoScroll: true 
     },
     initComponent: function(){
-        this.searchfield = new Ext.app.SearchField({
+        this.searchfield = new Ext.ux.form.SearchField({
             id: this.getId()+'-searchfield',
             name: 'data[Search]'
             ,parent: this

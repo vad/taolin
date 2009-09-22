@@ -54,7 +54,7 @@ SearchUsers = Ext.extend(Ext.Panel, {
     title: null
     /**
      * @cfg {Boolean} hideToolbar This parameter should be set to true in order to hide the toolbar
-     * containing an Ext.app.SearchField instance for performing queries. Default to false
+     * containing an Ext.ux.form.SearchField instance for performing queries. Default to false
      */
     ,hideToolbar: false
     /** 
@@ -129,11 +129,11 @@ SearchUsers = Ext.extend(Ext.Panel, {
                 emptyMsg: 'No colleague'
             })
             // If hideToolbar is true tbar is set to null
-            // Otherwise it contains an Ext.app.SearchField instance to perform queries
+            // Otherwise it contains an Ext.ux.form.SearchField instance to perform queries
             ,tbar: this.hideToolbar ? null : 
                         [
                             '<span qtip="Search your colleagues by name, surname, phone number or group\'s name">Search: </span>', ' ', ' ',
-                            new Ext.app.SearchField({
+                            new Ext.ux.form.SearchField({
                                 name: 'data[Search]',
                                 store: this.store,
                                 width: 180

@@ -196,7 +196,7 @@ FeedReader = function(conf, panel_conf){
     FeedReader.superclass.constructor.call(this, {
         items: [
             {
-                html: '<img src="ext/resources/images/default/s.gif" id="'+
+                html: '<img src="extjs/resources/images/default/s.gif" id="'+
                     this.getId()+'_logo" style="margin:auto auto"/>'
             }
             ,this.grid
