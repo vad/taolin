@@ -135,6 +135,7 @@ html:  '<div style="padding:0 0 5px 5px;"><img style="vertical-align:middle;" sr
     MathWidget.superclass.constructor.call(this, {
         autoHeight: true
         ,autoWidth: true
+        ,style: 'margin-top:2px'
         ,defaults: { autoScroll: true }
         ,layout: 'fit'
         ,items: new Ext.TabPanel({
