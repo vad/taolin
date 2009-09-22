@@ -26,7 +26,7 @@ Ext.onReady(function(){
     setPortalConfiguration(application_init);
 });
 
-Ext.BLANK_IMAGE_URL = 'ext/resources/images/default/s.gif';
+Ext.BLANK_IMAGE_URL = 'extjs/resources/images/default/s.gif';
 
 //Ext.onReady(
 function application_init(){
@@ -84,12 +84,12 @@ function application_init(){
     */
     
     var numColumns = 3;
-        var columns = new Array();
+    var columns = new Array();
     for(var i=0; i< numColumns; i++){
         columns.push({
                 columnWidth:1/numColumns,
                 style:'padding:20px 10px 20px 10px'
-            });
+        });
     }
    
     // preparing text for Did you know messages

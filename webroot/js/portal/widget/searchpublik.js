@@ -37,7 +37,7 @@ SearchPublik = Ext.extend(Ext.Panel, {
     title: null
     /**
      * @cfg {Boolean} hideToolbar This parameter should be set to true in order to hide the toolbar
-     * containing an Ext.app.SearchField instance for performing queries. Default to false
+     * containing an Ext.ux.form.SearchField instance for performing queries. Default to false
      */
     ,hideToolbar: false
     /** 
@@ -123,11 +123,11 @@ SearchPublik = Ext.extend(Ext.Panel, {
                 emptyMsg: 'No papers'
             })
             // If hideToolbar is true tbar is set to null
-            // Otherwise it contains an Ext.app.SearchField instance to perform queries
+            // Otherwise it contains an Ext.ux.form.SearchField instance to perform queries
             ,tbar: this.hideToolbar ? null : 
                         [
                             '<span qtip="Search publications in FBK publik database">Search: </span>', ' ', ' ',
-                            new Ext.app.SearchField({
+                            new Ext.ux.form.SearchField({
                                 id: 'searchfield-'+this.getId(),
                                 name: 'data[Search]',
                                 store: this.store,

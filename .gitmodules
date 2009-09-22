@@ -1,0 +1,3 @@
+[submodule "webroot/extjs"]
+	path = webroot/extjs
+	url = git://github.com/probonogeek/extjs.git
