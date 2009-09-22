@@ -26,9 +26,6 @@ westPanel = new Ext.Panel({
     minSize: 220,
     maxSize: 600,
     /* This panel should not be closed, only collapsed */
-    tools: toolsnotclose,
-    hideCollapseTool:true,
-    collapsible: true,
     margins:'5 0 5 5',
     cmargins:'5 5 5 5',
     layout:'accordion',
