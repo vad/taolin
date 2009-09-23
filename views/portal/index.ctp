@@ -18,7 +18,6 @@
  *
  */
 ?>
-<!--
 <style type="text/css">
 #loading-mask{
     position:absolute;
@@ -52,7 +51,6 @@
     font: normal 10px arial,tahoma,sans-serif;
 }
 </style>
--->
 
 <div id="loading-mask" style=""></div>
 <div id="loading">

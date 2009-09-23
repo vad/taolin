@@ -1712,4 +1712,8 @@ body.x-body-masked .x-window-plain .x-window-mc {
 }
 
 
-.ext-strict .x-small-editor .x-form-text {height: 14px !important}
+/*
+.ext-strict .x-small-editor .x-form-text {
+    height: 14px !important
+}
+*/
