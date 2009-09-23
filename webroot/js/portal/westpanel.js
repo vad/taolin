@@ -23,6 +23,8 @@ westPanel = new Ext.Panel({
     title:'Social Bar',
     split:true,
     width: (getBodySize(1/3)[0] < 400 ? getBodySize(1/3)[0] : 400), // 400px is the max. value
+    maxSize: 400,
+    minSize: 320,
     /* This panel should not be closed, only collapsed */
     margins:'5 0 5 5',
     cmargins:'5 5 5 5',
