@@ -34,7 +34,7 @@
     This is a example of the json
     </code></pre>
 */
-Ext.namespace( 'Ext.ux.fbk.sonet' );
+Ext.ns( 'Ext.ux.fbk.sonet' );
 
 Ext.ux.fbk.sonet.MetaSearch = Ext.extend(Ext.Panel, {
     autoHeight: true,

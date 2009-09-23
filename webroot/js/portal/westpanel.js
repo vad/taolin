@@ -42,6 +42,15 @@ westPanel = new Ext.Panel({
     },{
         xtype:'userprofile'
         ,id: 'user_profile'
+        ,firstExpand: true
+        ,listeners: {
+            beforeexpand: function(t){
+                if (t.firstExpand) {
+                    showUserInfo(null, true);
+                    t.firstExpand = false;
+                }
+            }
+        }
     },{
         title:'Edit your profile',
         border:false,
@@ -98,29 +107,26 @@ westPanel = new Ext.Panel({
             hidePanel = false;
         }
         
+        Ext.getCmp('user_profile').firstExpand = false;
+        if(!hidePanel) expandUserPanel();
+        
         Ext.Ajax.request({
             url : 'users/getinfo/'+reqid,
             method: 'GET',
             params: {src: logparams},
             success: function ( result, request ) {
                 /*
-                 * Whenever this function shows user info it shall expand both
-                 * western panel and accordion panel containing 'user_image' div
+                 * Whenever this function shows user info it shall expand the
+                 * accordion panel containing 'user_image' div
                  */
-                westPanel.expand();
-
                 // Show user info (aka first tab of tabpanel)
                 Ext.getCmp('user_profile').items.items[1].setActiveTab(0);
 
-                if(!hidePanel) expandUserPanel();
                 var jsondata = Ext.util.JSON.decode(result.responseText);
                 westPanel.showedUser = jsondata.user;
                 var user_text = '';
 
                 if(reqid==='') { //this call always gives access to this user data
-                    Ext.get("logged_as_username").update(
-                        '<a href="javascript:void(0)" onclick="showUserInfo(null, null, \'' + Ext.util.Format.htmlEncode('{"source": "logout_div"}') + '\')" qtip="Click here to view your profile">'+jsondata.user.login+'</a>'
-                    );
                     window.thisId = jsondata.user.id;
                     window.thisLogin = jsondata.user.login;
                     if(jsondata.user.email) 

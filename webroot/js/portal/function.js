@@ -39,7 +39,7 @@ function setPortalConfiguration(f){
 }
 
 function expandUserPanel(){
-    Ext.getCmp('user_profile').expand(true);
+    Ext.getCmp('user_profile').expand(false);
 }
 
 function expandSettingsPanel(){
@@ -75,8 +75,7 @@ function openImageChooser(){
     showText(false, 'undodelphoto');
 }   
 
-function showText(showtext, element){  
-  
+function showText(showtext, element){
     var slideMe = Ext.get(element);  
   
     switch(showtext){  

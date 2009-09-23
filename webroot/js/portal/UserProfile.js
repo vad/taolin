@@ -26,7 +26,7 @@
   * Shows a user's profile
   *
   */
-Ext.namespace( 'Ext.ux.fbk.sonet' );
+Ext.ns( 'Ext.ux.fbk.sonet' );
 
 Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
     title:'User profile',

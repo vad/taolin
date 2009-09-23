@@ -119,8 +119,8 @@ function application_init(){
     var clear_html = 
         '<div id="logout_div" class="right-element">'
             //+ '<span id="exttheme" style="float:left;padding-right:5px;"></span> | '
-            + '<span id="logged_as_username"></span> '
-            + '(<a href="javascript:void(0)" onclick="expandSettingsPanel()">edit profile</a>) | '
+            + '<span><a qtip="Click here to view your profile" onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)">profile</a></span> '
+            + '(<a href="javascript:void(0)" onclick="expandSettingsPanel()">edit</a>) | '
             + '<span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span> | '
             + '<img src="js/portal/shared/icons/fam/new.png" class="size16x16" /><a href="./wiki" target="_blank">FBK wiki</a> | '
             + '<a href="./pages/privacy_policy" target="_blank">Privacy policy</a> | '
@@ -181,7 +181,6 @@ function application_init(){
      * showUserInfo(null, true) fill western-panel
      */
     getWidgetsPosition();
-    showUserInfo(null, true);
 
     // render comboTheme
     /*comboTheme.render(Ext.get('exttheme'));
