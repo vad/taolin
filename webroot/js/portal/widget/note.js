@@ -40,7 +40,10 @@ Note = function(conf, panel_conf){
     Ext.apply(this, panel_conf);
 
     var note_title = conf.title ? conf.title : 'Note';
+
     var note_background = conf.bgcolor;
+    if (note_background.charAt(0) != '#')
+        note_background = '#'+note_background;
 
     this.form = new Ext.form.FormPanel({
         autoHeight: true
@@ -91,12 +94,12 @@ Note = function(conf, panel_conf){
                     fn: function(){
                         Ext.getCmp(panel_conf.portlet_id).setTitle(note_title);
                         if(note_background && note_background != '') {
-                   
-                            $('#'+this.id+' .note-text-container').css('background','#'+note_background);
+                            $('#'+this.id+' .note-text-container').css('background',note_background);
+                            
+                            // font color
                             var b = note_background.getBrightness();
                             var note_foreground = (b > 127) ? 'black' : 'white';
                             $('#'+this.id+' .note-text-area').css('color', note_foreground);
-
                         }
                     },
                     scope: this

@@ -85,77 +85,78 @@ Ext.ux.ColorPicker = Ext.extend( Ext.BoxComponent, {
 		// initialize start position
 		Ext.get( this.rgbPicker ).moveTo( Ext.get( this.cpGetId( 'rgb' ) ).getLeft() - 7, Ext.get( this.cpGetId( 'rgb' ) ).getTop() - 7 );
 		// Create color divs and Form elements
-		this.formPanel = new Ext.form.FormPanel({
-			'renderTo': Ext.DomHelper.append( this.body, {
+		Ext.DomHelper.append( this.body, {
 							'id': this.cpGetId( 'fCont' ),
 							'cls': 'x-cp-formcontainer'
-						}, true ),
-			'frame': true,
-			'labelAlign': 'left',
-			'labelWidth': 10,
-			'items': [{
-				'layout': 'column',
-				'items': [{
-					'columnWidth': .5,
-					'layout': 'form',
-					'defaultType': 'numberfield',
-					'defaults': {
-						'width': 30,
-						'value': 0,
-						'minValue': 0,
-						'maxValue': 255,
-						'allowBlank': false,
-						'labelSeparator': ''
+						}, true );
+		
+		this.formPanel = new Ext.form.FormPanel({
+			renderTo: this.cpGetId( 'fCont' ),
+			frame: true,
+			labelAlign: 'left',
+			labelWidth: 10,
+			forceLayout: true,
+			items: [{
+				layout: 'column',
+				items: [{
+					columnWidth: .5,
+					layout: 'form',
+					defaultType: 'numberfield',
+					defaults: {
+						width: 30,
+						value: 0,
+						minValue: 0,
+						maxValue: 255,
+						allowBlank: false,
+						labelSeparator: ''
 					},
-					'items': [{
-						'fieldLabel': 'R',
-						'id': this.cpGetId( 'iRed' )
+					items: [{
+						fieldLabel: 'R',
+						id: this.cpGetId( 'iRed' )
 					},{
-						'fieldLabel': 'G',
-						'id': this.cpGetId( 'iGreen' )
+						fieldLabel: 'G',
+						id: this.cpGetId( 'iGreen' )
 					},{
-						'fieldLabel': 'B',
-						'id': this.cpGetId( 'iBlue' )
+						fieldLabel: 'B',
+						id: this.cpGetId( 'iBlue' )
 					}]
 				},{
-					'columnWidth': .5,
-					'layout': 'form',
-					'defaultType': 'numberfield',
-					'defaults': {
-						'width': 30,
-						'value': 0,
-						'minValue': 0,
-						'maxValue': 255,
-						'allowBlank': false,
-						'labelSeparator': ''
+					columnWidth: .5,
+					layout: 'form',
+					defaultType: 'numberfield',
+					defaults: {
+						width: 30,
+						value: 0,
+						minValue: 0,
+						maxValue: 255,
+						allowBlank: false,
+						labelSeparator: ''
 					},
-					'items': [{
-						'fieldLabel': 'H',
-						'maxValue': 360,
-						'id': this.cpGetId( 'iHue' )
+					items: [{
+						fieldLabel: 'H',
+						maxValue: 360,
+						id: this.cpGetId( 'iHue' )
 					},{
-						'fieldLabel': 'S',
-						'id': this.cpGetId( 'iSat' )
+						fieldLabel: 'S',
+						id: this.cpGetId( 'iSat' )
 					},{
-						'fieldLabel': 'V',
-						'id': this.cpGetId( 'iVal' )
+						fieldLabel: 'V',
+						id: this.cpGetId( 'iVal' )
 					}]
 				}]
 			},{
-				'layout': 'form',
-				'defaultType': 'textfield',
-				'labelAlign': 'left',
-				'defaults': {
-					'width': 82,
-					'value': '000000',
-					'labelSeparator': '',
-					'allowBlank': false
+				layout: 'form',
+				defaultType: 'textfield',
+				labelAlign: 'left',
+				defaults: {
+					width: 82,
+					allowBlank: false
 				},
-				'id': this.cpGetId( 'cCont' ),
-				'items': [{
-					'fieldLabel': '#',
-					'id': this.cpGetId( 'iHexa' ),
-					'value': '000000'
+				id: this.cpGetId( 'cCont' ),
+				items: [{
+					fieldLabel: '#',
+					id: this.cpGetId( 'iHexa' ),
+					value: '000000'
 				}]
 			}]
 		});
@@ -166,11 +167,13 @@ Ext.ux.ColorPicker = Ext.extend( Ext.BoxComponent, {
 		Ext.getCmp( this.cpGetId( 'iSat' ) ).on( 'change', this.updateFromIHSV.createDelegate( this ) );
 		Ext.getCmp( this.cpGetId( 'iVal' ) ).on( 'change', this.updateFromIHSV.createDelegate( this ) );
 		Ext.getCmp( this.cpGetId( 'iHexa' ) ).on( 'change', this.updateFromIHexa.createDelegate( this ) );
-		Ext.DomHelper.append( this.cpGetId( 'cCont' ), { 'cls': 'x-cp-colorbox', 'id': this.cpGetId( 'cWebSafe' ) , 'style' : 'visibility:hidden' }, true ).update( 'Websafe' );
-		Ext.DomHelper.append( this.cpGetId( 'cCont' ), { 'cls': 'x-cp-colorbox', 'id': this.cpGetId( 'cInverse' ) , 'style' : 'visibility:hidden' }, true ).update( 'Inverse' );
-		Ext.DomHelper.append( this.cpGetId( 'cCont' ), { 'cls': 'x-cp-colorbox', 'id': this.cpGetId( 'cColor' ) }, true ).update( 'Pick Color' );
-		Ext.get( this.cpGetId( 'cWebSafe' ) ).on( 'click', this.updateFromBox.createDelegate( this ) );
-		Ext.get( this.cpGetId( 'cInverse' ) ).on( 'click', this.updateFromBox.createDelegate( this ) );
+		
+	    //Ext.DomHelper.append( this.cpGetId( 'fCont' ), { 'cls': 'x-cp-colorbox', 'id': this.cpGetId( 'cWebSafe' ) }, true ).update( 'Websafe' );
+		//Ext.DomHelper.append( this.cpGetId( 'fCont' ), { 'cls': 'x-cp-colorbox', 'id': this.cpGetId( 'cInverse' ) }, true ).update( 'Inverse' );
+		Ext.DomHelper.append( this.cpGetId( 'fCont' ), { 'cls': 'x-cp-colorbox', 'id': this.cpGetId( 'cColor' ) }, true ).update( 'Pick Color' );
+		
+		//Ext.get( this.cpGetId( 'cWebSafe' ) ).on( 'click', this.updateFromBox.createDelegate( this ) );
+		//Ext.get( this.cpGetId( 'cInverse' ) ).on( 'click', this.updateFromBox.createDelegate( this ) );
 		Ext.get( this.cpGetId( 'cColor' ) ).on( 'click', this.selectColor.createDelegate( this ) );
 		Ext.DomHelper.append( this.body, {'tag':'br','cls':'x-cp-clearfloat'});
 	},
@@ -266,7 +269,8 @@ Ext.ux.ColorPicker = Ext.extend( Ext.BoxComponent, {
 			'color': '#' + this.rgbToHex( invert )
 		});
 		Ext.getDom( this.cpGetId( 'cColor' ) ).title = '#'+this.rgbToHex( rgb );
-		Ext.get( this.cpGetId( 'cInverse' ) ).setStyle({
+		/*
+        Ext.get( this.cpGetId( 'cInverse' ) ).setStyle({
 			'background': '#' + this.rgbToHex( invert ),
 			'color': '#' + this.rgbToHex( rgb )
 		});
@@ -276,6 +280,7 @@ Ext.ux.ColorPicker = Ext.extend( Ext.BoxComponent, {
 			'color': '#' + this.rgbToHex( wsInvert )
 		});
 		Ext.getDom( this.cpGetId( 'cWebSafe' ) ).title = '#'+this.rgbToHex( websafe );
+        */
 		Ext.get( this.huePicker ).moveTo( Ext.get( this.huePicker ).getLeft(), Ext.get( this.cpGetId( 'hue' ) ).getTop() + this.getHPos( Ext.getCmp( this.cpGetId( 'iHue' ) ).getValue() ) - 7, ( this.animateMove || true ) );
 		Ext.get( this.rgbPicker ).moveTo( Ext.get( this.cpGetId( 'rgb' ) ).getLeft() + this.getSPos( Ext.getCmp( this.cpGetId( 'iSat' ) ).getValue() / 100 ) - 7, Ext.get( this.cpGetId( 'hue' ) ).getTop() + this.getVPos( Ext.getCmp( this.cpGetId( 'iVal' ) ).getValue() / 100 ) - 7, ( this.animateMove || true ) );
 		Ext.get( this.cpGetId( 'rgb' ) ).setStyle({ 'background-color': '#' + this.rgbToHex( this.hsvToRgb( Ext.getCmp( this.cpGetId( 'iHue' ) ).getValue(), 1, 1 ) ) });
@@ -284,6 +289,7 @@ Ext.ux.ColorPicker = Ext.extend( Ext.BoxComponent, {
 	 *
 	 */
 	setColor: function(c) {
+		c = c.replace('#', '');
 		if(!/^[0-9a-fA-F]{6}$/.test(c))return;
 		Ext.getCmp( this.cpGetId( 'iHexa' ) ).setValue(c);
 		this.updateFromIHexa();
@@ -319,7 +325,9 @@ Ext.ux.ColorPicker = Ext.extend( Ext.BoxComponent, {
 	 */
 	updateFromBox: function( event, element ) {
 		this.updateMode = 'click';
-		var temp = this.rgbToHsv( this.hexToRgb( Ext.get( element ).getColor( 'backgroundColor', '', '' ) ) );
+		var col = Ext.get( element ).getColor( 'backgroundColor', '', '' );
+		col = col.replace("#", "");
+		var temp = this.rgbToHsv( this.hexToRgb( col ));
 		this.HSV = { h: temp[0], s:temp[1], v:temp[2]};
 		this.updateColor();
 	},
