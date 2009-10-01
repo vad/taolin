@@ -17,12 +17,15 @@
 *
 */
 
+var pWidth = getBodySize(1/3)[0];
+var desiredPanelWidth = pWidth < 400 ? pWidth : 400; // 400px is the max. value
+
 westPanel = new Ext.Panel({
     region:'west',
     id:'west-panel',
     title:'Social Bar',
     split:true,
-    width: (getBodySize(1/3)[0] < 400 ? getBodySize(1/3)[0] : 400), // 400px is the max. value
+    width: desiredPanelWidth,
     maxSize: 400,
     minSize: 320,
     /* This panel should not be closed, only collapsed */
@@ -126,6 +129,7 @@ westPanel = new Ext.Panel({
 
                 var jsondata = Ext.util.JSON.decode(result.responseText);
                 westPanel.showedUser = jsondata.user;
+
                 var user_text = '';
 
                 if(reqid==='') { //this call always gives access to this user data
@@ -157,14 +161,30 @@ westPanel = new Ext.Panel({
                     mod_description=Ext.util.Format.htmlDecode(mod_description.replace(/(\n)/g,'<br />'));
                 }
 
-                var tpl = new Ext.XTemplate(
+                var userinfo_tpl = new Ext.XTemplate(
                     '<div class="user-profile-class" style="text-align:left;margin:5px;line-height:150%;font-size:100%;">',
-                    '<br/><b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
-                    /* if own profile, prompt a shortcut to edit the profile */
-                    '<tpl if="((this.reqid === \'\') || (this.reqid == window.thisId))">',
-                        '<span style="padding-left:10px;"><a href="javascript:expandSettingsPanel()">Edit</a></span>',
-                    '</tpl>',
-                    '</b><br/>',
+                        '<b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
+                        /* if own profile, prompt a shortcut to edit the profile */
+                        '<tpl if="((this.reqid === \'\') || (this.reqid == window.thisId))">',
+                            '<span style="padding-left:10px;"><a href="javascript:expandSettingsPanel()">Edit</a></span>',
+                        '</tpl>',
+                        '</b><br/><br/>',
+                        '<tpl if="email">',
+                            '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{this.sourceSendMail}\')"> <img style="vertical-align:bottom;" title="Click here to email user" src="js/portal/shared/icons/fam/email.png" class="size16x16"/> <a href="javascript:void(0)">{email}</a></span>',
+                        '</tpl>',
+                        '<tpl if="((phone) && (phone != \'0\'))">',
+                            '<br /><b>Phone:</b><span> {phone}</span>',
+                        '</tpl>',
+                        '<tpl if="((phone2) && (phone2 != \'0\'))">',
+                            '<br /><b>Phone 2:</b><span> {phone2}</span>',
+                        '</tpl>',
+                    '<div>',{
+                        reqid: reqid
+                    }
+                );
+
+                var usertext_tpl = new Ext.XTemplate(
+                    '<div class="user-profile-class" style="text-align:left;margin:5px;line-height:150%;font-size:100%;">',
                     '<span id="user-status"></span>',
                     /* check if the user is "chattable" */
                     '<tpl if="((this.reqid !== \'\') && (login) && (jabber.u_n !== login) && (active === \'1\'))">',
@@ -173,15 +193,6 @@ westPanel = new Ext.Panel({
                     /* if s/he is not a champion, suggest as a champion! */
                     '<tpl if="((this.reqid !== \'\') && (active !== \'1\'))">',
                         '<div class="warning-message" style="text-align:left">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{this.sourceSuggestAs}\')">suggest {name} as a new {[window.config.appname]} champion!</a></div><br />',
-                    '</tpl>',
-                    '<tpl if="email">',
-                        '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{this.sourceSendMail}\')"> <img style="vertical-align:bottom;" title="Click here to email user" src="js/portal/shared/icons/fam/email.png" class="size16x16"/> <a href="javascript:void(0)">{email}</a></span>',
-                    '</tpl>',
-                    '<tpl if="((phone) && (phone != \'0\'))">',
-                        '<br /><b>Phone:</b><span> {phone}</span>',
-                    '</tpl>',
-                    '<tpl if="((phone2) && (phone2 != \'0\'))">',
-                        '<br /><b>Phone 2:</b><span> {phone2}</span>',
                     '</tpl>',
                     '<tpl if="((personal_page) && (personal_page != \'null\'))">',
                         '<br /><b>Home page:</b> <span><a href="{personal_page}" target="_blank">{[values.personal_page.substr(0,7)==="http://" ? values.personal_page.substr(7) : values.personal_page]}</a></span>',
@@ -303,7 +314,9 @@ westPanel = new Ext.Panel({
                         }
                     }
                     );
-                    tpl.overwrite(Ext.get('user_text'), jsondata.user);
+                    
+                    userinfo_tpl.overwrite(Ext.get('user_info'), jsondata.user);
+                    usertext_tpl.overwrite(Ext.get('user_text'), jsondata.user);
                 
                     if(jsondata.user.login)
                         findChatStatus(reqid, jsondata.user.login);
