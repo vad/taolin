@@ -41,28 +41,35 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
         var config = {
             items: [{
                 border: false,
-                html: 
-                    '<div class="user-photo-container" onmouseout="if (mouseLeaves(this, event)) {$(\'#edit-photo-button\').fadeOut(\'fast\');}" onmouseover="if (Ext.getCmp(\'west-panel\').showTools){$(\'#edit-photo-button\').fadeIn(\'fast\')}">' +
-                    '<img id="user_photo" />' +
-                    '<div id="edit-photo-button" onclick="openImageChooser();" style="background: #DDE4FF;-moz-border-radius:3px;">' +
-                        '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Change photo</span>' +
-                        '<img src="js/portal/shared/icons/fam/image_edit.png" class="size16x16" />' +
-                    '</div>' +
-                '</div>' +
-                '<div id="user-profile-edit-div" class="edit_div" style="margin:15px; !important">' +
-                    '<div onclick="expandSettingsPanel();">' +
-                        '<img src="js/portal/shared/icons/fam/user_edit.png" class="size16x16"/>' +
-                        '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your profile</span>' +
-                    '</div>' +
-                    '<div onclick="openImageChooser();">' +
-                        '<img src="img/icons/fugue/image--pencil.png" class="size16x16"/>' +
-                        '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your photos</span>' +
-                    '</div>' +
-                    '<div onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">' +
-                       '<img src="js/portal/shared/icons/fam/map_edit.png" class="size16x16"/>' +
-                       '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit workplace</span>' + 
-                    '</div>' +
-                '</div>'  
+                html:
+                    '<table><tr">' +
+                        '<td style="padding-right:10px;">' + 
+                            '<div class="user-photo-container" onmouseout="if (mouseLeaves(this, event)) {$(\'#edit-photo-button\').fadeOut(\'fast\');}" onmouseover="if (Ext.getCmp(\'west-panel\').showTools){$(\'#edit-photo-button\').fadeIn(\'fast\')}">' +
+                                '<img id="user_photo" class="ante" style="padding:1px;margin:5px;"/>' +
+                                '<div id="edit-photo-button" onclick="openImageChooser();" style="background: #DDE4FF;-moz-border-radius:3px;">' +
+                                    '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Change photo</span>' +
+                                    '<img src="js/portal/shared/icons/fam/image_edit.png" class="size16x16" />' +
+                                '</div>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td>' +
+                            '<div id="user_info"></div>' +
+                        '</td>' +
+                    '</tr></table>' + 
+                    '<div id="user-profile-edit-div" class="edit_div" style="margin:15px; !important">' +
+                        '<div onclick="expandSettingsPanel();">' +
+                            '<img src="js/portal/shared/icons/fam/user_edit.png" class="size16x16"/>' +
+                            '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your profile</span>' +
+                        '</div>' +
+                        '<div onclick="openImageChooser();">' +
+                            '<img src="img/icons/fugue/image--pencil.png" class="size16x16"/>' +
+                            '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your photos</span>' +
+                        '</div>' +
+                        '<div onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">' +
+                           '<img src="js/portal/shared/icons/fam/map_edit.png" class="size16x16"/>' +
+                           '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit workplace</span>' + 
+                        '</div>' +
+                    '</div>'  
             },{           
                 xtype:'tabpanel',
                 border: false,
@@ -78,18 +85,33 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                     autoScroll:true
                 },
                 items: [{
-                        title: 'Info',
+                        title: 'Information',
                         html: '<div id="user_text"></div>',
                         autoHeight: true
                     },{
+                        title: 'Events'
+                        ,xtype: 'timeline'
+                        ,autoHeight: true
+                        ,iconCls: null
+                        ,bodyStyle: 'padding-right:15px'
+                        ,id: 'user_info_timeline'
+                        ,autoLoad: false
+                        ,listeners:{
+                            'activate': function(p){
+                                if(westPanel.showedUser.id != p.view.store.baseParams.u_id) {
+                                    console.log('Cambio!');
+                                    p.view.store.setBaseParam('u_id', westPanel.showedUser.id);
+                                    p.view.store.reload();
+                                }
+                            }
+                        }
+                    },{
                         xtype:'userpublications'
                         ,id:'wp-publik-tab'
-                    }
-                    ,{
+                    },{
                         xtype:'userphotos'
                         ,id:'wp-photos-tab'
-                    }
-                ]
+                    }                ]
             }]
 
         };

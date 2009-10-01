@@ -76,6 +76,7 @@ timelineTemplate = new Ext.XTemplate(
                         '</td>',
                     '</tr>',
                 '</table>',
+                '<span style="float: right; padding: 0 5px; font-size: 90%; cursor: pointer;" onclick="console.log(\'Fuffa\')">{[xindex]}<img src="js/portal/shared/icons/fam/comment.png" style="vertical-align:middle;"></span>',
             '</div>',
         '</tpl>',
         /*'<br/>',
@@ -146,6 +147,7 @@ Timeline = Ext.extend(Ext.Panel, {
     ,collapsible:true
     ,hideCollapseTool:true
     ,tools: toolsnotclose
+    ,autoLoad: false
     /**
      * @cfg {Number} limit The number of events to be displayed in the timeline. Default to 15
      */
@@ -179,6 +181,7 @@ Timeline = Ext.extend(Ext.Panel, {
                 limit: this.limit
                 ,u_id: this.userId
             }
+            ,autoLoad: this.autoLoad
         });
 
         var dv = new Ext.DataView({
@@ -187,7 +190,7 @@ Timeline = Ext.extend(Ext.Panel, {
             store: store,
             itemSelector: 'div.timeline-wrapper',
             loadingText: 'Loading timeline...',
-            deferEmptyText:false
+            deferEmptyText: false
         });
 
         this.add(dv);
