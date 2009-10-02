@@ -18,6 +18,33 @@
  * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
  *
  */
+?>
+  <script>
+    $(document).ready(function(){
+      $("form").submit(function(){
+          
+          var host = $("input#ldaphost").val();
+          var port = $("input#ldapport").val();
+          var dn = $("input#ldapdn").val();
+          var domain = $("input#ldapdomain").val();
+
+          var dataString = 'host='+ host + '&port=' + port + '&dn=' + dn + '$domain=' + domain;
+
+          $ajax({
+            url: 'installation/usr/testldapconnection.php'
+            ,type: 'POST'
+            ,data: dataString
+            ,success: function(){
+              alert(msg);
+            }
+            ,error: function(){
+              alert('Error');
+            }
+          });
+      })
+    })
+  </script>
+<?php
 
 function third_step_main(){
 
@@ -33,28 +60,26 @@ function ldap_settings_form(){
 
 ?>
   <div class="inner">
-    <form action="install.php?step=3" method="POST" class="form">
+    <!--<form action="install.php?step=3" method="POST" class="form">-->
+    <form action="" method="POST" class="form" id="testLdapConnection">
       <h3>Ldap configuration</h3>
       <div class="group">
 
         <label class="label" for="post_title">host</label>
-        <input type="text" class="text_field" name="ldap[host]" />
+        <input type="text" class="text_field" name="ldap[host]" id="ldaphost" />
 
         <label class="label" for="post_title">port</label>
-        <input type="text" class="text_field" name="ldap[port]" />
+        <input type="text" class="text_field" name="ldap[port]" id="ldapport" />
 
         <label class="label" for="post_title">dn</label>
-        <input type="text" class="text_field" name="ldap[dn]" />
+        <input type="text" class="text_field" name="ldap[dn]" id="ldapdn" />
 
         <label class="label" for="post_title">domain</label>
-        <input type="text" class="text_field" name="ldap[domain]" />
+        <input type="text" class="text_field" name="ldap[domain]" id="ldapdomain" />
       </div>
-    
-      <p class="first">
-      Test this settings</p>
 
       <div class="group navform" style="padding-top:20px">
-        <input type="submit" class="button" value="Save" />
+        <input type="submit" class="button" value="Test Ldap connection" />
       </div>
     </form>
   </div>
