@@ -56,7 +56,7 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                             '<div id="user_info"></div>' +
                         '</td>' +
                     '</tr></table>' + 
-                    '<div id="user-profile-edit-div" class="edit_div" style="margin:15px; !important">' +
+                    '<div id="user-profile-edit-div" class="edit_div" style="margin: 15px 30px; !important">' +
                         '<div onclick="expandSettingsPanel();">' +
                             '<img src="js/portal/shared/icons/fam/user_edit.png" class="size16x16"/>' +
                             '<span onmouseover="this.style.textDecoration=\'underline\'; this.style.cursor=\'default\'" onmouseout="this.style.textDecoration=\'none\'">Edit your profile</span>' +
@@ -99,7 +99,6 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                         ,listeners:{
                             'activate': function(p){
                                 if(westPanel.showedUser.id != p.view.store.baseParams.u_id) {
-                                    console.log('Cambio!');
                                     p.view.store.setBaseParam('u_id', westPanel.showedUser.id);
                                     p.view.store.reload();
                                 }
