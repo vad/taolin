@@ -184,37 +184,37 @@ westPanel = new Ext.Panel({
                 );
 
                 var usertext_tpl = new Ext.XTemplate(
-                    '<div class="user-profile-class" style="text-align:left;margin:5px;line-height:150%;font-size:100%;">',
-                    '<span id="user-status"></span>',
+                    '<div class="user-profile-class" style="text-align:left;margin:10px;line-height:150%;font-size:100%;">',
+                    '<span id="user-status"></span><br />',
                     /* check if the user is "chattable" */
                     '<tpl if="((this.reqid !== \'\') && (login) && (jabber.u_n !== login) && (active === \'1\'))">',
-                        '<div class="user-item user-{login}" style="margin:10px"><a href="javascript:void(0)" onclick=\'jabberui.createNewChatWindow(new JSJaCJID("{login}@fbk.eu"))\'>Chat with {name} {surname}</a></div>',
+                        '<div class="user-item user-{login}" style="margin: 0 10px"><a href="javascript:void(0)" onclick=\'jabberui.createNewChatWindow(new JSJaCJID("{login}@fbk.eu"))\'>Chat with {name} {surname}</a></div><br />',
                     '</tpl>',
                     /* if s/he is not a champion, suggest as a champion! */
                     '<tpl if="((this.reqid !== \'\') && (active !== \'1\'))">',
                         '<div class="warning-message" style="text-align:left">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{this.sourceSuggestAs}\')">suggest {name} as a new {[window.config.appname]} champion!</a></div><br />',
                     '</tpl>',
                     '<tpl if="((personal_page) && (personal_page != \'null\'))">',
-                        '<br /><b>Home page:</b> <span><a href="{personal_page}" target="_blank">{[values.personal_page.substr(0,7)==="http://" ? values.personal_page.substr(7) : values.personal_page]}</a></span>',
+                        '<b>Home page:</b> <span><a href="{personal_page}" target="_blank">{[values.personal_page.substr(0,7)==="http://" ? values.personal_page.substr(7) : values.personal_page]}</a></span><br />',
                     '</tpl>',
                     '<tpl if="building_id">',
-                        '<br /><b>Workplace:</b> <span><a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow(\{buildingId:{building_id}, userId: {id}, logparams:\'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id": "{id}"}') + '\'\})).show()">where\'s {[this.getPronoun(values.gender)]} office?</a></span>',
+                        '<b>Workplace:</b> <span><a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow(\{buildingId:{building_id}, userId: {id}, logparams:\'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id": "{id}"}') + '\'\})).show()">where\'s {[this.getPronoun(values.gender)]} office?</a></span><br />',
                     '</tpl>',
                     '<tpl if="date_of_birth">',
-                        '<br /><b>Date of birth:</b><span> {[Date.parseDate(values.date_of_birth, "Y-m-d").format("F, d")]}</span>',
+                        '<b>Date of birth:</b><span> {[Date.parseDate(values.date_of_birth, "Y-m-d").format("F, d")]}</span><br />',
                     '</tpl>',
                     '<tpl if="home_address">',
-                        '<br /><br /><b>Lives in:</b><span> {home_address}</span>',
+                        '<br /><b>Lives in:</b><span> {home_address}</span><br />',
                     '</tpl>',
                     '<tpl if="carpooling">',
-                        '<br /><img style="vertical-align:bottom;" src="js/portal/shared/icons/fam/car.png" /> <b>Available for carpooling!</b>',
+                        '<img style="vertical-align:bottom;" src="js/portal/shared/icons/fam/car.png" /> <b>Available for carpooling!</b><br />',
                     '</tpl>',
 
                     /*********************************************
                      * START Group description
                      *********************************************/
                     '<tpl if="groups_description">',
-                        '<br /><br /><b>{[window.config.defaultgroupname]}</b>',
+                        '<br /><b>{[window.config.defaultgroupname]}</b>',
                         '<br />',
                         '<span>',
                             '<ul style="padding: 5px 0 0 20px">', 
@@ -224,7 +224,7 @@ westPanel = new Ext.Panel({
                                 '</li>',
                             '</tpl>',
                             '</ul>',
-                        '</span>',
+                        '</span><br />',
                     '</tpl>',
                     /*********************************************
                      * END Group description
@@ -234,7 +234,7 @@ westPanel = new Ext.Panel({
                      * START Social Networking
                      *********************************************/
                     '<tpl if="(linkedin) || (twitter) || (facebook)">', // if one of the social network's field is present...
-                        '<br /><b>Social networking on:</b><br />',
+                        '<b>Social networking on:</b><br />',
                         '<span style="padding-left:10px">',
                             '<tpl if="linkedin">',
                                 '<a href="http://www.linkedin.com/in/{linkedin}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="linkedin"/></a>',
@@ -245,13 +245,13 @@ westPanel = new Ext.Panel({
                             '<tpl if="facebook">',
                                 '<a href="{facebook}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="facebook"/></a>',
                             '</tpl>',
-                        '</span><br />',
+                        '</span><br /><br />',
                     '</tpl>',
                     /**********************************************
                      * END Social Networking
                      *********************************************/
                     '<tpl if="mod_description">',
-                        '<br /><b>About {name}:</b><span> {this.mod_description}</span>',
+                        '<b>About {name}:</b><span> {this.mod_description}</span>',
                     '</tpl>',
                     '</div>'
                     ,{
