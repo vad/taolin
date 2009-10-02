@@ -1,0 +1,72 @@
+/*
+ * Code obtained from the "jQuery Simple Drop-Down Menu Plugin" by Javascript-Array.com
+ * Link: http://javascript-array.com/scripts/jquery_simple_drop_down_menu/
+ *
+ */
+
+#main-menu {   
+    margin: 0;
+    padding: 0;
+    position:relative;
+    z-index:1;
+}
+   
+#main-menu .header {
+    z-index: 2;
+}
+ 
+#main-menu li {    
+    float: left;
+    list-style: none;
+    font: 12px Tahoma, Arial;
+    z-index:3;
+}
+
+#main-menu li a {
+    display: block;
+    padding: 3px 6px;
+    /*background: #20548E;
+    border-right: 1px solid white;
+    width: 70px;
+    color: #EAFFED;*/
+    border-right: 1px solid #115393;;
+    color: #115393;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 13px;
+    font-family: Arial;
+    white-space: nowrap;
+}
+
+#main-menu li a:hover {
+    background: #C2D695;
+    z-index: 4;
+}
+
+#main-menu li ul {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    visibility: hidden;
+    border-top: 1px solid white;
+    z-index:5;
+}
+
+#main-menu li ul li {
+    float: none;
+    display: inline;
+    z-index:6;
+    background: #ddd;
+}
+
+#main-menu li ul li a {
+    width: auto;
+    /*background: #9F1B1B;*/
+    background: white;
+    z-index:7;
+}
+
+#main-menu li ul li a:hover {
+    background: #C2D695;
+    z-index:8;
+}
