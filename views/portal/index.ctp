@@ -67,6 +67,7 @@
 if ($isdebugactive == 1) {
 ?>
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/portal.css' />
+<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/menu.css' />
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/widget-sprite.css' />
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/custom.css' />
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/file-upload.css' />
