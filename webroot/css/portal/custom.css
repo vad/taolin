@@ -111,7 +111,7 @@ textarea{
 }
 
 .add_widgets a {
-  color: green;
+  color: green !important;
 }
 
 td {
