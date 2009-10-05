@@ -112,32 +112,34 @@ function application_init(){
     var main_menu = 
         '<ul id="main-menu">' +
             '<li><span id="logged_as_username"></span></li>' +
-            '<li class="header"><a href="javascript:void(0)">Personal profile</a>' +
+            '<li class="header"><a href="javascript:void(0)">Personal profile<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
                 '<ul>' +
                     '<li><a onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)">View your profile</a></li>' + 
                     '<li><a href="javascript:void(0)" onclick="expandSettingsPanel()">Edit your profile</a></li>' + 
                     '<li><a href="javascript:void(0)" onclick="openImageChooser()">Edit your photos</a></li>' + 
+                    '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Edit your workplace</a></li>' + 
                  '</ul>' +
             '</li>' + 
-            '<li class="header"><a href="javascript:void(0)">Resources</a>' +
+            '<li class="header"><a href="javascript:void(0)">Utilities<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
                 '<ul>' +
-                    '<li><a href="./wiki" target="_blank">Add widget</a></li>' +
+                    '<li><span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span></li>' +
                     '<li><a href="javascript:void(0)" onclick="addOrBounceWidget(&#39;Ext.ux.fbk.sonet.MetaSearch&#39;,&#39;string_identifier&#39;,&#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)">Search</a></li>' + 
+                    '<li><a href="javascript:void(0)" onclick="Ext.getCmp(\'timeline\').expand()">View timeline</a></li>' +
                 '</ul>' +
             '</li>' +
-            '<li class="header"><a href="javascript:void(0)">Pages</a>' +
+            '<li class="header"><a href="./wiki" target="_blank">FBK Wiki</a></li>' +
+            '<li class="header"><a href="javascript:void(0)">Info<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
                 '<ul>' +
-                    '<li><a href="./wiki" target="_blank">FBK Wiki</a></li>' +
-                    '<li><a href="./pages/help" target="_blank">Help</a></li>' +
+                    '<li><a href="./pages/help" target="_blank">FAQ - Help</a></li>' +
                     '<li><a href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
                 '</ul>' +
             '</li>' +
-            '<li class="header"><a href="javascript:void(0)">About ' + window.config.appname + '</a>' +
+            /*'<li class="header"><a href="javascript:void(0)">About ' + window.config.appname + '</a>' +
                 '<ul>' +
                     '<li><a href="http://github.com/vad/taolin" target="_blank">Code (github.com)</a></li>' +
                     '<li><a href="http://github.com/vad/taolin/issues" target="_blank">Issues (github.com)</a></li>' +
                 '</ul>' +
-            '</li>' +
+            '</li>' +*/
             '<li class="header last"><a href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
         '</ul>';
 
@@ -233,8 +235,10 @@ function application_init(){
     $('#main-menu .header').hover(
         function(){
             $(this).find('ul').css({visibility: 'visible'});
+            $(this).find('img.arrow').attr('src','js/portal/shared/icons/fam/bullet_arrow_up.png');
         },function(){
             $(this).find('ul').css({visibility: 'hidden'});
+            $(this).find('img.arrow').attr('src','js/portal/shared/icons/fam/bullet_arrow_down.png');
         }
     );
     
