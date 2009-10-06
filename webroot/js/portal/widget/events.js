@@ -34,7 +34,10 @@
 Events = function(conf, panel_conf){
     Ext.apply(this, panel_conf);
     
-    var limit = conf.items ? conf.items : 3;
+    var nItems = 5;
+    if (conf.items){
+        nItems = parseInt(conf.items);
+    }
     this.currentPage = 1;
     
     this.autoExpand = conf.autoExpand;
@@ -44,6 +47,7 @@ Events = function(conf, panel_conf){
     var store = new Ext.data.JsonStore({
         url: 'calendars/get'
         ,root: 'events'
+        ,totalProperty: 'totalCount'
         ,fields: ['end_time', 'start_time', 'summary', 'description', 'location', 'uid']
         ,parent: this
         ,listeners: {
@@ -56,6 +60,9 @@ Events = function(conf, panel_conf){
                     for(i=store.data.length-1; i>=0; i--)
                         this.parent.expander.toggleRow(i);
             }
+        }
+        ,baseParams: {
+            limit: nItems
         }
     });
 
@@ -89,6 +96,14 @@ Events = function(conf, panel_conf){
             ,scrollOffset:0
             ,emptyText: 'No events planned' /* If this is not written and there are no events, check that phpicalendar works! Probably it does not and this is the problem! */
         },
+        bbar: new Ext.PagingToolbar({
+            store: store,
+            beforePageText: '',
+            pageSize: nItems,
+            displayInfo: true,
+            displayMsg: '{0} - {1} of {2}',
+            emptyMsg: 'No events'
+        }),
         hideHeaders: true,
 		store: store,
         cm: new Ext.grid.ColumnModel([

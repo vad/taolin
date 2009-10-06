@@ -142,7 +142,7 @@ class CalendarsController extends AppController {
         $events_cnt = $this->Calendar->Event->find('count', $params);
 
         $params['limit'] = $limit;
-        $params['page'] = $start/$limit;
+        $params['page'] = $start/$limit + 1;
 
         $res = $this->Calendar->Event->find('all', $params);
         $events = Set::extract($res, '{n}.Event');
