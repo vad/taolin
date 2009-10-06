@@ -119,10 +119,10 @@ Timeline = Ext.extend(Ext.Panel, {
                     '</tpl>',
                     '<br/>',
                     '<div style="margin: 20px 50px; text-align: center; border:1px solid black; padding: 5px 0;">',
-                        '<tpl if="this.isFirstPage()"><img src="img/icons/fugue/control-180.png" class="size16x16" style="vertical-align:bottom;"/> <a style="padding-right:5px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(true)">Next</a></tpl>',
-                        '<tpl if="!this.isFirstPage()"><img src="img/icons/fugue/control-180.png" class="size16x16" style="vertical-align:bottom;"/> <span style="color: gray; padding-right:15px;">Next</span></tpl>',
+                        '<tpl if="this.isFirstPage()"><img src="img/icons/fugue/control-180.png" class="size16x16" style="vertical-align:bottom;"/> <a style="padding-right:5px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(true)">Newer events</a></tpl>',
+                        '<tpl if="!this.isFirstPage()"><img src="img/icons/fugue/control-180.png" class="size16x16" style="vertical-align:bottom;"/> <span style="color: gray; padding-right:15px;">Newer events</span></tpl>',
                         '|',
-                        '<a style="padding-left:15px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(false)">Previous</a> <img src="img/icons/fugue/control.png" class="size16x16" style="vertical-align:bottom;"/>',
+                        '<a style="padding-left:15px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(false)">Older events</a> <img src="img/icons/fugue/control.png" class="size16x16" style="vertical-align:bottom;"/>',
                     '</div>',
                     '<br/>',
                 '</tpl>',
@@ -201,7 +201,7 @@ Timeline = Ext.extend(Ext.Panel, {
 
         var dv = new Ext.DataView({
             tpl: timelineTemplate,
-            emptyText: '<div style="padding:10px 5px;font-size:100%"><b>There are no events in the timeline.</b></div>', 
+            emptyText: '<div style="padding:10px 5px;font-size:100%"><b><div class="warning-message">There are no events in the timeline.</b></div><br /><div>Maybe you have browsed all the events in the timeline. Please try getting back to <a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').paginateTimeline(true)">newer events</a></div></div>', 
             store: store,
             itemSelector: 'div.timeline-wrapper',
             loadingText: 'Loading timeline...',

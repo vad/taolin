@@ -132,7 +132,7 @@ class TimelinesController extends AppController {
 
         if(isset($result))
             $response['timeline'] = $result;
-        else 
+        else
             $response['timeline'] = array();
        
         $response['success'] = true;
