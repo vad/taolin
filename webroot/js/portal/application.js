@@ -120,13 +120,14 @@ function application_init(){
                     '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Edit your workplace</a></li>' + 
                  '</ul>' +
             '</li>' + 
-            '<li class="header"><a href="javascript:void(0)">Utilities<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
+            '<li class="header"><a href="javascript:void(0)">Tools<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
                 '<ul>' +
                     '<li><span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span></li>' +
                     '<li><a href="javascript:void(0)" onclick="addOrBounceWidget(&#39;Ext.ux.fbk.sonet.MetaSearch&#39;,&#39;string_identifier&#39;,&#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)">Search</a></li>' + 
-                    '<li><a href="javascript:void(0)" onclick="Ext.getCmp(\'timeline\').expand()">View timeline</a></li>' +
+                    '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Workplaces</a></li>' + 
                 '</ul>' +
             '</li>' +
+            '<li class="header"><a href="javascript:void(0)" onclick="Ext.getCmp(\'timeline\').expand()">Timeline</a></li>' +
             '<li class="header"><a href="./wiki" target="_blank">FBK Wiki</a></li>' +
             '<li class="header"><a href="javascript:void(0)">Info<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
                 '<ul>' +
