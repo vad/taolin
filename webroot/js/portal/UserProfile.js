@@ -89,11 +89,11 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                         html: '<div id="user_text"></div>',
                         autoHeight: true
                     },{
-                        title: 'Events'
+                        title: 'Timeline'
                         ,xtype: 'timeline'
                         ,autoHeight: true
                         ,iconCls: null
-                        ,bodyStyle: 'padding-right:15px'
+                        ,bodyStyle: 'padding-right:15px; border: 0 none;'
                         ,id: 'user_info_timeline'
                         ,autoLoad: false
                         ,listeners:{
