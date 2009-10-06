@@ -29,114 +29,6 @@
     </code></pre>
 */
 
-timelineTemplate = new Ext.XTemplate( 
-    '<div>',
-        '<tpl for=".">',
-            '<div style="padding:5px 0;min-height:60px;" class="timeline-wrapper">',
-                '<tpl if="this.checkEventDate(date, xindex)">',
-                    '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{[this.formatEventDate(values.date)]}</b></span></div>',
-                '</tpl>',
-                '<tpl if="!(this.lastEventOfDay)">',
-                    '<hr style="border: 1px solid #E5ECF9;width:80%;" />',
-                '</tpl>',
-                '<tpl if="this.isOwner(user_id)">',
-                    '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="Ext.getCmp(\'timeline\').deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
-                '</tpl>',
-                '<span style="color:#888888;font-size:90%;text-align:right;margin-left:5px;">',
-                    '<tpl if="(icon != null)">',
-                        '<img src="{icon}" class="size16x16" /> ',
-                    '</tpl>',
-                    '{[values.date.format("M, d H:i")]}',
-                '</span><br />',
-                '<table>',
-                    '<tr>',
-                        '<tpl if="(user_photo!=null && user_photo != \'\')">',
-                            '<td valign=top>',
-                                '<div style="text-align:center;width:50px;cursor:pointer;" onclick=\"showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')\">',
-                                    '<img style="padding:2px 0" src="{[window.config.img_path]}t40x40/{[this.photoExtToJpg(values.user_photo)]}" />',
-                                '</div>',
-                            '</td>',
-                        '</tpl>',
-                        '<tpl if="(user_photo==null || user_photo == \'\')">',
-                            '<tpl if="(user_id!=null)">',
-                                '<td valign=top>',
-                                    '<div style="text-align:center;width:50px;cursor:pointer;" onclick=\"showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')\">',
-                                        '<img style="padding:2px 0;" width="40" height="50" src="img/nophoto.png" />',
-                                    '</div>',
-                                '</td>',
-                            '</tpl>',
-                            '<tpl if="(user_id==null)">',
-                                '<td>',
-                                    '<span style="padding: 0 2px"></span>',
-                                '</td>',
-                            '</tpl>',
-                        '</tpl>',
-                        '<td>',
-                            '{[values.event.urlize().smilize()]} ',
-                        '</td>',
-                    '</tr>',
-                '</table>',
-                '<span style="float: right; padding: 0 5px; font-size: 90%; cursor: pointer;" onclick="console.log(\'Fuffa\')">{[xindex]}<img src="js/portal/shared/icons/fam/comment.png" style="vertical-align:middle;"></span>',
-            '</div>',
-        '</tpl>',
-        /*'<br/>',
-        '<div style="text-align:center;margin:auto auto;">',
-            '<a href="javascript:void(0)" onclick="Ext.getCmp(\'timeline\').view.store.load({limit: Ext.getCmp(\'timeline\').view.store.totalLength + 5})">Show more events...</a>',
-        '</div>',
-        '<br/>',*/
-    '</div>',
-    {
-        // Current date being processed (belonging to the currently processed event)
-        processedDate: null
-        // Last event of day
-        ,lastEventOfDay: false
-        // Returns true if the owner of the timeline's event is the user
-        ,isOwner: function(u_id){
-            return window.thisId === u_id;
-        }
-        // Set
-        ,checkEventDate: function(eventDate, index){
-
-            if(index==1)
-                this.processedDate = null;
-
-            var formattedEventDate = eventDate.format('M, d Y');
-
-            if(formattedEventDate!==this.processedDate){
-                this.processedDate = formattedEventDate;
-                this.lastEventOfDay = true;
-            }
-            else
-                this.lastEventOfDay = false;
-
-            return this.lastEventOfDay;
-        }
-        ,formatEventDate: function(eventDate){
-            // Formatting Date object in order to compare it
-            formattedEventDate = eventDate.toDateString();
-            
-            // Today's Date
-            var today = new Date();
-
-            // Yesterday's Date
-            var yesterday = new Date()
-            yesterday.setDate(yesterday.getDate() - 1);
-
-            // Comparing Date
-            if(formattedEventDate == today.toDateString())
-                return 'Today';
-            else if(formattedEventDate == yesterday.toDateString())
-                return 'Yesterday';
-            else
-                return eventDate.format('F, d Y');
-        }
-        // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)
-        ,photoExtToJpg: function(screenshot){
-            return Ext.util.Format.substr(screenshot, 0, screenshot.lastIndexOf(".")) + '.jpg'; 
-        }
-    }
-);
-
 Timeline = Ext.extend(Ext.Panel, {
     border:false
     ,title:'Timeline'
@@ -172,14 +64,137 @@ Timeline = Ext.extend(Ext.Panel, {
         Timeline.superclass.initComponent.apply(this, arguments);
     }
     ,onRender: function(){
+
+        timelineId = 'timeline';
+        timelineTemplate = new Ext.XTemplate( 
+            '<div>',
+                '<tpl>',
+                    '<tpl for=".">',
+                        '<div style="padding:5px 0;min-height:60px;" class="timeline-wrapper">',
+                            '<tpl if="this.checkEventDate(date, xindex)">',
+                                '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{[this.formatEventDate(values.date)]}</b></span></div>',
+                            '</tpl>',
+                            '<tpl if="!(this.lastEventOfDay)">',
+                                '<hr style="border: 1px solid #E5ECF9;width:80%;" />',
+                            '</tpl>',
+                            '<tpl if="this.isOwner(user_id)">',
+                                '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="Ext.getCmp(\'timeline\').deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
+                            '</tpl>',
+                            '<span style="color:#888888;font-size:90%;text-align:right;margin-left:5px;">',
+                                '<tpl if="(icon != null)">',
+                                    '<img src="{icon}" class="size16x16" /> ',
+                                '</tpl>',
+                                '{[values.date.format("M, d H:i")]}',
+                            '</span><br />',
+                            '<table>',
+                                '<tr>',
+                                    '<tpl if="(user_photo!=null && user_photo != \'\')">',
+                                        '<td valign=top>',
+                                            '<div style="text-align:center;width:50px;cursor:pointer;" onclick=\"showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')\">',
+                                                '<img style="padding:2px 0" src="{[window.config.img_path]}t40x40/{[this.photoExtToJpg(values.user_photo)]}" />',
+                                            '</div>',
+                                        '</td>',
+                                    '</tpl>',
+                                    '<tpl if="(user_photo==null || user_photo == \'\')">',
+                                        '<tpl if="(user_id!=null)">',
+                                            '<td valign=top>',
+                                                '<div style="text-align:center;width:50px;cursor:pointer;" onclick=\"showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')\">',
+                                                    '<img style="padding:2px 0;" width="40" height="50" src="img/nophoto.png" />',
+                                                '</div>',
+                                            '</td>',
+                                        '</tpl>',
+                                        '<tpl if="(user_id==null)">',
+                                            '<td>',
+                                                '<span style="padding: 0 2px"></span>',
+                                            '</td>',
+                                        '</tpl>',
+                                    '</tpl>',
+                                    '<td>',
+                                        '{[values.event.urlize().smilize()]} ',
+                                    '</td>',
+                                '</tr>',
+                            '</table>',
+                            //'<span style="float: right; padding: 0 5px; font-size: 90%; cursor: pointer;">{[xindex]}<img src="js/portal/shared/icons/fam/comment.png" style="vertical-align:middle;"></span>',
+                        '</div>',
+                    '</tpl>',
+                    '<br/>',
+                    '<div style="margin: 20px 50px; text-align: center; border:1px solid black; padding: 5px 0;">',
+                        '<tpl if="this.isFirstPage()"><img src="img/icons/fugue/control-180.png" class="size16x16" style="vertical-align:bottom;"/> <a style="padding-right:5px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(true)">Next</a></tpl>',
+                        '<tpl if="!this.isFirstPage()"><img src="img/icons/fugue/control-180.png" class="size16x16" style="vertical-align:bottom;"/> <span style="color: gray; padding-right:15px;">Next</span></tpl>',
+                        '|',
+                        '<a style="padding-left:15px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(false)">Previous</a> <img src="img/icons/fugue/control.png" class="size16x16" style="vertical-align:bottom;"/>',
+                    '</div>',
+                    '<br/>',
+                '</tpl>',
+            '</div>',
+            {
+                parent: this
+                // Current date being processed (belonging to the currently processed event)
+                ,processedDate: null
+                // Last event of day
+                ,lastEventOfDay: false
+                // Returns true if the owner of the timeline's event is the user
+                ,isOwner: function(u_id){
+                    return window.thisId === u_id;
+                }
+                // Set
+                ,checkEventDate: function(eventDate, index){
+
+                    if(index==1)
+                        this.processedDate = null;
+
+                    var formattedEventDate = eventDate.format('M, d Y');
+
+                    if(formattedEventDate!==this.processedDate){
+                        this.processedDate = formattedEventDate;
+                        this.lastEventOfDay = true;
+                    }
+                    else
+                        this.lastEventOfDay = false;
+
+                    return this.lastEventOfDay;
+                }
+                ,formatEventDate: function(eventDate){
+                    // Formatting Date object in order to compare it
+                    formattedEventDate = eventDate.toDateString();
+                    
+                    // Today's Date
+                    var today = new Date();
+
+                    // Yesterday's Date
+                    var yesterday = new Date()
+                    yesterday.setDate(yesterday.getDate() - 1);
+
+                    // Comparing Date
+                    if(formattedEventDate == today.toDateString())
+                        return 'Today';
+                    else if(formattedEventDate == yesterday.toDateString())
+                        return 'Yesterday';
+                    else
+                        return eventDate.format('F, d Y');
+                }
+                // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)
+                ,photoExtToJpg: function(screenshot){
+                    return Ext.util.Format.substr(screenshot, 0, screenshot.lastIndexOf(".")) + '.jpg'; 
+                }
+                ,isFirstPage: function(){
+
+                    var start = this.parent.view.store.baseParams.start;
+                    var limit = this.parent.view.store.baseParams.limit;
+
+                    return start - limit >= 0;
+                }
+            }
+        );
+
         var store = new Ext.data.JsonStore({
             url: 'timelines/gettimeline',
             root: 'timeline',
-            fields: ['id','user_id','event','name','surname','login','user_photo','icon',
-                    {name: 'date', type: 'date', dateFormat: 'Y-m-d H:i:s'}]
+            fields: ['id','user_id','event','name','surname','login','user_photo','icon',{name: 'date', type: 'date', dateFormat: 'Y-m-d H:i:s'}]
             ,baseParams: {
                 limit: this.limit
                 ,u_id: this.userId
+                ,start: 0
             }
             ,autoLoad: this.autoLoad
         });
@@ -190,11 +205,14 @@ Timeline = Ext.extend(Ext.Panel, {
             store: store,
             itemSelector: 'div.timeline-wrapper',
             loadingText: 'Loading timeline...',
-            deferEmptyText: false
+            deferEmptyText: false,
         });
 
         this.add(dv);
         this.view = dv;
+
+        // Set parent for the XTemplate
+        timelineTemplate.parent = this;
 
         var task = {
             run: function(){
@@ -269,7 +287,24 @@ Timeline = Ext.extend(Ext.Panel, {
             });
         } 
     }
+    ,paginateTimeline: function(newer){
 
+        var start = this.view.store.baseParams.start;
+        var limit = this.view.store.baseParams.limit;
+
+        var offset = 0;
+
+        if(newer){
+            offset = start - limit;
+            if(offset < 0)
+                offset = 0;
+        }
+        else 
+            offset = start + limit;
+
+        this.view.store.setBaseParam('start', offset);
+        this.view.store.reload();
+    }
 });
 
 Ext.reg('timeline', Timeline);
