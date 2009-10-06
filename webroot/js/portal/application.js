@@ -109,6 +109,41 @@ function application_init(){
     ];
     var dyk = aDyk[Math.floor(Math.random()*aDyk.length)]; // pick a random string out of aDyk
 
+    var main_menu = 
+        '<ul id="main-menu">' +
+            '<li><span id="logged_as_username"></span></li>' +
+            '<li class="header"><a href="javascript:void(0)">Personal profile<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
+                '<ul>' +
+                    '<li><a onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)">View your profile</a></li>' + 
+                    '<li><a href="javascript:void(0)" onclick="expandSettingsPanel()">Edit your profile</a></li>' + 
+                    '<li><a href="javascript:void(0)" onclick="openImageChooser()">Edit your photos</a></li>' + 
+                    '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Edit your workplace</a></li>' + 
+                 '</ul>' +
+            '</li>' + 
+            '<li class="header"><a href="javascript:void(0)">Tools<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
+                '<ul>' +
+                    '<li><span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span></li>' +
+                    '<li><a href="javascript:void(0)" onclick="addOrBounceWidget(&#39;Ext.ux.fbk.sonet.MetaSearch&#39;,&#39;string_identifier&#39;,&#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)">Search</a></li>' + 
+                    '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Workplaces</a></li>' + 
+                '</ul>' +
+            '</li>' +
+            '<li class="header"><a href="javascript:void(0)" onclick="Ext.getCmp(\'timeline\').expand()">Timeline</a></li>' +
+            '<li class="header"><a href="./wiki" target="_blank">FBK Wiki</a></li>' +
+            '<li class="header"><a href="javascript:void(0)">Info<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
+                '<ul>' +
+                    '<li><a href="./pages/help" target="_blank">FAQ - Help</a></li>' +
+                    '<li><a href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
+                '</ul>' +
+            '</li>' +
+            /*'<li class="header"><a href="javascript:void(0)">About ' + window.config.appname + '</a>' +
+                '<ul>' +
+                    '<li><a href="http://github.com/vad/taolin" target="_blank">Code (github.com)</a></li>' +
+                    '<li><a href="http://github.com/vad/taolin/issues" target="_blank">Issues (github.com)</a></li>' +
+                '</ul>' +
+            '</li>' +*/
+            '<li class="header last"><a href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
+        '</ul>';
+
     /** 
      * HTML shown in the northern part of the viewport.
      * It contains:
@@ -116,16 +151,11 @@ function application_init(){
      * - logout menu
      * - "Did you know?" questions
      */
+    
     var clear_html = 
         '<div id="logout_div" class="right-element">'
             //+ '<span id="exttheme" style="float:left;padding-right:5px;"></span> | '
-            + '<span><a qtip="Click here to view your profile" onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)">profile</a></span> '
-            + '(<a href="javascript:void(0)" onclick="expandSettingsPanel()">edit</a>) | '
-            + '<span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span> | '
-            + '<img src="js/portal/shared/icons/fam/new.png" class="size16x16" /><a href="./wiki" target="_blank">FBK wiki</a> | '
-            + '<a href="./pages/privacy_policy" target="_blank">Privacy policy</a> | '
-            + '<a href="./pages/help" target="_blank">Help</a> | '
-            + '<a href="./accounts/logout" onclick="jabber.quit()">Logout</a>'
+            + main_menu
         + '</div>'
         + '<div class="left-element">'
             + '<img src="'+window.config.logo+'" qtip="taolin logo" style="padding-left:10px"/>'
@@ -139,20 +169,8 @@ function application_init(){
             id: 'north-panel',
             border: false,
             height: 50,
-            items:[
-                /**
-                 * How to add a menu?
-                 */
-                /*new Ext.Toolbar({
-                    items:[{
-                        text:'Tools'
-                        ,menu: menuTools
-                    },{
-                        text:'Utilities'
-                        ,menu: menuMain
-                    }]
-                })
-            ,*/{
+            style: 'z-index:1',
+            items:[{
                 html: clear_html
                 ,border: false
             }]
@@ -163,6 +181,7 @@ function application_init(){
             margins:'5 5 5 0',
             cls:'desktop',
             bodyStyle: 'padding:0 10px',
+            style: 'z-index:0;',
             /* Here we define three different column for our portal. If you change the number of
              * the column please check the database for any inconsistency
              */
@@ -212,6 +231,18 @@ function application_init(){
         Ext.get('loading-mask').fadeOut({remove:true});
     }, 2000);
 
+    /** Menu */
+    
+    $('#main-menu .header').hover(
+        function(){
+            $(this).find('ul').css({visibility: 'visible'});
+            $(this).find('img.arrow').attr('src','js/portal/shared/icons/fam/bullet_arrow_up.png');
+        },function(){
+            $(this).find('ul').css({visibility: 'hidden'});
+            $(this).find('img.arrow').attr('src','js/portal/shared/icons/fam/bullet_arrow_down.png');
+        }
+    );
+    
 }
 
 /*

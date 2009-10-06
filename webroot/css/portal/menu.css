@@ -1,0 +1,79 @@
+/*
+ * Code obtained from the "jQuery Simple Drop-Down Menu Plugin" by Javascript-Array.com
+ * Link: http://javascript-array.com/scripts/jquery_simple_drop_down_menu/
+ *
+ */
+
+#main-menu {   
+    margin: 0;
+    padding: 0;
+    position:relative;
+    z-index:10001;
+}
+   
+#main-menu .header {
+    z-index: 10002;
+    border-right: 1px solid #115393;
+}
+   
+#main-menu .last {
+    border-right: 0pt none;
+    z-index: 10002;
+}
+ 
+#main-menu li {    
+    float: left;
+    list-style: none;
+    font: 12px Tahoma, Arial;
+    z-index:10003;
+}
+
+#main-menu li a {
+    display: block;
+    padding: 3px 6px;
+    /*background: #20548E;
+    border-right: 1px solid white;
+    width: 70px;
+    color: #EAFFED;*/
+    color: #115393;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size: 13px;
+    font-family: Arial;
+    white-space: nowrap;
+}
+
+#main-menu li a:hover {
+    background: #C2D695;
+    z-index: 10004;
+}
+
+#main-menu li ul {
+    margin: 0;
+    padding: 5px 0 0 0;
+    position: fixed;
+    visibility: hidden;
+    z-index:10005;
+    border-right: 1px solid #115393;
+    border-bottom: 1px solid #115393;
+}
+
+#main-menu li ul li {
+    float: none;
+    display: inline;
+    z-index:10006;
+    background: #ddd;
+    padding 2px;
+}
+
+#main-menu li ul li a {
+    width: auto;
+    /*background: #9F1B1B;*/
+    background: white;
+    z-index:10007;
+}
+
+#main-menu li ul li a:hover {
+    background: #C2D695;
+    z-index:10008;
+}

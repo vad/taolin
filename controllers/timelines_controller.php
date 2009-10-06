@@ -81,7 +81,13 @@ class TimelinesController extends AppController {
 
         $u_id = $this->params['form']['u_id'];
         $limit = $this->params['form']['limit'];
-        if (!$limit) $limit = 20;
+        $start = $this->params['form']['start'];
+
+        if (!$limit)
+            $limit = 20;
+
+        if (!$start)
+            $start = 0;
 
         $checked_users = array();
         
@@ -94,7 +100,7 @@ class TimelinesController extends AppController {
         $readabletimeline = $this->ReadableTimeline->find('all', 
             array('conditions' => $conditions,
                 'fields' => array('id','user_id','name','surname','login','gender','param','date','temp','icon'),
-                'limit' => $limit, 'recursive' => 0
+                'limit' => $limit, 'recursive' => 0, 'page' => $start/$limit + 1
             )
         );
 
@@ -126,9 +132,9 @@ class TimelinesController extends AppController {
 
         if(isset($result))
             $response['timeline'] = $result;
-        else 
+        else
             $response['timeline'] = array();
-        
+       
         $response['success'] = true;
         
         $this->set('json', $response);

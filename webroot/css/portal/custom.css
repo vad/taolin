@@ -111,11 +111,7 @@ textarea{
 }
 
 .add_widgets a {
-  color: green;
-}
-
-#user_photo {
-    width:100%;
+  color: green !important;
 }
 
 td {
