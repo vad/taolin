@@ -130,7 +130,7 @@ function application_init(){
         + '<div class="left-element">'
             + '<img src="'+window.config.logo+'" qtip="taolin logo" style="padding-left:10px"/>'
         + '</div>'
-        + '<div id="didyouknow_div"><span id="didyouknow_span"><table><tr><td style="padding:0 10px;'+(Math.random() > 0.3?'display:none;':'')+'">'+dyk+' <a href="javascript:void(0)" onclick="$(\'#didyouknow_span\').toggle();" style="margin-left:10px;font-size:xx-small;">[Hide this message]</a></td></tr></table></span></div>';
+        + '<div id="didyouknow_div" style="'+(Math.random() > 0.3?'display:none;':'')+'"><span id="didyouknow_span"><table><tr><td style="padding:0 10px;">'+dyk+' <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:xx-small;">[Hide this message]</a></td></tr></table></span></div>';
 
     window.viewport = new Ext.Viewport({
         layout:'border',

@@ -186,7 +186,7 @@ div.buddyliststate {
 }
 
 .buddylist-status-field {
-    background: #6A8095;
+    background: #f6f6f6;
     color:white;
 }
 
@@ -298,10 +298,13 @@ div.buddyliststate {
     background:white !important;
     font-weight:bold;
 }
-.feedreader-grid span.rss-item-date {
+.feedreader-grid .rss-item-date {
     color: #888;
     font-weight: normal;
     font-size: 90% !important;
+}
+.feedreader-grid .x-grid3-row-body{
+    padding-bottom:30px;
 }
 /* END Feed Reader */
 

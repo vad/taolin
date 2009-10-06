@@ -322,6 +322,7 @@ var jabber = {
     iqRoster: function(iq){
       //console.log('iqRoster');
       var q = iq.getQuery();
+      
       roster.clear(); //i hope the new roster replaces the old one...
       $(q).find('item').each(function(){
         var t = $(this);

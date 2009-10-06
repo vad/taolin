@@ -98,9 +98,9 @@ FeedReader = function(conf, panel_conf){
    
     this.expander = new Ext.grid.RowExpander({
         tpl: new Ext.Template(
-            '<p><b>Summary:</b> {description}</p>',
-            '<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{url}" target="_blank">more...</a></span>',
-            '<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="javascript:Ext.getCmp(\''+feedId+'\').grid.sendTo()">Email to</a> | </span>'
+            '<div><b>Summary:</b> {description}</div>',
+            '<div style="margin-top:20px"><span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{url}" target="_blank">more...</a></span>',
+            '<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="javascript:Ext.getCmp(\''+feedId+'\').grid.sendTo()">Email to</a> | </span></div>'
         )
         ,listeners: {
             expand: function(){

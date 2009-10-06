@@ -230,7 +230,8 @@ function removeWidget(w_id){
             method: 'GET',
             success: function(result, request){
                 var w_name = Ext.util.JSON.decode(result.responseText)['widget_name'];
-                Ext.fly('didyouknow_div').update('<span id="didyouknow_span"><table><tr><td style="padding:0 10px;">Widget '+w_name+' closed. <a href="javascript:void(0)" onclick="undoRemoveWidget('+w_id+')">Undo this action</a> or <a href="javascript:void(0)" onclick="$(\'#didyouknow_span\').toggle();" style="font-size:90%;">hide this message</a></td></tr></table></span>');
+                Ext.fly('didyouknow_div').update('<span id="didyouknow_span"><table><tr><td style="padding:0 10px;">Widget '+w_name+' closed. <a href="javascript:void(0)" onclick="undoRemoveWidget('+w_id+')">Undo this action</a> or <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').hide();" style="font-size:90%;">hide this message</a></td></tr></table></span>');
+                $('#didyouknow_div').show();
             },
             failure: function(){
                 Ext.Msg.show({
