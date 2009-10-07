@@ -22,6 +22,7 @@ The following procedure is for installing Taolin on a GNU/Linux machine, running
 * Apache + PHP
 * The latest versions of CakePHP, in tar.gz format, available [here](http://cakephp.org/). Here is the direct link to the [version 1.2.1.8004.tar.gz](http://cakeforge.org/frs/download.php/698/cake_1.2.1.8004.tar.gz/donation=complete)
 * The latest version of taolin, in tar.gz format, available [here](http://taolin.fbk.eu)
+* Download the latest version of ExtJS from its [website](http://www.extjs.com) (link to the [download page](http://www.extjs.com/products/extjs/download.php)). Then extract all the files from the downloaded archive and copy those files into the directory named "extjs", placed under "webroot" in your taolin installation directory.
 
 ## 2. Installation
 
