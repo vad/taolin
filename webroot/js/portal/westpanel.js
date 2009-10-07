@@ -132,11 +132,10 @@ westPanel = new Ext.Panel({
 
                 var user_text = '';
 
-                if(reqid==='') { //this call always gives access to this user data
-                    window.thisId = jsondata.user.id;
-                    window.thisLogin = jsondata.user.login;
+                if(reqid==='' && window.user.id===jsondata.user.id ) { //this call always gives access to this user data
+                    window.user.login = jsondata.user.login;
                     if(jsondata.user.email) 
-                        window.thisEmail = jsondata.user.email;
+                        window.user.email = jsondata.user.email;
                 }
                 
                 westPanel.showPublik(jsondata.user.login);
@@ -144,7 +143,7 @@ westPanel = new Ext.Panel({
 
                 //save in a retrievable place if this photo is user's photo
                 //and then show tools
-                westPanel.showTools = ((!reqid) || (reqid == window.thisId));
+                westPanel.showTools = ((!reqid) || (reqid == window.user.id));
                 showText(westPanel.showTools, 'user-profile-edit-div'); // Shows tools and Edit box only if the showed profile belongs to the user
 
                 if (('photo' in jsondata.user) && (jsondata.user.photo)){
@@ -165,7 +164,7 @@ westPanel = new Ext.Panel({
                     '<div class="user-profile-class" style="text-align:left;margin:5px;line-height:150%;font-size:100%;">',
                         '<b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
                         /* if own profile, prompt a shortcut to edit the profile */
-                        '<tpl if="((this.reqid === \'\') || (this.reqid == window.thisId))">',
+                        '<tpl if="((this.reqid === \'\') || (this.reqid == window.user.id))">',
                             '<span style="padding-left:10px;"><a href="javascript:expandSettingsPanel()">Edit</a></span>',
                         '</tpl>',
                         '</b><br/><br/>',

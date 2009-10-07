@@ -135,7 +135,7 @@ Timeline = Ext.extend(Ext.Panel, {
                 ,lastEventOfDay: false
                 // Returns true if the owner of the timeline's event is the user
                 ,isOwner: function(u_id){
-                    return window.thisId === u_id;
+                    return window.user.id === u_id;
                 }
                 // Set
                 ,checkEventDate: function(eventDate, index){

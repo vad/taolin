@@ -46,7 +46,7 @@ PhotoChooser.prototype = {
 			    url: this.config.url,
 			    root: 'photos',
                 method: 'POST',
-                baseParams: {id: window.thisId},
+                baseParams: {id: window.user.id},
 			    fields: [
 			        'id', 'name', 'filename', 'caption', 'url','is_hidden','default_photo',
 			        {name:'size', type: 'float'},
@@ -136,8 +136,8 @@ PhotoChooser.prototype = {
 
                             // The store in the west-panel is loaded only if it exists
                             var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
-                            if((westPanel.showedUser.id === window.thisId) && store)
-                                store.load({params: {id: window.thisId}});
+                            if((westPanel.showedUser.id === window.user.id) && store)
+                                store.load({params: {id: window.user.id}});
 
                             /* Hide div containing the "Undo delete" message */
                             showText(false, 'undodelphoto');
@@ -176,8 +176,8 @@ PhotoChooser.prototype = {
                                         Ext.getCmp('photo-chooser').store.load();
                                         // The store in the west-panel is loaded only if it exists
                                         var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
-                                        if((request.params.name === 'name' || request.params.name === 'caption') && (westPanel.showedUser.id == window.thisId) && store)
-                                            store.load({params: {id: window.thisId}});
+                                        if((request.params.name === 'name' || request.params.name === 'caption') && (westPanel.showedUser.id == window.user.id) && store)
+                                            store.load({params: {id: window.user.id}});
                                     },
                                     failure: function(){
                                         Ext.Msg.show({
@@ -471,8 +471,8 @@ PhotoChooser.prototype = {
 
                     // The store in the west-panel is loaded only if it exists
                     var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
-                    if((westPanel.showedUser.id === window.thisId) && store)
-                        store.load({params: {id: window.thisId}});
+                    if((westPanel.showedUser.id === window.user.id) && store)
+                        store.load({params: {id: window.user.id}});
 
                     Ext.get("undodelphoto").update('You have deleted a photo. <a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').undoDeletePhoto(' + p_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelphoto\')">hide this message</a>');
                     

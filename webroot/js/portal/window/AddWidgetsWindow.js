@@ -52,7 +52,7 @@ AddWidgetsWindow.prototype = {
                 url: 'widgets/listwidgets',
                 root: 'widgets',
                 //method: 'POST',
-                baseParams: {id: window.thisId, limit: 50},
+                baseParams: {id: window.user.id, limit: 50},
                 fields: [
                     'id', 'name', 'screenshot', 'description',
                     {name: 'modified', type: 'date', dateFormat: 'Y-m-d H:i:s'}

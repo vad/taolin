@@ -116,8 +116,8 @@ PhotoUpload = function(){
                             }
                             Ext.getCmp('upload-window').close();
                             Ext.getCmp('photo-chooser').store.load();
-                            if(Ext.getCmp('wp-photos-tab') && Ext.getCmp('wp-photos-tab').store && (window.thisId === westPanel.showedUser.id))
-                                Ext.getCmp('wp-photos-tab').store.load({params: {id: window.thisId}});
+                            if(Ext.getCmp('wp-photos-tab') && Ext.getCmp('wp-photos-tab').store && (window.user.id === westPanel.showedUser.id))
+                                Ext.getCmp('wp-photos-tab').store.load({params: {id: window.user.id}});
                             reloadTimeline();
                         },
                         failure: function(fp, o){

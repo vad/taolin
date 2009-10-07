@@ -132,7 +132,7 @@ Board = function(conf, panel_conf){
             Ext.getDom(this.id + '-img-view-form2').src = 'js/portal/shared/icons/fam/delete.png';
             Ext.getDom(this.id + '-view-form2').style.color = 'red';
             Ext.getDom(this.id + '-view-form2').innerHTML = 'Hide insert message form';
-            this.form.form.findField('email').setValue(window.thisEmail ? window.thisEmail : '');
+            this.form.form.findField('email').setValue(window.user.email ? window.user.email : '');
             this.form.expand();
         }
         else {
@@ -341,7 +341,7 @@ Board = function(conf, panel_conf){
         '</div>', 
         {
             isOwner: function(u_id){
-                return window.thisId === u_id;
+                return window.user.id === u_id;
             }
             ,pages: function(){
                 return range(Math.ceil(this.parent.view.store.reader.jsonData.totalCount/limit));

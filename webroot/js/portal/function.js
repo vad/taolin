@@ -33,6 +33,7 @@ function setPortalConfiguration(f){
         success: function(result, request){
             var json_decode = Ext.util.JSON.decode(result.responseText);
             window['config'] = json_decode.config;
+            window['user'] = json_decode.user;
             if (f) f();
         }
     });
@@ -470,7 +471,7 @@ function suggestAsChampion(name, surname, login, email, logparams){
         multiline: true,  
         fn: function(btn, text){
             if(btn === 'ok') {
-                SendMail(window.config.contactus, window.thisLogin + ' suggested us ' + name + ' ' + surname + ' (login: ' + login + ', mail: ' + email + ') as a champion for taolin!\n\nMessage leaved by the user: ' + text, null, null, logparams);
+                SendMail(window.config.contactus, window.user.login + ' suggested us ' + name + ' ' + surname + ' (login: ' + login + ', mail: ' + email + ') as a champion for taolin!\n\nMessage leaved by the user: ' + text, null, null, logparams);
                 Ext.example.msg('Suggestion done!','You suggested ' + name + ' as a champion for taolin');
             }
         }

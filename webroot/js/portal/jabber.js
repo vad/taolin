@@ -172,7 +172,7 @@ var jabber = {
     this.send(presence);
 
     //save status in the west panel
-    if(westPanel.showedUser.id === window.thisId){
+    if(westPanel.showedUser.id === window.user.id){
         setChatStatus(status.htmlEnc().smilize().urlize());
     }
   },
