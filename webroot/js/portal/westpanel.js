@@ -149,7 +149,7 @@ westPanel = new Ext.Panel({
                 if (('photo' in jsondata.user) && (jsondata.user.photo)){
                     Ext.get("user_photo").dom.src = jsondata.user.photo;
                 } else {
-                    Ext.get("user_photo").dom.src = 'img/nophoto.png';
+                    Ext.get("user_photo").dom.src = 'img/nophoto_small.png';
                 }
                 
                 var mod_description = jsondata.user.mod_description;
