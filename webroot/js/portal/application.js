@@ -127,8 +127,8 @@ function application_init(){
                     '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Workplaces</a></li>' + 
                 '</ul>' +
             '</li>' +
-            '<li class="header"><a href="javascript:void(0)" onclick="Ext.getCmp(\'timeline\').expand()">Timeline</a></li>' +
             '<li class="header"><a href="./wiki" target="_blank">FBK Wiki</a></li>' +
+            '<li class="header"><a href="javascript:void(0)" onclick="Ext.getCmp(\'timeline\').expand()">Timeline</a></li>' +
             '<li class="header"><a href="javascript:void(0)">Info<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
                 '<ul>' +
                     '<li><a href="./pages/help" target="_blank">FAQ - Help</a></li>' +
