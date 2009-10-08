@@ -157,20 +157,24 @@ td {
     margin-bottom: 5px;
 }
 
-.buddyliststateaway {
-    background:url(../../js/portal/shared/icons/fam/bullet_orange.png) left no-repeat ! important;
+div.buddyliststate {
+    background-image:url(../../js/portal/shared/icons/fam/bullet_green.png);
+    background-repeat:no-repeat;
 }
 
-div.buddyliststate {
-    background:url(../../js/portal/shared/icons/fam/bullet_green.png) left no-repeat ! important;
+.buddyliststateaway {
+    background-image:url(../../js/portal/shared/icons/fam/bullet_orange.png);
+    background-repeat:no-repeat;
 }
 
 .buddyliststatednd {
-    background:url(../../js/portal/shared/icons/fam/bullet_delete.png) left no-repeat ! important;
+    background-image:url(../../js/portal/shared/icons/fam/bullet_delete.png);
+    background-repeat:no-repeat;
 }
 
 .buddyliststateinvisible {
-    background:url(../../js/portal/shared/icons/fam/bullet_black.png) left no-repeat ! important;
+    background-image:url(../../js/portal/shared/icons/fam/bullet_black.png);
+    background-repeat:no-repeat;
 }
 
 .add_icon {
@@ -183,11 +187,12 @@ div.buddyliststate {
 
 .buddylist-status-field {
     background: #f6f6f6;
-    color:white;
+    color:black;
 }
 
 .buddylist-status-focus {
-    background: #FFFFFF;
+    background:#FFFFCC;
+    border:1px solid #FFCC00;
     color:black;
 }
 
