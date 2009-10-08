@@ -83,11 +83,11 @@ function application_init(){
         , this);
     */
     
-    var numColumns = 3;
+    window.config.num_columns = 2;
     var columns = new Array();
-    for(var i=0; i< numColumns; i++){
+    for(var i=0; i< window.config.num_columns; i++){
         columns.push({
-                columnWidth:1/numColumns,
+                columnWidth:1/window.config.num_columns,
                 style:'padding:20px 10px 20px 10px'
         });
     }

@@ -376,7 +376,7 @@ function getWidgetsPosition(){
  * defined_position: boolean, if true insert the portlet at the position defined in the conf
  */
 
-function createNewPortlet(conf, defined_position){
+function createNewPortlet(conf, use_widget_position){
     var pc = Ext.getCmp('portal_central');
     var col, widget;
 
@@ -408,12 +408,20 @@ function createNewPortlet(conf, defined_position){
     else
         portlet.tools = tools;
 
-    col = pc.items.items[column];
-
-    if(defined_position)
+    if(column < window.config.num_columns){
+        col = pc.items.items[column];
+        insert_position = 0;
+    }
+    else {
+        column = (column + pos) % window.config.num_columns;
+        col = pc.items.items[column];
+        insert_position = col.items.items.length + 1;
+    }
+        
+    if(use_widget_position)
         portlet = col.insert(pos, portlet); // insert the portlet at the defined position
     else
-        portlet = col.insert(0, portlet); // insert the portlet at the first place in the column
+        portlet = col.insert(insert_position, portlet); // insert the portlet at the first place in the column
 
     col.doLayout();
 
