@@ -80,61 +80,61 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                                 name: 'date_of_birth',
                                 format: 'Y-m-d',
                                 readOnly: true,
-                                anchor: '100%'
+                                anchor: '95%'
                             }), {
                                 fieldLabel: 'Email',
                                 name: 'email',
                                 vtype:'email',
                                 maxLength: 50,
-                                anchor: '100%'
+                                anchor: '95%'
                             }, {
                                 fieldLabel: 'Internal Phone <br /><span style="font-weight:normal;font-size:90%;">(0461/314xxx)</span>',
                                 name: 'phone',
                                 maxLength: 3,
-                                anchor: '100%'
+                                anchor: '95%'
                             }, {
                                 fieldLabel: 'Secondary internal phone <br /><span style="font-weight:normal;font-size:90%;">(0461/314xxx)</span>',
                                 name: 'phone2',
                                 maxLength: 3,
-                                anchor: '100%'
+                                anchor: '95%'
                             }, {
                                 fieldLabel: 'Personal Page',
                                 name: 'personal_page',
                                 vtype:'url',
                                 maxLength: 80,
-                                anchor: '100%'
+                                anchor: '95%'
                             }, {
                                 fieldLabel: 'Home address',
                                 name: 'home_address',
                                 maxLength: 180,
-                                anchor: '100%'
+                                anchor: '95%'
                             }, {
                                 fieldLabel: 'Available for carpooling?',
                                 name: 'carpooling',
                                 xtype: 'checkbox',
-                                anchor: '100%'
+                                anchor: '95%'
                             }, {
                                 fieldLabel: 'About me <br /><span style="font-weight:normal;font-size:90%;">(Describe yourself, your interests and your work here at FBK)</span>',
                                 name: 'description',
                                 xtype: 'textarea',
                                 grow: true,
-                                anchor: '100%'
+                                anchor: '95%'
                             }, {
                                 fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" class="size16x16" style="vertical-align: middle" /> Linkedin public-profile<br /><span style="font-weight:normal;font-size:90%;">Example: set it to <i>nickname</i> if your linkedin public profile url is <i>http://www.linkedin.com/in/nickname</i></span>'
                                 ,name: 'linkedin'
                                 ,maxLength: 50
-                                ,anchor: '100%'
+                                ,anchor: '95%'
                             }, {
                                 fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.twitter.com" class="size16x16" style="vertical-align: middle" /> Twitter username'
                                 ,name: 'twitter'
                                 ,maxLength: 50
-                                ,anchor: '100%'
+                                ,anchor: '95%'
                             }, {
                                 fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16" style="vertical-align: middle" /> Facebook profile Web address<br /><span style="font-weight:normal;font-size:90%;">If you have a facebook username, enter http://www.facebook.com/ followed by your username (eg: <i>http://www.facebook.com/foousername</i>). Otherwise, once logged into Facebook, click the <i>Profile</i> button and then copy here the Web address of the resulting page</span>'
                                 ,name: 'facebook'
                                 ,vtype: 'url'
                                 ,maxLength: 120
-                                ,anchor: '100%'
+                                ,anchor: '95%'
                             }]
                     })
                 },{
