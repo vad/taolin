@@ -39,7 +39,7 @@ MathWidget = function(conf, panel_conf){
     google.load('visualization', '1', {callback: f,
         packages:'scatterchart'});
 
-    var helpString = 'Type any math expression and push \"Enter\". Examples: \"3+4\" or \"2 * pow(2,5)\".<br /><a target=\"_blank\" href=\"http://www.w3schools.com/jsref/jsref_obj_math.asp\">List of available functions</a></div>';
+    var helpString = 'Type any math expression and push \"Enter\". Examples: \"3+4\" or \"2 * pow(2,5)\".<br /><a target=\"_blank\" href=\"http://www.w3schools.com/jsref/jsref_obj_math.asp\">List of available functions</a>';
 
     this.calcForm = new Ext.form.FormPanel({
         autoHeight: true
@@ -62,7 +62,7 @@ MathWidget = function(conf, panel_conf){
             ,anchor: '100%'
     	},{
             /* Using JQuery toggle to show/hide an originally hidden div */
-html:  '<div style="padding:0 0 5px 5px;"><img style="vertical-align:middle;" src="img/icons/fugue/information-balloon.png" /> <span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'none\'" style="cursor: pointer;text-align:left;line-height:150%;font-size:100%;font-family:Verdana;" onclick="$(\'#calcForm-math-help_'+this.getId()+'\').toggle(400)">Help</span></div><div id="calcForm-math-help_'+this.getId()+'" style="display:none;padding:10px 5px;background:#f6f6f6;">' + helpString
+            html:  '<div style="padding:10px 0 5px 5px;"><img style="vertical-align:middle;" src="img/icons/fugue/information-balloon.png" /> <span class="underlineHover" onclick="$(\'#calcForm-math-help_'+this.getId()+'\').toggle(400)">Help</span></div><div id="calcForm-math-help_'+this.getId()+'" style="display:none;padding:10px 5px;background:#f6f6f6;">' + helpString + '</div>'
         }
         ]
         ,keys:{
@@ -104,9 +104,32 @@ html:  '<div style="padding:0 0 5px 5px;"><img style="vertical-align:middle;" sr
             ,value: '-5, 5'
             ,anchor: '100%'
         },{
-            html:  '<div style="padding:0 0 5px 5px;"><img style="vertical-align:middle;" src="img/icons/fugue/information-balloon.png" /> <span onmouseover="this.style.textDecoration=\'underline\';" onmouseout="this.style.textDecoration=\'none\'" style="cursor: pointer;text-align:left;line-height:150%;font-size:100%;font-family:Verdana;" onclick="$(\'#graphForm-math-help_'+this.getId()+'\').toggle(400)">Help</span></div><div id="graphForm-math-help_'+this.getId()+'" style="display:none;padding: 10px 5px;background:#f6f6f6;">' + helpString
-        }
-        ]
+            xtype: 'label'
+            ,html:  '<div style="padding:10px 0 5px 5px;"><img style="vertical-align:middle;" src="img/icons/fugue/chart--pencil.png" /> <span id="demobutton_'+this.getId()+'" class="underlineHover">Demo</span> &nbsp; '
+            + '<img style="vertical-align:middle;" src="img/icons/fugue/information-balloon.png" /> <span id="helpbutton_graph_'+this.getId()+'" class="underlineHover">Help</span></div><div id="graphForm-math-help_'+this.getId()+'" style="display:none;padding: 10px 5px;background:#f6f6f6;">' + helpString + '</div>'
+        },{
+            //dummy component that is rendered at the end
+            xtype:'component'
+            ,widgetId: this.getId()
+            ,listeners:{
+                beforerender: function(dummy){
+                    var wi = this.widgetId;
+                    var gf = Ext.getCmp(wi).graphForm;
+                    gf.items.remove(dummy);
+
+                    Ext.EventManager.on('helpbutton_graph_'+wi,
+                        'click', function(){
+                            $('#graphForm-math-help_'+gf.parent.getId()).toggle(400);
+                        }, gf
+                    );
+                    Ext.EventManager.on('demobutton_'+wi, 'click', function(){
+                            this.getComponent(0).setValue('x*sin(x)');
+                            this.plot();
+                        }, gf
+                    );
+                }
+            }
+        }]
         ,plot: function(){
             var el = document.getElementById('plot_'+this.parent.getId());
             // form's width includes padding

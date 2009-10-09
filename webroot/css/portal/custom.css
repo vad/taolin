@@ -587,3 +587,12 @@ color:black;
     width:16px;
     height:16px;
 }
+
+/* class to underline on mouse over */
+.underlineHover {
+    text-decoration: none;
+    cursor: pointer;
+}
+.underlineHover:hover {
+    text-decoration: underline;
+}
