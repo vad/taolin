@@ -30,13 +30,9 @@
 
 #main-menu li a {
     display: block;
-    padding: 3px 6px;
-    /*background: #20548E;
-    border-right: 1px solid white;
-    width: 70px;
-    color: #EAFFED;*/
+    padding: 0px 3px;
     color: #115393;
-    text-decoration: underline;
+    text-decoration: none;
     font-weight: bold;
     font-size: 13px;
     font-family: Arial;
@@ -68,9 +64,9 @@
 
 #main-menu li ul li a {
     width: auto;
-    /*background: #9F1B1B;*/
     background: white;
     z-index:10007;
+    padding: 3px;
 }
 
 #main-menu li ul li a:hover {

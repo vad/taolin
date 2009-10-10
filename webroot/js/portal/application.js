@@ -109,10 +109,13 @@ function application_init(){
     ];
     var dyk = aDyk[Math.floor(Math.random()*aDyk.length)]; // pick a random string out of aDyk
 
+    /*
+     * Main menu:
+     *  use .header class only for top-level menu voices
+     */ 
     var main_menu = 
         '<ul id="main-menu">' +
-            '<li><span id="logged_as_username"></span></li>' +
-            '<li class="header"><a href="javascript:void(0)">Personal profile<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
+            '<li class="header"><a href="javascript:void(0)">Personal profile</a>' +
                 '<ul>' +
                     '<li><a onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)">View your profile</a></li>' + 
                     '<li><a href="javascript:void(0)" onclick="expandSettingsPanel()">Edit your profile</a></li>' + 
@@ -120,7 +123,7 @@ function application_init(){
                     '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Edit your workplace</a></li>' + 
                  '</ul>' +
             '</li>' + 
-            '<li class="header"><a href="javascript:void(0)">Tools<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
+            '<li class="header"><a href="javascript:void(0)">Tools</a>' +
                 '<ul>' +
                     '<li><span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span></li>' +
                     '<li><a href="javascript:void(0)" onclick="addOrBounceWidget(&#39;Ext.ux.fbk.sonet.MetaSearch&#39;,&#39;string_identifier&#39;,&#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)">Search</a></li>' + 
@@ -129,7 +132,7 @@ function application_init(){
             '</li>' +
             '<li class="header"><a href="./wiki" target="_blank">FBK Wiki</a></li>' +
             '<li class="header"><a href="javascript:void(0)" onclick="Ext.getCmp(\'timeline\').expand()">Timeline</a></li>' +
-            '<li class="header"><a href="javascript:void(0)">Info<img class="arrow" style="vertical-align:top" src="js/portal/shared/icons/fam/bullet_arrow_down.png"></a>' +
+            '<li class="header"><a href="javascript:void(0)">Info</a>' +
                 '<ul>' +
                     '<li><a href="./pages/help" target="_blank">FAQ - Help</a></li>' +
                     '<li><a href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
@@ -231,9 +234,17 @@ function application_init(){
         Ext.get('loading-mask').fadeOut({remove:true});
     }, 2000);
 
-    /** Menu */
-    
-    $('#main-menu .header').hover(
+    /** 
+     * Menu 
+     */
+   
+    // Styling: add an image (an arrow) at the end of each menu voice that has a sub-menu
+    $('#main-menu .header:has(ul)').each(function(idx, element){
+        $(this).find('a:first').append('<img class="arrow" style="vertical-align:top;" src="js/portal/shared/icons/fam/bullet_arrow_down.png">');
+    });
+
+    // Adding hover
+    $('#main-menu .header:has(ul)').hover(
         function(){
             $(this).find('ul').css({visibility: 'visible'});
             $(this).find('img.arrow').attr('src','js/portal/shared/icons/fam/bullet_arrow_up.png');
@@ -242,7 +253,6 @@ function application_init(){
             $(this).find('img.arrow').attr('src','js/portal/shared/icons/fam/bullet_arrow_down.png');
         }
     );
-    
 }
 
 /*
