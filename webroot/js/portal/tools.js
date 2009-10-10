@@ -95,7 +95,7 @@ tools = [{
             var portal_central = Ext.getCmp('portal_central');
 
             for (var i=0, col; col=portal_central.items.items[i++];) {
-                col.columnWidth = .33;
+                col.columnWidth = 1 / window.config.num_columns;
                 col.show();
                 for (var j=0, p; p=col.items.items[j++];) {
                     p.show();
