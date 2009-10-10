@@ -19,69 +19,65 @@
 
 Ext.onReady(function(){
 
-Ext.QuickTips.init();
-// message target    
-Ext.form.Field.prototype.msgTarget = "side";
+    Ext.QuickTips.init();
+    // message target    
+    Ext.form.Field.prototype.msgTarget = "side";
 
-/*
-layout:'ux.center',
-items: {
-    width: '100%'
-    }
-*/
-var login_form = new Ext.FormPanel({
-                                title: 'Login',
-                                id: 'login_form',
-                                width: 300,
-                                height: 150,
-							    frame: true,
-                                defaultType: 'textfield',
-                                bodyStyle: 'padding: 20px 0px 0px 0px',
-                                collapsible: false,
-                                items: [
-                                         { fieldLabel: 'Username',
-                                           name: 'username',
-                                           inputType: 'text',
-                                           //allowBlank: false,            //simple validation
-										   autoCreate:{tag: "input", type: "text", size: "20", autocomplete: "on"},
-										   id: 'campouser' 
-                                         },
-                                         { fieldLabel: 'Password',
-                                           name: 'password',
-                                           //allowBlank: false,           //simple validation
-                                           inputType: 'password',
-										   autoCreate:{tag: "input", type: "password", size: "20", autocomplete: "on"},
-                                           id: 'campopass'
-                                         }
-                                        ],
-                                buttons: [{
-                                            id: 'login_button',
-                                            text: 'Login',
-                                            handler: function(){ performLogin(login_form); }
-                                         },
-                                         {
-                                            text: 'Cancel',
-                                            handler: function() {
-                                                login_form.form.reset();
-                                            }
-                                         }
-                                         ],
-                                submit: function(){
-                                    this.getEl().dom.setAttribute('action', '.');
-                                    this.getForm().getEl().dom.submit();
-                                },
-                                onSubmit: Ext.emptyFn
+    /*
+    layout:'ux.center',
+    items: {
+        width: '100%'
+        }
+    */
+    var login_form = new Ext.FormPanel({
+        title: 'Login',
+        id: 'login_form',
+        width: 300,
+        height: 150,
+        frame: true,
+        defaultType: 'textfield',
+        bodyStyle: 'padding: 20px 0px 0px 0px',
+        collapsible: false,
+        items:[{
+            fieldLabel: 'Username',
+            name: 'username',
+            inputType: 'text',
+            //allowBlank: false,            //simple validation
+            autoCreate:{tag: "input", type: "text", size: "20", autocomplete: "on"},
+            id: 'campouser' 
+        },{
+            fieldLabel: 'Password',
+            name: 'password',
+            //allowBlank: false,           //simple validation
+            inputType: 'password',
+            autoCreate:{tag: "input", type: "password", size: "20", autocomplete: "on"},
+            id: 'campopass'
+        }],
+        buttons: [{
+            id: 'login_button',
+            text: 'Login',
+            handler: function(){ performLogin(login_form); }
+         },{
+            text: 'Cancel',
+            handler: function() {
+                login_form.form.reset();
+            }
+         }],
+        submit: function(){
+            this.getEl().dom.setAttribute('action', '.');
+            this.getForm().getEl().dom.submit();
+        },
+        onSubmit: Ext.emptyFn
+      });
 
-                              });
+    login_form.render('login-form');
+    Ext.get('campouser').focus();
 
-login_form.render('login-form');
-Ext.get('campouser').focus();
-
-var map = new Ext.KeyMap("login_form", {
-      key: 13,
-      fn: function(){ performLogin(login_form); },
-      scope: login_form
-}); 
+    var map = new Ext.KeyMap("login_form", {
+        key: 13,
+        fn: function(){ performLogin(login_form); },
+        scope: login_form
+    }); 
 
 })
 
