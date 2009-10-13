@@ -462,7 +462,7 @@ class UsersController extends AppController {
                 $m_fields = '';
     
                 foreach($mod_fields as $key => $field){
-                    $m_fields .= ' '.$key.',';
+                    $m_fields .= " $key,";
                 }      
 
                 // Drop last comma
