@@ -134,7 +134,8 @@ class TimelinesController extends AppController {
             $response['timeline'] = $result;
         else
             $response['timeline'] = array();
-       
+        
+        $response['total'] = $this->ReadableTimeline->find('count', array('conditions' => $conditions));
         $response['success'] = true;
         
         $this->set('json', $response);
