@@ -96,6 +96,7 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                         ,bodyStyle: 'padding-right:15px; border: 0 none;'
                         ,id: 'user_info_timeline'
                         ,autoLoad: false
+                        ,frame: false
                         ,listeners:{
                             'activate': function(p){
                                 if(westPanel.showedUser.id != p.view.store.baseParams.u_id) {

@@ -226,9 +226,9 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
     ,refreshMapTag: function(store){
         var tpl = new Ext.XTemplate(
             '<map name="floormap">',
-            '<tpl for=".">',
-            '<area shape="circle" coords="{[this.fromNormalizedCoord(values.x, values.y)]},16" title="{name} {surname}" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "map window"}') + '\')" />',
-            '</tpl>',
+                '<tpl for=".">',
+                    '<area shape="circle" coords="{[this.fromNormalizedCoord(values.x, values.y)]},16" title="{name} {surname}" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "map window"}') + '\')" />',
+                '</tpl>',
             '</map>',
             {
                 fromNormalizedCoord: function(x, y){
