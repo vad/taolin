@@ -156,6 +156,7 @@ if ($isdebugactive == 1) {
 
     echo $javascript->link('portal/window/AddWidgetsWindow.js');
     echo $javascript->link('portal/window/ChatWindow.js');
+    echo $javascript->link('portal/window/CommentWindow.js');
     echo $javascript->link('portal/window/GroupDetails.js');
     echo $javascript->link('portal/window/MapWindow.js');
     echo $javascript->link('portal/window/PhotoChooser.js');
