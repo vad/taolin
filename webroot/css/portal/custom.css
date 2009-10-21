@@ -596,3 +596,17 @@ color:black;
 .underlineHover:hover {
     text-decoration: underline;
 }
+
+.comment {
+    padding: 0 5px;
+}
+
+.comment a{
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.timeline-wrapper a{
+    font-weight: bold;
+    text-decoration: none;
+}
