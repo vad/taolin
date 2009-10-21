@@ -23,7 +23,7 @@ CommentWindow = function(c_model, foreign_id) {
     this.model = c_model;
 
     this.store = new Ext.data.JsonStore({
-        url: model + '/getcomments'
+        url: this.model + '/getcomments'
         ,root: 'comments'
         ,method: 'POST'
         ,fields: ['id','user_id','text', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'name', 'surname']
