@@ -1,3 +1,6 @@
 [submodule "webroot/extjs"]
 	path = webroot/extjs
 	url = git://github.com/probonogeek/extjs.git
+[submodule "plugins/commentable"]
+	path = plugins/commentable
+	url = git://github.com/josegonzalez/cakephp-commentable-behavior.git

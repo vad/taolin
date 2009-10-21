@@ -263,7 +263,7 @@ Board = function(conf, panel_conf){
         tpl: new Ext.XTemplate(
         '<div class="nevede-widget">',
             '<tpl for=".">',
-                '<div class="user-wrapper" style="background:{[xindex % 2 === 0 ? "white" : "#EEEEEE"]};text-align:left;">',
+                '<div class="user-wrapper" style="background:{[xindex % 2 === 0 ? "white" : #ECEFF5"]};text-align:left;">',
                 /* User owns the message */
                     '<tpl if="this.isOwner(user_id)">',
                         '<span id="'+this.getId()+'-{id}-text" class="x-editable" style="padding-right:15px;">',
