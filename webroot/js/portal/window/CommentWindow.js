@@ -18,9 +18,10 @@
 */
 
 
-CommentWindow = function(c_model, foreign_id) {
+CommentWindow = function(commented_model, foreign_key) {
 
-    this.model = c_model;
+    this.model = commented_model;
+    this.f_id = foreign_key;
 
     this.store = new Ext.data.JsonStore({
         url: this.model + '/getcomments'
@@ -28,9 +29,17 @@ CommentWindow = function(c_model, foreign_id) {
         ,method: 'POST'
         ,fields: ['id','user_id','text', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'name', 'surname']
         ,baseParams: {
-            foreign_id: foreign_id
+            foreign_id: this.f_id
         }
         ,autoLoad: true
+        ,listeners:{
+            'load': {
+                fn: function(){
+                    this.center();
+                }
+                ,scope: this
+            }
+        }
     });
 
     this.view = new Ext.DataView({
@@ -51,20 +60,14 @@ CommentWindow = function(c_model, foreign_id) {
                             '</td>',
                         '</tr>',
                     '</table>',
-                    //'<tpl if="!this.isLastComment(xindex)">',
                         '<hr style="border: 1px solid #E5ECF9;width:95%;" />',
-                    //'</tpl>',
                 '</div>',
             '</tpl>'
-        ,{
-            parent: this
-            ,isLastComment: function(index){
-                return  index >= this.parent.store.totalLength;
-            }
-        })
+        )
         ,emptyText: '<div style="padding:10px 5px;font-size:100%"><b><div class="warning-message">No comments!</b></div></div>'
 	    ,itemSelector: 'div.comment'
         ,autoHeight: true
+        ,autoScroll: true
         ,style: 'padding-top: 10px'
     });
 
@@ -75,8 +78,8 @@ CommentWindow = function(c_model, foreign_id) {
         ,style: 'padding: 10px 20px'
         ,labelAlign: 'top'
         ,border: false
-        ,items: [
-        {
+        ,frame: false
+        ,items: [{
             xtype: 'textarea'
             ,fieldLabel: 'Add your comment'
             ,grow: true
@@ -96,7 +99,6 @@ CommentWindow = function(c_model, foreign_id) {
                         url: model + '/addcomment',
                         waitMsg:'Saving Data...',
                         success: function(form,action){
-
                             var jsondata = Ext.util.JSON.decode(action.response.responseText);
                             var commentRecord = Ext.data.Record.create(['id','user_id','text', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'name', 'surname']);
                         
@@ -118,12 +120,21 @@ CommentWindow = function(c_model, foreign_id) {
         }]
     });
 
+    this.refreshWindow = function(model, foreign_key){
+        this.model = model;
+        this.f_id = foreign_key;
+        this.store.baseParams.foreign_id = this.f_id;
+
+        this.store.reload();
+    }
+
     CommentWindow.superclass.constructor.call(this, {
         title: 'Comments'
         ,id: 'comments_window'
-        ,width:500
-        ,minwidth:300
-        ,resizable: true
+        ,autoScroll: false
+        ,autoHeight: true
+        ,width: 500
+        ,resizable: false
         ,iconCls:'chatwindowicon'
         ,items: [{
             items: this.view
