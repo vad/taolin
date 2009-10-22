@@ -114,16 +114,29 @@ Timeline = Ext.extend(Ext.Panel, {
                                     '</td>',
                                 '</tr>',
                             '</table>',
-                            //'<span style="float: right; padding: 0 5px; font-size: 90%; cursor: pointer;">{[xindex]}<img src="js/portal/shared/icons/fam/comment.png" style="vertical-align:middle;"></span>',
+                            //'<span onclick="openCommentWindow(\'boards\',{[xindex]})" style="float: right; padding: 0 5px; font-size: 90%; cursor: pointer;">{[xindex]}<img src="js/portal/shared/icons/fam/comment.png" style="vertical-align:middle;"></span>',
                         '</div>',
                     '</tpl>',
                     '<br/>',
-                    '<div style="margin: 20px 50px; text-align: center; border:1px solid black; padding: 5px 0;">',
-                        '<tpl if="!this.isFirstPage()"><img src="img/icons/fugue/control-180.png" class="size16x16" style="vertical-align:bottom;"/> <a style="padding-right:15px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(true)">Newer events</a></tpl>',
-                        '<tpl if="this.isFirstPage()"><span style="color: gray; padding-right:15px;">Newer events</span></tpl>',
+                    // Pagination
+                    '<div style="margin: 20px 50px; text-align: center; border:1px solid gray; padding: 5px 0; color:gray;">',
+                        '<tpl if="!this.isFirstPage()">',
+                            '<span class="timeline-pagination"><img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/><a style="padding-right:5px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(0)">Newest</a></span>',
+                            '<span class="timeline-pagination"><img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/><a style="padding-right:15px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(1)">Newer</a></span>',
+                        '</tpl>',
+                        '<tpl if="this.isFirstPage()">',
+                            '<img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/><span style="color: gray; padding-right:5px;">Newest</span>',
+                            '<img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/><span style="color: gray; padding-right:15px;">Newer</span>',
+                        '</tpl>',
                         '|',
-                        '<tpl if="!this.isLastPage()"><a style="padding-left:15px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(false)">Older events</a> <img src="img/icons/fugue/control.png" class="size16x16" style="vertical-align:bottom;"/></tpl>',
-                        '<tpl if="this.isLastPage()"><span style="color: gray; padding-left:15px;">Older events</span></tpl>',
+                        '<tpl if="!this.isLastPage()">',
+                            '<span class="timeline-pagination"><a style="padding-left:15px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(2)">Older</a><img src="img/icons/fugue/control-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
+                            '<span class="timeline-pagination"><a style="padding-left:5px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(3)">Oldest</a><img src="img/icons/fugue/control-double-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
+                        '</tpl>',
+                        '<tpl if="this.isLastPage()">',
+                            '<span style="color: gray; padding-left:15px;">Older</span><img src="img/icons/fugue/control-000-small.png" class="size16x16" style="vertical-align:top;"/>',
+                            '<span style="color: gray; padding-left:5px;">Oldest</span><img src="img/icons/fugue/control-double-000-small.png" class="size16x16" style="vertical-align:top;"/>',
+                        '</tpl>',
                     '</div>',
                     '<br/>',
                 '</tpl>',
@@ -296,20 +309,33 @@ Timeline = Ext.extend(Ext.Panel, {
             });
         } 
     }
-    ,paginateTimeline: function(newer){
+    ,paginateTimeline: function(pag_case){
 
         var start = this.view.store.baseParams.start;
         var limit = this.view.store.baseParams.limit;
+        var total = this.view.store.totalLength;
 
         var offset = 0;
 
-        if(newer){
-            offset = start - limit;
-            if(offset < 0)
+        switch(pag_case){
+            case 0:
+                offset = 0;
+                break;
+            case 1:
+                offset = start - limit;
+                break;
+            case 2: 
+                offset = start + limit;
+                break;
+            case 3:
+                offset = total - limit;
+                break;
+            default:
                 offset = 0;
         }
-        else 
-            offset = start + limit;
+                
+        if(offset < 0)
+            offset = 0;
 
         this.view.store.setBaseParam('start', offset);
         this.view.store.reload();

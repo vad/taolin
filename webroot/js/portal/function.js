@@ -74,7 +74,16 @@ function openImageChooser(){
     }
     chooser.show(Ext.get('edit-photo-button'));
     showText(false, 'undodelphoto');
-}   
+}  
+
+function openCommentWindow(model, foreign_key){
+    var comments_window = Ext.getCmp('comments_window');
+
+    if(!comments_window) // if not exist
+        new CommentWindow(model, foreign_key); // Open a new comment window
+    else
+        comments_window.refreshWindow(model, foreign_key); // otherwise refresh the existing one
+}
 
 function showText(showtext, element){
     var slideMe = Ext.get(element);  
