@@ -609,4 +609,18 @@ color:black;
 .timeline-wrapper a{
     text-decoration: none;
     font-weight: bold;
+    font-size: 12px;
 }
+
+.timeline-wrapper a:hover{
+    text-decoration: underline;
+}
+
+.timeline-pagination a{
+    text-decoration: none;
+}
+
+.timeline-pagination a:hover{
+    text-decoration: underline;
+}
+    text
