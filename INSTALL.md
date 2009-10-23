@@ -99,7 +99,7 @@ Taolin depends also on `mod_rewrite`. Make sure it's installed and enabled (goog
 
 * Import the Taolin database into your taolin database (install is in taolin root)
         $ psql -U YOUR_SUPERUSER taolin
-        # \i install/taolin.struct.sql
+        # \i config/sql/taolin.struct.sql
 
 
 ### 2.6 Configuring Taolin

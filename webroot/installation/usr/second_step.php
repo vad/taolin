@@ -21,7 +21,7 @@
 
 function second_step_main(){
 
-  $sql_scripts_path = "../../install/";
+  $sql_scripts_path = "../../config/sql/";
   
   $sql_scripts = array(
       "taolin.struct.sql"
