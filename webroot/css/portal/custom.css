@@ -620,7 +620,7 @@ color:black;
     text-decoration: none;
 }
 
-.timeline-pagination a:hover{
+.timeline-pagination:hover{
     text-decoration: underline;
+    font-weight: bold;
 }
-    text
