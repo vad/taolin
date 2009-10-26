@@ -598,7 +598,10 @@ color:black;
 }
 
 .comment {
-    padding: 0 5px;
+    padding: 5px;
+    margin: 5px;
+    border: 2px solid #CCCCCC;
+    -moz-border-radius: 6px;
 }
 
 .comment a{
