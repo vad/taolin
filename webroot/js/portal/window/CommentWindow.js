@@ -46,7 +46,7 @@ CommentWindow = function(commented_model, foreign_key) {
         store: this.store
         ,tpl: new Ext.XTemplate(
             '<tpl for=".">',
-                '<div class="comment">',
+                '<div class="comment border_radius_5px">',
                     '<table>',
                         '<tr>',
                             '<td valign=top>',
@@ -60,13 +60,13 @@ CommentWindow = function(commented_model, foreign_key) {
                             '</td>',
                         '</tr>',
                     '</table>',
-                        '<hr style="border: 1px solid #E5ECF9;width:95%;" />',
+                    //'<hr style="border: 1px solid #E5ECF9;width:95%;" />',
                 '</div>',
             '</tpl>'
         )
         ,emptyText: '<div style="padding:10px 5px;font-size:100%"><b><div class="warning-message">No comments!</b></div></div>'
 	    ,itemSelector: 'div.comment'
-        ,autoHeight: true
+        ,height: 300
         ,autoScroll: true
         ,style: 'padding-top: 10px'
     });
@@ -83,7 +83,8 @@ CommentWindow = function(commented_model, foreign_key) {
             xtype: 'textarea'
             ,fieldLabel: 'Add your comment'
             ,grow: true
-            ,growMin: 20
+            ,growMin: 25 
+            ,growMax: 200
             ,name: 'comment'
             ,anchor: '100%'
         }],
@@ -131,14 +132,14 @@ CommentWindow = function(commented_model, foreign_key) {
     CommentWindow.superclass.constructor.call(this, {
         title: 'Comments'
         ,id: 'comments_window'
-        ,autoScroll: false
         ,autoHeight: true
         ,width: 500
-        ,resizable: false
+        ,resizable: true
         ,iconCls:'chatwindowicon'
         ,items: [{
             items: this.view
             ,border: false
+            ,autoScroll: true
         },{
             items: this.form
             ,border: false
