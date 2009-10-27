@@ -103,11 +103,8 @@ CommentWindow = function(model_alias, foreign_key) {
                             foreign_key: this.f_key
                         },
                         success: function(form,action){
-                            var jsondata = Ext.util.JSON.decode(action.response.responseText);
-                            var commentRecord = Ext.data.Record.create(['id','user_id','text', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'name', 'surname']);
-                        
                             form.reset(); // Cleaning form
-                            store.add(new commentRecord(jsondata.comment)); // Adding the new record to the store
+                            store.reload();
                         }
                     }
                 );
