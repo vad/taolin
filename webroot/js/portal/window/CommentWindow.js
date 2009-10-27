@@ -136,6 +136,7 @@ CommentWindow = function(commented_model, foreign_key) {
         ,width: 500
         ,resizable: true
         ,iconCls:'chatwindowicon'
+        ,constrain: true
         ,items: [{
             items: this.view
             ,border: false
