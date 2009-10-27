@@ -82,6 +82,7 @@ textarea{
     border-width: 1px;*/
     margin:0 auto;
     -moz-border-radius:5px;
+    -webkit-border-radius:5px;
 }
 
 #searchwidget_div {
@@ -395,8 +396,6 @@ div.thumb span {
     height:180px;
 }
 
-
-
 /* END Photo Chooser and Add Widgets Window */
 
 /* Edit div ( a blue box with text and images*/
@@ -407,7 +406,6 @@ div.thumb span {
     border-width:1px;
     display:block;
     padding:5px;
-    -moz-border-radius:5px;
     text-align:left;
     margin: auto auto;
     line-height:100%;
@@ -455,6 +453,11 @@ textarea.note-text-area {
 }
 
 /* END SEND-TO WINDOW */
+
+.border_radius_5px {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
 
 /* THEME HACK */
 .x-tbar-loading { 
@@ -601,7 +604,6 @@ color:black;
     padding: 5px;
     margin: 5px;
     border: 2px solid #CCCCCC;
-    -moz-border-radius: 6px;
 }
 
 .comment a{

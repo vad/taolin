@@ -47,7 +47,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
             scope: this,
             items: [
                 {
-                    html: '<div id="edit-div" class="edit_div">' +
+                    html: '<div id="edit-div" class="edit_div border_radius_5px">' +
                             '<div onclick="showUserInfo(null, null, \'' + Ext.util.Format.htmlEncode('{"source": "edit profile"}') + '\');" style="padding:1px 0;">' +
                                 '<img src="js/portal/shared/icons/fam/user_comment.png" class="size16x16"/>' +
                                 '<span class="underlineHover">View your profile</span>' +
