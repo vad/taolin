@@ -307,35 +307,35 @@ ON users FOR EACH ROW EXECUTE PROCEDURE users_tsv_trigger();
 -- # Final view structure for view "readable_timeline"
 
 CREATE OR REPLACE VIEW readable_timelines AS
-SELECT "timelines"."id" AS "id" , "timelines"."user_id" AS "user_id" , "users"."name" AS "name" , "users"."surname" AS "surname" , "timelines"."login" AS "login" , "users"."gender" AS "gender" , "timelines"."template_id" AS "template_id" , "timelines"."param" AS "param" , "timelines"."date" AS "date" , "templates"."temp" AS "temp" , "templates"."icon" AS "icon"
-FROM (((SELECT * FROM timelines WHERE deleted = 0) AS timelines
-LEFT OUTER JOIN (SELECT * FROM users WHERE deleted = 0) AS users ON "timelines"."user_id" = "users"."id")
-JOIN "templates" ON "timelines"."template_id" = "templates"."id")
-WHERE
-(
- (
-  "timelines"."id" IN (
-   SELECT max("timelines"."id") AS "MAX(id)"
-     FROM "timelines" JOIN templates ON template_id = templates.id
-     WHERE "timelines"."deleted" = 0 AND "templates"."is_unique" = 1
-     GROUP BY "timelines"."template_id" , "timelines"."user_id"
-  )
-  AND "users"."deleted" = 0
- )
- OR "timelines"."user_id" IS NULL
- OR (
-  "timelines"."id"
-  IN (
-   SELECT "timelines"."id"
-   FROM "timelines" JOIN templates ON template_id = templates.id
-   WHERE (
-   "timelines"."deleted" = 0
-   AND "templates"."is_unique" = 0
-   )
-  )
- )
-)
-ORDER BY "timelines"."date" DESC;
+    SELECT "timelines"."id" AS "id" , "timelines"."user_id" AS "user_id" , "users"."name" AS "name" , "users"."surname" AS "surname" , "timelines"."login" AS "login" , "users"."gender" AS "gender" , "timelines"."template_id" AS "template_id" , "timelines"."param" AS "param" , "timelines"."date" AS "date" , "templates"."temp" AS "temp" , "templates"."icon" AS "icon",  timelines.model_alias AS model_alias, timelines.foreign_key as foreign_key
+        FROM (((SELECT * FROM timelines WHERE deleted = 0) AS timelines
+            LEFT OUTER JOIN (SELECT * FROM users WHERE deleted = 0) AS users ON "timelines"."user_id" = "users"."id")
+            JOIN "templates" ON "timelines"."template_id" = "templates"."id")
+        WHERE
+        (
+            "timelines"."user_id" IS NULL
+            OR (
+                "users"."deleted" = 0
+                AND "timelines"."id" IN (
+                    SELECT max("timelines"."id") AS "MAX(id)"
+                        FROM "timelines" JOIN templates ON template_id = templates.id
+                        WHERE "timelines"."deleted" = 0 AND "templates"."is_unique" = 1
+                        GROUP BY "timelines"."template_id" , "timelines"."user_id"
+                    )
+            )
+            OR (
+                "timelines"."id"
+                IN (
+                    SELECT "timelines"."id"
+                        FROM "timelines" JOIN templates ON template_id = templates.id
+                        WHERE (
+                            "timelines"."deleted" = 0
+                            AND "templates"."is_unique" = 0
+                        )
+                )
+            )
+        )
+        ORDER BY "timelines"."date" DESC;
 
 -- ALTER TABLE readable_timelines OWNER TO sonetdbmgr;
 
