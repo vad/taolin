@@ -37,11 +37,14 @@ class TimelinesController extends AppController {
      * add an event to timelines table
      * Params:  
      * @param: parameters to be displayed in the timeline 
-     * @type: foreign key on types table, containing template to render those parameters
      * @date: date of the event, format datetime, 
      *        format 'YYYY-MM-DD HH:MM:SS'
+     * @type_name: foreign key on types table, containing template to render those parameters
+     * @uid: id of the user who perform the action
+     * @model_alias: Model alias (for commenting purposes) that binds the timeline's event with the corresponding database table
+     * @f_key: foreign key to the aforementioned database table
      */
-    function add($param, $date, $type_name, $uid){
+    function add($param, $date, $type_name, $uid, $model_alias, $f_key){
         
         // Encoding parameters into json
         if(!empty($param) && ($param != null))
@@ -66,6 +69,8 @@ class TimelinesController extends AppController {
         $data['param'] = $param;
         $data['date'] = $date;
         $data['template_id'] = $tltype;
+        $data['model_alias'] = $model_alias;
+        $data['foreign_key'] = $f_key;
 
         $this->Timeline->save($data);
     }

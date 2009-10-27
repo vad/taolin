@@ -59,8 +59,10 @@ class BoardsController extends AppController {
             $this->Board->save($data);
             
             $response['success'] = true;
-                
-            $this->addtotimeline();
+              
+            $ads_id = $this->Board->id;
+
+            $this->addtotimeline(array("text" => $data['text']), null, null, null, null, $ads_id);
             
         } else {
             $response['success'] = false;
@@ -164,21 +166,21 @@ class BoardsController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
         
-        $id = $this->params['form']['ads_id'];
+        $ads_id = $this->params['form']['ads_id'];
         $value = $this->params['form']['value'];
 
-        if(isset($id) && isset($value)){
+        if(isset($ads_id) && isset($value)){
           
             if($value != null && $value!='null'){
 
-                $data['id'] = $id;
+                $data['id'] = $ads_id;
                 $data['text'] = $value;
     
                 $this->Board->save($data);
 
                 $response['success'] = true; 
 
-                $this->addtotimeline();
+                $this->addtotimeline(array("text" => $value), null, null, null, null, $ads_id);
 
             } 
             else $response['success'] = false;

@@ -114,7 +114,8 @@ class PhotosController extends AppController {
             $imagefoldername = $this->Conf->get('Images.people_web_path'); 
             
             $sanitized_desc = $this->san->html(str_replace('\'', '\\\'', $params['Photo']['caption']));
-            $this->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$params['Photo']['filename'], "width" => $params['Photo']['width'], "height" => $params['Photo']['height'], "filename" => $params['Photo']['filename'], "caption" => $sanitized_desc, "name" => $params['Photo']['name']));
+
+            $this->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$params['Photo']['filename'], "width" => $params['Photo']['width'], "height" => $params['Photo']['height'], "filename" => $params['Photo']['filename'], "caption" => $sanitized_desc, "name" => $params['Photo']['name']), null, null, null, null, $p_id);
         }
         else {
             $response['success'] = false;
@@ -229,8 +230,12 @@ class PhotosController extends AppController {
                             
                             // If the picture is not hidden (hence visible to all other users), add this event to timeline
                             if(!(isset($params['is_hidden']) && ($params['is_hidden'] == 'on'))){ 
+
                                 $sanitized_desc = $this->san->html(str_replace('\'', '\\\'', $desc));
-                                $this->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$dest_file, "width" => $width, "height" => $height, "filename" => $dest_file, "caption" => $sanitized_desc, "name" => $name));
+
+                                $p_id = $this->Photo->id;
+
+                                $this->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$dest_file, "width" => $width, "height" => $height, "filename" => $dest_file, "caption" => $sanitized_desc, "name" => $name), null, null, null, null, $p_id);
                             }
                         }
 
