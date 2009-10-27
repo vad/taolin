@@ -18,10 +18,10 @@
 */
 
 
-CommentWindow = function(commented_model, foreign_key) {
+CommentWindow = function(model_alias, foreign_key) {
 
-    this.model = commented_model;
-    this.f_id = foreign_key;
+    this.model = Ext.util.Format.lowercase(model_alias) + 's';
+    this.f_key = foreign_key;
 
     this.store = new Ext.data.JsonStore({
         url: this.model + '/getcomments'
@@ -29,7 +29,7 @@ CommentWindow = function(commented_model, foreign_key) {
         ,method: 'POST'
         ,fields: ['id','user_id','text', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'name', 'surname']
         ,baseParams: {
-            foreign_id: this.f_id
+            foreign_key: this.f_key
         }
         ,autoLoad: true
         ,listeners:{
@@ -99,6 +99,9 @@ CommentWindow = function(commented_model, foreign_key) {
                     {
                         url: model + '/addcomment',
                         waitMsg:'Saving Data...',
+                        params:{
+                            foreign_key: this.f_key
+                        },
                         success: function(form,action){
                             var jsondata = Ext.util.JSON.decode(action.response.responseText);
                             var commentRecord = Ext.data.Record.create(['id','user_id','text', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'name', 'surname']);
@@ -121,10 +124,10 @@ CommentWindow = function(commented_model, foreign_key) {
         }]
     });
 
-    this.refreshWindow = function(model, foreign_key){
-        this.model = model;
-        this.f_id = foreign_key;
-        this.store.baseParams.foreign_id = this.f_id;
+    this.refreshWindow = function(model_alias, foreign_key){
+        this.model = model_alias;
+        this.f_key = foreign_key;
+        this.store.baseParams.foreign_key = this.f_key;
 
         this.store.reload();
     }
