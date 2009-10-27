@@ -134,7 +134,7 @@ Timeline = Ext.extend(Ext.Panel, {
                                     '</td>',
                                 '</tr>',
                             '</table>',
-                            '<span onclick="openCommentWindow(\'boards\',{[xindex]})" style="float: right; padding: 0 5px; font-size: 90%; cursor: pointer; color: #555555;"><img src="js/portal/shared/icons/fam/comment.png" style="vertical-align:middle;">{[xindex]}</span>',
+                            //'<span onclick="openCommentWindow({model},{foreign_key})" style="float: right; padding: 0 5px; font-size: 90%; cursor: pointer; color: #555555;"><img src="js/portal/shared/icons/fam/comment.png" style="vertical-align:middle;">{[xindex]}</span>',
                         '</div>',
                     '</tpl>',
                     '<br/>',
