@@ -56,7 +56,7 @@ CommentWindow = function(commented_model, foreign_key) {
                             '</td>',
                             '<td>',
                                 '<a href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{name} {surname}</b></a> {text} ',
-                                '<div style="color:gray;padding-top: 3px;">October, 21 2009</div>',
+                                '<div style="color:gray;padding-top: 3px;">{date}</div>',
                             '</td>',
                         '</tr>',
                     '</table>',
