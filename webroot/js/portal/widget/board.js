@@ -155,7 +155,7 @@ Board = function(conf, panel_conf){
                     url : 'boards/deleteads/'+ads_id ,
                     method: 'GET',
                     success: function(result, request){
-                        Ext.get('undodelads-'+w_id).update('You deleted an announcement. <a href="javascript:void(0)" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelads-'+w_id+'\')">hide this message</a>');
+                        Ext.get('undodelads-'+w_id).update('Message deleted. <a href="javascript:void(0)" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelads-'+w_id+'\')">hide this message</a>');
                         showText(true, 'undodelads-'+w_id);
                         store.load();
                     },
@@ -274,12 +274,13 @@ Board = function(conf, panel_conf){
                                 '<br /><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText({id}, true)">View more</a>',
                             '</span>',
                         '</tpl>',
-                        '<br />',
+                        '<br /><br />',
                         '<span class="board-img">',
-                            '<img src="js/portal/shared/icons/fam/pencil.png" onclick="Ext.getCmp(\''+this.getId()+'\').startEditAds({id})" title="Edit this message" width="12px" height="12px" style="float:right;cursor:pointer;">',
-                        '</span><br />',
-                        '<span class="board-img">',
-                            '<img src="js/portal/shared/icons/fam/cross.png" onclick="Ext.getCmp(\''+this.getId()+'\').deleteAds({id});" title="Delete this message" width="12px" height="12px" style="float:right;cursor:pointer;">',
+                            '<img src="js/portal/shared/icons/fam/pencil.png" onclick="Ext.getCmp(\''+this.getId()+'\').startEditAds({id})" title="Edit this message" />',
+                            '<img src="js/portal/shared/icons/fam/cross.png" onclick="Ext.getCmp(\''+this.getId()+'\').deleteAds({id});" title="Delete this message" style="padding: 0 10px;" />',
+                            /*'<span onclick="openCommentWindow(\'Board\',{id})">',
+                                '<img src="js/portal/shared/icons/fam/comment.png" title="View comments" />{id}',
+                            '</span>',*/
                         '</span>',
                         '<span style="color:#888888;font-size:90%;">',
                             'Created on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]}',
@@ -301,15 +302,16 @@ Board = function(conf, panel_conf){
                                 '<br /><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText({id}, true)">View more</a>',
                             '</span>',
                         '</tpl>',
-                        '<br />',
+                        '<br /><br />',
                         '<span class="board-img">',
-                            '<img src="js/portal/shared/icons/fam/user.png" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "board widget", "widget_id": "{this.parent_id}"}') + '\')" title="View owner profile" width="13px" height="13px" style="float:right;cursor:pointer;">',
+                            '<tpl if="email != null && email != \'\'">',
+                                '<img src="js/portal/shared/icons/fam/email.png" onclick="Ext.getCmp(\''+this.getId()+'\').sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');" title="Contact owner" />',
+                            '</tpl>',
+                            '<img src="js/portal/shared/icons/fam/user.png" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "board widget", "widget_id": "{this.parent_id}"}') + '\')" title="View owner profile" style="padding: 0 10px;" />',
+                            /*'<span onclick="openCommentWindow(\'Board\',{id})">',
+                                '<img src="js/portal/shared/icons/fam/comment.png" title="View comments" />{id}',
+                            '</span>',*/
                         '</span>',
-                        '<tpl if="email != null && email != \'\'">',
-                            '<span class="board-img"><br />',
-                                '<img src="js/portal/shared/icons/fam/email.png" onclick="Ext.getCmp(\''+this.getId()+'\').sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');" title="Contact owner" width="12px" height="12px" style="float:right;cursor:pointer;">',
-                            '</span>',
-                        '</tpl>',
                         '<span style="color:#888888;font-size:90%;padding-right:15px;">',
                             'Created on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]} by ',
                         /* span's onclick lead to misfunctionalities of DataView.indexOf(someitem) */
@@ -431,11 +433,11 @@ Board = function(conf, panel_conf){
                 ,load: function(store, records, options){
                         var boardwidget = $('#'+this.parent.getId()+' .nevede-widget');
                         var imgs = boardwidget.find('.board-img');
-                        imgs.css({visibility: 'hidden'});
 
-                        //hoverIntent provided some problems with tooltip so we
-                        //decided to switch back to hover even if it doesn't
-                        //completely work with IE
+                        /* hoverIntent provided some problems with tooltip so we
+                         * decided to switch back to hover even if it doesn't
+                         * completely work with IE */
+
                         boardwidget.hover(function(){
                                             imgs.css({visibility: 'visible'});
                                         }, function(){
@@ -453,16 +455,16 @@ Board = function(conf, panel_conf){
         defaults: { autoScroll: true },
         items: [{
             style: 'padding: 5px 5px 0 5px;',
-            html: '<div><img id="'+this.getId()+'-img-view-form2" style="margin-right:5px;" width="12px" height="12px" src="img/add.png" /> <span id="'+this.getId()+'-view-form2" class="underlineHover" style="color:green;text-align:left;line-height:150%;font-size:90%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div><img id="'+this.getId()+'-img-view-form2" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form2" class="underlineHover" style="color:green;text-align:left;line-height:150%;font-size:90%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
         },{
-            html: '<div id="undodelads-'+this.getId()+'" class="undodel"></div>',
+            html: '<div id="undodelads-'+this.getId()+'" class="undodel border_radius_5px" style="padding: 2px 0;margin: 2px 10px;"></div>',
             display: 'none',
             border: false
 		},{
             items: this.view
         },{
             style: 'padding:5px;',
-            html: '<div style="overflow:hidden;"><span><a href="javascript:void()" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</a></span><img id="'+this.getId()+'-img-view-form" style="margin-right:5px;" width="12px" height="12px" src="img/add.png" /> <span id="'+this.getId()+'-view-form" class="underlineHover" style="color:green;text-align:left;line-height:150%;font-size:90%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div style="overflow:hidden;"><span><a href="javascript:void()" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</a></span><img id="'+this.getId()+'-img-view-form" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form" class="underlineHover" style="color:green;text-align:left;line-height:150%;font-size:90%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
         },{
             items: this.form
         }]

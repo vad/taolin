@@ -629,3 +629,21 @@ color:black;
     text-decoration: underline;
     font-weight: bold;
 }
+
+.board-img{
+    visibility: hidden;
+    float: right;
+}
+
+.board-img img{
+    vertical-align: middle;
+    cursor: pointer;
+    width: 13px;
+    height: 13px;
+}
+
+.board-img span{
+    cursor: pointer;
+    font-size: 90%;
+    color: #555555;
+}
