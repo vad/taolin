@@ -39,7 +39,7 @@ CREATE OR REPLACE FUNCTION insert_new_event_into_timeline() RETURNS trigger AS $
   BEGIN
     -- insert record into users_history table if operation is not insert
     IF NEW.calendar_id IN (SELECT id FROM calendars WHERE url = 'http://www.fbk.eu/event.ics' OR url = 'http://in.fbk.eu/event.ics') THEN
-        INSERT INTO timelines (template_id, param, date) VALUES (13, '{"summary":"' || REPLACE(SUBSTRING(NEW.summary,1,50),'"','\\"') || '..."}', NEW.created);
+        INSERT INTO timelines (template_id, param, date, model_alias, foreign_key) VALUES (13, '{"summary":"' || REPLACE(SUBSTRING(NEW.summary,1,50),'"','\\"') || '..."}', NEW.created, 'Event', NEW.id);
     END IF;
     RETURN NEW;
   END;
