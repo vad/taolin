@@ -115,7 +115,7 @@ class PhotosController extends AppController {
             
             $sanitized_desc = $this->san->html(str_replace('\'', '\\\'', $params['Photo']['caption']));
 
-            $this->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$params['Photo']['filename'], "width" => $params['Photo']['width'], "height" => $params['Photo']['height'], "filename" => $params['Photo']['filename'], "caption" => $sanitized_desc, "name" => $params['Photo']['name']), null, null, null, null, $p_id);
+            $this->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$params['Photo']['filename'], "width" => $params['Photo']['width'], "height" => $params['Photo']['height'], "filename" => $params['Photo']['filename'], "caption" => $sanitized_desc, "name" => $params['Photo']['name']), null, null, null, 'Photo', $p_id);
         }
         else {
             $response['success'] = false;
@@ -235,7 +235,7 @@ class PhotosController extends AppController {
 
                                 $p_id = $this->Photo->id;
 
-                                $this->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$dest_file, "width" => $width, "height" => $height, "filename" => $dest_file, "caption" => $sanitized_desc, "name" => $name), null, null, null, null, $p_id);
+                                $this->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$dest_file, "width" => $width, "height" => $height, "filename" => $dest_file, "caption" => $sanitized_desc, "name" => $name), null, null, null, 'Photo', $p_id);
                             }
                         }
 

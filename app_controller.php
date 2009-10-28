@@ -74,9 +74,6 @@ class AppController extends Controller
             // Check for requesting controller and action
             $type_name = $this->params['controller']."-".$this->action;
 
-        if($model_alias == null)
-            $model_alias = $this->modelNames[0];
-
         //Importing TimelinesController
         App::import('Controller','Timelines');
         $controller = new TimelinesController;

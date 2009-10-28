@@ -62,7 +62,7 @@ class BoardsController extends AppController {
               
             $ads_id = $this->Board->id;
 
-            $this->addtotimeline(array("text" => $data['text']), null, null, null, null, $ads_id);
+            $this->addtotimeline(array("text" => $data['text']), null, null, null, 'Board', $ads_id);
             
         } else {
             $response['success'] = false;
@@ -180,7 +180,7 @@ class BoardsController extends AppController {
 
                 $response['success'] = true; 
 
-                $this->addtotimeline(array("text" => $value), null, null, null, null, $ads_id);
+                $this->addtotimeline(array("text" => $value), null, null, null, 'Board', $ads_id);
 
             } 
             else $response['success'] = false;
