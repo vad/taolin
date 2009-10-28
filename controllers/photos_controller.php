@@ -75,7 +75,15 @@ class PhotosController extends AppController {
             $photo['Photo']['size'] = $photo[0]['size'];
             if (($photo['Photo']) && (!$photo['Photo']['hidden'])){ 
                 $photo['Photo']['url'] = (Router::url('/')).'img/'.$imagefoldername.$photo['Photo']['filename'];
-            } 
+            }
+
+            $comments = $this->getphotocomments($photo['Photo']['id']);
+
+            if(!(empty($comments)))
+                $photo['Photo']['commentsCount'] = count($comments);
+            else
+                $photo['Photo']['commentsCount'] = 0;
+
             $photos[] = $photo['Photo'];
         }
 
@@ -409,6 +417,61 @@ class PhotosController extends AppController {
             imagedestroy($photo);
 
         }
+    }
+
+    function addcomment(){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+
+        $user_id = $this->Session->read('id');
+        
+        $p_id = $this->params['form']['foreign_id'];
+        $text = $this->params['form']['comment'];
+
+        $comment = array('Comment' => array(
+            'body' => $text,
+            'name' => $user_id,
+            'email' => 'abc@example.com'
+        ));
+
+        $this->Photo->createComment($p_id, $comment);
+
+        $this->set('json', array(
+            'success' => TRUE
+        ));
+    }
+    
+    function getcomments(){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+
+        $p_id = $this->params['form']['foreign_id'];
+        $comments = Set::extract($this->getphotocomments($p_id), '{n}.Comment');
+        
+        $this->set('json', array(
+            'success' => TRUE,
+            'comments' => $comments)
+        );
+    }
+
+    // Retrieve comments for a single photo with id = $p_id
+    function getphotocomments($p_id){
+        $filter = array('Photo.id' => $p_id);
+        $photo = $this->Photo->find('first', array(
+            'conditions' => $filter,
+            'recursive' => FALSE
+        ));
+        $this->Photo->create($photo);
+
+        $comments = $this->Photo->getComments(array(
+            'options' => array(
+                'conditions' => array(
+                    'Comment.status' => 'pending'
+                )
+            )
+        ));
+
+        return $comments;
     }
 }
 ?>

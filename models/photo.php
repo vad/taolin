@@ -21,7 +21,7 @@ class Photo extends AppModel
 {
     var $name = 'Photo'; 
     var $belongsTo = 'User';
-    var $actsAs = array('SoftDeletable'); 
+    var $actsAs = array('Commentable.Commentable', 'SoftDeletable'); 
 
     function getdefault($u_id, $fields){
         $opts = array(
