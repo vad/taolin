@@ -90,7 +90,7 @@ Timeline = Ext.extend(Ext.Panel, {
                         '</tpl>',
                     '</div>',
                     '<tpl for=".">',
-                        '<div style="padding:5px 0;min-height:60px;" class="timeline-wrapper">',
+                        '<div class="timeline-wrapper">',
                             '<tpl if="this.checkEventDate(date, xindex)">',
                                 '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{[this.formatEventDate(values.date)]}</b></span></div>',
                             '</tpl>',
@@ -134,7 +134,12 @@ Timeline = Ext.extend(Ext.Panel, {
                                     '</td>',
                                 '</tr>',
                             '</table>',
-                            //'<span onclick="openCommentWindow({model},{foreign_key})" style="float: right; padding: 0 5px; font-size: 90%; cursor: pointer; color: #555555;"><img src="js/portal/shared/icons/fam/comment.png" style="vertical-align:middle;">{[xindex]}</span>',
+                            '<tpl if="(comments_number)">',
+                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><img src="js/portal/shared/icons/fam/comment.png">{comments_number}</span>',
+                            '</tpl>',
+                            '<tpl if="(!comments_number)">',
+                                '<span class="timeline-comments" onclick="openCommentWindow({model_alias},{foreign_id})"><img src="js/portal/shared/icons/fam/comment_add.png" style="vertical-align:top;"> Comment</span>',
+                            '</tpl>',
                         '</div>',
                     '</tpl>',
                     '<br/>',
@@ -142,10 +147,8 @@ Timeline = Ext.extend(Ext.Panel, {
             '</div>',
             {
                 parent: this
-                // Current date being processed (belonging to the currently processed event)
-                ,processedDate: null
-                // Last event of day
-                ,lastEventOfDay: false
+                ,processedDate: null // Current date being processed (belonging to the currently processed event)
+                ,lastEventOfDay: false // Last event of day
                 // Returns true if the owner of the timeline's event is the user
                 ,isOwner: function(u_id){
                     return window.user.id === u_id;
@@ -211,7 +214,7 @@ Timeline = Ext.extend(Ext.Panel, {
         var store = new Ext.data.JsonStore({
             url: 'timelines/gettimeline',
             root: 'timeline',
-            fields: ['id','user_id','event','name','surname','login','user_photo','icon',{name: 'date', type: 'date', dateFormat: 'Y-m-d H:i:s'}]
+            fields: ['id','user_id','event','name','surname','login','user_photo','icon',{name: 'date', type: 'date', dateFormat: 'Y-m-d H:i:s'},'model_alias','foreign_id','comments_number']
             ,baseParams: {
                 limit: this.limit
                 ,u_id: this.userId

@@ -611,14 +611,31 @@ color:black;
     text-decoration: none;
 }
 
-.timeline-wrapper a{
+.timeline-wrapper {
+    padding: 5px 0;
+    min-height: 60px;
+}
+
+.timeline-wrapper a {
     text-decoration: none;
     font-weight: bold;
     font-size: 12px;
 }
 
-.timeline-wrapper a:hover{
+.timeline-wrapper a:hover {
     text-decoration: underline;
+}
+
+.timeline-comments {
+    float: right;
+    padding: 0 5px;
+    font-size: 90%;
+    cursor: pointer;
+    color: #555555;
+}
+
+.timeline-comments img {
+    vertical-align: middle;
 }
 
 .timeline-pagination a{
