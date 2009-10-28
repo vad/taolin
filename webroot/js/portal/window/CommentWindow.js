@@ -18,18 +18,18 @@
 */
 
 
-CommentWindow = function(model_alias, foreign_key) {
+CommentWindow = function(model_alias, foreign_id) {
 
     this.model = Ext.util.Format.lowercase(model_alias) + 's';
-    this.f_key = foreign_key;
+    this.f_id = foreign_id;
 
     this.store = new Ext.data.JsonStore({
         url: this.model + '/getcomments'
         ,root: 'comments'
         ,method: 'POST'
-        ,fields: ['id','user_id','text', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'name', 'surname']
+        ,fields: ['id','user_id','body', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'name', 'surname']
         ,baseParams: {
-            foreign_key: this.f_key
+            foreign_id: this.f_id
         }
         ,autoLoad: true
         ,listeners:{
@@ -55,12 +55,11 @@ CommentWindow = function(model_alias, foreign_key) {
                                 '</div>',
                             '</td>',
                             '<td>',
-                                '<a href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{name} {surname}</b></a> {text} ',
+                                '<a href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{name} {surname}</b></a> {body} ',
                                 '<div style="color:gray;padding-top: 3px;">{date}</div>',
                             '</td>',
                         '</tr>',
                     '</table>',
-                    //'<hr style="border: 1px solid #E5ECF9;width:95%;" />',
                 '</div>',
             '</tpl>'
         )
@@ -100,7 +99,7 @@ CommentWindow = function(model_alias, foreign_key) {
                         url: model + '/addcomment',
                         waitMsg:'Saving Data...',
                         params:{
-                            foreign_key: this.f_key
+                            foreign_id: this.f_id
                         },
                         success: function(form,action){
                             form.reset(); // Cleaning form
@@ -121,10 +120,10 @@ CommentWindow = function(model_alias, foreign_key) {
         }]
     });
 
-    this.refreshWindow = function(model_alias, foreign_key){
+    this.refreshWindow = function(model_alias, foreign_id){
         this.model = model_alias;
-        this.f_key = foreign_key;
-        this.store.baseParams.foreign_key = this.f_key;
+        this.f_id = foreign_id;
+        this.store.baseParams.foreign_id = this.f_id;
 
         this.store.reload();
     }
