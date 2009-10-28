@@ -120,14 +120,6 @@ CommentWindow = function(model_alias, foreign_id) {
         }]
     });
 
-    this.refreshWindow = function(model_alias, foreign_id){
-        this.model = model_alias;
-        this.f_id = foreign_id;
-        this.store.baseParams.foreign_id = this.f_id;
-
-        this.store.reload();
-    }
-
     CommentWindow.superclass.constructor.call(this, {
         title: 'Comments'
         ,id: 'comments_window'
