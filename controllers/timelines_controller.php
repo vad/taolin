@@ -104,7 +104,7 @@ class TimelinesController extends AppController {
 
         $readabletimeline = $this->ReadableTimeline->find('all', 
             array('conditions' => $conditions,
-                'fields' => array('id','user_id','name','surname','login','gender','param','date','temp','icon', 'model_alias', 'foreign_id', 'comments_count'),
+                'fields' => array('id','user_id','name','surname','login','gender','param','date','temp','icon', 'model_alias', 'foreign_id', 'commentsCount'),
                 'limit' => $limit, 'recursive' => 0, 'page' => $start/$limit + 1
             )
         );

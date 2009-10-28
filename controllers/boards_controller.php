@@ -100,7 +100,7 @@ class BoardsController extends AppController {
         foreach($resboards as $board){
             $board['Board']['name'] = $board['User']['name'];
             $board['Board']['surname'] = $board['User']['surname'];
-            $board['Board']['comments_count'] = count($this->getmessagecomments($board['Board']['id']));
+            $board['Board']['commentsCount'] = count($this->getmessagecomments($board['Board']['id']));
             $boards[] = $board['Board'];
         }
 

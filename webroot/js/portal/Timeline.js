@@ -134,10 +134,10 @@ Timeline = Ext.extend(Ext.Panel, {
                                     '</td>',
                                 '</tr>',
                             '</table>',
-                            '<tpl if="comments_count &gt; 0">',
-                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><img src="js/portal/shared/icons/fam/comment.png">{comments_count}</span>',
+                            '<tpl if="commentsCount &gt; 0">',
+                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><img src="js/portal/shared/icons/fam/comment.png">{commentsCount}</span>',
                             '</tpl>',
-                            '<tpl if="comments_count &lt;= 0">',
+                            '<tpl if="commentsCount &lt;= 0">',
                                 '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment"></span>',
                             '</tpl>',
                         '</div>',
@@ -214,7 +214,7 @@ Timeline = Ext.extend(Ext.Panel, {
         var store = new Ext.data.JsonStore({
             url: 'timelines/gettimeline',
             root: 'timeline',
-            fields: ['id','user_id','event','name','surname','login','user_photo','icon',{name: 'date', type: 'date', dateFormat: 'Y-m-d H:i:s'},'model_alias','foreign_id','comments_count']
+            fields: ['id','user_id','event','name','surname','login','user_photo','icon',{name: 'date', type: 'date', dateFormat: 'Y-m-d H:i:s'},'model_alias','foreign_id','commentsCount']
             ,baseParams: {
                 limit: this.limit
                 ,u_id: this.userId
