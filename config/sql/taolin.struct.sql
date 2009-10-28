@@ -229,6 +229,8 @@ CREATE TABLE "timelines" (
   "template_id" INTEGER NOT NULL,
   "param" text,
   "date" TIMESTAMP(0) NOT NULL,
+  model_alias character varying(100),
+  foreign_id integer,
   "created" TIMESTAMP(0) NOT NULL default now(),
   "modified" TIMESTAMP(0) default NULL,
   "deleted" SMALLINT NOT NULL default '0',
@@ -307,7 +309,8 @@ ON users FOR EACH ROW EXECUTE PROCEDURE users_tsv_trigger();
 -- # Final view structure for view "readable_timeline"
 
 CREATE OR REPLACE VIEW readable_timelines AS
-    SELECT "timelines"."id" AS "id" , "timelines"."user_id" AS "user_id" , "users"."name" AS "name" , "users"."surname" AS "surname" , "timelines"."login" AS "login" , "users"."gender" AS "gender" , "timelines"."template_id" AS "template_id" , "timelines"."param" AS "param" , "timelines"."date" AS "date" , "templates"."temp" AS "temp" , "templates"."icon" AS "icon",  timelines.model_alias AS model_alias, timelines.foreign_key as foreign_key
+    SELECT "timelines"."id" AS "id" , "timelines"."user_id" AS "user_id" , "users"."name" AS "name" , "users"."surname" AS "surname" , "timelines"."login" AS "login" , "users"."gender" AS "gender" , "timelines"."template_id" AS "template_id" , "timelines"."param" AS "param" , "timelines"."date" AS "date" , "templates"."temp" AS "temp" , "templates"."icon" AS "icon",  timelines.model_alias AS model_alias, timelines.foreign_id as foreign_id
+        ,(SELECT COUNT(*) FROM comments JOIN timelines AS timecount ON comments.class = COALESCE(timecount.model_alias, 'Timeline') AND comments.foreign_id = COALESCE(timecount.foreign_id, timecount.id) WHERE timecount.id = timelines.id) AS comments_count
         FROM (((SELECT * FROM timelines WHERE deleted = 0) AS timelines
             LEFT OUTER JOIN (SELECT * FROM users WHERE deleted = 0) AS users ON "timelines"."user_id" = "users"."id")
             JOIN "templates" ON "timelines"."template_id" = "templates"."id")

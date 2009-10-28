@@ -104,7 +104,7 @@ class TimelinesController extends AppController {
 
         $readabletimeline = $this->ReadableTimeline->find('all', 
             array('conditions' => $conditions,
-                'fields' => array('id','user_id','name','surname','login','gender','param','date','temp','icon'),
+                'fields' => array('id','user_id','name','surname','login','gender','param','date','temp','icon', 'model_alias', 'foreign_id', 'comments_count'),
                 'limit' => $limit, 'recursive' => 0, 'page' => $start/$limit + 1
             )
         );
@@ -131,6 +131,12 @@ class TimelinesController extends AppController {
         foreach($events as $event){
             $event['user_photo'] = $hash_photos[$event['user_id']];
             $event['event'] = $this->prepareevent($event);
+            
+            if (empty($event['model_alias'])) {
+                $event['model_alias'] = 'Timeline';
+                $event['foreign_id'] = $event['id'];
+            }
+
             unset($event['param'], $event['temp']); // no need to send this parameter, hence unset it
             $result[] = $event;
         }
@@ -235,6 +241,70 @@ class TimelinesController extends AppController {
     
         $this->set('json', $response);
     }   
+
+
+    function addcomment(){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+
+        $user_id = $this->Session->read('id');
+        
+        $this->log(print_r($this->params['form'], TRUE));
+        $e_id = $this->params['form']['foreign_id'];
+        $text = $this->params['form']['comment'];
+
+        $filter = array('Timeline.id' => $e_id);
+        $fields = array('Timeline.model_alias', 'Timeline.foreign_key');
+        $event = $this->Timeline->find($filter, $fields, null, null);
+
+        $comment = array('Comment' => array('body' => $text, 'name' => $user_id, 'email' => 'abc@example.com'));
+
+        if (!(is_null($event['Timeline']['model_alias']) || is_null($event['Timeline']['foreign_key']))) { // De Morgan :-)
+            $this->log('Commenting '.$event['Timeline']['model_alias']);
+
+        } else {
+            $this->log('Commenting timeline');
+
+            $this->Timeline->createComment($e_id, $comment);
+        }
+
+        $this->set('json', array(
+            'success' => TRUE
+        ));
+    }
+
+    
+    function getcomments(){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+
+        //$user_id = $this->Session->read('id');
+        
+        $e_id = $this->params['form']['foreign_id'];
+
+        $filter = array('Timeline.id' => $e_id);
+        $event = $this->Timeline->find('first', array(
+            'conditions' => $filter,
+            'recursive' => FALSE
+        ));
+        $this->log(print_r($event, TRUE));
+
+        $this->Timeline->create($event);
+        $comments = $this->Timeline->getComments(array(
+            'options' => array(
+                'conditions' => array(
+                    'Comment.status' => 'pending'
+                )
+            )
+        ));
+        $comments = Set::extract($comments, '{n}.Comment');
+        $this->log(print_r($comments, TRUE));
+        
+        $this->set('json', array(
+            'success' => TRUE,
+            'comments' => $comments)
+        );
+    }
 
 }
 ?>

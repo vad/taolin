@@ -21,7 +21,7 @@ class Board extends AppModel
 {
     var $name = 'Board';
     var $belongsTo = 'User';
-    var $actsAs = array('SoftDeletable'); 
+    var $actsAs = array('SoftDeletable', 'Commentable.Commentable'); 
 }
 
 ?>
