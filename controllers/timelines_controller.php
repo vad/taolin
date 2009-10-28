@@ -249,24 +249,16 @@ class TimelinesController extends AppController {
 
         $user_id = $this->Session->read('id');
         
-        $this->log(print_r($this->params['form'], TRUE));
         $e_id = $this->params['form']['foreign_id'];
         $text = $this->params['form']['comment'];
 
-        $filter = array('Timeline.id' => $e_id);
-        $fields = array('Timeline.model_alias', 'Timeline.foreign_key');
-        $event = $this->Timeline->find($filter, $fields, null, null);
+        $comment = array('Comment' => array(
+            'body' => $text,
+            'name' => $user_id,
+            'email' => 'abc@example.com'
+        ));
 
-        $comment = array('Comment' => array('body' => $text, 'name' => $user_id, 'email' => 'abc@example.com'));
-
-        if (!(is_null($event['Timeline']['model_alias']) || is_null($event['Timeline']['foreign_key']))) { // De Morgan :-)
-            $this->log('Commenting '.$event['Timeline']['model_alias']);
-
-        } else {
-            $this->log('Commenting timeline');
-
-            $this->Timeline->createComment($e_id, $comment);
-        }
+        $this->Timeline->createComment($e_id, $comment);
 
         $this->set('json', array(
             'success' => TRUE
@@ -278,8 +270,6 @@ class TimelinesController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
-        //$user_id = $this->Session->read('id');
-        
         $e_id = $this->params['form']['foreign_id'];
 
         $filter = array('Timeline.id' => $e_id);
@@ -287,9 +277,8 @@ class TimelinesController extends AppController {
             'conditions' => $filter,
             'recursive' => FALSE
         ));
-        $this->log(print_r($event, TRUE));
-
         $this->Timeline->create($event);
+
         $comments = $this->Timeline->getComments(array(
             'options' => array(
                 'conditions' => array(
@@ -298,7 +287,6 @@ class TimelinesController extends AppController {
             )
         ));
         $comments = Set::extract($comments, '{n}.Comment');
-        $this->log(print_r($comments, TRUE));
         
         $this->set('json', array(
             'success' => TRUE,
