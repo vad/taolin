@@ -138,7 +138,7 @@ Timeline = Ext.extend(Ext.Panel, {
                                 '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><img src="js/portal/shared/icons/fam/comment.png">{comments_number}</span>',
                             '</tpl>',
                             '<tpl if="(!comments_number)">',
-                                '<span class="timeline-comments" onclick="openCommentWindow({model_alias},{foreign_id})"><img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment"></span>',
+                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment"></span>',
                             '</tpl>',
                         '</div>',
                     '</tpl>',
