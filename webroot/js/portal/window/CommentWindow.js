@@ -24,13 +24,10 @@ CommentWindow = function(model_alias, foreign_id) {
     this.f_id = foreign_id;
 
     this.store = new Ext.data.JsonStore({
-        url: this.model + '/getcomments'
+        url: this.model + '/getcomments/' + this.f_id
         ,root: 'comments'
-        ,method: 'POST'
+        ,method: 'GET'
         ,fields: ['id','user_id','body', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'name', 'surname']
-        ,baseParams: {
-            foreign_id: this.f_id
-        }
         ,autoLoad: true
         ,listeners:{
             'load': {

@@ -17,8 +17,6 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-<?php
 
 class WrappersController extends AppController
 {

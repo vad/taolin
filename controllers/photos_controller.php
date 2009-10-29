@@ -23,7 +23,7 @@ uses('sanitize');
 class PhotosController extends AppController {
 	var $name = 'Photos';
 	var $helpers = array('Html','Form','Javascript');
-    var $components = array('Email','PhotoUtil','Thumber');
+    var $components = array('Email','PhotoUtil','Thumber', 'Comment');
 
     function beforeFilter()
     {
@@ -425,16 +425,7 @@ class PhotosController extends AppController {
 
         $user_id = $this->Session->read('id');
         
-        $p_id = $this->params['form']['foreign_id'];
-        $text = $this->params['form']['comment'];
-
-        $comment = array('Comment' => array(
-            'body' => $text,
-            'name' => $user_id,
-            'email' => 'abc@example.com'
-        ));
-
-        $this->Photo->createComment($p_id, $comment);
+        $this->Comment->addComment($this->Photo, $this->params, $user_id);
 
         $this->set('json', array(
             'success' => TRUE

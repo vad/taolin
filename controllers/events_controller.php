@@ -17,22 +17,19 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-<?php
 
 uses('sanitize');
 
 class EventsController extends AppController {
     var $name = 'Events';
+    var $components = array('Comment');
 
     
-    function getcomments(){
+    function getcomments($foreign_id){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
-        $e_id = $this->params['form']['foreign_id'];
-
-        $filter = array('Event.id' => $e_id);
+        $filter = array('Event.id' => $foreign_id);
         $event = $this->Event->find('first', array(
             'conditions' => $filter,
             'recursive' => FALSE
@@ -60,17 +57,8 @@ class EventsController extends AppController {
         $this->layout = 'ajax';
 
         $user_id = $this->Session->read('id');
-        
-        $e_id = $this->params['form']['foreign_id'];
-        $text = $this->params['form']['comment'];
 
-        $comment = array('Comment' => array(
-            'body' => $text,
-            'name' => $user_id,
-            'email' => 'abc@example.com'
-        ));
-
-        $this->Event->createComment($e_id, $comment);
+        $this->Comment->addComment($this->Event, $this->params, $user_id);
 
         $this->set('json', array(
             'success' => TRUE

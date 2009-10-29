@@ -24,6 +24,7 @@ class TimelinesController extends AppController {
     var $name = 'Timelines';
     var $helpers = array('Html','Form','Javascript');
     var $uses = array('Photo','ReadableTimeline','Template','Timeline');
+    var $components = array('Comment');
 
     function beforeFilter()
     {
@@ -248,17 +249,8 @@ class TimelinesController extends AppController {
         $this->layout = 'ajax';
 
         $user_id = $this->Session->read('id');
-        
-        $e_id = $this->params['form']['foreign_id'];
-        $text = $this->params['form']['comment'];
 
-        $comment = array('Comment' => array(
-            'body' => $text,
-            'name' => $user_id,
-            'email' => 'abc@example.com'
-        ));
-
-        $this->Timeline->createComment($e_id, $comment);
+        $this->Comment->addComment($this->Timeline, $this->params, $user_id);
 
         $this->set('json', array(
             'success' => TRUE
@@ -266,27 +258,14 @@ class TimelinesController extends AppController {
     }
 
     
-    function getcomments(){
+    function getcomments($id){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
-        $e_id = $this->params['form']['foreign_id'];
-
-        $filter = array('Timeline.id' => $e_id);
-        $event = $this->Timeline->find('first', array(
-            'conditions' => $filter,
-            'recursive' => FALSE
-        ));
-        $this->Timeline->create($event);
-
-        $comments = $this->Timeline->getComments(array(
-            'options' => array(
-                'conditions' => array(
-                    'Comment.status' => 'pending'
-                )
-            )
-        ));
-        $comments = Set::extract($comments, '{n}.Comment');
+        $comments = Set::extract(
+            $this->Comment->getComments($this->Timeline, $id),
+            '{n}.Comment'
+        );
         
         $this->set('json', array(
             'success' => TRUE,

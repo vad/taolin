@@ -17,14 +17,13 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-<?php
 
 uses('sanitize');
 
 class BoardsController extends AppController {
     var $name = 'Boards';
     var $helpers = array('Html','Form','Javascript');
+    var $components = array('Comment');
     var $paginate = array(
             'limit' => 5
             ,'page' => 1
@@ -101,12 +100,8 @@ class BoardsController extends AppController {
             $board['Board']['name'] = $board['User']['name'];
             $board['Board']['surname'] = $board['User']['surname'];
             
-            $comments = $this->getmessagecomments($board['Board']['id']);
+            $board['Board']['commentsCount'] = $this->Comment->getCommentCount($this->Board, $board['Board']['id']);
 
-            if(!(empty($comments)))
-                $board['Board']['commentsCount'] = count($comments);
-            else
-                $board['Board']['commentsCount'] = 0;
 
             $boards[] = $board['Board'];
         }
@@ -198,59 +193,34 @@ class BoardsController extends AppController {
         $this->set('json', $response);
     }
 
+
     function addcomment(){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
         $user_id = $this->Session->read('id');
         
-        $b_id = $this->params['form']['foreign_id'];
-        $text = $this->params['form']['comment'];
-
-        $comment = array('Comment' => array(
-            'body' => $text,
-            'name' => $user_id,
-            'email' => 'abc@example.com'
-        ));
-
-        $this->Board->createComment($b_id, $comment);
+        $this->Comment->addComment($this->Board, $this->params, $user_id);
 
         $this->set('json', array(
             'success' => TRUE
         ));
     }
-    
-    function getcomments(){
+
+
+    function getcomments($id){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
-        $b_id = $this->params['form']['foreign_id'];
-        $comments = Set::extract($this->getmessagecomments($b_id), '{n}.Comment');
+        $comments = Set::extract(
+            $this->Comment->getComments($this->Board, $id),
+            '{n}.Comment'
+        );
         
         $this->set('json', array(
             'success' => TRUE,
             'comments' => $comments)
         );
-    }
-
-    // Retrieve comments for a single message with id = $b_id
-    function getmessagecomments($b_id){
-        $filter = array('Board.id' => $b_id);
-        $boardmsg = $this->Board->find('first', array(
-            'conditions' => $filter,
-            'recursive' => FALSE
-        ));
-        $this->Board->create($boardmsg);
-
-        $comments = $this->Board->getComments(array(
-            'options' => array(
-                'conditions' => array(
-                    'Comment.status' => 'pending'
-                )
-            )
-        ));
-
-        return $comments;
     }
 
 }
