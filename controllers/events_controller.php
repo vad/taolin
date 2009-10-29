@@ -25,25 +25,14 @@ class EventsController extends AppController {
     var $components = array('Comment');
 
     
-    function getcomments($foreign_id){
+    function getcomments($id){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
-        $filter = array('Event.id' => $foreign_id);
-        $event = $this->Event->find('first', array(
-            'conditions' => $filter,
-            'recursive' => FALSE
-        ));
-        $this->Event->create($event);
-
-        $comments = $this->Event->getComments(array(
-            'options' => array(
-                'conditions' => array(
-                    'Comment.status' => 'pending'
-                )
-            )
-        ));
-        $comments = Set::extract($comments, '{n}.Comment');
+        $comments = Set::extract(
+            $this->Comment->getComments($this->Event, $id),
+            '{n}.Comment'
+        );
         
         $this->set('json', array(
             'success' => TRUE,

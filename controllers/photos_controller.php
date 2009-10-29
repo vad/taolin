@@ -77,12 +77,7 @@ class PhotosController extends AppController {
                 $photo['Photo']['url'] = (Router::url('/')).'img/'.$imagefoldername.$photo['Photo']['filename'];
             }
 
-            $comments = $this->getphotocomments($photo['Photo']['id']);
-
-            if(!(empty($comments)))
-                $photo['Photo']['commentsCount'] = count($comments);
-            else
-                $photo['Photo']['commentsCount'] = 0;
+            $photo['Photo']['commentsCount'] = $this->Comment->getCommentCount($this->Photo, $photo['Photo']['id']);
 
             $photos[] = $photo['Photo'];
         }
@@ -432,12 +427,15 @@ class PhotosController extends AppController {
         ));
     }
     
-    function getcomments(){
+    
+    function getcomments($id){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
-        $p_id = $this->params['form']['foreign_id'];
-        $comments = Set::extract($this->getphotocomments($p_id), '{n}.Comment');
+        $comments = Set::extract(
+            $this->Comment->getComments($this->Photo, $id),
+            '{n}.Comment'
+        );
         
         $this->set('json', array(
             'success' => TRUE,
@@ -445,24 +443,5 @@ class PhotosController extends AppController {
         );
     }
 
-    // Retrieve comments for a single photo with id = $p_id
-    function getphotocomments($p_id){
-        $filter = array('Photo.id' => $p_id);
-        $photo = $this->Photo->find('first', array(
-            'conditions' => $filter,
-            'recursive' => FALSE
-        ));
-        $this->Photo->create($photo);
-
-        $comments = $this->Photo->getComments(array(
-            'options' => array(
-                'conditions' => array(
-                    'Comment.status' => 'pending'
-                )
-            )
-        ));
-
-        return $comments;
-    }
 }
 ?>
