@@ -664,3 +664,7 @@ color:black;
     font-size: 90%;
     color: #555555;
 }
+
+img.inline {
+    vertical-align:middle;
+}
