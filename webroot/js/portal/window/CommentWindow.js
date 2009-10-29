@@ -55,7 +55,7 @@ CommentWindow = function(model_alias, foreign_id) {
                                 '</div>',
                             '</td>',
                             '<td>',
-                                '<a href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{name} {surname}</b></a> {body} ',
+                                '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{name} {surname}</b></a> {[values.body.urlize().smilize()]} ',
                                 '<div style="color:gray;padding-top: 3px;">{date}</div>',
                             '</td>',
                         '</tr>',
@@ -119,14 +119,6 @@ CommentWindow = function(model_alias, foreign_id) {
             ,scope: this
         }]
     });
-
-    this.refreshWindow = function(model_alias, foreign_id){
-        this.model = model_alias;
-        this.f_id = foreign_id;
-        this.store.baseParams.foreign_id = this.f_id;
-
-        this.store.reload();
-    }
 
     CommentWindow.superclass.constructor.call(this, {
         title: 'Comments'

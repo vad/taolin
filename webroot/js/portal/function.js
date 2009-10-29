@@ -79,10 +79,10 @@ function openImageChooser(){
 function openCommentWindow(model, foreign_key){
     var comments_window = Ext.getCmp('comments_window');
 
-    if(!comments_window) // if not exist
-        new CommentWindow(model, foreign_key); // Open a new comment window
-    else
-        comments_window.refreshWindow(model, foreign_key); // otherwise refresh the existing one
+    if(comments_window) // if not exist
+        comments_window.close();
+
+    new CommentWindow(model, foreign_key); // Open a new comment window
 }
 
 function showText(showtext, element){

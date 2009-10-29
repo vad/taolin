@@ -42,9 +42,9 @@ class TimelinesController extends AppController {
      * @type_name: foreign key on types table, containing template to render those parameters
      * @uid: id of the user who perform the action
      * @model_alias: Model alias (for commenting purposes) that binds the timeline's event with the corresponding database table
-     * @f_key: foreign key to the aforementioned database table
+     * @foreign_id: foreign key to the aforementioned database table
      */
-    function add($param, $date, $type_name, $uid, $model_alias, $f_key){
+    function add($param, $date, $type_name, $uid, $model_alias, $foreign_id){
         
         // Encoding parameters into json
         if(!empty($param) && ($param != null))
@@ -70,7 +70,7 @@ class TimelinesController extends AppController {
         $data['date'] = $date;
         $data['template_id'] = $tltype;
         $data['model_alias'] = $model_alias;
-        $data['foreign_key'] = $f_key;
+        $data['foreign_id'] = $foreign_id;
 
         $this->Timeline->save($data);
     }
@@ -104,7 +104,7 @@ class TimelinesController extends AppController {
 
         $readabletimeline = $this->ReadableTimeline->find('all', 
             array('conditions' => $conditions,
-                'fields' => array('id','user_id','name','surname','login','gender','param','date','temp','icon', 'model_alias', 'foreign_id', 'comments_count'),
+                'fields' => array('id','user_id','name','surname','login','gender','param','date','temp','icon', 'model_alias', 'foreign_id', 'commentsCount'),
                 'limit' => $limit, 'recursive' => 0, 'page' => $start/$limit + 1
             )
         );

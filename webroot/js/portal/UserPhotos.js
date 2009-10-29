@@ -40,8 +40,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             url: 'photos/getphotos',
             root: 'photos',
             method: 'POST',
-            fields: ['id', 'name', 'filename', 'caption', 'width',
-                'height', 'url', 'is_hidden','default_photo', 'created'],
+            fields: ['id', 'name', 'filename', 'caption', 'width', 'height', 'url', 'is_hidden','default_photo', 'created', 'commentsCount'],
             listeners:{
                 load: function(){
                     this.parent.setTitle(
