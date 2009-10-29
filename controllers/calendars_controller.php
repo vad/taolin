@@ -147,6 +147,20 @@ class CalendarsController extends AppController {
         $res = $this->Calendar->Event->find('all', $params);
         $events = Set::extract($res, '{n}.Event');
 
+        foreach ($events as &$event) {
+            $this->Calendar->Event->create($event);
+
+            $comments = $this->Calendar->Event->getComments(array(
+                'options' => array(
+                    'conditions' => array(
+                        'Comment.status' => 'pending'
+                    )
+                )
+            ));
+
+            $event['commentsCount'] = count(Set::extract($comments, '{n}.Comment'));
+        }
+
         $out = array();
         $out['totalCount'] = $events_cnt;
         $out['events'] = $events;

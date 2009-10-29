@@ -48,7 +48,7 @@ Events = function(conf, panel_conf){
         url: 'calendars/get'
         ,root: 'events'
         ,totalProperty: 'totalCount'
-        ,fields: ['end_time', 'start_time', 'summary', 'description', 'location', 'uid']
+        ,fields: ['id', 'end_time', 'start_time', 'summary', 'description', 'location', 'uid', 'commentsCount']
         ,parent: this
         ,listeners: {
             load: function(store, records, options) {
@@ -108,15 +108,27 @@ Events = function(conf, panel_conf){
 		store: store,
         cm: new Ext.grid.ColumnModel([
             this.expander,
-            {id:'title'
-            , renderer: function(value, p, record) {
-                var df = 'M, d H:i';
-                var sd = Date.parseDate(record.get('start_time'), 'Y-m-d H:i:s').dateFormat(df);
-                var ed = Date.parseDate(record.get('end_time'), 'Y-m-d H:i:s').dateFormat(df);
-                value = String.format(
-                    '<p style="color:#888">From {0} to {1}</p><b>{2}</b>',
-                    sd, ed, record.get('summary'));
-                return value;
+            {
+                id:'title'
+                ,renderer: function(value, p, record) {
+                    var df = 'M, d H:i';
+                    var sd = Date.parseDate(record.get('start_time'), 'Y-m-d H:i:s').dateFormat(df);
+                    var ed = Date.parseDate(record.get('end_time'), 'Y-m-d H:i:s').dateFormat(df);
+                    value = String.format(
+                        '<p style="color:#888">From {0} to {1}</p><b>{2}</b>',
+                        sd, ed, record.get('summary')
+                    );
+
+                    // comments
+                    value += String.format('<div style="float:right" onclick="openCommentWindow(\'Event\', {0})">', record.get('id'));
+                    if (record.get('commentsCount'))
+                        value += record.get('commentsCount') +'<img class="inline" src="js/portal/shared/icons/fam/comment.png"/>';
+                    else 
+                        value += '<img class="inline" src="js/portal/shared/icons/fam/comment_add.png"/>';
+
+                    value += '</div>';
+
+                    return value;
                 }
             }
         ]),
