@@ -606,11 +606,6 @@ color:black;
     border: 2px solid #CCCCCC;
 }
 
-.comment a{
-    font-weight: bold;
-    text-decoration: none;
-}
-
 .timeline-wrapper {
     padding: 5px 0;
     min-height: 60px;
