@@ -27,7 +27,7 @@ CommentWindow = function(model_alias, foreign_id) {
         url: this.model + '/getcomments/' + this.f_id
         ,root: 'comments'
         ,method: 'GET'
-        ,fields: ['id','user_id','body', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'name', 'surname']
+        ,fields: ['id','user_id','body', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'user_name', 'user_surname']
         ,autoLoad: true
         ,listeners:{
             'load': {
@@ -52,7 +52,7 @@ CommentWindow = function(model_alias, foreign_id) {
                                 '</div>',
                             '</td>',
                             '<td>',
-                                '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{name} {surname}</b></a> {[values.body.urlize().smilize()]}',
+                                '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
                                 '<div style="color:gray;padding-top: 5px;font-size:90%;">{[values.created.format("F, d \\\\a\\\\t H:i")]}</div>',
                             '</td>',
                         '</tr>',

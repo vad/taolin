@@ -1,24 +1,25 @@
 <?php
-/*
- * SimplePie CakePHP Component
- * Copyright (c) 2007 Matt Curry
- * www.PseudoCoder.com
- *
- * Based on the work of Scott Sansoni (http://cakeforge.org/snippet/detail.php?type=snippet&id=53)
- *
- * @author      mattc <matt@pseudocoder.com>
- * @version     1.0
- * @license     MIT
- *
- */
+/**
+  * This file is part of taolin project (http://taolin.fbk.eu)
+  * Copyright (C) 2008, 2009 FBK Foundation, (http://www.fbk.eu)
+  * Authors: SoNet Group (see AUTHORS.txt)
+  *
+  * Taolin is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU Affero General Public License as published by
+  * the Free Software Foundation version 3 of the License.
+  *
+  * Taolin is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU Affero General Public License for more details.
+  *
+  * You should have received a copy of the GNU Affero General Public License
+  * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
+  *
+  */
 
 class CommentComponent extends Object {
-
-    /*
-    function __construct() {
-      $this->cache = CACHE . 'rss' . DS;
-    }
-    */
+    var $user = null;
 
     function addComment(&$Model, $params, $user_id){
         
@@ -36,9 +37,20 @@ class CommentComponent extends Object {
     }
 
     
-    // Retrieve comments for a single message with id = $b_id
+    function setupUserModel() {
+        if ($this->user == null) {
+            App::import('Model', 'User');
+
+            $this->user = & new User();
+        }
+    }
+
+
+
+    // Retrieve comments for a single data with id = $foreign_id
     // TODO: move this into the behaviour!
-    function getComments(&$Model, $foreign_id){
+    // $dirty=TRUE means that this functions must not do postprocessing
+    function getComments(&$Model, $foreign_id, $dirty=FALSE){
         $filter = array($Model->alias.'.id' => $foreign_id);
         $boardmsg = $Model->find('first', array(
             'conditions' => $filter,
@@ -54,12 +66,32 @@ class CommentComponent extends Object {
             )
         ));
 
+        if ($dirty) return $comments;
+
+        $this->setupUserModel();
+
+        foreach ($comments as &$comment) {
+            $conditions = array('id' => $comment['Comment']['name']);
+            $user = $this->user->find('first', array(
+                'conditions' => $conditions,
+                'fields' => array('User.login', 'User.name', 'User.surname'),
+                'recursive' => FALSE
+            ));
+
+            $comment['Comment']['user_login'] = $user['User']['login'];
+            $comment['Comment']['user_name'] = $user['User']['name'];
+            $comment['Comment']['user_surname'] = $user['User']['surname'];
+            $comment['Comment']['user_id'] = $comment['Comment']['name'];
+            unset($comment['Comment']['name']);
+
+        }
+
         return $comments;
     }
 
 
     function getCommentCount(&$Model, $foreign_id) {
-        $comments = $this->getComments($Model, $foreign_id);
+        $comments = $this->getComments($Model, $foreign_id, TRUE);
 
         if(!(empty($comments)))
             return count($comments);
