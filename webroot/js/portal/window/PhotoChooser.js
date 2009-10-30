@@ -48,7 +48,7 @@ PhotoChooser.prototype = {
                 method: 'POST',
                 baseParams: {id: window.user.id},
 			    fields: [
-			        'id', 'name', 'filename', 'caption', 'url','is_hidden','default_photo',
+			        'id', 'name', 'filename', 'caption', 'is_hidden','default_photo',
 			        {name:'size', type: 'float'},
                     {name:'created'},
                     {name: 'modified'}
@@ -101,7 +101,7 @@ PhotoChooser.prototype = {
 				prepareData: formatData.createDelegate(this)
 			});
 
-            this.setDefaultPhoto = function(p_id, url){
+            this.setDefaultPhoto = function(p_id, filename){
                 if(p_id){
                     Ext.Ajax.request({
                         url : 'photos/setdefaultphoto/'+p_id ,
@@ -120,8 +120,9 @@ PhotoChooser.prototype = {
                         }
                     });
                 }
-                if(url) {
-                    Ext.get('user_photo').dom.src = url;
+                if(filename) {
+                    filename_to_jpg = Ext.util.Format.substr(filename, 0, filename.lastIndexOf(".")) + ".jpg";
+                    Ext.get('user_photo').dom.src = window.config.img_path + "t140x140/" + filename_to_jpg;
                 }
                 else showUserInfo(null, null, '{"source": "photo editor"}');
             };
@@ -400,7 +401,7 @@ PhotoChooser.prototype = {
                         '<span><b>This is your default photo</b></span><br /><br />',
                     '</tpl>',
                     '<tpl if="(defaultPhoto == \'0\')">',
-                        '<span><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').setDefaultPhoto(\'{id}\', \'{url}\')">Set this as your default photo!!!</a></span><br /><br />',
+                        '<span><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').setDefaultPhoto(\'{id}\', \'{filename}\')">Set this as your default photo!!!</a></span><br /><br />',
                     '</tpl>',
 					'<b>Description: </b><span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'caption\', \'{[values.caption ? (values.description).replace(/\'/g,"\\\'") : ""]}\')">(edit)</a></span><br />',
 					'<span>{formattedDescription}</span>',

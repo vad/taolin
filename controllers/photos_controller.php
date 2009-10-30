@@ -73,12 +73,7 @@ class PhotosController extends AppController {
 
         foreach($photo_ar as $photo){
             $photo['Photo']['size'] = $photo[0]['size'];
-            if (($photo['Photo']) && (!$photo['Photo']['hidden'])){ 
-                $photo['Photo']['url'] = (Router::url('/')).'img/'.$imagefoldername.$photo['Photo']['filename'];
-            }
-
             $photo['Photo']['commentsCount'] = $this->Comment->getCommentCount($this->Photo, $photo['Photo']['id']);
-
             $photos[] = $photo['Photo'];
         }
 
