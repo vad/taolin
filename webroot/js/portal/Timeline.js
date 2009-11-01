@@ -151,7 +151,6 @@ Timeline = Ext.extend(Ext.Panel, {
             '</div>',
             {
                 parent: this
-                ,today: new Date()
                 ,processedDate: null // Current date being processed (belonging to the currently processed event)
                 ,lastEventOfDay: false // Last event of day
                 // Returns true if the owner of the timeline's event is the user
@@ -180,14 +179,13 @@ Timeline = Ext.extend(Ext.Panel, {
                     // Formatting Date object in order to compare it
                     formattedEventDate = eventDate.toDateString();
 
-                    // Yesterday's Date
-                    var yesterday = new Date();
-                    yesterday.setDate(this.today.getDate() - 1);
+                    var today = new Date(), yesterday = new Date();
+                    yesterday.setDate(today.getDate() - 1);
 
                     // Comparing Date
-                    if(formattedEventDate == this.today.toDateString()){
+                    if(formattedEventDate == today.toDateString()){
                         if(printHours){
-                            var diff = Math.ceil((this.today.getTime()-eventDate.getTime())/(1000*60));
+                            var diff = Math.ceil((today.getTime()-eventDate.getTime())/(1000*60));
                             return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
                         } 
                         else return 'Today';

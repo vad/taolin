@@ -60,20 +60,19 @@ CommentWindow = function(model_alias, foreign_id) {
                 '</div>',
             '</tpl>'
             ,{
-                today: new Date()
-                ,formatEventDate: function(eventDate, printHours){
+                formatEventDate: function(eventDate, printHours){
                     
                     // Formatting Date object in order to compare it
                     formattedEventDate = eventDate.toDateString();
 
                     // Yesterday's Date
-                    var yesterday = new Date();
-                    yesterday.setDate(this.today.getDate() - 1);
+                    var today = new Date(), yesterday = new Date();
+                    yesterday.setDate(today.getDate() - 1);
 
                     // Comparing Date
-                    if(formattedEventDate == this.today.toDateString()){
+                    if(formattedEventDate == today.toDateString()){
                         if(printHours){
-                            var diff = Math.ceil((this.today.getTime()-eventDate.getTime())/(1000*60));
+                            var diff = Math.ceil((today.getTime()-eventDate.getTime())/(1000*60));
                             return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
                         } 
                         else return 'Today';
