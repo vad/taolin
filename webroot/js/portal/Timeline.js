@@ -139,7 +139,7 @@ Timeline = Ext.extend(Ext.Panel, {
                                 '</tr>',
                             '</table>',
                             '<tpl if="commentsCount &gt; 0">',
-                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><span class="underlineHover">' + Ext.util.Format.plural('{commentsCount}', "comment") + '</span> <img src="js/portal/shared/icons/fam/comment.png" title="View ' + Ext.util.Format.plural('{commentsCount}', "comment") + '"></span>',
+                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><span class="underlineHover">{[this.formatComments(values.commentsCount)]}</span> <img src="js/portal/shared/icons/fam/comment.png" title="View {[this.formatComments(values.commentsCount)]}"></span>',
                             '</tpl>',
                             '<tpl if="commentsCount &lt;= 0">',
                                 '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><span class="underlineHover">Add a comment</span> <img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment"></span>',
@@ -215,6 +215,9 @@ Timeline = Ext.extend(Ext.Panel, {
                     var limit = this.parent.view.store.baseParams.limit;
 
                     return (start + limit) >= total;
+                }
+                ,formatComments: function(cc){
+                    return Ext.util.Format.plural(cc, 'comment');
                 }
             }
         );
