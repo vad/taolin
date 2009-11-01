@@ -62,6 +62,10 @@ Timeline = Ext.extend(Ext.Panel, {
         Ext.apply(this, Ext.apply(this.initialConfig, config));
 
         Timeline.superclass.initComponent.apply(this, arguments);
+
+        /*commentManager.on("addcomment", function(){
+            console.log("Weeeeepppaaa!!!");        
+        });*/
     }
     ,onRender: function(){
 
@@ -92,7 +96,7 @@ Timeline = Ext.extend(Ext.Panel, {
                     '<tpl for=".">',
                         '<div class="timeline-wrapper">',
                             '<tpl if="this.checkEventDate(date, xindex)">',
-                                '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{[this.formatEventDate(values.date)]}</b></span></div>',
+                                '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{[this.formatEventDate(values.date, false)]}</b></span></div>',
                             '</tpl>',
                             '<tpl if="!(this.lastEventOfDay)">',
                                 '<hr style="border: 1px solid #E5ECF9;width:80%;margin-top:10px;margin-bottom:10px;" />',
@@ -104,7 +108,7 @@ Timeline = Ext.extend(Ext.Panel, {
                                 '<tpl if="(icon != null)">',
                                     '<img src="{icon}" class="size16x16" /> ',
                                 '</tpl>',
-                                '{[values.date.format("M, d H:i")]}',
+                                '{[this.formatEventDate(values.date, true)]}',
                             '</span><br />',
                             '<table>',
                                 '<tr>',
@@ -147,6 +151,7 @@ Timeline = Ext.extend(Ext.Panel, {
             '</div>',
             {
                 parent: this
+                ,today: new Date()
                 ,processedDate: null // Current date being processed (belonging to the currently processed event)
                 ,lastEventOfDay: false // Last event of day
                 // Returns true if the owner of the timeline's event is the user
@@ -170,24 +175,27 @@ Timeline = Ext.extend(Ext.Panel, {
 
                     return this.lastEventOfDay;
                 }
-                ,formatEventDate: function(eventDate){
+                ,formatEventDate: function(eventDate, printHours){
+                    
                     // Formatting Date object in order to compare it
                     formattedEventDate = eventDate.toDateString();
-                    
-                    // Today's Date
-                    var today = new Date();
 
                     // Yesterday's Date
-                    var yesterday = new Date()
-                    yesterday.setDate(yesterday.getDate() - 1);
+                    var yesterday = new Date();
+                    yesterday.setDate(this.today.getDate() - 1);
 
                     // Comparing Date
-                    if(formattedEventDate == today.toDateString())
-                        return 'Today';
+                    if(formattedEventDate == this.today.toDateString()){
+                        if(printHours){
+                            var diff = Math.ceil((this.today.getTime()-eventDate.getTime())/(1000*60));
+                            return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
+                        } 
+                        else return 'Today';
+                    }
                     else if(formattedEventDate == yesterday.toDateString())
-                        return 'Yesterday';
+                        return printHours ? 'Yestarday at ' + eventDate.format('H:1') : 'Yesterday';
                     else
-                        return eventDate.format('F, d Y');
+                        return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
                 }
                 // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)
                 ,photoExtToJpg: function(screenshot){

@@ -53,12 +53,37 @@ CommentWindow = function(model_alias, foreign_id) {
                             '</td>',
                             '<td>',
                                 '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
-                                '<div style="color:gray;padding-top: 5px;font-size:90%;">{[values.created.format("F, d \\\\a\\\\t H:i")]}</div>',
+                                '<div style="color:gray;padding-top: 5px;font-size:90%;">{[this.formatEventDate(values.created, true)]}</div>',
                             '</td>',
                         '</tr>',
                     '</table>',
                 '</div>',
             '</tpl>'
+            ,{
+                today: new Date()
+                ,formatEventDate: function(eventDate, printHours){
+                    
+                    // Formatting Date object in order to compare it
+                    formattedEventDate = eventDate.toDateString();
+
+                    // Yesterday's Date
+                    var yesterday = new Date();
+                    yesterday.setDate(this.today.getDate() - 1);
+
+                    // Comparing Date
+                    if(formattedEventDate == this.today.toDateString()){
+                        if(printHours){
+                            var diff = Math.ceil((this.today.getTime()-eventDate.getTime())/(1000*60));
+                            return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
+                        } 
+                        else return 'Today';
+                    }
+                    else if(formattedEventDate == yesterday.toDateString())
+                        return printHours ? 'Yestarday at ' + eventDate.format('H:1') : 'Yesterday';
+                    else
+                        return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
+                }
+            }
         )
         ,emptyText: '<div style="padding:10px 5px;font-size:100%"><b><div class="warning-message">No comments!</b></div></div>'
 	    ,itemSelector: 'div.comment'
