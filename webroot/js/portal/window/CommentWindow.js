@@ -78,7 +78,7 @@ CommentWindow = function(model_alias, foreign_id) {
                         else return 'Today';
                     }
                     else if(formattedEventDate == yesterday.toDateString())
-                        return printHours ? 'Yestarday at ' + eventDate.format('H:1') : 'Yesterday';
+                        return printHours ? 'Yestarday at ' + eventDate.format('H:i') : 'Yesterday';
                     else
                         return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
                 }
