@@ -120,9 +120,9 @@ Events = function(conf, panel_conf){
                     );
 
                     // comments
-                    value += String.format('<div style="float:right" onclick="openCommentWindow(\'Event\', {0})">', record.get('id'));
+                    value += String.format('<div class="comment-icons-text" style="float:right" onclick="openCommentWindow(\'Event\', {0})">', record.get('id'));
                     if (record.get('commentsCount'))
-                        value += record.get('commentsCount') +'<img class="inline" src="js/portal/shared/icons/fam/comment.png"/>';
+                        value += record.get('commentsCount') +' <img class="inline" src="js/portal/shared/icons/fam/comment.png"/>';
                     else 
                         value += '<img class="inline" src="js/portal/shared/icons/fam/comment_add.png"/>';
 

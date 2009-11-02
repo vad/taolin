@@ -663,3 +663,7 @@ color:black;
 img.inline {
     vertical-align:middle;
 }
+
+.comment-icons-text {
+    cursor: pointer;
+}
