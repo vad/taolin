@@ -40,11 +40,12 @@ function application_init(){
     var qtip = Ext.QuickTips.getQuickTip();
     qtip.interceptTitles = true;
 
-    commentManager = new Ext.ux.fbk.sonet.EventManager({
-        name: "commentmanager"
+    eventManager = new Ext.ux.fbk.sonet.EventManager({
+        name: "taolin-event-manager"
         ,events: {
-            addcomment: true,
-            removecomment: true
+            addcomment: true
+            ,removecomment: true
+            ,newtimelineevent: true
         }
         ,listeners:{
             addcomment: function(){

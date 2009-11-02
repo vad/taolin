@@ -125,7 +125,7 @@ CommentWindow = function(model_alias, foreign_id) {
                         success: function(form,action){
                             form.reset(); // Cleaning form
                             store.reload();
-                            commentManager.fireEvent("addcomment", model);
+                            eventManager.fireEvent("addcomment", model);
                         }
                     }
                 );

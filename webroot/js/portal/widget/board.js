@@ -46,7 +46,7 @@ Board = function(conf, panel_conf){
 
     this.maxTextLength = 150;
 
-    this.cm = commentManager;
+    this.eventManager = eventManager;
 
     this.form = new Ext.form.FormPanel({
         autoHeight: true
@@ -484,12 +484,12 @@ Board = function(conf, panel_conf){
         }]
     });
 
-    this.cm.on("addcomment", function(model){ 
+    this.eventManager.on("addcomment", function(model){ 
         if(model && model === 'boards') 
             this.view.store.reload(); 
     }, this);
 
-    this.cm.on("removecomment", function(model){ 
+    this.eventManager.on("removecomment", function(model){ 
         if(model && model === 'boards') 
             this.view.store.reload(); 
     }, this);

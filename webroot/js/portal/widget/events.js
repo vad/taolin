@@ -42,7 +42,7 @@ Events = function(conf, panel_conf){
     
     this.autoExpand = conf.autoExpand;
 
-    this.commentManager = commentManager;
+    this.eventManager = eventManager;
 
     eventId = this.getId();
     
@@ -162,12 +162,12 @@ Events = function(conf, panel_conf){
     
     store.load();
     
-    this.commentManager.on("addcomment", function(model){ 
+    this.eventManager.on("addcomment", function(model){ 
         if(model && model === 'events')
             store.reload(); 
     }, this);
 
-    this.commentManager.on("removecomment", function(model){ 
+    this.eventManager.on("removecomment", function(model){ 
         if(model && model === 'events') 
             store.reload(); 
     }, this);
