@@ -46,6 +46,8 @@ Board = function(conf, panel_conf){
 
     this.maxTextLength = 150;
 
+    this.cm = commentManager;
+
     this.form = new Ext.form.FormPanel({
         autoHeight: true
         ,bodyStyle:'padding:10px;'
@@ -460,7 +462,7 @@ Board = function(conf, panel_conf){
             ,parent: this
         })
     });
-    
+
     Board.superclass.constructor.call(this, {
         autoHeight: true,
         autoWidth: true,
@@ -482,6 +484,15 @@ Board = function(conf, panel_conf){
         }]
     });
 
+    this.cm.on("addcomment", function(model){ 
+        if(model && model === 'boards') 
+            this.view.store.reload(); 
+    }, this);
+
+    this.cm.on("removecomment", function(model){ 
+        if(model && model === 'boards') 
+            this.view.store.reload(); 
+    }, this);
 };
 
 Ext.extend(Board, Ext.Panel); 

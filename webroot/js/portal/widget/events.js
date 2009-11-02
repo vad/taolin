@@ -42,6 +42,8 @@ Events = function(conf, panel_conf){
     
     this.autoExpand = conf.autoExpand;
 
+    this.commentManager = commentManager;
+
     eventId = this.getId();
     
     var store = new Ext.data.JsonStore({
@@ -159,6 +161,16 @@ Events = function(conf, panel_conf){
     });
     
     store.load();
+    
+    this.commentManager.on("addcomment", function(model){ 
+        if(model && model === 'events')
+            store.reload(); 
+    }, this);
+
+    this.commentManager.on("removecomment", function(model){ 
+        if(model && model === 'events') 
+            store.reload(); 
+    }, this);
 };
 
 Ext.extend(Events, Ext.grid.GridPanel);

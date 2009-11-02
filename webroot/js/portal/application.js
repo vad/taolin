@@ -39,7 +39,23 @@ function application_init(){
     
     var qtip = Ext.QuickTips.getQuickTip();
     qtip.interceptTitles = true;
-    
+
+    commentManager = new Ext.ux.fbk.sonet.EventManager({
+        name: "commentmanager"
+        ,events: {
+            addcomment: true,
+            removecomment: true
+        }
+        ,listeners:{
+            addcomment: function(){
+                reloadTimeline();
+            }
+            ,removecomment: function(){
+                reloadTimeline();
+            }
+        }
+    });
+
     /*
      * Themes for Taolin gui
      */

@@ -62,6 +62,10 @@ Timeline = Ext.extend(Ext.Panel, {
         Ext.apply(this, Ext.apply(this.initialConfig, config));
 
         Timeline.superclass.initComponent.apply(this, arguments);
+
+        /*commentManager.on("addcomment", function(){
+            console.log("Weeeeepppaaa!!!");        
+        });*/
     }
     ,onRender: function(){
 
@@ -92,7 +96,7 @@ Timeline = Ext.extend(Ext.Panel, {
                     '<tpl for=".">',
                         '<div class="timeline-wrapper">',
                             '<tpl if="this.checkEventDate(date, xindex)">',
-                                '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{[this.formatEventDate(values.date)]}</b></span></div>',
+                                '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{[this.formatEventDate(values.date, false)]}</b></span></div>',
                             '</tpl>',
                             '<tpl if="!(this.lastEventOfDay)">',
                                 '<hr style="border: 1px solid #E5ECF9;width:80%;margin-top:10px;margin-bottom:10px;" />',
@@ -104,7 +108,7 @@ Timeline = Ext.extend(Ext.Panel, {
                                 '<tpl if="(icon != null)">',
                                     '<img src="{icon}" class="size16x16" /> ',
                                 '</tpl>',
-                                '{[values.date.format("M, d H:i")]}',
+                                '{[this.formatEventDate(values.date, true)]}',
                             '</span><br />',
                             '<table>',
                                 '<tr>',
@@ -135,10 +139,10 @@ Timeline = Ext.extend(Ext.Panel, {
                                 '</tr>',
                             '</table>',
                             '<tpl if="commentsCount &gt; 0">',
-                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">{commentsCount} <img src="js/portal/shared/icons/fam/comment.png" title="View comments"></span>',
+                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><span class="underlineHover">{[this.formatComments(values.commentsCount)]}</span> <img src="js/portal/shared/icons/fam/comment.png" title="View {[this.formatComments(values.commentsCount)]}"></span>',
                             '</tpl>',
                             '<tpl if="commentsCount &lt;= 0">',
-                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment"></span>',
+                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><span class="underlineHover">Add a comment</span> <img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment"></span>',
                             '</tpl>',
                         '</div>',
                     '</tpl>',
@@ -170,24 +174,26 @@ Timeline = Ext.extend(Ext.Panel, {
 
                     return this.lastEventOfDay;
                 }
-                ,formatEventDate: function(eventDate){
+                ,formatEventDate: function(eventDate, printHours){
+                    
                     // Formatting Date object in order to compare it
                     formattedEventDate = eventDate.toDateString();
-                    
-                    // Today's Date
-                    var today = new Date();
 
-                    // Yesterday's Date
-                    var yesterday = new Date()
-                    yesterday.setDate(yesterday.getDate() - 1);
+                    var today = new Date(), yesterday = new Date();
+                    yesterday.setDate(today.getDate() - 1);
 
                     // Comparing Date
-                    if(formattedEventDate == today.toDateString())
-                        return 'Today';
+                    if(formattedEventDate == today.toDateString()){
+                        if(printHours){
+                            var diff = Math.ceil((today.getTime()-eventDate.getTime())/(1000*60));
+                            return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
+                        } 
+                        else return 'Today';
+                    }
                     else if(formattedEventDate == yesterday.toDateString())
-                        return 'Yesterday';
+                        return printHours ? 'Yestarday at ' + eventDate.format('H:i') : 'Yesterday';
                     else
-                        return eventDate.format('F, d Y');
+                        return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
                 }
                 // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)
                 ,photoExtToJpg: function(screenshot){
@@ -207,6 +213,9 @@ Timeline = Ext.extend(Ext.Panel, {
                     var limit = this.parent.view.store.baseParams.limit;
 
                     return (start + limit) >= total;
+                }
+                ,formatComments: function(cc){
+                    return Ext.util.Format.plural(cc, 'comment');
                 }
             }
         );
