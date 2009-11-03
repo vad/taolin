@@ -18,10 +18,11 @@
 */
 
 
-CommentWindow = function(model_alias, foreign_id) {
+CommentWindow = function(model_alias, foreign_id, event_html) {
 
     this.model = Ext.util.Format.lowercase(model_alias) + 's';
     this.f_id = foreign_id;
+    this.event_html = event_html;
 
     this.store = new Ext.data.JsonStore({
         url: this.model + '/getcomments/' + this.f_id
@@ -30,7 +31,7 @@ CommentWindow = function(model_alias, foreign_id) {
         ,fields: ['id','user_id','body', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'user_name', 'user_surname']
         ,autoLoad: true
         ,listeners:{
-            'load': {
+            load: {
                 fn: function(){
                     this.center();
                 }
@@ -78,7 +79,7 @@ CommentWindow = function(model_alias, foreign_id) {
                         else return 'Today';
                     }
                     else if(formattedEventDate == yesterday.toDateString())
-                        return printHours ? 'Yestarday at ' + eventDate.format('H:i') : 'Yesterday';
+                        return printHours ? 'Yesterday at ' + eventDate.format('H:i') : 'Yesterday';
                     else
                         return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
                 }
@@ -89,6 +90,17 @@ CommentWindow = function(model_alias, foreign_id) {
         ,height: 300
         ,autoScroll: true
         ,style: 'padding-top: 10px'
+        ,listeners:{
+            render:{
+                fn: function(){
+                    if(this.event_html){
+                        $("#commented-event").css({'background':'#eee','margin':'auto auto','padding':'10px 5px'}); // Styling
+                        this.event_html.clone().appendTo("#commented-event"); // Appending event
+                    }
+                }
+                ,scope: this
+            }
+        }
     });
 
     this.form = new Ext.form.FormPanel({
@@ -151,6 +163,8 @@ CommentWindow = function(model_alias, foreign_id) {
         ,iconCls:'chatwindowicon'
         ,constrain: true
         ,items: [{
+            html: '<div id="commented-event"></div>'
+        },{
             items: this.view
             ,border: false
             ,autoScroll: true
