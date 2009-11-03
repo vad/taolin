@@ -49,6 +49,7 @@ Timeline = Ext.extend(Ext.Panel, {
      * only events related to specified user. Default to null.
      */
     ,userId: null
+
     ,initComponent: function(){
         var config = {
             items: [{
@@ -139,10 +140,10 @@ Timeline = Ext.extend(Ext.Panel, {
                                 '</tr>',
                             '</table>',
                             '<tpl if="commentsCount &gt; 0">',
-                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><span class="underlineHover">{[this.formatComments(values.commentsCount)]}</span> <img src="js/portal/shared/icons/fam/comment.png" title="View {[this.formatComments(values.commentsCount)]}"></span>',
+                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id}, $(this).parent().find(\'table\'))"><span class="underlineHover">{[this.formatComments(values.commentsCount)]}</span> <img src="js/portal/shared/icons/fam/comment.png" title="View {[this.formatComments(values.commentsCount)]}"></span>',
                             '</tpl>',
                             '<tpl if="commentsCount &lt;= 0">',
-                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><span class="underlineHover">Add a comment</span> <img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment"></span>',
+                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id}, $(this).parent().find(\'table\'))"><span class="underlineHover">Add a comment</span> <img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment"></span>',
                             '</tpl>',
                         '</div>',
                     '</tpl>',
@@ -191,7 +192,7 @@ Timeline = Ext.extend(Ext.Panel, {
                         else return 'Today';
                     }
                     else if(formattedEventDate == yesterday.toDateString())
-                        return printHours ? 'Yestarday at ' + eventDate.format('H:i') : 'Yesterday';
+                        return printHours ? 'Yesterday at ' + eventDate.format('H:i') : 'Yesterday';
                     else
                         return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
                 }

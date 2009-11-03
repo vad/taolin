@@ -71,10 +71,10 @@ Events = function(conf, panel_conf){
 	this.expander = new Ext.grid.RowExpander({
         tpl: new Ext.XTemplate(
             '<tpl if="((description) && (description !== \'\'))">'
-		    ,'<div class="description"><p><b>Description:</b> {description}</p></div>'
+                ,'<div class="description"><p><b>Description:</b> {description}</p></div>'
             ,'</tpl>'
             ,'<tpl if="(!((description) && (description !== \'\')))">'
-		    ,'<div><p>No description available</p></div>'
+                ,'<div><p>No description available</p></div>'
             ,'</tpl>'
             ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{uid}" target="_blank">more...</a></span>'
             ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="javascript:Ext.getCmp(\''+eventId+'\').sendTo()">Email to</a> | </span>'
@@ -122,7 +122,7 @@ Events = function(conf, panel_conf){
                     );
 
                     // comments
-                    value += String.format('<div class="comment-icons-text" style="float:right" onclick="openCommentWindow(\'Event\', {0})">', record.get('id'));
+                    value += String.format('<div class="comment-icons-text" style="float:right" onclick="openCommentWindow(\'Event\', {0}, $(\'{1}\').html(\'{2}\').css(\'text-align\', \'center\').wrapInner(\'{3}\'))">', record.get('id'), "<div>", Ext.util.Format.htmlEncode(record.get('summary')), "<b></b>");
                     if (record.get('commentsCount'))
                         value += record.get('commentsCount') +' <img class="inline" src="js/portal/shared/icons/fam/comment.png"/>';
                     else 
