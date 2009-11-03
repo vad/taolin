@@ -89,7 +89,6 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
 	    ,itemSelector: 'div.comment'
         ,height: 300
         ,autoScroll: true
-        ,style: 'padding-top: 10px'
         ,listeners:{
             render:{
                 fn: function(){
