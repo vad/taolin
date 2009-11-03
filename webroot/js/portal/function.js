@@ -722,7 +722,7 @@ function range(/*[start,] stop[, step]*/) {
 
     var a = [];
     for (var i = min; i <= max; i += step) {
-        a[i] = i;
+        a.push(i);
     }
     return a;
 }
