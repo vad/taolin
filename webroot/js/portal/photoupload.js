@@ -50,8 +50,8 @@ PhotoUpload = function(){
             emptyText: 'Select an image',
             fieldLabel: 'Photo',
             name: 'file',
+            buttonText: '',
             buttonCfg: {
-                text: '',
                 iconCls: 'upload-icon'
             },
             listeners: {
