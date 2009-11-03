@@ -262,7 +262,7 @@ Board = function(conf, panel_conf){
     };
     
     this.view = new Ext.DataView({
-        tpl: new Ext.XTemplate(
+        tpl: new Ext.ux.fbk.sonet.XTemplate(
         '<div class="nevede-widget">',
             '<tpl for=".">',
                 '<div id="'+this.getId()+'-{id}-wrapper" class="user-wrapper" style="background:{[xindex % 2 === 0 ? "white" : "#ECEFF5"]};text-align:left;">',
@@ -356,10 +356,7 @@ Board = function(conf, panel_conf){
             '</div>',
         '</div>', 
         {
-            isOwner: function(u_id){
-                return window.user.id === u_id;
-            }
-            ,pages: function(){
+            pages: function(){
                 var min = Math.max(0,this.getPageNumber()-5);
                 var max = Math.min(min+10, Math.ceil(this.parent.view.store.reader.jsonData.totalCount/limit));
 

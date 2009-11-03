@@ -71,11 +71,11 @@ Timeline = Ext.extend(Ext.Panel, {
     ,onRender: function(){
 
         timelineId = 'timeline';
-        timelineTemplate = new Ext.XTemplate( 
+        timelineTemplate = new Ext.ux.fbk.sonet.XTemplate( 
             '<div>',
                 '<tpl>',
                     // Pagination
-                    '<div style="margin: 5px auto; text-align: center; padding: 5px 0; color:#ddd;">',
+                    '<div style="margin: 5px auto; text-align: center; padding: 5px 0; color:#ddd;"',
                         '<tpl if="!this.isFirstPage()">',
                             '<span class="timeline-pagination"><img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/><a style="padding-right:5px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(0)">Newest</a></span>',
                             '<span class="timeline-pagination"><img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/><a href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(1)">Newer</a></span>',
@@ -154,10 +154,6 @@ Timeline = Ext.extend(Ext.Panel, {
                 parent: this
                 ,processedDate: null // Current date being processed (belonging to the currently processed event)
                 ,lastEventOfDay: false // Last event of day
-                // Returns true if the owner of the timeline's event is the user
-                ,isOwner: function(u_id){
-                    return window.user.id === u_id;
-                }
                 // Set
                 ,checkEventDate: function(eventDate, index){
 
@@ -174,31 +170,6 @@ Timeline = Ext.extend(Ext.Panel, {
                         this.lastEventOfDay = false;
 
                     return this.lastEventOfDay;
-                }
-                ,formatEventDate: function(eventDate, printHours){
-                    
-                    // Formatting Date object in order to compare it
-                    formattedEventDate = eventDate.toDateString();
-
-                    var today = new Date(), yesterday = new Date();
-                    yesterday.setDate(today.getDate() - 1);
-
-                    // Comparing Date
-                    if(formattedEventDate == today.toDateString()){
-                        if(printHours){
-                            var diff = Math.ceil((today.getTime()-eventDate.getTime())/(1000*60));
-                            return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
-                        } 
-                        else return 'Today';
-                    }
-                    else if(formattedEventDate == yesterday.toDateString())
-                        return printHours ? 'Yesterday at ' + eventDate.format('H:i') : 'Yesterday';
-                    else
-                        return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
-                }
-                // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)
-                ,photoExtToJpg: function(screenshot){
-                    return Ext.util.Format.substr(screenshot, 0, screenshot.lastIndexOf(".")) + '.jpg'; 
                 }
                 ,isFirstPage: function(){
 

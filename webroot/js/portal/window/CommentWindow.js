@@ -42,7 +42,7 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
 
     this.view = new Ext.DataView({
         store: this.store
-        ,tpl: new Ext.XTemplate(
+        ,tpl: new Ext.ux.fbk.sonet.XTemplate(
             '<tpl for=".">',
                 '<div class="comment border_radius_5px">',
                     '<table>',
@@ -60,30 +60,6 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
                     '</table>',
                 '</div>',
             '</tpl>'
-            ,{
-                formatEventDate: function(eventDate, printHours){
-                    
-                    // Formatting Date object in order to compare it
-                    formattedEventDate = eventDate.toDateString();
-
-                    // Yesterday's Date
-                    var today = new Date(), yesterday = new Date();
-                    yesterday.setDate(today.getDate() - 1);
-
-                    // Comparing Date
-                    if(formattedEventDate == today.toDateString()){
-                        if(printHours){
-                            var diff = Math.ceil((today.getTime()-eventDate.getTime())/(1000*60));
-                            return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
-                        } 
-                        else return 'Today';
-                    }
-                    else if(formattedEventDate == yesterday.toDateString())
-                        return printHours ? 'Yesterday at ' + eventDate.format('H:i') : 'Yesterday';
-                    else
-                        return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
-                }
-            }
         )
         ,emptyText: '<div style="padding:10px 5px;font-size:100%"><b><div class="warning-message">No comments!</b></div></div>'
 	    ,itemSelector: 'div.comment'
