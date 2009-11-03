@@ -49,9 +49,12 @@ function application_init(){
         }
         ,listeners:{
             addcomment: function(){
-                reloadTimeline();
+                this.fireEvent('newtimelineevent');
             }
             ,removecomment: function(){
+                this.fireEvent('newtimelineevent');
+            }
+            ,newtimelineevent: function(){
                 reloadTimeline();
             }
         }

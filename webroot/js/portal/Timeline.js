@@ -49,6 +49,7 @@ Timeline = Ext.extend(Ext.Panel, {
      * only events related to specified user. Default to null.
      */
     ,userId: null
+
     ,initComponent: function(){
         var config = {
             items: [{
