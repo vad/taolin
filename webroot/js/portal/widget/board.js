@@ -346,10 +346,10 @@ Board = function(conf, panel_conf){
             /* Paging... */
             '<div style="padding-top:10px;" class="pages">Pages: ',
                 '<tpl for="this.pages()">',
-                    '<tpl if="this.getPageNumber() != xindex">',
+                    '<tpl if="this.getPageNumber() != (values+1)">',
                         '<a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage({.+1})" class="page">{.+1}</a>',
                     '</tpl>',
-                    '<tpl if="this.getPageNumber() == xindex">',
+                    '<tpl if="this.getPageNumber() == (values+1)">',
                         '<span class="page">{.+1}</span>',
                     '</tpl>',
                 '</tpl>',
@@ -360,7 +360,10 @@ Board = function(conf, panel_conf){
                 return window.user.id === u_id;
             }
             ,pages: function(){
-                return range(Math.ceil(this.parent.view.store.reader.jsonData.totalCount/limit));
+                var min = Math.max(0,this.getPageNumber()-5);
+                var max = Math.min(min+10, Math.ceil(this.parent.view.store.reader.jsonData.totalCount/limit));
+
+                return range(min, max);
             }
             ,getPageNumber: function(){
                 return this.parent.currentPage;
