@@ -157,9 +157,9 @@ GroupDetails.prototype = {
     			    	'<div class="thumb"><img style="padding:10px;" width=112 height=140 src="img/nophoto.png"></img></div>',
                     '</tpl>',
 	    			'<span style="padding:10px;"><b>{shortName}</b></span>',
-                    '<tpl for="groups">',
+                    /*'<tpl for="groups">',
                         '<br /><span class="underlineHover" onclick="groupDetails(\'{id}\', \'{name}\', \'' + Ext.util.Format.htmlEncode('{"source": "group window", "group_id": "{id}"}') + '\')">{name}</span>',
-                    '</tpl>',
+                    '</tpl>',*/
                 '</div>',
 			'</tpl>', {
                 // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)
