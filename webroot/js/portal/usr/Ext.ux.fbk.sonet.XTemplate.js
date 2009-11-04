@@ -40,26 +40,33 @@ Ext.ux.fbk.sonet.XTemplate = Ext.extend(Ext.XTemplate, {
         return window.user.id === u_id;
     }
 
-    ,formatEventDate: function(eventDate, printHours){
+    ,formatDate: function(originalDate, printHours){
         
         // Formatting Date object in order to compare it
-        formattedEventDate = eventDate.toDateString();
+        formattedDate = originalDate.toDateString();
 
         var today = new Date(), yesterday = new Date();
         yesterday.setDate(today.getDate() - 1);
 
         // Comparing Date
-        if(formattedEventDate == today.toDateString()){
+        if(formattedDate == today.toDateString()){
             if(printHours){
-                var diff = Math.ceil((today.getTime()-eventDate.getTime())/(1000*60));
-                return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
+                var diff = Math.floor((today.getTime()-originalDate.getTime())/(1000*60));
+                if(diff == 0)
+                    return "Right now"
+                else
+                    return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
             } 
             else return 'Today';
         }
-        else if(formattedEventDate == yesterday.toDateString())
-            return printHours ? 'Yesterday at ' + eventDate.format('H:i') : 'Yesterday';
-        else
-            return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
+        else if(formattedDate == yesterday.toDateString())
+            return printHours ? 'Yesterday at ' + originalDate.format('H:i') : 'Yesterday';
+        else{
+            if(today.getYear() == originalDate.getYear())
+                return printHours ? originalDate.format('F, d \\a\\t H:i') : originalDate.format('F, d');
+            else
+                return printHours ? originalDate.format('F, d Y \\a\\t H:i') : originalDate.format('F, d Y');
+        }
     }
 
     // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)

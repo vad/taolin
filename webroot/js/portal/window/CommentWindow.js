@@ -54,7 +54,7 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
                             '</td>',
                             '<td style="padding-left:10px;">',
                                 '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
-                                '<div style="color:gray;padding-top:5px;font-size:90%;">{[this.formatEventDate(values.created, true)]}</div>',
+                                '<div style="color:gray;padding-top:5px;font-size:90%;">{[this.formatDate(values.created, true)]}</div>',
                             '</td>',
                         '</tr>',
                     '</table>',
