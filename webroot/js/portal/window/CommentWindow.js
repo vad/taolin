@@ -48,13 +48,13 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
                     '<table>',
                         '<tr>',
                             '<td valign=top>',
-                                '<div style="text-align:center;width:50px;cursor:pointer;" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')">',
+                                '<div style="text-align:center;width:40px;cursor:pointer;padding-left:2px;" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')">',
                                     '<img style="padding:2px 0" src="photos/getphotofromuserid/{user_id}/40/40" title="View user\'s profile"/>',
                                 '</div>',
                             '</td>',
-                            '<td>',
+                            '<td style="padding-left:10px;">',
                                 '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
-                                '<div style="color:gray;padding-top: 5px;font-size:90%;">{[this.formatEventDate(values.created, true)]}</div>',
+                                '<div style="color:gray;padding-top:5px;font-size:90%;">{[this.formatEventDate(values.created, true)]}</div>',
                             '</td>',
                         '</tr>',
                     '</table>',
@@ -69,7 +69,7 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
             render:{
                 fn: function(){
                     if(this.event_html){
-                        $("#commented-event").css({'background':'#eee','margin':'auto auto','padding':'10px 5px'}); // Styling
+                        $("#commented-event").css({'background':'#ECEFF5','margin':'auto auto','padding':'10px 5px'}); // Styling
                         this.event_html.clone().appendTo("#commented-event"); // Appending event
                     }
                 }
