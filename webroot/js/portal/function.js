@@ -903,6 +903,24 @@ function addOrBounceWidget(identifier, type, logparams){
     }
 }
 
+function searchWidget(identifier, type){
+        
+    if(!type)
+        type = 'widget_id';
+    
+    var portal_central = Ext.getCmp('portal_central');
+
+    for (var i=0, col; col=portal_central.items.items[i++];) {
+        for (var j=0, p; p=col.items.items[j++];) {
+            if (identifier == p[type]){
+                return true;
+            } 
+        }
+    }
+
+    return false;
+}
+
 /*
  * returns an array that contains body size, scaled to the given ratio
  * 

@@ -57,6 +57,10 @@ jabberui = function () {
         createNewChatWindow: function(chatId){
             var chatName = chatId._node+'@'+chatId._domain;
             var chatWindow = Ext.getCmp(chatName);
+
+            if(!searchWidget('BuddyList','string_identifier'))
+                addwidget(5);
+
             if (!chatWindow) {
                 var newChat = new ChatWindow({
                     id: chatName,
