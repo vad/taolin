@@ -578,11 +578,24 @@ color:black;
     background: #FFFFFF url(../../ext/resources/images/default/form/text-bg.gif) repeat-x;
 }
 /* START user profile class */
+.user-profile-class {
+    text-align:left;
+    margin:10px;
+    line-height:150%;
+    font-size:100%;
+}
 .user-profile-class span{
     font-family: Arial;
 }
 .user-profile-class b{
     font-family: verdana;
+}
+.user-profile-class a {
+    text-decoration: none;
+}
+
+.user-profile-class a:hover {
+    text-decoration: underline;
 }
 /* END user profile class */
 

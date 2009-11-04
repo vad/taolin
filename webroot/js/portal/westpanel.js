@@ -161,7 +161,7 @@ westPanel = new Ext.Panel({
                 }
 
                 var userinfo_tpl = new Ext.XTemplate(
-                    '<div class="user-profile-class" style="text-align:left;margin:5px;line-height:150%;font-size:100%;">',
+                    '<div class="user-profile-class">',
                         '<b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
                         /* if own profile, prompt a shortcut to edit the profile */
                         '<tpl if="((this.reqid === \'\') || (this.reqid == window.user.id))">',
@@ -183,7 +183,7 @@ westPanel = new Ext.Panel({
                 );
 
                 var usertext_tpl = new Ext.XTemplate(
-                    '<div class="user-profile-class" style="text-align:left;margin:10px;line-height:150%;font-size:100%;">',
+                    '<div class="user-profile-class">',
                     '<span id="user-status"></span><br />',
                     /* check if the user is "chattable" */
                     '<tpl if="((this.reqid !== \'\') && (login) && (jabber.u_n !== login) && (active === \'1\'))">',
