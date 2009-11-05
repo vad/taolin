@@ -604,6 +604,11 @@ color:black;
     height:16px;
 }
 
+.size12x12 {
+    width:12px;
+    height:12px;
+}
+
 /* class to underline on mouse over */
 .underlineHover {
     text-decoration: none;
