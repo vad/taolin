@@ -53,7 +53,7 @@ Timeline = Ext.extend(Ext.Panel, {
     ,initComponent: function(){
         var config = {
             items: [{
-                html: '<div id="undodelevent" class="undodel"></div>',
+                html: '<div id="undodelevent-'+this.id+'" class="undodel"></div>',
                 display: 'none',
                 autoHeight: true,
                 border: false
@@ -103,7 +103,7 @@ Timeline = Ext.extend(Ext.Panel, {
                                 '<hr style="border: 1px solid #E5ECF9;width:80%;margin-top:10px;margin-bottom:10px;" />',
                             '</tpl>',
                             '<tpl if="this.isOwner(user_id)">',
-                                '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="Ext.getCmp(\'timeline\').deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
+                                '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="Ext.getCmp(\'{[this.parent.id]}\').deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
                             '</tpl>',
                             '<span style="color:#888888;font-size:90%;text-align:right;margin-left:5px;">',
                                 '<tpl if="(icon != null)">',
@@ -248,14 +248,15 @@ Timeline = Ext.extend(Ext.Panel, {
     ,deleteTimelineEvent: function(e_id){
 
         var store = this.view.store;
+        var parentId = this.id;
 
         if(e_id){
             Ext.Ajax.request({
                 url : 'timelines/deleteevent/'+e_id ,
                 method: 'GET',
                 success: function(result, request){
-                    Ext.get("undodelevent").update('Event deleted. <a href="javascript:void(0)" "onclick="Ext.getCmp(\'timeline\').undoDeleteTimelineEvent(' + e_id + ')">Undo</a> | <a href="javascript:showText(false, \'undodelevent\')">Hide</a>');
-                    showText(true, 'undodelevent');
+                    Ext.get("undodelevent-"+parentId).update('Event deleted. <a href="javascript:void(0)" "onclick="Ext.getCmp(\''+parentId+'\').undoDeleteTimelineEvent(' + e_id + ')">Undo</a> | <a href="javascript:showText(false, \'undodelevent\')">Hide</a>');
+                    showText(true, 'undodelevent-'+parentId);
                     store.load();
                 },
                 failure: function(){
@@ -272,13 +273,14 @@ Timeline = Ext.extend(Ext.Panel, {
     ,undoDeleteTimelineEvent:function(e_id){
 
         var store = this.view.store;
+        var parentId = this.id;
 
         if(e_id){
             Ext.Ajax.request({
                 url : 'timelines/undodeleteevent/'+e_id ,
                 method: 'GET',
                 success: function(result, request){
-                    showText(false, 'undodelevent');
+                    showText(false, 'undodelevent-' + parentId);
                     store.load();
                 },
                 failure: function(){
