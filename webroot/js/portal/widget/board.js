@@ -106,6 +106,7 @@ Board = function(conf, panel_conf){
             handler: function(){
                 
                 var boardStore = this.view.store;
+                var em = this.eventManager;
 
                 this.form.getForm().submit(
                     {
@@ -116,6 +117,7 @@ Board = function(conf, panel_conf){
                             form.reset();
                             form.findField('email').setValue(email);
                             boardStore.load();
+                            em.fireEvent('newtimelineevent');
                         }
                     }
                 );
@@ -197,11 +199,15 @@ Board = function(conf, panel_conf){
 
     this.modifyAds = function (a_id, newvalue){
        if(a_id){
+            var em = this.eventManager;
+
             Ext.Ajax.request({
                 url : 'boards/modifyads/',
                 params: {'ads_id': a_id, 'value': newvalue},
                 method: 'POST',
-                success: reloadTimeline,
+                success: function(){
+                    em.fireEvent('newtimelineevent');
+                },
                 failure: function(){
                     Ext.Msg.show({
                         title: 'Warning!',

@@ -233,13 +233,25 @@ Timeline = Ext.extend(Ext.Panel, {
         
         Timeline.superclass.onRender.apply(this, arguments);
     }
+    ,isReloadable: function(){
+        return !this.hidden;
+    }
     ,constructor: function(config){
          config = config || {};
          config.listeners = config.listeners || {};
          Ext.applyIf(config.listeners, {
-         //add listeners config here
-            expand: function(t){
-                reloadTimeline();
+            //add listeners config here
+            render: {
+                fn: function(timeline){
+                    eventManager.on('newtimelineevent', function(){
+                        if (timeline && timeline.isReloadable()){
+                            //Load the store
+                            timeline.view.store.load();
+                            //Reset reloadTask timeout to actual time
+                            timeline.reloadTask.taskRunTime = Date.parse(Date());
+                        }
+                    });
+                }
             }
          });
              

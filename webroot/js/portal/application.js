@@ -54,9 +54,6 @@ function application_init(){
             ,removecomment: function(){
                 this.fireEvent('newtimelineevent');
             }
-            ,newtimelineevent: function(){
-                reloadTimeline();
-            }
         }
     });
 

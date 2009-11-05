@@ -39,11 +39,10 @@ westPanel = new Ext.Panel({
     },
     items: [{
         xtype:'timeline'
-        /* Be careful if you want to change this id. It is used several times
-         * to access to the timeline and to its methods (in Timeline.js or in 
-         * reloadTimeline() into functions.js)
-         */
         ,id: 'timeline'
+        ,isReloadable: function(){
+            return !this.collapsed;
+        }
     },{
         xtype:'userprofile'
         ,id: 'user_profile'
