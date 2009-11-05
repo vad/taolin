@@ -60,7 +60,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
         //this.store.load({params: {id: westPanel.showedUser.id}});
 
         var tpl = new Ext.ux.fbk.sonet.XTemplate( 
-            '<div style="font-size:100%">',
+            '<div style="font-size:100%; overflow-y: none;">',
                 '<tpl for=".">',
                     '<div style="padding:10px;" class="thumb-wrap">',
                         /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
