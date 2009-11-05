@@ -63,10 +63,6 @@ Timeline = Ext.extend(Ext.Panel, {
         Ext.apply(this, Ext.apply(this.initialConfig, config));
 
         Timeline.superclass.initComponent.apply(this, arguments);
-
-        /*commentManager.on("addcomment", function(){
-            console.log("Weeeeepppaaa!!!");        
-        });*/
     }
     ,onRender: function(){
 
