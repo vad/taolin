@@ -43,6 +43,11 @@ westPanel = new Ext.Panel({
         ,isReloadable: function(){
             return !this.collapsed;
         }
+        ,listeners: {
+            expand: function(){
+                eventManager.fireEvent('newtimelineevent');
+            }
+        }
     },{
         xtype:'userprofile'
         ,id: 'user_profile'
