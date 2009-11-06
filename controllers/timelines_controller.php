@@ -20,9 +20,10 @@
 
 class TimelinesController extends AppController {
     var $name = 'Timelines';
-    var $helpers = array('Html','Form','Javascript');
+    var $helpers = array('Html','Form');
     var $uses = array('Photo','ReadableTimeline','Template','Timeline');
     var $components = array('Comment');
+    var $cacheName = "cake_controller_timelines_last-timeline-events";
 
     function beforeFilter()
     {
@@ -72,6 +73,9 @@ class TimelinesController extends AppController {
         $data['foreign_id'] = $foreign_id;
 
         $this->Timeline->save($data);
+
+        # clear cache
+        clearCache($this->cacheName, '', '');
     }
 
    
@@ -81,17 +85,21 @@ class TimelinesController extends AppController {
     function gettimeline(){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
-        $this->recursive = 0;
+
+        $limit_default = 15;
+        $start_default = 0;
 
         $u_id = $this->params['form']['u_id'];
-        $limit = $this->params['form']['limit'];
-        $start = $this->params['form']['start'];
 
-        if (!$limit)
-            $limit = 20;
+        if (array_key_exists('limit', $this->params['form']))
+            $limit = $this->params['form']['limit'];
+        else
+            $limit = $limit_default;
 
-        if (!$start)
-            $start = 0;
+        if (array_key_exists('start', $this->params['form']))
+            $start = $this->params['form']['start'];
+        else
+            $start = $start_default;
 
         $checked_users = array();
         
@@ -101,53 +109,71 @@ class TimelinesController extends AppController {
         else
             $conditions = 'date <= \''.date('Y-m-d H:i:s').'\'';
 
-        $readabletimeline = $this->ReadableTimeline->find('all', 
-            array('conditions' => $conditions,
-                'fields' => array('id','user_id','name','surname','login','gender','param','date','temp','icon', 'model_alias', 'foreign_id', 'commentsCount'),
-                'limit' => $limit, 'recursive' => 0, 'page' => $start/$limit + 1
-            )
-        );
+        $cache_expires = '+5 minutes'; 
+        #cache only the first page
+        if (($start == $start_default) && ($limit == $limit_default)) {
 
-        $events = Set::extract($readabletimeline, '{n}.ReadableTimeline');
+            $cache_data = cache($this->cacheName, null, $cache_expires);
 
-        $users = Set::extract($events, '{n}.user_id');
-        $users_photo = $this->Photo->find('all',
-            array(
-                'conditions' => array(
-                    'user_id' => $users,
-                    'default_photo' => 1,
-                    'is_hidden' => 0
-                ),
-                'fields' => array('User.id', 'Photo.filename'),
-                'recursive' => 0
-            )
-        );
-
-        foreach ($users_photo as $photo) {
-            $hash_photos[$photo['User']['id']] = $photo['Photo']['filename'];
+        } else {
+            $cache_data = "";
         }
 
-        foreach($events as $event){
-            $event['user_photo'] = $hash_photos[$event['user_id']];
-            $event['event'] = $this->prepareevent($event);
-            
-            if (empty($event['model_alias'])) {
-                $event['model_alias'] = 'Timeline';
-                $event['foreign_id'] = $event['id'];
+        if (empty($cache_data)) {
+            $this->recursive = 0;
+
+            $readabletimeline = $this->ReadableTimeline->find('all',
+                array('conditions' => $conditions,
+                    'fields' => array('id','user_id','name','surname','login','gender','param','date','temp','icon', 'model_alias', 'foreign_id', 'commentsCount'),
+                    'limit' => $limit, 'recursive' => 0, 'page' => $start/$limit + 1
+                )
+            );
+
+            $events = Set::extract($readabletimeline, '{n}.ReadableTimeline');
+
+            $users = Set::extract($events, '{n}.user_id');
+            $users_photo = $this->Photo->find('all',
+                array(
+                    'conditions' => array(
+                        'user_id' => $users,
+                        'default_photo' => 1,
+                        'is_hidden' => 0
+                    ),
+                    'fields' => array('User.id', 'Photo.filename'),
+                    'recursive' => 0
+                )
+            );
+
+            foreach ($users_photo as $photo) {
+                $hash_photos[$photo['User']['id']] = $photo['Photo']['filename'];
             }
 
-            unset($event['param'], $event['temp']); // no need to send this parameter, hence unset it
-            $result[] = $event;
-        }
+            foreach($events as $event){
+                $event['user_photo'] = $hash_photos[$event['user_id']];
+                $event['event'] = $this->prepareevent($event);
+                
+                if (empty($event['model_alias'])) {
+                    $event['model_alias'] = 'Timeline';
+                    $event['foreign_id'] = $event['id'];
+                }
 
-        if(isset($result))
-            $response['timeline'] = $result;
-        else
-            $response['timeline'] = array();
-        
-        $response['total'] = $this->ReadableTimeline->find('count', array('conditions' => $conditions));
-        $response['success'] = true;
-        
+                unset($event['param'], $event['temp']); // no need to send this parameter, hence unset it
+                $result[] = $event;
+            }
+
+            if(isset($result))
+                $response['timeline'] = $result;
+            else
+                $response['timeline'] = array();
+            
+            $response['total'] = $this->ReadableTimeline->find('count', array('conditions' => $conditions));
+            $response['success'] = true;
+
+            cache($this->cacheName, serialize($response), $cache_expires);
+        } else {
+            $response = unserialize($cache_data);
+        } 
+
         $this->set('json', $response);
     }
 
