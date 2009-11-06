@@ -42,48 +42,29 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
 
     this.view = new Ext.DataView({
         store: this.store
-        ,tpl: new Ext.XTemplate(
+        ,tpl: new Ext.ux.fbk.sonet.XTemplate(
             '<tpl for=".">',
                 '<div class="comment border_radius_5px">',
                     '<table>',
                         '<tr>',
                             '<td valign=top>',
-                                '<div style="text-align:center;width:50px;cursor:pointer;" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')">',
+                                '<div style="text-align:center;width:40px;cursor:pointer;padding-left:2px;" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')">',
                                     '<img style="padding:2px 0" src="photos/getphotofromuserid/{user_id}/40/40" title="View user\'s profile"/>',
                                 '</div>',
                             '</td>',
-                            '<td>',
+                            '<td style="padding-left:10px;">',
                                 '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
-                                '<div style="color:gray;padding-top: 5px;font-size:90%;">{[this.formatEventDate(values.created, true)]}</div>',
+                                '<div style="color:gray;padding-top:5px;font-size:90%;">{[this.formatDate(values.created, true)]}</div>',
                             '</td>',
+                            '<tpl if="this.isOwner(user_id)">',
+                                '<td style="right:10px; width:12px; position: absolute;">',
+                                    '<img class="size12x12" src="js/portal/shared/icons/fam/cross.png" />',
+                                '</td>',
+                            '</tpl>',
                         '</tr>',
                     '</table>',
                 '</div>',
             '</tpl>'
-            ,{
-                formatEventDate: function(eventDate, printHours){
-                    
-                    // Formatting Date object in order to compare it
-                    formattedEventDate = eventDate.toDateString();
-
-                    // Yesterday's Date
-                    var today = new Date(), yesterday = new Date();
-                    yesterday.setDate(today.getDate() - 1);
-
-                    // Comparing Date
-                    if(formattedEventDate == today.toDateString()){
-                        if(printHours){
-                            var diff = Math.ceil((today.getTime()-eventDate.getTime())/(1000*60));
-                            return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
-                        } 
-                        else return 'Today';
-                    }
-                    else if(formattedEventDate == yesterday.toDateString())
-                        return printHours ? 'Yesterday at ' + eventDate.format('H:i') : 'Yesterday';
-                    else
-                        return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
-                }
-            }
         )
         ,emptyText: '<div style="padding:10px 5px;font-size:100%"><b><div class="warning-message">No comments!</b></div></div>'
 	    ,itemSelector: 'div.comment'
@@ -93,7 +74,7 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
             render:{
                 fn: function(){
                     if(this.event_html){
-                        $("#commented-event").css({'background':'#eee','margin':'auto auto','padding':'10px 5px'}); // Styling
+                        $("#commented-event").css({'background':'#ECEFF5','margin':'auto auto','padding':'10px 5px'}); // Styling
                         this.event_html.clone().appendTo("#commented-event"); // Appending event
                     }
                 }

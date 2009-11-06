@@ -69,7 +69,7 @@ Feedback = function(conf, panel_conf){
                             Ext.example.msg('Sent, thanks for your message!', sentText);
                             form.reset();
                             if(!view.hidden) view.store.load();
-                            reloadTimeline();
+                            eventManager.fireEvent('newtimelineevent');
                         }
                     }
                 );

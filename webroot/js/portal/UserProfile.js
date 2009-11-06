@@ -98,10 +98,10 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                         ,autoLoad: false
                         ,frame: false
                         ,listeners:{
-                            'activate': function(p){
-                                if(westPanel.showedUser.id != p.view.store.baseParams.u_id) {
-                                    p.view.store.setBaseParam('u_id', westPanel.showedUser.id);
-                                    p.view.store.reload();
+                            activate: function(timeline){
+                                if(westPanel.showedUser.id != timeline.view.store.baseParams.u_id) {
+                                    timeline.view.store.setBaseParam('u_id', westPanel.showedUser.id);
+                                    timeline.view.store.reload();
                                 }
                             }
                         }

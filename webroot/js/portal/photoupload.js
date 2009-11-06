@@ -50,8 +50,8 @@ PhotoUpload = function(){
             emptyText: 'Select an image',
             fieldLabel: 'Photo',
             name: 'file',
+            buttonText: '',
             buttonCfg: {
-                text: '',
                 iconCls: 'upload-icon'
             },
             listeners: {
@@ -114,11 +114,14 @@ PhotoUpload = function(){
                                 var url = window.config.img_path+o.result.url;
                                 Ext.getCmp('photo-chooser').setDefaultPhoto(null, url);
                             }
+                            
+                            if(!fp.findField('is_hidden').getValue())
+                                eventManager.fireEvent('newtimelineevent');
+
                             Ext.getCmp('upload-window').close();
                             Ext.getCmp('photo-chooser').store.load();
-                            if(Ext.getCmp('wp-photos-tab') && Ext.getCmp('wp-photos-tab').store && (window.user.id === westPanel.showedUser.id))
+                            if(Ext.getCmp('wp-photos-tab') && Ext.getCmp('wp-photos-tab').store && (westPanel.showedUser) && (window.user.id === westPanel.showedUser.id))
                                 Ext.getCmp('wp-photos-tab').store.load({params: {id: window.user.id}});
-                            reloadTimeline();
                         },
                         failure: function(fp, o){
                             Ext.example.msg('Failure!', 'We are sorry - Problem found in data transmission.<br /><br />'+ o.result.message, 15);

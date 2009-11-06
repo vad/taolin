@@ -53,7 +53,7 @@ Timeline = Ext.extend(Ext.Panel, {
     ,initComponent: function(){
         var config = {
             items: [{
-                html: '<div id="undodelevent" class="undodel"></div>',
+                html: '<div id="undodelevent-'+this.id+'" class="undodel"></div>',
                 display: 'none',
                 autoHeight: true,
                 border: false
@@ -63,19 +63,15 @@ Timeline = Ext.extend(Ext.Panel, {
         Ext.apply(this, Ext.apply(this.initialConfig, config));
 
         Timeline.superclass.initComponent.apply(this, arguments);
-
-        /*commentManager.on("addcomment", function(){
-            console.log("Weeeeepppaaa!!!");        
-        });*/
     }
     ,onRender: function(){
 
         timelineId = 'timeline';
-        timelineTemplate = new Ext.XTemplate( 
+        timelineTemplate = new Ext.ux.fbk.sonet.XTemplate( 
             '<div>',
                 '<tpl>',
                     // Pagination
-                    '<div style="margin: 5px auto; text-align: center; padding: 5px 0; color:#ddd;">',
+                    '<div style="margin: 5px auto; text-align: center; padding: 5px 0; color:#ddd;"',
                         '<tpl if="!this.isFirstPage()">',
                             '<span class="timeline-pagination"><img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/><a style="padding-right:5px;" href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(0)">Newest</a></span>',
                             '<span class="timeline-pagination"><img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/><a href="javascript:void(0)" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(1)">Newer</a></span>',
@@ -97,19 +93,19 @@ Timeline = Ext.extend(Ext.Panel, {
                     '<tpl for=".">',
                         '<div class="timeline-wrapper">',
                             '<tpl if="this.checkEventDate(date, xindex)">',
-                                '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{[this.formatEventDate(values.date, false)]}</b></span></div>',
+                                '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{[this.formatDate(values.date, false)]}</b></span></div>',
                             '</tpl>',
                             '<tpl if="!(this.lastEventOfDay)">',
                                 '<hr style="border: 1px solid #E5ECF9;width:80%;margin-top:10px;margin-bottom:10px;" />',
                             '</tpl>',
                             '<tpl if="this.isOwner(user_id)">',
-                                '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="Ext.getCmp(\'timeline\').deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
+                                '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="Ext.getCmp(\'{[this.parent.id]}\').deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
                             '</tpl>',
                             '<span style="color:#888888;font-size:90%;text-align:right;margin-left:5px;">',
                                 '<tpl if="(icon != null)">',
                                     '<img src="{icon}" class="size16x16" /> ',
                                 '</tpl>',
-                                '{[this.formatEventDate(values.date, true)]}',
+                                '{[this.formatDate(values.date, true)]}',
                             '</span><br />',
                             '<table>',
                                 '<tr>',
@@ -154,10 +150,6 @@ Timeline = Ext.extend(Ext.Panel, {
                 parent: this
                 ,processedDate: null // Current date being processed (belonging to the currently processed event)
                 ,lastEventOfDay: false // Last event of day
-                // Returns true if the owner of the timeline's event is the user
-                ,isOwner: function(u_id){
-                    return window.user.id === u_id;
-                }
                 // Set
                 ,checkEventDate: function(eventDate, index){
 
@@ -174,31 +166,6 @@ Timeline = Ext.extend(Ext.Panel, {
                         this.lastEventOfDay = false;
 
                     return this.lastEventOfDay;
-                }
-                ,formatEventDate: function(eventDate, printHours){
-                    
-                    // Formatting Date object in order to compare it
-                    formattedEventDate = eventDate.toDateString();
-
-                    var today = new Date(), yesterday = new Date();
-                    yesterday.setDate(today.getDate() - 1);
-
-                    // Comparing Date
-                    if(formattedEventDate == today.toDateString()){
-                        if(printHours){
-                            var diff = Math.ceil((today.getTime()-eventDate.getTime())/(1000*60));
-                            return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
-                        } 
-                        else return 'Today';
-                    }
-                    else if(formattedEventDate == yesterday.toDateString())
-                        return printHours ? 'Yesterday at ' + eventDate.format('H:i') : 'Yesterday';
-                    else
-                        return printHours ? eventDate.format('F, d \\a\\t H:i') : eventDate.format('F, d Y');
-                }
-                // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)
-                ,photoExtToJpg: function(screenshot){
-                    return Ext.util.Format.substr(screenshot, 0, screenshot.lastIndexOf(".")) + '.jpg'; 
                 }
                 ,isFirstPage: function(){
 
@@ -262,13 +229,25 @@ Timeline = Ext.extend(Ext.Panel, {
         
         Timeline.superclass.onRender.apply(this, arguments);
     }
+    ,isReloadable: function(){
+        return !this.hidden;
+    }
     ,constructor: function(config){
          config = config || {};
          config.listeners = config.listeners || {};
          Ext.applyIf(config.listeners, {
-         //add listeners config here
-            expand: function(t){
-                reloadTimeline();
+            //add listeners config here
+            render: {
+                fn: function(timeline){
+                    eventManager.on('newtimelineevent', function(){
+                        if (timeline && timeline.isReloadable()){
+                            //Load the store
+                            timeline.view.store.load();
+                            //Reset reloadTask timeout to actual time
+                            timeline.reloadTask.taskRunTime = Date.parse(Date());
+                        }
+                    });
+                }
             }
          });
              
@@ -277,14 +256,15 @@ Timeline = Ext.extend(Ext.Panel, {
     ,deleteTimelineEvent: function(e_id){
 
         var store = this.view.store;
+        var parentId = this.id;
 
         if(e_id){
             Ext.Ajax.request({
                 url : 'timelines/deleteevent/'+e_id ,
                 method: 'GET',
                 success: function(result, request){
-                    Ext.get("undodelevent").update('Event deleted. <a href="javascript:void(0)" "onclick="Ext.getCmp(\'timeline\').undoDeleteTimelineEvent(' + e_id + ')">Undo</a> | <a href="javascript:showText(false, \'undodelevent\')">Hide</a>');
-                    showText(true, 'undodelevent');
+                    Ext.get("undodelevent-"+parentId).update('Event deleted. <a href="javascript:void(0)" "onclick="Ext.getCmp(\''+parentId+'\').undoDeleteTimelineEvent(' + e_id + ')">Undo</a> | <a href="javascript:showText(false, \'undodelevent\')">Hide</a>');
+                    showText(true, 'undodelevent-'+parentId);
                     store.load();
                 },
                 failure: function(){
@@ -301,13 +281,14 @@ Timeline = Ext.extend(Ext.Panel, {
     ,undoDeleteTimelineEvent:function(e_id){
 
         var store = this.view.store;
+        var parentId = this.id;
 
         if(e_id){
             Ext.Ajax.request({
                 url : 'timelines/undodeleteevent/'+e_id ,
                 method: 'GET',
                 success: function(result, request){
-                    showText(false, 'undodelevent');
+                    showText(false, 'undodelevent-' + parentId);
                     store.load();
                 },
                 failure: function(){

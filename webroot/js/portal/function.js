@@ -49,14 +49,7 @@ function expandSettingsPanel(){
 }
 
 function reloadTimeline(){
-    var timeline = Ext.getCmp('timeline');
-
-    if (timeline && !timeline.collapsed){
-        //Load the store
-        timeline.view.store.load();
-        //Reset reloadTask timeout to actual time
-        timeline.reloadTask.taskRunTime = Date.parse(Date());
-    }
+    eventManager.fireEvent('newtimelineevent');
 }
 
 function openImageChooser(){
@@ -291,7 +284,7 @@ function addwidget(w_id, logparams){
             success: function(result, request){
                 var conf = Ext.util.JSON.decode(result.responseText)[0];
                 createNewPortlet(conf);
-                reloadTimeline();
+                eventManager.fireEvent('newtimelineevent');
                 gotoWidget(w_id, false, logparams);
             },
             failure: function(){
@@ -903,6 +896,24 @@ function addOrBounceWidget(identifier, type, logparams){
     }
 }
 
+function searchWidget(identifier, type){
+        
+    if(!type)
+        type = 'widget_id';
+    
+    var portal_central = Ext.getCmp('portal_central');
+
+    for (var i=0, col; col=portal_central.items.items[i++];) {
+        for (var j=0, p; p=col.items.items[j++];) {
+            if (identifier == p[type]){
+                return true;
+            } 
+        }
+    }
+
+    return false;
+}
+
 /*
  * returns an array that contains body size, scaled to the given ratio
  * 
@@ -978,7 +989,7 @@ function openFirstLoginWizard(){
                        
                         wizard_form.submit({ // submitting form 
                             success: function(){
-                                reloadTimeline(); //reload timeline to show the latest event
+                                eventManager.fireEvent('newtimelineevent');
                                 showUserInfo(null, true); // reload user info
                                 Ext.getCmp('settings').items.first().form.load(); // reload user settings
                             }

@@ -40,7 +40,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             url: 'photos/getphotos',
             root: 'photos',
             method: 'POST',
-            fields: ['id', 'name', 'filename', 'caption', 'width', 'height', 'url', 'is_hidden','default_photo', 'created', 'commentsCount'],
+            fields: ['id', 'name', 'filename', 'caption', 'width', 'height', 'url', 'is_hidden','default_photo',{name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'commentsCount'],
             listeners:{
                 load: function(){
                     this.parent.setTitle(
@@ -59,15 +59,16 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
     onRender: function(){
         //this.store.load({params: {id: westPanel.showedUser.id}});
 
-        var tpl = new Ext.XTemplate( 
-            '<div style="font-size:100%">',
+        var tpl = new Ext.ux.fbk.sonet.XTemplate( 
+            '<div style="font-size:100%; overflow-y: none;">',
                 '<tpl for=".">',
                     '<div style="padding:10px;" class="thumb-wrap">',
                         /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
                         '<div class="thumb"><span></span>',
                             '<img class="ante" style="padding:5px;cursor:pointer;" src="{[window.config.img_path]}t140x140/{[this.photoExtToJpg(values.filename)]}" />',
                         '</div>',
-                        '<span style="padding-bottom:5px;"><b>{name}</b></span><br />',
+                        '<span><b>{name}</b></span><br />',
+                        '<span style="padding-bottom:5px;color:gray;font-size:90%;">{[this.formatDate(values.created, false)]}</span><br />',
                      '</div>',
                 '</tpl>',
             '</div>', {
