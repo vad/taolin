@@ -75,7 +75,7 @@ class CommentComponent extends Object {
             $user = $this->user->find('first', array(
                 'conditions' => $conditions,
                 'fields' => array('User.login', 'User.name', 'User.surname'),
-                'recursive' => FALSE
+                'recursive' => -1
             ));
 
             $comment['Comment']['user_login'] = $user['User']['login'];

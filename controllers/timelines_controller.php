@@ -111,12 +111,14 @@ class TimelinesController extends AppController {
 
         $cache_expires = '+5 minutes'; 
         #cache only the first page
-        if (($start == $start_default) && ($limit == $limit_default)) {
+        if (($start == $start_default) && ($limit == $limit_default) && ($u_id == null)) {
 
-            $cache_data = cache($this->cacheName, null, $cache_expires);
-
+            $mainTimelineAndDefaultValues = True;
+            $cache_data = cache($this->cacheName, null, $cache_expires); #retrieve values
+            
         } else {
             $cache_data = "";
+            $mainTimelineAndDefaultValues = False;
         }
 
         if (empty($cache_data)) {
@@ -169,7 +171,9 @@ class TimelinesController extends AppController {
             $response['total'] = $this->ReadableTimeline->find('count', array('conditions' => $conditions));
             $response['success'] = true;
 
-            cache($this->cacheName, serialize($response), $cache_expires);
+            if ($mainTimelineAndDefaultValues) # save only if this is the main timeline and with default values
+                cache($this->cacheName, serialize($response), $cache_expires);
+
         } else {
             $response = unserialize($cache_data);
         } 
