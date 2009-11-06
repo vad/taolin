@@ -541,7 +541,11 @@ hSmile = {
  */
 String.prototype.smilize = function () {
     var s = this;
-    return s.multiReplace(hSmile);
+    var ta = document.createElement("textarea");
+    ta.innerHTML = s.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    //$(ta).remove();
+
+    return ta.value.multiReplace(hSmile);
 };
 
 /**
