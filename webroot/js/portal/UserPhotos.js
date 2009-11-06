@@ -60,7 +60,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
         //this.store.load({params: {id: westPanel.showedUser.id}});
 
         var tpl = new Ext.ux.fbk.sonet.XTemplate( 
-            '<div style="font-size:100%; overflow-y: none;">',
+            '<div style="font-size:100%; overflow-y: hidden;">',
                 '<tpl for=".">',
                     '<div style="padding:10px;" class="thumb-wrap">',
                         /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
@@ -97,11 +97,15 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                           * (necessary to center the Ext.Msg element in the window)
                           */
                          var winTitle = Ext.util.Format.ellipsis(dv.store.getAt(index).get('name'), 50);
+                         var orig_filename = dv.store.getAt(index).get('filename');
+                         var filename = Ext.util.Format.substr(orig_filename, 0, orig_filename.lastIndexOf("."));
+                         var url = dv.store.getAt(index).get('url');
+                         var caption = dv.store.getAt(index).get('caption'); 
                          
                          var imgWidth = parseInt(dv.store.getAt(index).get('width'));
                          var imgHeight = parseInt(dv.store.getAt(index).get('height'));
 
-                         var imageValues = showImageParam(imgWidth, imgHeight, dv.store.getAt(index).get('url'), dv.store.getAt(index).get('filename'), dv.store.getAt(index).get('caption'));
+                         var imageValues = showImageParam(imgWidth, imgHeight, url, filename, caption);
                          var winBody = imageValues["winBody"];
                          var winWidth = imageValues["winWidth"];
                          
@@ -113,7 +117,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                          if(dv.store.getAt(index + 1) != null)
                              winButtons['yes'] = "Next";
 
-                         Ext.Msg.show({  
+                         var img_window = Ext.Msg.show({  
                              width: winWidth, 
                              title: winTitle,  
                              msg: winBody,  
@@ -134,7 +138,10 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                                  }  
                              }   
                          });
-
+                        
+                         $('#'+filename).load(function(){
+                             img_window.getDialog().center();
+                         });
 
                     },
                     scope:this

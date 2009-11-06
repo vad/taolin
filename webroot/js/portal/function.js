@@ -776,29 +776,34 @@ function findChatStatus(req, login){
  *
  **************************************************************************/
 
-function showPicture(url, width, height, filename, caption, name){
+function showPicture(url, width, height, orig_filename, caption, name){
 
-        var winTitle = Ext.util.Format.ellipsis(name, 50);
-        
-        var res = showImageParam(width, height, url, filename, caption);
-        var winButtons = {no: "Close"};
+    var winTitle = Ext.util.Format.ellipsis(name, 50);
 
-        Ext.Msg.show({  
+    var filename = Ext.util.Format.substr(orig_filename, 0, orig_filename.lastIndexOf("."));
+    
+    var res = showImageParam(width, height, url, filename, caption);
+    var winButtons = {no: "Close"};
+
+    var img_window = Ext.Msg.show({ 
         width: res["winWidth"], 
         title: winTitle,  
         msg: res["winBody"],  
         buttons: winButtons,
         closable: true,
         iconCls: 'picture'
-   });
-        
+    });
+
+    /* Todo: add this listeners only once!!! */
+    $('#'+filename).load(function(){
+        img_window.getDialog().center();
+    });
+
 }
    
 function showImageParam(imgWidth, imgHeight, url, filename, caption){
 
-    // Moving filename extension to .jpg (since all the thumbs are saved as .jpg)
-    var filename_jpg = Ext.util.Format.substr(filename, 0, filename.lastIndexOf(".")) + '.jpg';
-    var winBody = '<img class="ante" style="min-height:70px;margin:auto auto;display:block;" src="'+window.config.img_path+'t480x480/'+filename_jpg+'"></img>';
+    var winBody = '<img id="'+filename+'" class="ante" style="min-height:70px;margin:auto auto;display:block;" src="'+window.config.img_path+'t480x480/'+filename+'.jpg"></img>';
 
     winBody += caption ? '<br /><div style="padding:5px 0 0 5px;font-family:Arial;">' + caption.replace(/\\n/g,"<br />").urlize().smilize() + '</div>' : '';
 
