@@ -122,7 +122,7 @@ function application_init(){
         'Did you know that you can view other people photos gallery by clicking on one of their photos?',
         'Did you know that there is a <a href="./pages/privacy_policy" target="_blank">privacy policy</a> about how your data are used? <a href="./pages/privacy_policy" target="_blank">Read the privacy policy</a>!',
         'Did you know that you can edit your workplace and view other\'s on a  map? <a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "did you know", "user_id":""}') + '\'})).show()">Edit!</a>',
-        'Did you know that you can suggest a colleague of yours as new champion on her/his profile?',
+        'Did you know that you can suggest a colleague of yours as new champion on her/his profile?'
     ];
     var dyk = aDyk[Math.floor(Math.random()*aDyk.length)]; // pick a random string out of aDyk
 

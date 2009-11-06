@@ -241,6 +241,9 @@ class TimelinesController extends AppController {
         }
     
         $this->set('json', $response);
+
+        # clear cache
+        clearCache($this->cacheName, '', '');
     }           
 
 
@@ -269,6 +272,9 @@ class TimelinesController extends AppController {
         }
     
         $this->set('json', $response);
+
+        # clear cache
+        clearCache($this->cacheName, '', '');
     }   
 
 
@@ -283,6 +289,9 @@ class TimelinesController extends AppController {
         $this->set('json', array(
             'success' => TRUE
         ));
+
+        # clear cache
+        clearCache($this->cacheName, '', '');
     }
 
     

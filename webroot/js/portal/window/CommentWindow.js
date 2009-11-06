@@ -101,7 +101,7 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
             ,anchor: '100%'
         }],
         buttons: [{
-            text: 'Submit'
+            text: 'Comment'
             ,handler: function(){
                 
                 var store = this.view.store;
@@ -110,7 +110,7 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
                 this.form.getForm().submit(
                     {
                         url: model + '/addcomment',
-                        waitMsg:'Saving Data...',
+                        waitMsg:'Adding comment...',
                         params:{
                             foreign_id: this.f_id
                         },
