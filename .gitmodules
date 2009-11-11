@@ -7,3 +7,6 @@
 [submodule "vendors/h2o"]
 	path = vendors/h2o
 	url = git://github.com/speedmax/h2o-php.git
+[submodule "webroot/css/admin/web-app-theme"]
+	path = webroot/css/admin/web-app-theme
+	url = git://github.com/pilu/web-app-theme.git
