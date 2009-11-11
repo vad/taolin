@@ -89,6 +89,8 @@ class TimelinesController extends AppController {
         $limit_default = 15;
         $start_default = 0;
 
+        App::import('Vendor','h2o/h2o');
+
         $u_id = $this->params['form']['u_id'];
 
         if (array_key_exists('limit', $this->params['form']))
@@ -126,7 +128,7 @@ class TimelinesController extends AppController {
             $cache_data = "";
             $mainTimelineAndDefaultValues = False;
         }
-
+            
         if (empty($cache_data)) {
             $this->recursive = 0;
 
@@ -225,7 +227,6 @@ class TimelinesController extends AppController {
      */
     function prepareevent($event){
 
-        $template = $event['temp'];
         $parameters = $event['param'];
 
         // Only if parameters are not void or null
@@ -245,15 +246,11 @@ class TimelinesController extends AppController {
             $eventparam['userlogin'] = $event['login'];
             $eventparam['useradj'] = $adjective;
         }
+        
+        $eventparam['timelineid'] = $event['id'];
+        $eventparam['sitename'] = $this->Conf->get('Site.name');
 
-        foreach($eventparam as $key => $param){
-            // Replace each parameter within the template
-            $template = str_replace('_'.strtoupper($key).'_', $param, $template);
-        }
-        $template = str_replace('_TIMELINEID_', $event['id'], $template);
-        $template = str_replace('_SITENAME_', $this->Conf->get('Site.name'), $template);
-
-        return $template;
+        return h2o($event['temp'])->render($eventparam);
     }
 
 
