@@ -131,7 +131,7 @@ Timeline = Ext.extend(Ext.Panel, {
                                         '</tpl>',
                                     '</tpl>',
                                     '<td>',
-                                        '{[values.event.urlize().smilize()]} ',
+                                        '{[values.event.urlize()]} ',
                                     '</td>',
                                 '</tr>',
                             '</table>',
