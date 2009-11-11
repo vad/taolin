@@ -4,3 +4,6 @@
 [submodule "plugins/commentable"]
 	path = plugins/commentable
 	url = git://github.com/josegonzalez/cakephp-commentable-behavior.git
+[submodule "webroot/css/admin/web-app-theme"]
+	path = webroot/css/admin/web-app-theme
+	url = git://github.com/pilu/web-app-theme.git
