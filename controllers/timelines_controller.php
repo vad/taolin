@@ -100,6 +100,12 @@ class TimelinesController extends AppController {
             $start = $this->params['form']['start'];
         else
             $start = $start_default;
+        
+
+        if (array_key_exists('nocache', $this->params['url']))
+            $cache = FALSE;
+        else
+            $cache = TRUE;
 
         $checked_users = array();
         
@@ -111,7 +117,7 @@ class TimelinesController extends AppController {
 
         $cache_expires = '+5 minutes'; 
         #cache only the first page
-        if (($start == $start_default) && ($limit == $limit_default) && ($u_id == null)) {
+        if (($start == $start_default) && ($limit == $limit_default) && ($u_id == null) && $cache) {
 
             $mainTimelineAndDefaultValues = True;
             $cache_data = cache($this->cacheName, null, $cache_expires); #retrieve values
@@ -132,6 +138,38 @@ class TimelinesController extends AppController {
             );
 
             $events = Set::extract($readabletimeline, '{n}.ReadableTimeline');
+
+            # group by model alias
+            $grouped_events = array();
+            foreach ($events as &$event) {
+                $ma = $event['model_alias'];
+                if (!$ma) continue;
+
+                if (!array_key_exists($ma, $grouped_events))
+                    $grouped_events[$ma] = array();
+
+                $grouped_events[$ma][] = $event;
+            }
+
+            foreach ($grouped_events as $model_name => $records) {
+                App::import("Model", $model_name);
+
+                $model = new $model_name();
+                $ids = Set::extract($records, '{n}.foreign_id');
+
+                $model->create();
+                $model->enableSoftDeletable('find', false);
+                $deleted = Set::extract($model->find('all', array(
+                    'conditions' => array($model_name.'.id' => $ids,
+                        $model_name.'.deleted' => 1),
+                    'fields' => array('id', 'deleted')
+                )), '{n}.'.$model_name.'.id');
+
+                foreach ($events as $key => &$event) {
+                    if (($event['model_alias'] == $model_name) && in_array($event['foreign_id'], $deleted))
+                        unset($events[$key]);
+                }
+            }
 
             $users = Set::extract($events, '{n}.user_id');
             $users_photo = $this->Photo->find('all',
