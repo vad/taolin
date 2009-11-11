@@ -202,11 +202,11 @@ class TimelinesController extends AppController {
             else if($event['gender']==2) $adjective = 'her';
             else $adjective = 'her/his';
 
-            $eventparam['userid'] = $event['user_id'];
-            $eventparam['username'] = $event['name'];
-            $eventparam['usersurname'] = $event['surname'];
-            $eventparam['userlogin'] = $event['login'];
-            $eventparam['useradj'] = $adjective;
+            $eventparam['user']['id'] = $event['user_id'];
+            $eventparam['user']['name'] = $event['name'];
+            $eventparam['user']['surname'] = $event['surname'];
+            $eventparam['user']['login'] = $event['login'];
+            $eventparam['user']['adj'] = $adjective;
         }
         
         $eventparam['timelineid'] = $event['id'];
