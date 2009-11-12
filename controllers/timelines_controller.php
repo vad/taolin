@@ -109,8 +109,6 @@ class TimelinesController extends AppController {
         else
             $cache = TRUE;
 
-        $checked_users = array();
-        
         if($u_id != null){
             $conditions = array('user_id' => $u_id, 'date <= \''.date('Y-m-d H:i:s').'\'');
         }
@@ -130,7 +128,7 @@ class TimelinesController extends AppController {
         }
             
         if (empty($cache_data)) {
-            $this->recursive = 0;
+            $this->ReadableTimeline->recursive = 0;
 
             $readabletimeline = $this->ReadableTimeline->find('all',
                 array('conditions' => $conditions,
