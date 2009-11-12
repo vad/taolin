@@ -263,7 +263,7 @@ Timeline = Ext.extend(Ext.Panel, {
                 url : 'timelines/deleteevent/'+e_id ,
                 method: 'GET',
                 success: function(result, request){
-                    Ext.get("undodelevent-"+parentId).update('Event deleted. <a href="javascript:void(0)" "onclick="Ext.getCmp(\''+parentId+'\').undoDeleteTimelineEvent(' + e_id + ')">Undo</a> | <a href="javascript:showText(false, \'undodelevent\')">Hide</a>');
+                    Ext.get("undodelevent-"+parentId).update('Event deleted. <a href="javascript:void(0)" "onclick="Ext.getCmp(\''+parentId+'\').undoDeleteTimelineEvent(' + e_id + ')">Undo</a> | <a href="javascript:showText(false, \'undodelevent-'+parentId+'\')">Hide</a>');
                     showText(true, 'undodelevent-'+parentId);
                     store.load();
                 },

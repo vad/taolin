@@ -78,7 +78,6 @@ class TimelinesController extends AppController {
         clearCache($this->cacheName, '', '');
     }
 
-   
     /* 
      * gettimeline function retrieves events out of readable_timelines table
      */
@@ -88,8 +87,6 @@ class TimelinesController extends AppController {
 
         $limit_default = 15;
         $start_default = 0;
-
-        App::import('Vendor','h2o/h2o');
 
         $u_id = $this->params['form']['u_id'];
 
@@ -219,11 +216,13 @@ class TimelinesController extends AppController {
         $this->set('json', $response);
     }
 
-
     /* 
      * Format timeline event applying parameters to template
      */
     function prepareevent($event){
+
+        App::import('Vendor','h2o/h2o');
+        App::import('Vendor','filters');
 
         $parameters = $event['param'];
 
@@ -238,17 +237,17 @@ class TimelinesController extends AppController {
             else if($event['gender']==2) $adjective = 'her';
             else $adjective = 'her/his';
 
-            $eventparam['userid'] = $event['user_id'];
-            $eventparam['username'] = $event['name'];
-            $eventparam['usersurname'] = $event['surname'];
-            $eventparam['userlogin'] = $event['login'];
-            $eventparam['useradj'] = $adjective;
+            $eventparam['user']['id'] = $event['user_id'];
+            $eventparam['user']['name'] = $event['name'];
+            $eventparam['user']['surname'] = $event['surname'];
+            $eventparam['user']['login'] = $event['login'];
+            $eventparam['user']['adj'] = $adjective;
         }
         
         $eventparam['timelineid'] = $event['id'];
         $eventparam['sitename'] = $this->Conf->get('Site.name');
 
-        return h2o($event['temp'])->render($eventparam);
+        return h2o($event['temp'], array('autoescape' => false))->render($eventparam);
     }
 
 
