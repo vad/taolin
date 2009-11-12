@@ -78,7 +78,6 @@ class TimelinesController extends AppController {
         clearCache($this->cacheName, '', '');
     }
 
-   
     /* 
      * gettimeline function retrieves events out of readable_timelines table
      */
@@ -88,8 +87,6 @@ class TimelinesController extends AppController {
 
         $limit_default = 15;
         $start_default = 0;
-
-        App::import('Vendor','h2o/h2o');
 
         $u_id = $this->params['form']['u_id'];
 
@@ -183,11 +180,13 @@ class TimelinesController extends AppController {
         $this->set('json', $response);
     }
 
-
     /* 
      * Format timeline event applying parameters to template
      */
     function prepareevent($event){
+
+        App::import('Vendor','h2o/h2o');
+        App::import('Vendor','filters');
 
         $parameters = $event['param'];
 
@@ -212,7 +211,7 @@ class TimelinesController extends AppController {
         $eventparam['timelineid'] = $event['id'];
         $eventparam['sitename'] = $this->Conf->get('Site.name');
 
-        return h2o($event['temp'])->render($eventparam);
+        return h2o($event['temp'], array('autoescape' => false))->render($eventparam);
     }
 
 
