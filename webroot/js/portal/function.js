@@ -48,6 +48,16 @@ function expandSettingsPanel(){
     Ext.getCmp('settings').expand(true);
 }
 
+function showMainTimeline(){
+
+    var timeline = 'timeline';
+
+    if(Ext.getCmp(timeline).collapsed)
+        Ext.getCmp(timeline).expand();
+    else
+        reloadTimeline();
+}
+
 function reloadTimeline(){
     eventManager.fireEvent('newtimelineevent');
 }
