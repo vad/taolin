@@ -185,7 +185,8 @@ class TimelinesController extends AppController {
                 $hash_photos[$photo['User']['id']] = $photo['Photo']['filename'];
             }
 
-            foreach($events as $event){
+            $results = a();
+            foreach($events as &$event){
                 $event['user_photo'] = $hash_photos[$event['user_id']];
                 $event['event'] = $this->prepareevent($event);
                 
@@ -195,13 +196,10 @@ class TimelinesController extends AppController {
                 }
 
                 unset($event['param'], $event['temp']); // no need to send this parameter, hence unset it
-                $result[] = $event;
+                $results[] = $event; #copy to this new array because of a cake bug (array indexes are strings instead of integers...)
             }
 
-            if(isset($result))
-                $response['timeline'] = $result;
-            else
-                $response['timeline'] = array();
+            $response['timeline'] = $results;
             
             $response['total'] = $this->ReadableTimeline->find('count', array('conditions' => $conditions));
             $response['success'] = true;
@@ -211,7 +209,7 @@ class TimelinesController extends AppController {
 
         } else {
             $response = unserialize($cache_data);
-        } 
+        }
 
         $this->set('json', $response);
     }
