@@ -1,7 +1,7 @@
 -- # Table structure for table "acos"
 
 
-DROP TABLE IF EXISTS "acos";
+DROP TABLE IF EXISTS "acos" CASCADE;
 CREATE TABLE "acos" (
   "id" SERIAL,
   "parent_id" INTEGER default NULL,
