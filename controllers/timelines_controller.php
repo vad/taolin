@@ -129,7 +129,7 @@ class TimelinesController extends AppController {
 
             $readabletimeline = $this->ReadableTimeline->find('all',
                 array('conditions' => $conditions,
-                    'fields' => array('id','user_id','name','surname','login','gender','param','date','temp','icon', 'model_alias', 'foreign_id', 'commentsCount'),
+                    'fields' => array('id','user_id','name','surname','deleted','login','gender','param','date','temp','icon','model_alias','foreign_id','commentsCount'),
                     'limit' => $limit, 'recursive' => 0, 'page' => $start/$limit + 1
                 )
             );
@@ -240,6 +240,7 @@ class TimelinesController extends AppController {
             $eventparam['user']['surname'] = $event['surname'];
             $eventparam['user']['login'] = $event['login'];
             $eventparam['user']['adj'] = $adjective;
+            $eventparam['user']['deleted'] = $event['deleted'];
         }
         
         $eventparam['timelineid'] = $event['id'];
