@@ -329,7 +329,8 @@ BuddyList = function(conf, panel_conf) {
                         Ext.getCmp('status').store.add(rec);
                         
                         //store in DB
-                        this.panel.setPref('status', sStatus, reloadTimeline);
+                        this.panel.setPref('status', sStatus);
+                        eventManager.fireEvent('newtimelineevent');
 
                         //change jabber status
                         jabber.setPresence(sPresence, sStatus);
@@ -348,8 +349,9 @@ BuddyList = function(conf, panel_conf) {
                         var status = record.get('status');
                         
                         //store in DB
-                        combo.panel.setPref('status', status, reloadTimeline);
-                        
+                        combo.panel.setPref('status', status);
+                        eventManager.fireEvent('newtimelineevent');
+                                               
                         //change jabber status
                         jabber.setPresence(presence, status);
                     }

@@ -90,7 +90,9 @@ function openCommentWindow(model, foreign_key, event_html){
 }
 
 function showText(showtext, element){
-    var slideMe = Ext.get(element);  
+    var slideMe = Ext.get(element); 
+    if(!slideMe)
+        return false;
   
     switch(showtext){  
         //determine the direction of travel  
@@ -441,7 +443,7 @@ function createNewPortlet(conf, use_widget_position){
     /* add a setPortletTitle function to all the widgets */
     widget = portlet.items.first();
     widget.setPortletTitle = function(title) {Ext.getCmp(this.portlet_id).setTitle(title);};
-    widget.setPref = function(pref, value, callbackfun) {Ext.getCmp(this.portlet_id).setPref(pref, value, callbackfun);};
+    widget.setPref = function(pref, value) {Ext.getCmp(this.portlet_id).setPref(pref, value);};
 
     widget.addEvents('fullscreen', 'downsize');
 }

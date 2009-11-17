@@ -234,7 +234,7 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
         this.insert(0, this.confForm);
         this.doLayout();
     }
-    ,setPref:function(pref, value, callbackfun){
+    ,setPref:function(pref, value){
 
         var params = {id: this.getId()};
         params[pref] = value;
@@ -243,7 +243,6 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
             url : 'users_widgets/changeconf'
             ,method: 'POST'
             ,params: params
-            ,callback: callbackfun  
        });
     }
 });
