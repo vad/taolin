@@ -206,7 +206,7 @@ Timeline = Ext.extend(Ext.Panel, {
             store: store,
             itemSelector: 'div.timeline-wrapper',
             loadingText: 'Loading timeline...',
-            deferEmptyText: false,
+            deferEmptyText: false
         });
 
         this.add(dv);
