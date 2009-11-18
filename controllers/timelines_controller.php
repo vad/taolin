@@ -151,10 +151,14 @@ class TimelinesController extends AppController {
             foreach ($grouped_events as $model_name => $records) {
                 App::import("Model", $model_name);
 
+                $tmp = explode('.', $model_name);
+                $model_name = $tmp[count($tmp)-1];
+                
                 $model = new $model_name();
+                $model->create();
+                
                 $ids = Set::extract($records, '{n}.foreign_id');
 
-                $model->create();
                 $model->enableSoftDeletable('find', false);
                 $deleted = Set::extract($model->find('all', array(
                     'conditions' => array($model_name.'.id' => $ids,
