@@ -27,6 +27,26 @@
   $opts_tf = array_merge($opts, array('class' => 'text_field'));
 ?>
 
+<style type="text/css">
+  .CodeMirror-line-numbers {
+    width: 2.2em;
+    color: #aaa;
+    background-color: #eee;
+    text-align: right;
+    padding-right: .3em;
+    font-size: 10pt;
+    font-family: monospace;
+    padding-top: .4em;
+  }
+.CodeMirror-wrapping {
+    border: 1px solid #CFCFCF !important;
+}
+
+</style>
+
+
+<script type="text/javascript" charset="utf-8" src="<? echo $this->base ?>/admin-media/codemirror/js/codemirror.js"></script> 
+
 <div id="wrapper">
   <div id="main">
     <div class="block">
@@ -54,3 +74,17 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  var editor = CodeMirror.fromTextArea('TemplateTemp', {
+    height: "100px",
+    parserfile: "parsexml.js",
+    stylesheet: "<? echo $this->base ?>/admin-media/codemirror/css/xmlcolors.css",
+    path: "<? echo $this->base ?>/admin-media/codemirror/js/",
+    continuousScanning: 500,
+    lineNumbers: false,
+    
+  });
+</script>
+
+
