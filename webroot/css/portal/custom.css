@@ -685,3 +685,18 @@ img.inline {
 .comment-icons-text {
     cursor: pointer;
 }
+
+/* HR */
+hr.small, hr.large {
+    border: 1px solid rgb(229, 236, 249);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+hr.small {
+    width:20%;
+}
+
+hr.large {
+    width:85%;
+}
