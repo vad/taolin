@@ -10,3 +10,6 @@
 [submodule "webroot/css/admin/web-app-theme"]
 	path = webroot/css/admin/web-app-theme
 	url = git://github.com/pilu/web-app-theme.git
+[submodule "webroot/admin-media/codemirror"]
+	path = webroot/admin-media/codemirror
+	url = git://github.com/marijnh/CodeMirror.git
