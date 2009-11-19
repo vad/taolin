@@ -372,6 +372,10 @@ div.thumb *{
     padding:5px;
 }
 
+.ante:hover {
+    border-color: #115393;
+}
+
 /*.thumb-wrap span{
     position:absolute;
     left:0;
@@ -651,13 +655,46 @@ color:black;
     vertical-align: middle;
 }
 
+.timeline-pagination {
+    margin: 5px auto;
+    text-align: center;
+    padding: 15px 0;
+    color: #ddd;    
+}
+
 .timeline-pagination a{
     text-decoration: none;
 }
 
 .timeline-pagination a:hover{
     text-decoration: underline;
-    font-weight: bold;
+}
+
+.timeline-pagination .left-div{
+    width:50%;
+    padding-left: 5px;
+    text-align:left;
+    position:absolute;
+    display:block;
+}
+
+.timeline-pagination .right-div{
+    width:50%;
+    padding-right: 15px;
+    text-align:right;
+    position:absolute;
+    display:inline;
+}
+
+.pagination-item {
+    border: 1px solid #AAAADD;
+    padding: 5px;
+    margin: 0 2px;
+    text-align: center;
+}
+
+.pagination-item:hover {
+    border: 1px solid #115393;
 }
 
 .board-img{
