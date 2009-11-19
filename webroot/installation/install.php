@@ -42,8 +42,8 @@ else
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Installation</title>
-  <link rel="stylesheet" href="../css/admin/base.css" type="text/css" media="screen" />
-  <link rel="stylesheet" id="current-theme" href="../css/admin/themes/kathleene/style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="../css/admin/web-app-theme/stylesheets/base.css" type="text/css" media="screen" />
+  <link rel="stylesheet" id="current-theme" href="../css/admin/web-app-theme/stylesheets/themes/drastic-dark/style.css" type="text/css" media="screen" />
   <style type="text/css">
     #flashMessage {
       margin:10px 20px 0 20px;
