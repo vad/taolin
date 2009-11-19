@@ -87,7 +87,7 @@ Feedback = function(conf, panel_conf){
     this.view = new Ext.DataView({
         tpl: new Ext.XTemplate(
             '<tpl for=".">',
-                '<hr style="border: 1px solid #ccc;width:80%;" />',
+                '<hr class="large" />',
                 '<div class="user-wrapper" style="padding: 10px 10px;">',
                     '<div><span style="color:#777777;">{[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]}: </span>{[values.text.urlize().smilize()]}</div>',
                 '</div>',
