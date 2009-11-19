@@ -21,7 +21,16 @@ class Event extends AppModel
 {
     var $name = 'Event';
     var $belongsTo = 'Calendar';
-    var $actsAs = array('SoftDeletable', 'Commentable.Commentable'); 
-}
+    var $actsAs = array('SoftDeletable', 'Commentable.Commentable');
 
+    function afterSave($created){
+        
+        if($created) // if created, NOT updated!
+            $this->addtotimeline(array('summary' => $this->data['Event']['summary'], 'url' => $this->data['Event']['uid']), null, 'timelineevent-newevent', null, 'Event', $this->id);
+        
+
+        parent::afterSave($created);
+    }
+
+}
 ?>

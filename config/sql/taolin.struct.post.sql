@@ -34,18 +34,6 @@ CREATE OR REPLACE FUNCTION groups_users_trigger_fun() RETURNS trigger AS $groups
   END;
 $groups_users_trigger_fun$ LANGUAGE plpgsql;
 
-
-CREATE OR REPLACE FUNCTION insert_new_event_into_timeline() RETURNS trigger AS $insert_new_event_into_timeline$
-  BEGIN
-    -- insert record into users_history table if operation is not insert
-    IF NEW.calendar_id IN (SELECT id FROM calendars WHERE url = 'http://www.fbk.eu/event.ics' OR url = 'http://in.fbk.eu/event.ics') THEN
-        INSERT INTO timelines (template_id, param, date, model_alias, foreign_key) VALUES (13, '{"summary":"' || REPLACE(SUBSTRING(NEW.summary,1,50),'"','\\"') || '..."}', NEW.created, 'Event', NEW.id);
-    END IF;
-    RETURN NEW;
-  END;
-$insert_new_event_into_timeline$ LANGUAGE plpgsql;
-
-
 CREATE OR REPLACE FUNCTION on_delete_photo() RETURNS trigger AS $on_delete_photo$
   BEGIN
     IF OLD.default_photo = 1 THEN 
@@ -79,10 +67,6 @@ CREATE INDEX content_types__table_name__idx ON content_types (table_name);
 -- === groups_users ===
 CREATE TRIGGER groups_users_trigger AFTER INSERT OR UPDATE OR DELETE ON groups_users
 FOR EACH ROW EXECUTE PROCEDURE groups_users_trigger_fun(); 
-
--- === events ===
-CREATE TRIGGER events_trigger AFTER INSERT ON events
-FOR EACH ROW EXECUTE PROCEDURE insert_new_event_into_timeline(); 
 
 -- === photos ===
 --CREATE TRIGGER photos_trigger BEFORE UPDATE OR DELETE ON photos
