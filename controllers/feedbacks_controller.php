@@ -41,12 +41,16 @@ class FeedbacksController extends AppController {
         $this->layout = 'ajax';
        
         if (!empty($this->params['form']['text'])){
+
+            $uid = $this->Session->read('id');
+
             // a quanto pare qui l'escape viene fatto automaticamente dalla $this->save()
             $data['text'] = $this->params['form']['text'];
-            $data['user_id'] = $this->Session->read('id');
+            $data['user_id'] = $uid;
             $this->Feedback->save($data);
             $response['success'] = true;
-            $this->addtotimeline(null);
+            
+            $this->Feedback->addtotimeline(null, null, 'feedbacks-add', $uid);
             
         } else {
             $response['success'] = false;

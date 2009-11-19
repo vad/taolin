@@ -49,11 +49,14 @@ class BoardsController extends AppController {
         $this->layout = 'ajax';
         
         if (!empty($this->params['form']['text'])){
+            
+            $uid = $this->Session->read('id');
+
             // a quanto pare qui l'escape viene fatto automaticamente dalla $this->save()
             $data['text'] = $this->san->html($this->params['form']['text']);
             if(isset($this->params['form']['email']) && !empty($this->params['form']['email'])) $data['email'] = $this->params['form']['email'];
             if(isset($this->params['form']['expire_date']) && !empty($this->params['form']['expire_date'])) $data['expire_date'] = $this->params['form']['expire_date'];
-            $data['user_id'] = $this->Session->read('id');
+            $data['user_id'] = $uid;
 
             $this->Board->save($data);
             
@@ -61,7 +64,7 @@ class BoardsController extends AppController {
               
             $ads_id = $this->Board->id;
 
-            $this->addtotimeline(array("text" => $data['text']), null, null, null, 'Board', $ads_id);
+            $this->Board->addtotimeline(array("text" => $data['text']), null, 'boards-add', $uid, 'Board', $ads_id);
             
         } else {
             $response['success'] = false;
@@ -183,7 +186,7 @@ class BoardsController extends AppController {
 
                 $response['success'] = true; 
 
-                $this->addtotimeline(array("text" => $value), null, null, null, 'Board', $ads_id);
+                $this->Board->addtotimeline(array("text" => $value), null, 'boards-modifyads', $this->Session->read('id'), 'Board', $ads_id);
 
             } 
             else $response['success'] = false;

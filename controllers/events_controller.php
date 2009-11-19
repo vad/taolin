@@ -24,7 +24,6 @@ class EventsController extends AppController {
     var $name = 'Events';
     var $components = array('Comment');
 
-    
     function getcomments($id){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';

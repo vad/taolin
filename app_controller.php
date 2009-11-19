@@ -63,25 +63,6 @@ class AppController extends Controller
         Configure::write('App.name', $this->Conf->get('Site.name'));
         Configure::write('App.contactus', $this->Conf->get('Site.admin'));
     }
-    
-    function addtotimeline($param, $date_now = null, $type_name = null, $uid = null, $model_alias = null, $f_key = null){
-
-        // If $date_now is not defined, save this event with current datetime
-        if($date_now == null) 
-            $date_now = date('Y-m-d H:i:s');
-
-        if($type_name == null)
-            // Check for requesting controller and action
-            $type_name = $this->params['controller']."-".$this->action;
-
-        //Importing TimelinesController
-        App::import('Controller','Timelines');
-        $controller = new TimelinesController;
-        $controller->constructClasses();
-        // Invoking addtimeline() method in TimelinesController
-        $controller->add($param, $date_now, $type_name, $uid, $model_alias, $f_key);
-
-    }
 
     function beforeRender() {
 

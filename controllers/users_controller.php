@@ -476,7 +476,7 @@ class UsersController extends AppController {
                 $m_fields = ' modifying '.$m_fields;
             }
 
-            $this->addtotimeline(array('id' => $id, 'modfields' => $m_fields));
+            $this->User->addtotimeline(array('id' => $id, 'modfields' => $m_fields), null, 'users-setusersettings', $id);
 
         }
 
@@ -618,7 +618,7 @@ class UsersController extends AppController {
         
             $new_aro['parent_id'] = $users_aro_id;
             
-            $this->addtotimeline(null, null, null, $uid);
+            $this->User->addtotimeline(null, null, 'users-admin_activate', $uid);
 
         } else {
             $new_aro['parent_id'] = NULL;

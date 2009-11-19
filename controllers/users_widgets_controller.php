@@ -277,7 +277,7 @@ class UsersWidgetsController extends AppController {
         // If the user is changing his/her chat status, save it into the timeline
         if(isset($formdata['status']) && ($formdata['status'] != null) && ($formdata['status'] != "")){
             $escaped_status = $this->mrClean->html($formdata['status']);
-            $this->addtotimeline(array('status' => $escaped_status));
+            $this->UsersWidget->addtotimeline(array('status' => $escaped_status), null, 'users_widgets-changeconf', $user_id);
         }
 
         $this->set('json', $response);
@@ -308,10 +308,10 @@ class UsersWidgetsController extends AppController {
         $json = $this->getwidgetsposition($uw_id);
         Configure::write('debug', $DEBUG);
 
-        $this->addtotimeline(array(
+        $this->UsersWidget->addtotimeline(array(
             "name" => $out[0]['Widget']['name'],
             "w_id" => $w_id
-        ));
+        ), null, 'users_widgets-addwidget', $u_id);
 
         $this->set('json', $json);
     }

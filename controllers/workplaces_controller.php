@@ -57,7 +57,7 @@ class WorkplacesController extends AppController {
         $data['x'] = $form['x'];
         $data['y'] = $form['y'];
                 
-        $this->addtotimeline(array('building' => $data['building_id'],'coordx' => $data['x'],'coordy' => $data['y']));
+        $this->Workplace->addtotimeline(array('building' => $data['building_id'],'coordx' => $data['x'],'coordy' => $data['y']), null, 'workplaces-save', $uid);
 
         $this->Workplace->save($data);
 

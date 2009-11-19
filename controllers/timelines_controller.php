@@ -61,13 +61,9 @@ class TimelinesController extends AppController {
         ));
         $tltype = $type['Template']['id'];
 
-        if($uid)
-            $data['user_id'] = $uid;
-        else
-            $data['user_id'] = $this->Session->read('id');
-
         $data['param'] = $param;
         $data['date'] = $date;
+        $data['user_id'] = $uid;
         $data['template_id'] = $tltype;
         $data['model_alias'] = $model_alias;
         $data['foreign_id'] = $foreign_id;
