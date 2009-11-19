@@ -56,11 +56,11 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
                                 '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
                                 '<div style="color:gray;padding-top:5px;font-size:90%;">{[this.formatDate(values.created, true)]}</div>',
                             '</td>',
-                            '<tpl if="this.isOwner(user_id)">',
+                            /*'<tpl if="this.isOwner(user_id)">',
                                 '<td style="right:10px; width:12px; position: absolute;">',
                                     '<img class="size12x12" src="js/portal/shared/icons/fam/cross.png" />',
                                 '</td>',
-                            '</tpl>',
+                            '</tpl>',*/
                         '</tr>',
                     '</table>',
                 '</div>',
