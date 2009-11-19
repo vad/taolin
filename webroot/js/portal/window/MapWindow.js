@@ -413,6 +413,7 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
             }
             ,success: function ( result, request ) {
                 Ext.example.msg('Workplace', 'Position saved on the map');
+                eventManager.fireEvent('newtimelineevent');
                 this.loadMap();
             }
         });
