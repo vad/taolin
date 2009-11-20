@@ -81,6 +81,9 @@ class TimelinesController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
+        App::import('Vendor','h2o/h2o');
+        App::import('Vendor','filters');
+
         $limit_default = 15;
         $start_default = 0;
 
@@ -218,9 +221,6 @@ class TimelinesController extends AppController {
      * Format timeline event applying parameters to template
      */
     function prepareevent($event){
-
-        App::import('Vendor','h2o/h2o');
-        App::import('Vendor','filters');
 
         $parameters = $event['param'];
 
