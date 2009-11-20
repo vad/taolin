@@ -25,8 +25,15 @@ class Event extends AppModel
 
     function afterSave($created){
         
-        if($created) // if created, NOT updated!
-            $this->addtotimeline(array('summary' => $this->data['Event']['summary'], 'url' => $this->data['Event']['uid']), null, 'timelineevent-newevent', null, 'Event', $this->id);
+        if($created) // if the event is created, NOT merely updated!
+            $this->addtotimeline(
+                    array(
+                        'summary' => $this->data['Event']['summary'],
+                        'url' => $this->data['Event']['uid'],
+                        'start_time' => $this->data['Event']['start_time'],
+                        'end_time' => $this->data['Event']['end_time']
+                    ),
+                    null, 'timelineevent-newevent', null, 'Event', $this->id);
         
 
         parent::afterSave($created);
