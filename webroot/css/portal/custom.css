@@ -666,10 +666,6 @@ color:black;
     text-decoration: none;
 }
 
-.timeline-pagination a:hover{
-    text-decoration: underline;
-}
-
 .timeline-pagination .left-div{
     width:50%;
     padding-left: 5px;
@@ -691,6 +687,8 @@ color:black;
     padding: 5px;
     margin: 0 2px;
     text-align: center;
+    cursor: pointer;
+    color: #336699;
 }
 
 .pagination-item:hover {
