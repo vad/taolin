@@ -603,6 +603,18 @@ color:black;
 }
 /* END user profile class */
 
+.details-info {
+    padding-left: 5px;
+}
+.details-info a {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.details-info a:hover {
+    text-decoration: underline;
+}
+
 .size16x16 {
     width:16px;
     height:16px;

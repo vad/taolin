@@ -107,8 +107,14 @@ PhotoChooser.prototype = {
                         url : 'photos/setdefaultphoto/'+p_id ,
                         method: 'GET',
                         success: function(result, request){
-                            Ext.example.msg('Yeah!','Your default photo has been changed!');
+                            Ext.example.msg('Success','Your default photo has been changed!');
                             Ext.getCmp('photo-chooser').store.load();
+                            eventManager.fireEvent('newtimelineevent');
+                            if(filename) {
+                                filename_to_jpg = Ext.util.Format.substr(filename, 0, filename.lastIndexOf(".")) + ".jpg";
+                                if(Ext.get('user_photo'))
+                                    Ext.get('user_photo').dom.src = window.config.img_path + "t140x140/" + filename_to_jpg;
+                            }
                         },
                         failure: function(){
                             Ext.Msg.show({
@@ -120,11 +126,6 @@ PhotoChooser.prototype = {
                         }
                     });
                 }
-                if(filename) {
-                    filename_to_jpg = Ext.util.Format.substr(filename, 0, filename.lastIndexOf(".")) + ".jpg";
-                    Ext.get('user_photo').dom.src = window.config.img_path + "t140x140/" + filename_to_jpg;
-                }
-                else showUserInfo(null, null, '{"source": "photo editor"}');
             };
 		    
             this.undoDeletePhoto = function(p_id){
@@ -380,9 +381,9 @@ PhotoChooser.prototype = {
 			'<div class="details">',
 				'<tpl for=".">',
 					'<center><div style="padding:5px;"><img class="ante" src="{[window.config.img_path]}t240x240/{[this.photoExtToJpg(values.filename)]}"></center>',
-                    '<div class="details-info" style="padding-left:5px;">',
+                    '<div class="details-info">',
 					'<br /><b>Image Name: </b>',
-					'<span style="padding-right:40px">{usedName}</span><span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'name\', \'{usedName}\')">(edit)</a></span><br /><br />',
+					'<span style="padding-right:40px">{usedName}</span><span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'name\', \'{usedName}\')">edit</a></span><br /><br />',
 					'<b>Size: </b>',
 					'<span>{sizeString}</span><br /><br />',
                     '<b>Created on: </b>',
@@ -392,18 +393,18 @@ PhotoChooser.prototype = {
 					'<b>Visibility: </b>',
 					'<span>{visibility}</span>',//<input type="checkbox" name="is_hidden" default="{is_hidden}" /><br />',
                     '<tpl if="(is_hidden == \'1\')">',
-                        '<span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 0, {defaultPhoto})" title="Setting this photo as public will let other users">(Set this public)</a></span><br /><br />',
+                        '<span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 0, {defaultPhoto})" title="Setting this photo as public will let other users">set public</a></span><br /><br />',
                     '</tpl>',
                     '<tpl if="(is_hidden == \'0\')">',
-                        '<span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 1, {defaultPhoto})" title="Setting this photo as private will hide it to other users, even if this is already set as your default photo!">(Set this private)</a></span><br /><br />',
+                        '<span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 1, {defaultPhoto})" title="Setting this photo as private will hide it to other users, even if this is already set as your default photo!">set private</a></span><br /><br />',
                     '</tpl>',
 					'<tpl if="(defaultPhoto == \'1\')">',
                         '<span><b>This is your default photo</b></span><br /><br />',
                     '</tpl>',
                     '<tpl if="(defaultPhoto == \'0\')">',
-                        '<span><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').setDefaultPhoto(\'{id}\', \'{filename}\')">Set this as your default photo!!!</a></span><br /><br />',
+                        '<span><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').setDefaultPhoto(\'{id}\', \'{filename}\')">Set this as your default photo</a></span><br /><br />',
                     '</tpl>',
-					'<b>Description: </b><span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'caption\', \'{[values.caption ? (values.description).replace(/\'/g,"\\\'") : ""]}\')">(edit)</a></span><br />',
+					'<b>Description: </b><span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'caption\', \'{[values.caption ? (values.description).replace(/\'/g,"\\\'") : ""]}\')">edit</a></span><br />',
 					'<span>{formattedDescription}</span>',
                     '</div>',
 				'</tpl>',
@@ -472,7 +473,7 @@ PhotoChooser.prototype = {
 
                     // The store in the west-panel is loaded only if it exists
                     var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
-                    if((westPanel.showedUser.id === window.user.id) && store)
+                    if(westPanel.showedUser && (westPanel.showedUser.id === window.user.id) && store)
                         store.load({params: {id: window.user.id}});
 
                     Ext.get("undodelphoto").update('You have deleted a photo. <a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').undoDeletePhoto(' + p_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelphoto\')">hide this message</a>');
