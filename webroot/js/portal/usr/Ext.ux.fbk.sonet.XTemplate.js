@@ -55,7 +55,7 @@ Ext.ux.fbk.sonet.XTemplate = Ext.extend(Ext.XTemplate, {
             if(printHours){
                 var diff = Math.floor((today.getTime()-originalDate.getTime())/(1000*60));
                 if(diff == 0)
-                    return "Right now"
+                    return "Just now"
                 else
                     return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
             } 
