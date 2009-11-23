@@ -161,8 +161,9 @@ function application_init(){
                 '</li>' +
                 '<li class="header"><a href="javascript:void(0)">' + window.config.appname + '</a>' +
                     '<ul>' +
-                        '<li><a href="http://github.com/vad/taolin" target="_blank">Code (github.com)</a></li>' +
-                        '<li><a href="http://github.com/vad/taolin/issues" target="_blank">Issues (github.com)</a></li>' +
+                        /* This software is open source released under aGPL. See http://www.fsf.org/licensing/licenses/agpl-3.0.html for more details. According to the license, you must place in every Web page served by Taolin a link where your user can download the source code. So, please, don't remove this link, you can move it in another part of the web page, though. */
+                        '<li><a href="http://github.com/vad/taolin" target="_blank">Download the code</a></li>' +
+                        '<li><a href="http://github.com/vad/taolin/issues" target="_blank">Report an issue</a></li>' +
                     '</ul>' +
                 '</li>' +
                 '<li class="header last"><a href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
@@ -176,7 +177,8 @@ function application_init(){
                 '<li class="header"><a href="javascript:void(0)" onclick="showMainTimeline()">Timeline</a></li>' +
                 '<li class="header"><a href="./pages/help" target="_blank">FAQ - Help</a></li>' +
                 '<li class="header"><a href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
-                '<li class="header"><a href="http://github.com/vad/taolin" target="_blank">' + window.config.appname + ' code</a>' +
+                /* This software is open source released under aGPL. See http://www.fsf.org/licensing/licenses/agpl-3.0.html for more details. According to the license, you must place in every Web page served by Taolin a link where your user can download the source code. So, please, don't remove this link, you can move it in another part of the web page, though. */
+                '<li class="header"><a href="http://github.com/vad/taolin" target="_blank">Download the code</a>' +
                 '<li class="header last"><a href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
             '</ul>';
 
