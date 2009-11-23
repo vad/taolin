@@ -159,12 +159,12 @@ function application_init(){
                         '<li><a href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
                     '</ul>' +
                 '</li>' +
-                /*'<li class="header"><a href="javascript:void(0)">About ' + window.config.appname + '</a>' +
+                '<li class="header"><a href="javascript:void(0)">' + window.config.appname + '</a>' +
                     '<ul>' +
                         '<li><a href="http://github.com/vad/taolin" target="_blank">Code (github.com)</a></li>' +
                         '<li><a href="http://github.com/vad/taolin/issues" target="_blank">Issues (github.com)</a></li>' +
                     '</ul>' +
-                '</li>' +*/
+                '</li>' +
                 '<li class="header last"><a href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
             '</ul>';
     else // Simplified version for old, hated and unsupported browsers
@@ -176,6 +176,7 @@ function application_init(){
                 '<li class="header"><a href="javascript:void(0)" onclick="showMainTimeline()">Timeline</a></li>' +
                 '<li class="header"><a href="./pages/help" target="_blank">FAQ - Help</a></li>' +
                 '<li class="header"><a href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
+                '<li class="header"><a href="http://github.com/vad/taolin" target="_blank">' + window.config.appname + ' code</a>' +
                 '<li class="header last"><a href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
             '</ul>';
 
