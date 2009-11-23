@@ -35,6 +35,8 @@ Ext.ux.fbk.sonet.XTemplate = Ext.extend(Ext.XTemplate, {
         Ext.ux.fbk.sonet.XTemplate.superclass.constructor.apply(this, arguments);
     }
 
+    ,disableFormats: true
+
     // Returns true if the owner of the timeline's event is the user
     ,isOwner: function(u_id){
         return window.user.id === u_id;

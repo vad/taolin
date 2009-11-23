@@ -147,10 +147,30 @@ Timeline = Ext.extend(Ext.Panel, {
 
                         '</div>',
                     '</tpl>',
-                    '<br/>',
+                    '<br />',
+
+                    /* PAGINATION */
+                    '<tpl if="!(this.isFirstPage() && this.isLastPage())">',
+                        '<div class="timeline-pagination">',
+                            '<div class="left-div">',
+                                '<tpl if="!this.isFirstPage()">',
+                                    '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(0)" ><img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/>Newest</span>',
+                                    '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(1)"><img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/>Newer</span>',
+                                '</tpl>',
+                            '</div>',
+                            '<div class="right-div">',
+                                '<tpl if="!this.isLastPage()">',
+                                    '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(2)">Older<img src="img/icons/fugue/control-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
+                                    '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(3)">Oldest<img src="img/icons/fugue/control-double-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
+                                '</tpl>',
+                            '</div>',
+                        '</div>',
+                    '</tpl>',
+                    /* END OF PAGINATION */
+
                 '</tpl>',
-            '</div>',
-            {
+            '</div>'
+            ,{
                 parent: this
                 ,processedDate: null // Current date being processed (belonging to the currently processed event)
                 ,lastEventOfDay: false // Last event of day
