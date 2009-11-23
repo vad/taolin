@@ -110,10 +110,9 @@ PhotoChooser.prototype = {
                             Ext.example.msg('Success','Your default photo has been changed!');
                             Ext.getCmp('photo-chooser').store.load();
                             eventManager.fireEvent('newtimelineevent');
-                            if(filename) {
+                            if(filename && Ext.get('user_photo')) {
                                 filename_to_jpg = Ext.util.Format.substr(filename, 0, filename.lastIndexOf(".")) + ".jpg";
-                                if(Ext.get('user_photo'))
-                                    Ext.get('user_photo').dom.src = window.config.img_path + "t140x140/" + filename_to_jpg;
+                                Ext.get('user_photo').dom.src = window.config.img_path + "t140x140/" + filename_to_jpg;
                             }
                         },
                         failure: function(){
@@ -138,7 +137,7 @@ PhotoChooser.prototype = {
 
                             // The store in the west-panel is loaded only if it exists
                             var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
-                            if((westPanel.showedUser.id === window.user.id) && store)
+                            if(westPanel.showedUser && (westPanel.showedUser.id === window.user.id) && store)
                                 store.load({params: {id: window.user.id}});
 
                             /* Hide div containing the "Undo delete" message */
