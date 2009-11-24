@@ -373,7 +373,7 @@ div.thumb *{
 }
 
 .ante:hover {
-    border-color: #115393;
+    border: 2px solid #5EA0E3
 }
 
 /*.thumb-wrap span{
@@ -704,7 +704,7 @@ color:black;
 }
 
 .pagination-item:hover {
-    border: 1px solid #115393;
+    border: 2px solid #5EA0E3;
 }
 
 .board-img{
