@@ -85,8 +85,6 @@ PhotoChooser.prototype = {
 		    this.view = new Ext.DataView({
 				tpl: this.thumbTemplate,
 				singleSelect: true,
-                //overClass:'x-view-over',
-                overClass: 'searchusermouseoverbg',
 				itemSelector: 'div.thumb-wrap',
 				emptyText : '<div style="padding:10px;">No pictures match the specified filter</div>',
 				store: this.store,
