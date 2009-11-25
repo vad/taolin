@@ -67,8 +67,10 @@ class TimelinesController extends AppController {
         $data['template_id'] = $tltype;
         $data['model_alias'] = $model_alias;
         $data['foreign_id'] = $foreign_id;
+        $data['deleted'] = 0;
 
-        $this->Timeline->save($data);
+        $this->Timeline->create($data);
+        $this->Timeline->save();
 
         # clear cache
         clearCache($this->cacheName, '', '');

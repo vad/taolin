@@ -24,17 +24,22 @@ class Event extends AppModel
     var $actsAs = array('SoftDeletable', 'Commentable.Commentable');
 
     function afterSave($created){
-        
-        if($created) // if the event is created, NOT merely updated!
-            $this->addtotimeline(
-                    array(
-                        'summary' => $this->data['Event']['summary'],
-                        'url' => $this->data['Event']['uid'],
-                        'start_time' => $this->data['Event']['start_time'],
-                        'end_time' => $this->data['Event']['end_time']
-                    ),
-                    null, 'timelineevent-newevent', null, 'Event', $this->id);
-        
+
+        if(!empty($this->data) && ($created)){ // if the event is created, NOT merely updated!
+            $event = $this->data['Event'];
+            $e_id = $this->id;
+            if(array_key_exists('summary', $event) && !empty($event['summary'])){
+                $this->addtotimeline(
+                        array(
+                            'summary' => $event['summary'],
+                            'url' => $event['uid'],
+                            'start_time' => $event['start_time'],
+                            'end_time' => $event['end_time']
+                        ),
+                        null, 'timelineevent-newevent', null, 'Event', $e_id
+                );
+            }
+        }
 
         parent::afterSave($created);
     }
