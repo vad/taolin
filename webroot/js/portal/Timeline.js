@@ -168,6 +168,7 @@ Timeline = Ext.extend(Ext.Panel, {
                     '</tpl>',
                     /* END OF PAGINATION */
 
+                    '<br />',
                 '</tpl>',
             '</div>'
             ,{

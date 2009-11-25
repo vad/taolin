@@ -670,8 +670,8 @@ color:black;
 .timeline-pagination {
     margin: 5px auto;
     text-align: center;
-    padding: 15px 0;
-    color: #ddd;    
+    padding: 15px;
+    color: #ddd;   
 }
 
 .timeline-pagination a{
@@ -680,17 +680,12 @@ color:black;
 
 .timeline-pagination .left-div{
     width:50%;
-    padding-left: 5px;
-    text-align:left;
-    position:absolute;
-    display:block;
+    position: relative;
+    float:left;
 }
 
 .timeline-pagination .right-div{
     width:50%;
-    padding-right: 15px;
-    text-align:right;
-    position:absolute;
     display:inline;
 }
 
