@@ -233,10 +233,10 @@ Board = function(conf, panel_conf){
 
     this.formatText = function(id, expand){
 
+        var record = this.view.store.getById(id);
+
         var target = Ext.get(this.getId()+'-'+id+'-text');
         var target2 = Ext.get(this.getId()+'-'+id+'-colexp');
-        var item = this.view.findItemFromChild(target);
-        var record = this.view.store.getAt(this.view.indexOf(item));
 
         if(expand){ 
             target.update(record.data.text.urlize().smilize().replace(/\n/g,"<br />"));
