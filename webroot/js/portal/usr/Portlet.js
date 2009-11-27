@@ -80,7 +80,7 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
 
         //TODO: this doesn't need to be done for every instantiation
         w_class.prototype.setPortletTitle = function(title) {Ext.getCmp(this.portlet_id).setTitle(title);};
-        w_class.prototype.setPref = function(pref, value) {Ext.getCmp(this.portlet_id).setPref(pref, value);};
+        w_class.prototype.setPref = function(pref, value, callback) {Ext.getCmp(this.portlet_id).setPref(pref, value, callback);};
    
         this.remove(this.items.last());
         this.add(new w_class(conf.widget_conf, {portlet_id: conf.id}));
@@ -234,7 +234,7 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
         this.insert(0, this.confForm);
         this.doLayout();
     }
-    ,setPref:function(pref, value){
+    ,setPref:function(pref, value, callback){
 
         var params = {id: this.getId()};
         params[pref] = value;
@@ -243,6 +243,7 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
             url : 'users_widgets/changeconf'
             ,method: 'POST'
             ,params: params
+            ,callback: callback
        });
     }
 });

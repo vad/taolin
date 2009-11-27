@@ -240,8 +240,9 @@ BuddyList = function(conf, panel_conf) {
                     fn: function(panel, panelWidth, panelHeight){ 
                         var presence = Ext.getCmp('presence');
                         var status = Ext.getCmp('status');
-
-                        status.setWidth(panelWidth - (presence.width + 20));
+                        var width = panelWidth - (presence.width + 20); // Status's width
+                        if(width) // Check wether "width" is not NaN but a real number
+                            status.setWidth(width);
                     }, 
                     scope: this
                 }
@@ -329,8 +330,7 @@ BuddyList = function(conf, panel_conf) {
                         Ext.getCmp('status').store.add(rec);
                         
                         //store in DB
-                        this.panel.setPref('status', sStatus);
-                        eventManager.fireEvent('newtimelineevent');
+                        this.panel.setPref('status', sStatus, reloadTimeline);
 
                         //change jabber status
                         jabber.setPresence(sPresence, sStatus);
@@ -349,8 +349,7 @@ BuddyList = function(conf, panel_conf) {
                         var status = record.get('status');
                         
                         //store in DB
-                        combo.panel.setPref('status', status);
-                        eventManager.fireEvent('newtimelineevent');
+                        combo.panel.setPref('status', status, reloadTimeline);
                                                
                         //change jabber status
                         jabber.setPresence(presence, status);

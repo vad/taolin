@@ -443,7 +443,7 @@ function createNewPortlet(conf, use_widget_position){
     /* add a setPortletTitle function to all the widgets */
     widget = portlet.items.first();
     widget.setPortletTitle = function(title) {Ext.getCmp(this.portlet_id).setTitle(title);};
-    widget.setPref = function(pref, value) {Ext.getCmp(this.portlet_id).setPref(pref, value);};
+    widget.setPref = function(pref, value, callback) {Ext.getCmp(this.portlet_id).setPref(pref, value, callback);};
 
     widget.addEvents('fullscreen', 'downsize');
 }
