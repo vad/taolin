@@ -228,11 +228,8 @@ div.buddyliststate {
     position: relative;
 }
 
-#widget-new{
-    position:absolute;
-    right:0px;
-    top:0px;
-    padding:2px;
+.overlay {
+    position: relative;
     z-index:1001;
     height:auto;
     visibility:hidden;
@@ -240,21 +237,13 @@ div.buddyliststate {
 }
 
 /* To be applied to widget screenshots in the AddNeWidget window*/
-#widget_new img{
+.widget_new img{
     padding:2px;
     position:absolute;
     top:10;
     right:0;
 }
 
-#widget_new span{
-    margin-right:20px;
-    padding:2px;
-}
-
-#widget_container{
-    position: relative;
-}
 /* End AddNewWidget */
 
 /* Window add new Windgets */
