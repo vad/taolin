@@ -41,7 +41,10 @@
           <? echo $form->input('application_conf', $opts_ta); ?>
           <? echo $form->input('widget_conf', $opts_ta); ?>
           <? echo $form->input('screenshot', $opts_tf); ?>
-          <? echo $form->submit('Save', array('class' => 'button')); ?>
+          <br />
+          <? echo $form->submit('Save →', array('class' => 'button','div'=>false)); ?>
+          or
+          <a href="<? echo $this->base."/admin/widgets" ?>">Cancel</a>
           <? //echo $form->end('Save'); ?>
           </form>
         </div>
