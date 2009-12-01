@@ -23,7 +23,7 @@
 class TemplatesController extends AppController {
     var $name = 'Templates';
     var $paginate = array(
-        'limit' => 100,
+        'limit' => 8,
         'order' => 'id'
     );
     
