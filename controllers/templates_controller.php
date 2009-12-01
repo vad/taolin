@@ -36,8 +36,21 @@ class TemplatesController extends AppController {
         $res = $this->paginate();
         $this->set('templates', $res);
     }
-   
+    
+    function admin_add(){
+        Configure::write('debug', '0');
+        $this->layout = 'admin';
+        $this->recursive = -1;
+        
+        if (!empty($this->data)) {
+            if ($this->Template->save($this->data)) {
+                $this->Session->setFlash('Template created.', 'admin_flash_message_success');
+                $this->redirect(array('action' => 'index'));
+            }
+        }
 
+    }
+   
     function admin_edit($tid){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax     
         $this->layout = 'admin';

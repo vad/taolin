@@ -19,8 +19,6 @@
  *
  */
 
-$url = '/'.$url;
-
 ?>
 
 <div id="wrapper">
@@ -28,6 +26,7 @@ $url = '/'.$url;
     <div class="block">
       <div class="secondary-navigation">
         <ul><li class="first active"><a href='#top'>Templates list</a></li></ul>
+        <ul><li><a href="<? echo $this->base."/admin/templates/add" ?>">New template</a></li></ul>
         <div class="clear" />
       </div>
       <div class="content">
