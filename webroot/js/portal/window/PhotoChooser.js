@@ -200,6 +200,10 @@ PhotoChooser.prototype = {
                     method: 'POST',
                     success: function(result, request){
                         Ext.getCmp('photo-chooser').store.load();
+                        // The store in the west-panel is loaded only if it exists
+                        var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
+                        if((westPanel.showedUser.id == window.user.id) && store)
+                            store.load({params: {id: window.user.id}});
                     },
                     failure: function(){
                         Ext.Msg.show({
