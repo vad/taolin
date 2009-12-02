@@ -42,7 +42,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             method: 'POST',
             fields: ['id', 'name', 'filename', 'user_id', 'caption', 'width', 'height', 'url', 'is_hidden','default_photo',{name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'commentsCount'],
             listeners:{
-                load: function(){
+                load: function(store, records, option){
                     this.parent.setTitle(
                         this.parent.prevTitle+' ('+this.totalLength+')'
                     );
@@ -61,26 +61,53 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
         //this.store.load({params: {id: westPanel.showedUser.id}});
 
         var tpl = new Ext.ux.fbk.sonet.XTemplate( 
-            '<div style="font-size:100%; overflow-y: hidden;">',
-                '<tpl for=".">',
-                    '<div style="padding:10px;" class="thumb-wrap">',
-                        '<div class="thumb">',
-                            /* If the photo belongs to the user and is
-                             * private, show an overlay on that photo
-                             */
-                            '<tpl if="this.isOwner(user_id) && (is_hidden == 1)">',
-                                '<div class="overlay, private_photo">',
-                                    '<img class="size16x16" src="img/icons/fugue/minus-shield.png" title="This photo is private!" />',
-                                '</div>',
-                            '</tpl>',
-                            /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
-                            '<span></span><img class="ante" style="padding:5px;cursor:pointer;" src="{[window.config.img_path]}t140x140/{[this.photoExtToJpg(values.filename)]}" />',
+            '{[this.resetPreviousPhotoVisibility()]}',
+            '<tpl for=".">',
+                '<tpl if="this.showHeader(values.is_hidden)">',
+                    '<tpl if="this.previousPhotoVisibility == 0">',
+                        '<div style="padding-top: 15px;margin:0 25px;border-bottom:1px solid #aaa;font-weight:bold;">',
+                            'Public photos',
                         '</div>',
-                        '<span><b>{name}</b></span><br />',
-                        '<span style="padding-bottom:5px;color:gray;font-size:90%;">{[this.formatDate(values.created, false)]}</span><br />',
-                     '</div>',
+                        '<div style="overflow-y: hidden;">',
+                    '</tpl>',
+                    '<tpl if="this.previousPhotoVisibility == 1">',
+                        '</div>',
+                        '<div style="padding-top: 30px;margin:0 25px;border-bottom:1px solid #aaa;font-weight:bold;">',
+                            'Your private photos',
+                        '</div>',
+                        '<div style="overflow-y: hidden;">',
+                    '</tpl>',
                 '</tpl>',
-            '</div>'
+                '<div style="padding:10px;" class="thumb-wrap">',
+                    '<div class="thumb">',
+                        /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
+                        '<span></span><img class="ante" style="padding:5px;cursor:pointer;" src="{[window.config.img_path]}t140x140/{[this.photoExtToJpg(values.filename)]}" />',
+                    '</div>',
+                    '<span><b>{name}</b></span><br />',
+                    '<span style="padding-bottom:5px;color:gray;font-size:90%;">{[this.formatDate(values.created, false)]}</span><br />',
+                 '</div>',
+            '</tpl>',
+            '</div>',
+            {
+                /* Keeps track of the visibility of the previous photo
+                 * Need this function to show the correct header
+                 */
+                previousPhotoVisibility: null
+                // Reset that value
+                ,resetPreviousPhotoVisibility: function(){
+                    this.previousPhotoVisibility = null;
+                    return '';
+                }
+                // To show or not to show (the header "Public photos" / "Private photos")? This is the question
+                ,showHeader: function(is_private){
+                    if((is_private == 0 && this.previousPhotoVisibility == null) || (is_private == 1 && this.previousPhotoVisibility == 0)){
+                        this.previousPhotoVisibility = is_private;
+                        return true;
+                    }
+                    else 
+                        return false;
+                }
+            }
         );
 
         tpl.compile();

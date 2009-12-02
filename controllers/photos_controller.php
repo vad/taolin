@@ -55,7 +55,7 @@ class PhotosController extends AppController {
             $query = array(
                 'conditions'=> array('user_id'=>$user_id),
                 'fields' => $fields,
-                'order' => 'Photo.created DESC',
+                'order' => array('Photo.is_hidden', 'Photo.created DESC'),
                 'recursive'=>0
             );
         } else {

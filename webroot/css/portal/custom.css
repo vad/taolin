@@ -243,12 +243,6 @@ div.buddyliststate {
     right:0;
     background:white;
 }
-/* Overlay for private photo */
-.private_photo img{
-    position:absolute;
-    top: 20px;
-    right:20px;
-}
 
 /* Window add new Windgets */
 .list-widgets-grid .x-grid3-body tr{
