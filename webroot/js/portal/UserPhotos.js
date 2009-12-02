@@ -40,7 +40,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             url: 'photos/getphotos',
             root: 'photos',
             method: 'POST',
-            fields: ['id', 'name', 'filename', 'caption', 'width', 'height', 'url', 'is_hidden','default_photo',{name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'commentsCount'],
+            fields: ['id', 'name', 'filename', 'user_id', 'caption', 'width', 'height', 'url', 'is_hidden','default_photo',{name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'commentsCount'],
             listeners:{
                 load: function(){
                     this.parent.setTitle(
@@ -63,22 +63,25 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             '<div style="font-size:100%; overflow-y: hidden;">',
                 '<tpl for=".">',
                     '<div style="padding:10px;" class="thumb-wrap">',
-                        /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
-                        '<div class="thumb"><span></span>',
-                            '<img class="ante" style="padding:5px;cursor:pointer;" src="{[window.config.img_path]}t140x140/{[this.photoExtToJpg(values.filename)]}" />',
+                        '<div class="thumb">',
+                            /* If the photo belongs to the user and is
+                             * private, show an overlay on that photo
+                             */
+                            '<tpl if="this.isOwner(user_id) && (is_hidden == 1)">',
+                                '<div class="overlay, private_photo">',
+                                    '<img class="size16x16" src="img/icons/fugue/minus-shield.png" title="This photo is private!" />',
+                                '</div>',
+                            '</tpl>',
+                            /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
+                            '<span></span><img class="ante" style="padding:5px;cursor:pointer;" src="{[window.config.img_path]}t140x140/{[this.photoExtToJpg(values.filename)]}" />',
                         '</div>',
                         '<span><b>{name}</b></span><br />',
                         '<span style="padding-bottom:5px;color:gray;font-size:90%;">{[this.formatDate(values.created, false)]}</span><br />',
                      '</div>',
                 '</tpl>',
-            '</div>', {
-                // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)
-                photoExtToJpg: function(screenshot){
-                    return Ext.util.Format.substr(screenshot, 0, screenshot.lastIndexOf(".")) + '.jpg'; 
-                }
-            }
-
+            '</div>'
         );
+
         tpl.compile();
 
         var dv = new Ext.DataView({

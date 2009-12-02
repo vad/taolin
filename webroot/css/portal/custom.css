@@ -233,18 +233,22 @@ div.buddyliststate {
     z-index:1001;
     height:auto;
     visibility:hidden;
-    background:white;
 }
 
 /* To be applied to widget screenshots in the AddNeWidget window*/
 .widget_new img{
     padding:2px;
     position:absolute;
-    top:10;
+    top: 10;
     right:0;
+    background:white;
 }
-
-/* End AddNewWidget */
+/* Overlay for private photo */
+.private_photo img{
+    position:absolute;
+    top: 20px;
+    right:20px;
+}
 
 /* Window add new Windgets */
 .list-widgets-grid .x-grid3-body tr{
@@ -602,6 +606,16 @@ color:black;
 
 .details-info a:hover {
     text-decoration: underline;
+}
+
+.size24x24 {
+    width:24px;
+    height:24px;
+}
+
+.size32x32 {
+    width:32px;
+    height:32px;
 }
 
 .size16x16 {

@@ -46,7 +46,7 @@ class PhotosController extends AppController {
 
         $user_id = $this->Session->read('id');
        
-        $fields = array('Photo.id', 'Photo.name', 'Photo.filename','Photo.caption',
+        $fields = array('Photo.id', 'Photo.user_id', 'Photo.name', 'Photo.filename','Photo.caption',
             'Photo.width','Photo.height',"LENGTH(photo) AS size",
             'Photo.created', 'Photo.modified', 'Photo.is_hidden', 'Photo.default_photo'
         );
