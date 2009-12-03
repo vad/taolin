@@ -220,7 +220,10 @@ class TimelinesController extends AppController {
 
                 $commented_event = array();
                 $commented_event['temp'] = $short_template;
+<<<<<<< HEAD:controllers/timelines_controller.php
                 $commented_event['param'] = $event['param'];
+=======
+>>>>>>> 8ac7277ecbea5529ec548d5e70c85e4307e966b0:controllers/timelines_controller.php
 
                 // find user's data for the commented event
                 $model_name = $event['model_alias'];
