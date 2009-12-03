@@ -57,6 +57,7 @@
           <? echo $form->create('Template', array('class' => 'form')); ?>
           <? echo $form->input('name', $opts_tf); ?>
           <? echo $form->input('temp', $opts_ta); ?>
+          <? echo $form->input('short_temp', $opts_ta); ?>
           <? echo $form->input('icon', $opts_tf); ?>
           <br />
           <? echo $form->submit('Save →', array('class' => 'button','div'=>false)); ?>
@@ -80,15 +81,18 @@
 </div>
 
 <script type="text/javascript">
-  var editor = CodeMirror.fromTextArea('TemplateTemp', {
+  var cmConf = {
     height: "100px",
     parserfile: "parsexml.js",
     stylesheet: "<? echo $this->base ?>/admin-media/codemirror/css/xmlcolors.css",
     path: "<? echo $this->base ?>/admin-media/codemirror/js/",
     continuousScanning: 500,
     lineNumbers: false,
-    
-  });
+  };
+
+  // create a code mirror editor and clone configuration object (otherwise codemirror duplicates the first editor in the second one)
+  var editorTemp = CodeMirror.fromTextArea('TemplateTemp', $.extend(true, {}, cmConf));
+  var editorShortTemp = CodeMirror.fromTextArea('TemplateShortTemp', $.extend(true, {}, cmConf));
 </script>
 
 
