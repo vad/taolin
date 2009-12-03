@@ -33,7 +33,10 @@ class CommentComponent extends Object {
             'email' => 'abc@example.com'
         ));
 
-        $Model->createComment($foreign_id, $comment);
+        $out = $Model->createComment($foreign_id, $comment);
+        $comment_id = $Model->Comment->id;
+
+        $Model->addtotimeline(array(), null, 'comment', $user_id, $Model->alias, $foreign_id, $comment_id);
         
         # clear cache
         clearCache($this->cacheName, '', '');

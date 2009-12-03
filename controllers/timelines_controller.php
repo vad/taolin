@@ -24,6 +24,12 @@ class TimelinesController extends AppController {
     var $uses = array('Photo','ReadableTimeline','Template','Timeline');
     var $components = array('Comment');
     var $cacheName = "cake_controller_timelines_last-timeline-events";
+    // used in gettemplates for "Davide commented Marco's message
+    // in the board"-like events
+    var $shortTemplates = array(
+        "Board" => "{{ user | userify timelineid }}'s message in the board widget",
+        "Timeline" => "{{ user | userify timelineid }}'s event"
+    );
 
     function beforeFilter()
     {
@@ -44,7 +50,7 @@ class TimelinesController extends AppController {
      * @model_alias: Model alias (for commenting purposes) that binds the timeline's event with the corresponding database table
      * @foreign_id: foreign key to the aforementioned database table
      */
-    function add($param, $date, $type_name, $uid, $model_alias, $foreign_id){
+    function add($param, $date, $type_name, $uid, $model_alias, $foreign_id, $comment_id = null){
         
         // Encoding parameters into json
         if(!empty($param) && ($param != null))
@@ -67,6 +73,7 @@ class TimelinesController extends AppController {
         $data['template_id'] = $tltype;
         $data['model_alias'] = $model_alias;
         $data['foreign_id'] = $foreign_id;
+        $data['comment_id'] = $comment_id;
         $data['deleted'] = 0;
 
         $this->Timeline->create($data);
@@ -130,12 +137,16 @@ class TimelinesController extends AppController {
 
             $readabletimeline = $this->ReadableTimeline->find('all',
                 array('conditions' => $conditions,
-                    'fields' => array('id','user_id','name','surname','deleted','login','gender','param','date','temp','icon','model_alias','foreign_id','commentsCount'),
-                    'limit' => $limit, 'recursive' => 0, 'page' => $start/$limit + 1
+                    'fields' => array('id','user_id','name','surname','deleted','login','gender','param','date','temp','icon','model_alias','foreign_id','commentsCount', 'comment_id', 'comment_template_id'),
+                    'limit' => $limit,
+                    'recursive' => -1,
+                    'page' => $start/$limit + 1
                 )
             );
 
             $events = Set::extract($readabletimeline, '{n}.ReadableTimeline');
+
+            # now we check if timeline events are related to deleted Model/foreign_key
 
             # group by model alias
             $grouped_events = array();
@@ -152,6 +163,7 @@ class TimelinesController extends AppController {
             foreach ($grouped_events as $model_name => $records) {
                 App::import("Model", $model_name);
 
+                # explode: plugin.model_alias
                 $tmp = explode('.', $model_name);
                 $model_name = $tmp[count($tmp)-1];
                 
@@ -173,6 +185,46 @@ class TimelinesController extends AppController {
                 }
             }
 
+            /*
+             * find comments events
+             * they are two events in one:
+             *   "Davide commented 'Marco uploaded a photo'"
+             */
+            foreach ($events as &$event) { 
+                pr('NUOVOOOOO');
+                pr($event);
+
+                if (!$event['comment_id']) continue;
+
+                $out = $this->Template->findById($event['comment_template_id']); 
+                $short_template = $out['Template']['short_temp'];
+                pr($short_template);
+
+                $commented_event = array();
+                $commented_event['temp'] = $short_template;
+
+                // find user's data for the commented event
+                $model_name = $event['model_alias'];
+                App::import("Model", $model_name);
+
+                # explode: plugin.model_alias
+                $tmp = explode('.', $model_name);
+                $model_name = $tmp[count($tmp)-1];
+                
+                $model = new $model_name();
+                $model->create();
+
+                $res = $model->findById($event['foreign_id']);
+                $commented_user = $res['User'];
+                $commented_event['name'] = $commented_user['name'];
+                $commented_event['surname'] = $commented_user['surname'];
+                $commented_event['user_id'] = $commented_user['id'];
+
+                $event['subevent'] = $this->prepareevent($commented_event);
+            }
+
+
+            # retrieve users' photos 
             $users = Set::extract($events, '{n}.user_id');
             $users_photo = $this->Photo->find('all',
                 array(
@@ -194,6 +246,10 @@ class TimelinesController extends AppController {
             foreach($events as &$event){
                 $event['user_photo'] = $hash_photos[$event['user_id']];
                 $event['event'] = $this->prepareevent($event);
+
+                if ($event['subevent'])
+                    $event['event'] .= $event['subevent'];
+
                 
                 if (empty($event['model_alias'])) {
                     $event['model_alias'] = 'Timeline';
@@ -201,7 +257,7 @@ class TimelinesController extends AppController {
                 }
 
                 unset($event['param'], $event['temp']); // no need to send this parameter, hence unset it
-                $results[] = $event; #copy to this new array because of a cake bug (array indexes are strings instead of integers...)
+                $results[] = $event; #copy to this new array because of a cake bug (array indexes created by Set::extract are strings instead of integers...)
             }
 
             $response['timeline'] = $results;

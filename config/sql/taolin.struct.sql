@@ -231,6 +231,8 @@ CREATE TABLE "timelines" (
   "date" TIMESTAMP(0) NOT NULL,
   model_alias character varying(100),
   foreign_id integer,
+  comment_id integer default NULL,
+  comment_timeline_id integer default NULL,
   "created" TIMESTAMP(0) NOT NULL default now(),
   "modified" TIMESTAMP(0) default NULL,
   "deleted" SMALLINT NOT NULL default '0',
@@ -308,9 +310,26 @@ ON users FOR EACH ROW EXECUTE PROCEDURE users_tsv_trigger();
 
 -- # Final view structure for view "readable_timeline"
 
-CREATE VIEW readable_timelines AS
-    SELECT timelines.id, timelines.user_id, users.name, users.surname, users.deleted, timelines.login, users.gender, timelines.template_id, timelines.param, timelines.date, templates.temp, templates.icon, timelines.model_alias, timelines.foreign_id, (SELECT count(*) AS count FROM (comments JOIN timelines timecount ON ((((comments.class)::text = (COALESCE(timecount.model_alias, 'Timeline'::character varying))::text) AND (comments.foreign_id = COALESCE(timecount.foreign_id, timecount.id))))) WHERE (timecount.id = timelines.id)) AS "commentsCount" FROM (((SELECT timelines.id, timelines.user_id, timelines.login, timelines.template_id, timelines.param, timelines.date, timelines.created, timelines.modified, timelines.deleted, timelines.deleted_date, timelines.model_alias, timelines.foreign_id FROM timelines WHERE (timelines.deleted = 0)) timelines LEFT JOIN (SELECT users.id, users.login, users.name, users.surname, users.date_of_birth, users.gender, users.email, users.corporate_unit, users.groups_description, users.personal_page, users.phone, users.phone2, users.working_place, users.publik_id, users.created, users.modified, users.role, users.mod_date_of_birth, users.mod_email, users.mod_description, users.mod_personal_page, users.mod_phone, users.mod_phone2, users.mod_working_place, users.mod_role, users.mod_home_address, users.mod_carpooling, users.privacy_policy_acceptance, users.facebook, users.linkedin, users.twitter, users.active, users.deleted, users.deleted_date, users.content, users.tsv FROM users) users ON ((timelines.user_id = users.id))) JOIN templates ON ((timelines.template_id = templates.id))) WHERE (((timelines.user_id IS NULL) OR ((users.deleted = 0) AND (timelines.id IN (SELECT max(timelines.id) AS "MAX(id)" FROM (timelines JOIN templates ON ((timelines.template_id = templates.id))) WHERE ((timelines.deleted = 0) AND (templates.is_unique = 1)) GROUP BY timelines.template_id, timelines.user_id)))) OR (timelines.id IN (SELECT timelines.id FROM (timelines JOIN templates ON ((timelines.template_id = templates.id))) WHERE ((timelines.deleted = 0) AND (templates.is_unique = 0))))) ORDER BY timelines.date DESC;
-
+CREATE OR REPLACE VIEW readable_timelines AS 
+ SELECT timelines.id, timelines.user_id, users.name, users.surname, users.deleted, timelines.login, users.gender, timelines.template_id, timelines.param, timelines.date, templates.temp, templates.icon, timelines.model_alias, timelines.foreign_id, timelines.comment_id, timelines.comment_template_id, ( SELECT count(*) AS count
+           FROM comments
+      JOIN timelines timecount ON comments.class::text = COALESCE(timecount.model_alias, 'Timeline'::character varying)::text AND comments.foreign_id = COALESCE(timecount.foreign_id, timecount.id)
+     WHERE timecount.id = timelines.id) AS "commentsCount"
+   FROM ( SELECT timelines.id, timelines.user_id, timelines.login, timelines.template_id, timelines.param, timelines.date, timelines.created, timelines.modified, timelines.deleted, timelines.deleted_date, timelines.model_alias, timelines.foreign_id, timelines.comment_id, timelines.comment_template_id
+           FROM timelines
+          WHERE timelines.deleted = 0) timelines
+   LEFT JOIN ( SELECT users.id, users.login, users.name, users.surname, users.date_of_birth, users.gender, users.email, users.corporate_unit, users.groups_description, users.personal_page, users.phone, users.phone2, users.working_place, users.publik_id, users.created, users.modified, users.role, users.mod_date_of_birth, users.mod_email, users.mod_description, users.mod_personal_page, users.mod_phone, users.mod_phone2, users.mod_working_place, users.mod_role, users.mod_home_address, users.mod_carpooling, users.privacy_policy_acceptance, users.facebook, users.linkedin, users.twitter, users.active, users.deleted, users.deleted_date, users.content, users.tsv
+           FROM users) users ON timelines.user_id = users.id
+   JOIN templates ON timelines.template_id = templates.id
+  WHERE timelines.user_id IS NULL OR users.deleted = 0 AND (timelines.id IN ( SELECT max(timelines.id) AS "MAX(id)"
+   FROM timelines
+   JOIN templates ON timelines.template_id = templates.id
+  WHERE timelines.deleted = 0 AND templates.is_unique = 1
+  GROUP BY timelines.template_id, timelines.user_id)) OR (timelines.id IN ( SELECT timelines.id
+   FROM timelines
+   JOIN templates ON timelines.template_id = templates.id
+  WHERE timelines.deleted = 0 AND templates.is_unique = 0))
+  ORDER BY timelines.date DESC;
 
 
 -- ALTER TABLE readable_timelines OWNER TO sonetdbmgr;
