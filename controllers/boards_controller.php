@@ -203,7 +203,7 @@ class BoardsController extends AppController {
 
         $user_id = $this->Session->read('id');
         
-        $this->Comment->addComment($this->Board, $this->params, $user_id);
+        $this->Comment->addComment($this->Board, $this->params, $user_id, null, 'boards-add');
 
         $this->set('json', array(
             'success' => TRUE

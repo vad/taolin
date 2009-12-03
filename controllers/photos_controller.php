@@ -414,8 +414,24 @@ class PhotosController extends AppController {
         $this->layout = 'ajax';
 
         $user_id = $this->Session->read('id');
-        
-        $this->Comment->addComment($this->Photo, $this->params, $user_id);
+       
+        $photo = $this->Photo->find('first', array(
+                'conditions' => array(
+                    'Photo.id' => $this->params['form']['foreign_id']
+                ),
+                'fields' => array(
+                    'Photo.filename','Photo.name','Photo.caption','Photo.width','Photo.height'
+                ),
+                'recursive' => -1
+        ));
+
+        $tpl_params = $photo['Photo'];
+            
+        $imagefoldername = $this->Conf->get('Images.people_web_path'); 
+
+        $tpl_params['url'] = (Router::url('/')).'img/'.$imagefoldername.$tpl_params['filename'];
+
+        $this->Comment->addComment($this->Photo, $this->params, $user_id, $tpl_params, 'photos-setdefaultphoto');
 
         $this->set('json', array(
             'success' => TRUE

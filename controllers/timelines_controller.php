@@ -49,8 +49,10 @@ class TimelinesController extends AppController {
      * @uid: id of the user who perform the action
      * @model_alias: Model alias (for commenting purposes) that binds the timeline's event with the corresponding database table
      * @foreign_id: foreign key to the aforementioned database table
+     * @comment_id: foreign key to Comment database table
+     * @comment_type_name: template name (to be used for the "comment" event)
      */
-    function add($param, $date, $type_name, $uid, $model_alias, $foreign_id, $comment_id = null){
+    function add($param, $date, $type_name, $uid, $model_alias, $foreign_id, $comment_id = null, $comment_type_name = null){
         
         // Encoding parameters into json
         if(!empty($param) && ($param != null))
@@ -67,6 +69,21 @@ class TimelinesController extends AppController {
         ));
         $tltype = $type['Template']['id'];
 
+        if(isset($comment_type_name)){
+            $comment_type = $this->Timeline->Template->find('first', array(
+                'conditions' => array(
+                    'Template.name' => $comment_type_name
+                ),
+                'fields' => array(
+                    'Template.id'
+                ),
+                'recursive' => 0
+            ));
+            $comment_tltype = $comment_type['Template']['id'];
+        }
+        else
+            $comment_tltype = null;
+            
         $data['param'] = $param;
         $data['date'] = $date;
         $data['user_id'] = $uid;
@@ -74,7 +91,8 @@ class TimelinesController extends AppController {
         $data['model_alias'] = $model_alias;
         $data['foreign_id'] = $foreign_id;
         $data['comment_id'] = $comment_id;
-        $data['deleted'] = 0;
+        $data['comment_template_id'] = $comment_tltype;
+        $data['deleted'] = 0; // Need this to add Event's object (otherwise will fail)
 
         $this->Timeline->create($data);
         $this->Timeline->save();
@@ -202,6 +220,7 @@ class TimelinesController extends AppController {
 
                 $commented_event = array();
                 $commented_event['temp'] = $short_template;
+                $commented_event['param'] = $event['param'];
 
                 // find user's data for the commented event
                 $model_name = $event['model_alias'];
@@ -372,8 +391,21 @@ class TimelinesController extends AppController {
         $this->layout = 'ajax';
 
         $user_id = $this->Session->read('id');
+        
+        $event = $this->Template->Timeline->find('first', array(
+                'conditions' => array(
+                    'Timeline.id' => $this->params['form']['foreign_id'],
+                ),
+                'fields' => array(
+                    'Timeline.param', 'Template.name'
+                ),
+                'recursive' => 0
+        ));
 
-        $this->Comment->addComment($this->Timeline, $this->params, $user_id);
+        $tpl_param = $event['Timeline']['param'];
+        $comment_type_name = $event['Template']['name'];
+
+        $this->Comment->addComment($this->Timeline, $this->params, $user_id, $tpl_params, $comment_type_name);
 
         $this->set('json', array(
             'success' => TRUE

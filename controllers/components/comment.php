@@ -22,7 +22,7 @@ class CommentComponent extends Object {
     var $user = null;
     var $cacheName = "cake_controller_timelines_last-timeline-events";
 
-    function addComment(&$Model, $params, $user_id){
+    function addComment(&$Model, $params, $user_id, $tpl_params = array(), $comment_type_name = null){
         
         $foreign_id = $params['form']['foreign_id'];
         $text = $params['form']['comment'];
@@ -36,7 +36,7 @@ class CommentComponent extends Object {
         $out = $Model->createComment($foreign_id, $comment);
         $comment_id = $Model->Comment->id;
 
-        $Model->addtotimeline(array(), null, 'comment', $user_id, $Model->alias, $foreign_id, $comment_id);
+        $Model->addtotimeline($tpl_params, null, 'comment', $user_id, $Model->alias, $foreign_id, $comment_id, $comment_type_name);
         
         # clear cache
         clearCache($this->cacheName, '', '');
