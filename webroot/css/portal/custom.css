@@ -387,6 +387,13 @@ div.thumb span {
     height:180px;
 }
 
+.user-photos-header {
+    font-family: helvetical;
+    font-size: 150%;
+    margin:0 25px;
+    border-bottom:1px solid #aaa;
+}
+
 /* END Photo Chooser and Add Widgets Window */
 
 /* Edit div ( a blue box with text and images*/
