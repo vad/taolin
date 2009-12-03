@@ -20,7 +20,7 @@
 
 class AppModel extends Model
 {
-    function addtotimeline($param, $date_now = null, $type_name, $uid = null, $model_alias = null, $f_key = null){
+    function addtotimeline($param, $date_now = null, $type_name, $uid = null, $model_alias = null, $f_key = null, $comment_id = null){
 
         // If $date_now is not defined, save this event with current datetime
         if($date_now == null) 
@@ -31,7 +31,7 @@ class AppModel extends Model
         $controller = new TimelinesController;
         $controller->constructClasses();
         // Invoking addtimeline() method in TimelinesController
-        $controller->add($param, $date_now, $type_name, $uid, $model_alias, $f_key);
+        $controller->add($param, $date_now, $type_name, $uid, $model_alias, $f_key, $comment_id);
 
     }
 }
