@@ -312,6 +312,7 @@ class TimelinesController extends AppController {
             else if($event['gender']==2) $adjective = 'her';
             else $adjective = 'her/his';
 
+            pr($eventparam);
             $eventparam['user']['id'] = $event['user_id'];
             $eventparam['user']['name'] = $event['name'];
             $eventparam['user']['surname'] = $event['surname'];
@@ -391,7 +392,7 @@ class TimelinesController extends AppController {
         $this->layout = 'ajax';
 
         $user_id = $this->Session->read('id');
-        
+
         $event = $this->Template->Timeline->find('first', array(
                 'conditions' => array(
                     'Timeline.id' => $this->params['form']['foreign_id'],
@@ -402,7 +403,8 @@ class TimelinesController extends AppController {
                 'recursive' => 0
         ));
 
-        $tpl_param = $event['Timeline']['param'];
+        pr($event);
+        $tpl_params = $event['Timeline']['param'];
         $comment_type_name = $event['Template']['name'];
 
         $this->Comment->addComment($this->Timeline, $this->params, $user_id, $tpl_params, $comment_type_name);
