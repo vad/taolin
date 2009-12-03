@@ -32,7 +32,7 @@
   <div id="main">
     <div class="block">
       <div class="secondary-navigation">
-        <ul><li class="first"><a href="<? echo $this->base."/admin/templates" ?>">Templates list</a></li></ul>
+        <ul><li class="first"><a href="<? echo $this->base.DS."admin/templates" ?>">Templates list</a></li></ul>
         <ul><li class="active"><a href='#top'>New template</a></li></ul>
         <div class="clear" />
       </div>

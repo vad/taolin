@@ -26,7 +26,7 @@
     <div class="block">
       <div class="secondary-navigation">
         <ul><li class="first active"><a href='#top'>Templates list</a></li></ul>
-        <ul><li><a href="<? echo $this->base."/admin/templates/add" ?>">New template</a></li></ul>
+        <ul><li><a href="<? echo $this->base.DS."admin/templates/add" ?>">New template</a></li></ul>
         <div class="clear" />
       </div>
       <div class="content">
@@ -49,8 +49,8 @@
               echo "<td>".$template['id']."</td>";
               echo "<td>".$template['name']."</td>";
               echo "<td><code>".$template['temp']."</code></td>";
-              echo "<td width='20px' style='text-align: center;'><img src='../".$template['icon']."' class='size16x16' /></td>";
-              echo "<td width='30px'style='text-align: center'><a href='".$this->base."/admin/templates/edit/".$template['id']."' >edit</a></td>";
+              echo "<td width='20px' style='text-align: center;'><img src='".$this->base.DS.$template['icon']."' class='size16x16' /></td>";
+              echo "<td width='30px'style='text-align: center'><a href='".$this->base.DS."admin/templates/edit/".$template['id']."' >edit</a></td>";
 
               echo '</tr>';
             }
