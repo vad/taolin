@@ -427,15 +427,24 @@ class TimelinesController extends AppController {
     function getcomments($id){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
+        App::import('Vendor','h2o/h2o');
+        App::import('Vendor','filters');
 
         $comments = Set::extract(
             $this->Comment->getComments($this->Timeline, $id),
             '{n}.Comment'
         );
-        
+
+        $this->ReadableTimeline->recursive = -1;
+
+        $event = $this->ReadableTimeline->findById($id);
+        $details = $this->prepareevent($event['ReadableTimeline']);
+        pr($event);
+
         $this->set('json', array(
             'success' => TRUE,
-            'comments' => $comments)
+            'comments' => $comments,
+            'details' => $details)
         );
     }
 

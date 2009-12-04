@@ -18,11 +18,10 @@
 */
 
 
-CommentWindow = function(model_alias, foreign_id, event_html) {
+CommentWindow = function(model_alias, foreign_id) {
 
     this.model = Ext.util.Format.lowercase(model_alias) + 's';
     this.f_id = foreign_id;
-    this.event_html = event_html;
 
     this.store = new Ext.data.JsonStore({
         url: this.model + '/getcomments/' + this.f_id
@@ -34,6 +33,9 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
             load: {
                 fn: function(){
                     this.center();
+                    var details = this.store.reader.jsonData.details;
+                    $("#commented-event").css({'background':'#ECEFF5','margin':'auto auto','padding':'10px 5px'}); // Styling
+                    $("#commented-event").html(details);
                 }
                 ,scope: this
             }
@@ -70,17 +72,6 @@ CommentWindow = function(model_alias, foreign_id, event_html) {
 	    ,itemSelector: 'div.comment'
         ,height: 300
         ,autoScroll: true
-        ,listeners:{
-            render:{
-                fn: function(){
-                    if(this.event_html){
-                        $("#commented-event").css({'background':'#ECEFF5','margin':'auto auto','padding':'10px 5px'}); // Styling
-                        this.event_html.clone().appendTo("#commented-event"); // Appending event
-                    }
-                }
-                ,scope: this
-            }
-        }
     });
 
     this.form = new Ext.form.FormPanel({
