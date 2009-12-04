@@ -58,11 +58,14 @@ class CommentComponent extends Object {
     // $dirty=TRUE means that this functions must not do postprocessing
     function getComments(&$Model, $foreign_id, $dirty=FALSE){
         $filter = array($Model->alias.'.id' => $foreign_id);
-        $boardmsg = $Model->find('first', array(
+        $target = $Model->find('first', array(
             'conditions' => $filter,
             'recursive' => FALSE
         ));
-        $Model->create($boardmsg);
+        // if the target doesn't exist, returns an empty array
+        if (!$target) return array();
+
+        $Model->create($target);
 
         $comments = $Model->getComments(array(
             'options' => array(
