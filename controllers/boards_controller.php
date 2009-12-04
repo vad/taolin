@@ -219,10 +219,24 @@ class BoardsController extends AppController {
             $this->Comment->getComments($this->Board, $id),
             '{n}.Comment'
         );
-        
+        $msg = $this->Board->findById($id);
+        $params = array();
+        $params['user'] = $msg['User'];
+        $params['text'] = $msg['Board']['text'];
+
+        App::import("Model", 'Template');
+        $template = new Template();
+        $res = $template->findByName('board-details');
+        $tpl = $res['Template']['temp'];
+        App::import('Vendor','h2o/h2o');
+        App::import('Vendor','filters');
+
+        $details = h2o($tpl, array('autoescape' => false))->render($params);
+
         $this->set('json', array(
             'success' => TRUE,
-            'comments' => $comments)
+            'comments' => $comments,
+            'details' => $details)
         );
     }
 
