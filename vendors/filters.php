@@ -2,14 +2,26 @@
 
 class TimelineFilters extends FilterCollection {
 
-    static function userify($user, $timelineid){
-
+    static function userify($user, $timelineid, $suffix = null){
+        
         if(!$user['deleted'])
-            $str = sprintf('<a href="javascript:void(0)" onclick="showUserInfo(%d, null, \'{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;%d&quot;}\')">%s %s</a>', $user['id'], $timelineid, $user['name'], $user['surname']);
+            return sprintf('<a href="javascript:void(0)" onclick="showUserInfo(%d, null, \'{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;%d&quot;}\')">%s %s</a>', $user['id'], $timelineid, $user['name'], $user['surname']).$suffix;
         else
-            $str = $user['name']." ".$user['surname'];
+            return $user['name']." ".$user['surname'].$suffix;
 
-        return $str;
+    }
+    
+    static function user_adjectify($user, $timelineid){
+        
+        $is_comment = array_key_exists('commenter_id', $user);
+
+        if($is_comment) $suffix = "'s";
+        else $suffix = null;
+
+        if(!$is_comment || $user['id'] != $user['commenter_id'])
+            return TimelineFilters::userify($user, $timelineid, $suffix);
+        else
+            return $user['adj'];
     }
 
 }

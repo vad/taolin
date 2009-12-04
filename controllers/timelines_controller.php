@@ -237,7 +237,9 @@ class TimelinesController extends AppController {
                 $commented_event['name'] = $commented_user['name'];
                 $commented_event['surname'] = $commented_user['surname'];
                 $commented_event['user_id'] = $commented_user['id'];
+                $commented_event['gender'] = $commented_user['gender'];
                 $commented_event['deleted'] = $commented_user['deleted'];
+                $commented_event['commenter_id'] = $event['user_id'];
 
                 $event['subevent'] = $this->prepareevent($commented_event);
             }
@@ -314,12 +316,16 @@ class TimelinesController extends AppController {
 
             if (!array_key_exists('user', $eventparam))
                 $eventparam['user'] = array();
+
             $eventparam['user']['id'] = $event['user_id'];
             $eventparam['user']['name'] = $event['name'];
             $eventparam['user']['surname'] = $event['surname'];
             $eventparam['user']['login'] = $event['login'];
             $eventparam['user']['adj'] = $adjective;
             $eventparam['user']['deleted'] = $event['deleted'];
+
+            if(array_key_exists('commenter_id', $event))
+                $eventparam['user']['commenter_id'] = $event['commenter_id'];
         }
         
         $eventparam['timelineid'] = $event['id'];
