@@ -34,5 +34,29 @@ class AppModel extends Model
         $controller->add($param, $date_now, $type_name, $uid, $model_alias, $f_key, $comment_id, $comment_type_name);
 
     }
+
+    function filterinvisibles($ids = null){
+
+        if(empty($ids))
+            $ids = array($this->id);
+        else{
+            if(!is_array($ids))
+                $ids = array($ids);
+        }
+
+        $q = $this->find('all', array(
+                'conditions' => array(
+                    'id' => $ids,
+                    'deleted' => 1
+                ),
+                'fields' => array(
+                    'id', 'deleted'
+                ),
+                'recursive' => -1
+            )
+        );
+
+        return Set::extract($q, "{n}.$this->name.id");
+    }
 }
 ?>

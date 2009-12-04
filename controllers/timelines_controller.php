@@ -196,11 +196,8 @@ class TimelinesController extends AppController {
                 $ids = Set::extract($records, '{n}.foreign_id');
 
                 $model->enableSoftDeletable('find', false);
-                $deleted = Set::extract($model->find('all', array(
-                    'conditions' => array($model_name.'.id' => $ids,
-                        $model_name.'.deleted' => 1),
-                    'fields' => array('id', 'deleted')
-                )), '{n}.'.$model_name.'.id');
+
+                $deleted = $model->filterinvisibles($ids);
 
                 foreach ($events as $key => &$event) {
                     if (($event['model_alias'] == $model_name) && in_array($event['foreign_id'], $deleted))
