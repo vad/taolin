@@ -55,7 +55,8 @@ class TimelinesController extends AppController {
     function add($param, $date, $type_name, $uid, $model_alias, $foreign_id, $comment_id = null, $comment_type_name = null){
         
         // Encoding parameters into json
-        if(!empty($param) && ($param != null))
+        // (if it's an array, otherwise assume it's already encoded)
+        if(!empty($param) && ($param != null) && is_array($param))
             $param = json_encode($param);
 
         $type = $this->Timeline->Template->find('first', array(
@@ -105,7 +106,11 @@ class TimelinesController extends AppController {
      * gettimeline function retrieves events out of readable_timelines table
      */
     function gettimeline(){
-        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        //Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax
+        if (array_key_exists('debug', $this->params['url']))
+            Configure::write('debug', '2');
+        else
+            Configure::write('debug', '0');
         $this->layout = 'ajax';
 
         App::import('Vendor','h2o/h2o');
@@ -209,21 +214,15 @@ class TimelinesController extends AppController {
              *   "Davide commented 'Marco uploaded a photo'"
              */
             foreach ($events as &$event) { 
-                pr('NUOVOOOOO');
-                pr($event);
 
                 if (!$event['comment_id']) continue;
 
                 $out = $this->Template->findById($event['comment_template_id']); 
                 $short_template = $out['Template']['short_temp'];
-                pr($short_template);
 
                 $commented_event = array();
                 $commented_event['temp'] = $short_template;
-<<<<<<< HEAD:controllers/timelines_controller.php
                 $commented_event['param'] = $event['param'];
-=======
->>>>>>> 8ac7277ecbea5529ec548d5e70c85e4307e966b0:controllers/timelines_controller.php
 
                 // find user's data for the commented event
                 $model_name = $event['model_alias'];
@@ -315,7 +314,8 @@ class TimelinesController extends AppController {
             else if($event['gender']==2) $adjective = 'her';
             else $adjective = 'her/his';
 
-            pr($eventparam);
+            if (!array_key_exists('user', $eventparam))
+                $eventparam['user'] = array();
             $eventparam['user']['id'] = $event['user_id'];
             $eventparam['user']['name'] = $event['name'];
             $eventparam['user']['surname'] = $event['surname'];
@@ -406,7 +406,6 @@ class TimelinesController extends AppController {
                 'recursive' => 0
         ));
 
-        pr($event);
         $tpl_params = $event['Timeline']['param'];
         $comment_type_name = $event['Template']['name'];
 
