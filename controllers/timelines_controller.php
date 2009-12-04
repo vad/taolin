@@ -237,6 +237,7 @@ class TimelinesController extends AppController {
                 $commented_event['name'] = $commented_user['name'];
                 $commented_event['surname'] = $commented_user['surname'];
                 $commented_event['user_id'] = $commented_user['id'];
+                $commented_event['deleted'] = $commented_user['deleted'];
 
                 $event['subevent'] = $this->prepareevent($commented_event);
             }
