@@ -218,6 +218,7 @@ CREATE TABLE "templates" (
   "is_unique" SMALLINT NOT NULL default '0',
   PRIMARY KEY  ("id")
 );
+ALTER TABLE templates ADD CONSTRAINT templates_name_key UNIQUE (name);
 
 -- # Table structure for table "timelines"
 
