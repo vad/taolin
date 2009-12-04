@@ -35,6 +35,30 @@ class Photo extends AppModel
 
         return $this->find('first', $opts);
     }
+
+    function filterinvisibles($ids = null){
+
+        if(empty($ids))
+            $ids = array($this->id);
+        else{
+            if(!is_array($ids))
+                $ids = array($ids);
+        }
+
+        $q = $this->find('all', array(
+                'conditions' => array(
+                    'id' => $ids,
+                    'or' => array('deleted' => 1, 'is_hidden' => 1),
+                ),
+                'fields' => array(
+                    'id', 'deleted'
+                ),
+                'recursive' => -1
+            )
+        );
+
+        return Set::extract($q, "{n}.Photo.id");
+    }
 }
 
 ?>

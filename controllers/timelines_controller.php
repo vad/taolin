@@ -197,7 +197,7 @@ class TimelinesController extends AppController {
 
                 $model->enableSoftDeletable('find', false);
 
-                $deleted = $model->getinvisibles($ids);
+                $deleted = $model->filterinvisibles($ids);
 
                 foreach ($events as $key => &$event) {
                     if (($event['model_alias'] == $model_name) && in_array($event['foreign_id'], $deleted))

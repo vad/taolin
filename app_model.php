@@ -35,7 +35,14 @@ class AppModel extends Model
 
     }
 
-    function getinvisibles($ids = null){
+    function filterinvisibles($ids = null){
+
+        if(empty($ids))
+            $ids = array($this->id);
+        else{
+            if(!is_array($ids))
+                $ids = array($ids);
+        }
 
         $q = $this->find('all', array(
                 'conditions' => array(
