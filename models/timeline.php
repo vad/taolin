@@ -21,7 +21,10 @@ class Timeline extends AppModel
 {
     var $name = 'Timeline';
     var $belongsTo = array('Template','User');
-    var $actsAs = array('SoftDeletable', 'Commentable.Commentable'); 
+    var $actsAs = array('SoftDeletable',
+        'Commentable.Commentable' => array(
+            'dependent' => FALSE
+    )); 
 }
 
 ?>

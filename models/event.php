@@ -21,7 +21,10 @@ class Event extends AppModel
 {
     var $name = 'Event';
     var $belongsTo = 'Calendar';
-    var $actsAs = array('SoftDeletable', 'Commentable.Commentable');
+    var $actsAs = array('SoftDeletable',
+        'Commentable.Commentable' => array(
+            'dependent' => FALSE
+    )); 
 
     function afterSave($created){
 
