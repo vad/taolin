@@ -33,9 +33,25 @@ class EventsController extends AppController {
             '{n}.Comment'
         );
         
+        $event = $this->Event->findById($id);
+        $params = array();
+        $params['summary'] = $event['Event']['summary'];
+        $params['start_time'] = $event['Event']['start_time'];
+        $params['end_time'] = $event['Event']['end_time'];
+
+        App::import("Model", 'Template');
+        $template = new Template();
+        $res = $template->findByName('timelineevent-details');
+        $tpl = $res['Template']['temp'];
+        App::import('Vendor','h2o/h2o');
+        App::import('Vendor','filters');
+
+        $details = h2o($tpl, array('autoescape' => false))->render($params);
+
         $this->set('json', array(
             'success' => TRUE,
-            'comments' => $comments)
+            'comments' => $comments,
+            'details' => $details)
         );
     }
     
