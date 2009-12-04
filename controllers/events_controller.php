@@ -45,8 +45,20 @@ class EventsController extends AppController {
         $this->layout = 'ajax';
 
         $user_id = $this->Session->read('id');
+       
+        $event = $this->Event->find('first', array(
+                'conditions' => array(
+                    'Event.id' => $this->params['form']['foreign_id']
+                ),
+                'fields' => array(
+                    'Event.summary','Event.uid','Event.start_time','Event.end_time'
+                ),
+                'recursive' => -1
+        ));
+        
+        $tpl_params = $event['Event'];
 
-        $this->Comment->addComment($this->Event, $this->params, $user_id);
+        $this->Comment->addComment($this->Event, $this->params, $user_id, $tpl_params, 'timelineevent-newevent');
 
         $this->set('json', array(
             'success' => TRUE

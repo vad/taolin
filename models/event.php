@@ -35,7 +35,7 @@ class Event extends AppModel
                 $this->addtotimeline(
                         array(
                             'summary' => $event['summary'],
-                            'url' => $event['uid'],
+                            'uid' => $event['uid'],
                             'start_time' => $event['start_time'],
                             'end_time' => $event['end_time']
                         ),
