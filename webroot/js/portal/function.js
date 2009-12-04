@@ -79,14 +79,14 @@ function openImageChooser(){
     showText(false, 'undodelphoto');
 }  
 
-function openCommentWindow(model, foreign_key, event_html){
+function openCommentWindow(model, foreign_key){
 
     var comments_window = Ext.getCmp('comments_window');
 
     if(comments_window) // if not exist
         comments_window.close();
 
-    new CommentWindow(model, foreign_key, event_html); // Open a new comment window
+    new CommentWindow(model, foreign_key); // Open a new comment window
 }
 
 function showText(showtext, element){
