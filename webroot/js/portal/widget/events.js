@@ -122,11 +122,11 @@ Events = function(conf, panel_conf){
                     );
 
                     // comments
-                    value += String.format('<div class="comment-icons-text" style="float:right" onclick="openCommentWindow(\'Event\', {0})">', record.get('id'), "<div>", Ext.util.Format.htmlEncode(record.get('summary')), "<b></b>");
+                    value += String.format('<div class="comment-icons-text" style="float:right;color:gray;font-size:90%;" onclick="openCommentWindow(\'Event\', {0})">', record.get('id'), "<div>", Ext.util.Format.htmlEncode(record.get('summary')), "<b></b>");
                     if (record.get('commentsCount'))
-                        value += record.get('commentsCount') +' <img class="inline" src="js/portal/shared/icons/fam/comment.png"/>';
+                        value += record.get('commentsCount') +' <img class="size12x12" style="vertical-align:bottom;" src="js/portal/shared/icons/fam/comment.png"/>';
                     else 
-                        value += '<img class="inline" src="js/portal/shared/icons/fam/comment_add.png"/>';
+                        value += '<img class="size12x12" style="vertical-align:bottom;" src="js/portal/shared/icons/fam/comment_add.png"/>';
 
                     value += '</div>';
 
