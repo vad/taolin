@@ -83,6 +83,18 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                         /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
                         '<span></span><img class="ante" style="padding:5px;cursor:pointer;" src="{[window.config.img_path]}t140x140/{[this.photoExtToJpg(values.filename)]}" />',
                     '</div>',
+                    '<div style="float:right;font-size:90%;color:gray;cursor:pointer;">',
+                        '<tpl if="commentsCount &gt; 0">',
+                            '<span class="underlineHover" onclick="openCommentWindow(\'Photo\',{id})">',
+                                '{commentsCount} <img style="vertical-align:bottom;" class="size12x12" src="js/portal/shared/icons/fam/comment.png" title="View comments" />',
+                            '</span>',
+                        '</tpl>',
+                        '<tpl if="commentsCount &lt;= 0">',
+                            '<span class="underlineHover" onclick="openCommentWindow(\'Photo\',{id})">',
+                                '<img style="vertical-align:bottom;" class="size12x12" src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment">',
+                            '</span>',
+                        '</tpl>',
+                    '</div>',
                     '<span><b>{name}</b></span><br />',
                     '<span style="padding-bottom:5px;color:gray;font-size:90%;">{[this.formatDate(values.created, false)]}</span><br />',
                  '</div>',
@@ -117,7 +129,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             emptyText: '<div style="padding:10px 5px;font-size:100%"><div class="warning-message"><b>No photos for this user</b></div></div>', 
             store: this.store,
             loadingText: 'Please wait while loading...',
-            itemSelector: 'div.thumb-wrap',
+            itemSelector: 'div.thumb',
             listeners: {
                 click: {
                     fn: function(dv, index){
