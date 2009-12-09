@@ -41,10 +41,8 @@ class PhotosController extends AppController {
 
         $params = $this->params['form'];
 
-        $user_id = $params['id'];
-        $p_id = $params['photo_id'];
-        if(!$p_id)
-            $p_id = null;
+        $user_id = $params['u_id'];
+        $p_id = $params['p_id'];
 
         if (!$user_id)
             die('Request not valid!!!!');
@@ -56,25 +54,23 @@ class PhotosController extends AppController {
             'Photo.created', 'Photo.modified', 'Photo.is_hidden', 'Photo.default_photo'
         );
 
-        $conditions = array('user_id' => $user_id);
+        $conditions = array('Photo.user_id' => $user_id);
 
         if($u_id != $user_id) 
-            $conditions = array_push_assoc($conditions, 'is_hidden', 0);
+            $conditions['Photo.is_hidden'] = 0;
 
-        if(!$p_id)
-            $conditions = array_push_assoc($conditions, 'id', $p_id);
-
-        $this->log($conditions);
+        if($p_id)
+            $conditions['Photo.id'] = $p_id;
 
         $query = array(
-            'condition' => $conditions,
+            'conditions' => $conditions,
             'fields' => $fields,
             'order' => array('Photo.is_hidden', 'Photo.created DESC'),
-            'recursive'=>0
+            'recursive' => 0
         );
 
         $photo_ar = $this->Photo->find('all', $query);
-
+        
         $imagefoldername = $this->Conf->get('Images.people_web_path');
 
         foreach($photo_ar as $photo){
@@ -112,14 +108,7 @@ class PhotosController extends AppController {
             $this->Photo->saveAll($data);
             $response['success'] = true;
 
-            $params = $this->Photo->findById($p_id, array('field' =>'Photo.name','Photo.filename','Photo.width','Photo.height','Photo.caption',));
-
-            // Add event to the timeline
-            $imagefoldername = $this->Conf->get('Images.people_web_path'); 
-            
-            $sanitized_desc = $this->san->html(str_replace('\'', '\\\'', $params['Photo']['caption']));
-
-            $this->Photo->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$params['Photo']['filename'], "width" => $params['Photo']['width'], "height" => $params['Photo']['height'], "filename" => $params['Photo']['filename'], "caption" => $sanitized_desc, "name" => $params['Photo']['name']), null, 'photos-setdefaultphoto', $user_id, 'Photo', $p_id);
+            $this->Photo->addtotimeline(array("id" => $p_id), null, 'photos-setdefaultphoto', $user_id, 'Photo', $p_id);
         }
         else {
             $response['success'] = false;
@@ -239,7 +228,7 @@ class PhotosController extends AppController {
 
                                 $p_id = $this->Photo->id;
 
-                                $this->Photo->addtotimeline(array("url" => (Router::url('/')).'img/'.$imagefoldername.$dest_file, "width" => $width, "height" => $height, "filename" => $dest_file, "caption" => $sanitized_desc, "name" => $name), null, 'photos-uploadphoto', $user_id, 'Photo', $p_id);
+                                $this->Photo->addtotimeline(array("id" => $p_id), null, 'photos-uploadphoto', $user_id, 'Photo', $p_id);
                             }
                         }
 

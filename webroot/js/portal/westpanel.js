@@ -100,7 +100,7 @@ westPanel = new Ext.Panel({
     ,showPhotos: function(id){
         var tab = Ext.getCmp('wp-photos-tab');
 
-        tab.store.load({params: {id: id}});
+        tab.store.load({params: {u_id: id}});
     }
     
     /** showUser function

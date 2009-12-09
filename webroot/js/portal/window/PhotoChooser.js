@@ -46,7 +46,9 @@ PhotoChooser.prototype = {
 			    url: this.config.url,
 			    root: 'photos',
                 method: 'POST',
-                baseParams: {id: window.user.id},
+                baseParams: {
+                    u_id: window.user.id
+                },
 			    fields: [
 			        'id', 'name', 'filename', 'caption', 'is_hidden','default_photo',
 			        {name:'size', type: 'float'},
@@ -136,7 +138,7 @@ PhotoChooser.prototype = {
                             // The store in the west-panel is loaded only if it exists
                             var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
                             if(westPanel.showedUser && (westPanel.showedUser.id === window.user.id) && store)
-                                store.load({params: {id: window.user.id}});
+                                store.load({params: {user_id: window.user.id}});
 
                             /* Hide div containing the "Undo delete" message */
                             showText(false, 'undodelphoto');
@@ -176,7 +178,7 @@ PhotoChooser.prototype = {
                                         // The store in the west-panel is loaded only if it exists
                                         var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
                                         if((request.params.name === 'name' || request.params.name === 'caption') && (westPanel.showedUser.id == window.user.id) && store)
-                                            store.load({params: {id: window.user.id}});
+                                            store.load({params: {user_id: window.user.id}});
                                     },
                                     failure: function(){
                                         Ext.Msg.show({
@@ -203,7 +205,7 @@ PhotoChooser.prototype = {
                         // The store in the west-panel is loaded only if it exists
                         var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
                         if((westPanel.showedUser.id == window.user.id) && store)
-                            store.load({params: {id: window.user.id}});
+                            store.load({params: {user_id: window.user.id}});
                     },
                     failure: function(){
                         Ext.Msg.show({
@@ -242,11 +244,19 @@ PhotoChooser.prototype = {
             	        	selectOnFocus: true,
                         	width: 100,
                     		listeners: {
-                    			'render': {fn:function(){
-					                        	Ext.getCmp('filter').getEl().on('keyup', function(){
-                                                            						    		this.filter();
-                                                        						    	}, this, {buffer:500});
-                                        	}, scope:this}
+                    			'render': {
+                                    fn:function(){
+                                        Ext.getCmp('filter').getEl().on('keyup', function(){
+                                                this.filter();
+                                            },
+                                            this,
+                                            {
+                                                buffer:500
+                                            }
+                                        );
+                                    },
+                                    scope:this
+                                }
 	                	    }
              	        }, ' ', '-', {
                 	        text: 'Sort By:'
@@ -475,7 +485,7 @@ PhotoChooser.prototype = {
                     // The store in the west-panel is loaded only if it exists
                     var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
                     if(westPanel.showedUser && (westPanel.showedUser.id === window.user.id) && store)
-                        store.load({params: {id: window.user.id}});
+                        store.load({params: {user_id: window.user.id}});
 
                     Ext.get("undodelphoto").update('You have deleted a photo. <a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').undoDeletePhoto(' + p_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelphoto\')">hide this message</a>');
                     

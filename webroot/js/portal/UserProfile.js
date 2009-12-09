@@ -111,7 +111,7 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                     },{
                         xtype:'userphotos'
                         ,id:'wp-photos-tab'
-                    }                ]
+                    }]
             }]
 
         };

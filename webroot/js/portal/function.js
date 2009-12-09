@@ -792,43 +792,70 @@ function findChatStatus(req, login){
  *
  **************************************************************************/
 
-function showPicture(url, width, height, orig_filename, caption, name){
+function preparePhoto(photo){
 
-    var winTitle = Ext.util.Format.ellipsis(name, 50);
+    var winBody = '<img id="'+photo['filename']+'" class="ante" style="min-height:70px;margin:auto auto;display:block;" src="'+window.config.img_path+'t480x480/'+photo['filename']+'.jpg"></img>';
 
-    var filename = Ext.util.Format.substr(orig_filename, 0, orig_filename.lastIndexOf("."));
+    var cc = photo['commentsCount'];
+
+    if(cc > 0)
+        winBody += '<span style="padding-top:15px" class="timeline-comments" onclick="openCommentWindow(\'Photo\', '+photo['id']+')"><span class="underlineHover">'+Ext.util.Format.plural(cc, 'comment')+'</span> <img src="js/portal/shared/icons/fam/comment.png" title="View comments"></span>';
+    else
+        winBody += '<span style="padding-top:15px" class="timeline-comments" onclick="openCommentWindow(\'Photo\', '+photo['id']+')"><span class="underlineHover">Add a comment</span> <img src="js/portal/shared/icons/fam/comment.png" title="Add a comment"></span>';
+
+    winBody += photo['caption'] ? '<br /><div style="padding:5px 0 0 5px;font-family:Arial;">' + photo['caption'].replace(/\\n/g,"<br />").urlize().smilize() + '</div>' : '';
+
+    var res = {"winWidth" : 530, "winBody": winBody };
+
+    return res;
+}
+
+function showPhotoWindow(photo){
+
+    photo['filename'] = Ext.util.Format.substr(photo['filename'], 0, photo['filename'].lastIndexOf("."));
     
-    var res = showImageParam(width, height, url, filename, caption);
-    var winButtons = {no: "Close"};
+    var res = preparePhoto(photo);
+    var winTitle = Ext.util.Format.ellipsis(photo['name'], 50);
 
     var img_window = Ext.Msg.show({ 
         width: res["winWidth"], 
         title: winTitle,  
         msg: res["winBody"],  
-        buttons: winButtons,
+        buttons: {no: "Close"},
         closable: true,
         iconCls: 'picture'
     });
 
     /* Todo: add this listeners only once!!! */
-    $('#'+filename).load(function(){
+    $('#'+photo['filename']).load(function(){
         img_window.getDialog().center();
     });
-
 }
    
-function showImageParam(imgWidth, imgHeight, url, filename, caption){
+function showPicture(p_id){
 
-    var winBody = '<img id="'+filename+'" class="ante" style="min-height:70px;margin:auto auto;display:block;" src="'+window.config.img_path+'t480x480/'+filename+'.jpg"></img>';
-
-    winBody += '<span class="timeline-comments" onclick="openCommentWindow(\'Photo\', 1001)"><span class="underlineHover">12</span> <img src="js/portal/shared/icons/fam/comment.png" title="View comments"></span>';
-
-    winBody += caption ? '<br /><div style="padding:5px 0 0 5px;font-family:Arial;">' + caption.replace(/\\n/g,"<br />").urlize().smilize() + '</div>' : '';
-
-    var res = {"winWidth" : 530, "winBody": winBody };
-
-    return res;
-
+    if(p_id){
+        Ext.Ajax.request({
+            url:'photos/getphotos',
+            method: 'POST',
+            params: {
+                u_id: window.user.id,
+                p_id: p_id
+            }, 
+            success: function(result, request) {
+                var jsondata = Ext.util.JSON.decode(result.responseText);
+                showPhotoWindow(jsondata.photos[0]);
+            },
+            failure: function(){
+                Ext.Msg.show({
+                    title: 'Warning!',
+                    msg: '<center>Problem found in data transmission</center>',
+                    width: 400,
+                    icon: Ext.MessageBox.WARNING
+                });
+            }
+        });
+    }
 }
         
 function previewWidget(widgetid, widgetname, widgetdescription, screenshot, logparams){

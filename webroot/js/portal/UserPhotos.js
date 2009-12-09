@@ -127,52 +127,58 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                           * it will be created an <img> element with the desired properties such as the min-height
                           * (necessary to center the Ext.Msg element in the window)
                           */
-                         var winTitle = Ext.util.Format.ellipsis(dv.store.getAt(index).get('name'), 50);
-                         var orig_filename = dv.store.getAt(index).get('filename');
-                         var filename = Ext.util.Format.substr(orig_filename, 0, orig_filename.lastIndexOf("."));
-                         var url = dv.store.getAt(index).get('url');
-                         var caption = dv.store.getAt(index).get('caption'); 
-                         
-                         var imgWidth = parseInt(dv.store.getAt(index).get('width'));
-                         var imgHeight = parseInt(dv.store.getAt(index).get('height'));
-
-                         var imageValues = showImageParam(imgWidth, imgHeight, url, filename, caption);
-                         var winBody = imageValues["winBody"];
-                         var winWidth = imageValues["winWidth"];
-                         
-                         var winButtons = {no: "Close"};
-
-                         if(dv.store.getAt(index - 1) != null)
-                             winButtons['ok'] = "Prev";
-
-                         if(dv.store.getAt(index + 1) != null)
-                             winButtons['yes'] = "Next";
-
-                         var img_window = Ext.Msg.show({  
-                             width: winWidth, 
-                             title: winTitle,  
-                             msg: winBody,  
-                             buttons: winButtons,
-                             closable: false,
-                             iconCls: 'picture',
-                             /* HACK
-                              * Gallery based on recalling the following function and changing indexes 
-                              */
-                             fn:function(btn){
-                                 // In this hack, 'ok' button stands for 'prev'
-                                 if(btn == 'ok'){
-                                     dv.initialConfig.listeners.click.fn(dv, index-1);
-                                 }
-                                 // In this hack, 'no' button stands for 'next'
-                                 else if(btn == 'yes'){
-                                     dv.initialConfig.listeners.click.fn(dv, index+1);
-                                 }  
-                             }   
-                         });
                         
-                         $('#'+filename).load(function(){
-                             img_window.getDialog().center();
-                         });
+                        var photo = new Array();
+
+                        photo['id'] = dv.store.getAt(index).get('id');
+                        photo["url"] = dv.store.getAt(index).get('url');
+                        photo["caption"] = dv.store.getAt(index).get('caption'); 
+
+                        var orig_filename = dv.store.getAt(index).get('filename');
+                        photo["filename"] = Ext.util.Format.substr(orig_filename, 0, orig_filename.lastIndexOf("."));
+
+                        photo["imgWidth"] = parseInt(dv.store.getAt(index).get('width'));
+                        photo["imgHeight"] = parseInt(dv.store.getAt(index).get('height'));
+                        photo['commentsCount'] = dv.store.getAt(index).get('commentsCount');
+
+                        var imageValues = preparePhoto(photo);
+                        var winBody = imageValues["winBody"];
+                        var winWidth = imageValues["winWidth"];
+                        var winTitle = Ext.util.Format.ellipsis(dv.store.getAt(index).get('name'), 50);
+
+                        var winButtons = {no: "Close"};
+
+                        if(dv.store.getAt(index - 1) != null)
+                            winButtons['ok'] = "Prev";
+
+                        if(dv.store.getAt(index + 1) != null)
+                            winButtons['yes'] = "Next";
+
+                        var img_window = Ext.Msg.show({  
+                            width: winWidth, 
+                            title: winTitle,  
+                            msg: winBody,  
+                            buttons: winButtons,
+                            closable: false,
+                            iconCls: 'picture',
+                            /* HACK
+                             * Gallery based on recalling the following function and changing indexes 
+                             */
+                            fn:function(btn){
+                                // In this hack, 'ok' button stands for 'prev'
+                                if(btn == 'ok'){
+                                    dv.initialConfig.listeners.click.fn(dv, index-1);
+                                }
+                                // In this hack, 'no' button stands for 'next'
+                                else if(btn == 'yes'){
+                                    dv.initialConfig.listeners.click.fn(dv, index+1);
+                                }  
+                            }   
+                        });
+
+                        $('#'+photo['filename']).load(function(){
+                            img_window.getDialog().center();
+                        });
 
                     },
                     scope:this
