@@ -46,6 +46,7 @@ function application_init(){
             addcomment: true
             ,removecomment: true
             ,newtimelineevent: true
+            ,userphotochange: true
         }
         ,listeners:{
             addcomment: function(){

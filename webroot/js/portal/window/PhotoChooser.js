@@ -134,11 +134,9 @@ PhotoChooser.prototype = {
                         method: 'GET',
                         success: function(result, request){
                             Ext.getCmp('photo-chooser').store.load();
-
-                            // The store in the west-panel is loaded only if it exists
-                            var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
-                            if(westPanel.showedUser && (westPanel.showedUser.id === window.user.id) && store)
-                                store.load({params: {u_id: window.user.id}});
+                            
+                            // Fire a new event in order to reload the photos' store
+                            eventManager.fireEvent("userphotochange");
 
                             /* Hide div containing the "Undo delete" message */
                             showText(false, 'undodelphoto');
@@ -175,10 +173,9 @@ PhotoChooser.prototype = {
                                     method: 'POST',
                                     success: function(result, request){
                                         Ext.getCmp('photo-chooser').store.load();
-                                        // The store in the west-panel is loaded only if it exists
-                                        var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
-                                        if((request.params.name === 'name' || request.params.name === 'caption') && (westPanel.showedUser.id == window.user.id) && store)
-                                            store.load({params: {u_id: window.user.id}});
+                            
+                                        if(request.params.name === 'name' || request.params.name === 'caption')
+                                            eventManager.fireEvent("userphotochange"); // Fire a new event in order to reload the photos' store
                                     },
                                     failure: function(){
                                         Ext.Msg.show({
@@ -202,10 +199,7 @@ PhotoChooser.prototype = {
                     method: 'POST',
                     success: function(result, request){
                         Ext.getCmp('photo-chooser').store.load();
-                        // The store in the west-panel is loaded only if it exists
-                        var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
-                        if((westPanel.showedUser.id == window.user.id) && store)
-                            store.load({params: {u_id: window.user.id}});
+                        eventManager.fireEvent("userphotochange");
                     },
                     failure: function(){
                         Ext.Msg.show({
@@ -481,11 +475,8 @@ PhotoChooser.prototype = {
                 success: function(result, request){
                     // Reload PhotoChooser store and even the store in the west-panel
                     Ext.getCmp('photo-chooser').store.load();
-
-                    // The store in the west-panel is loaded only if it exists
-                    var store = Ext.StoreMgr.lookup('wp-photos-tab-store');
-                    if(westPanel.showedUser && (westPanel.showedUser.id === window.user.id) && store)
-                        store.load({params: {u_id: window.user.id}});
+                                            
+                    eventManager.fireEvent("userphotochange"); // Fire a new event in order to reload the photos' store
 
                     Ext.get("undodelphoto").update('You have deleted a photo. <a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').undoDeletePhoto(' + p_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelphoto\')">hide this message</a>');
                     

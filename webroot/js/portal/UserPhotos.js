@@ -200,6 +200,11 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
         });
 
         this.add(dv);
+    
+        eventManager.on("userphotochange", function(){
+            if(this.store.lastOptions.params.u_id == window.user.id)
+                this.store.reload(); 
+        }, this);
         
         Ext.ux.fbk.sonet.UserPublications.superclass.onRender.apply(
             this, arguments

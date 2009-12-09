@@ -120,8 +120,8 @@ PhotoUpload = function(){
 
                             Ext.getCmp('upload-window').close();
                             Ext.getCmp('photo-chooser').store.load();
-                            if(Ext.getCmp('wp-photos-tab') && Ext.getCmp('wp-photos-tab').store && (westPanel.showedUser) && (window.user.id === westPanel.showedUser.id))
-                                Ext.getCmp('wp-photos-tab').store.load({params: {id: window.user.id}});
+                            
+                            eventManager.fireEvent("userphotochange"); // Fire a new event in order to reload the photos' store
                         },
                         failure: function(fp, o){
                             Ext.example.msg('Failure!', 'We are sorry - Problem found in data transmission.<br /><br />'+ o.result.message, 15);
