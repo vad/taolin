@@ -39,33 +39,39 @@ class PhotosController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
-        $u_id = $_POST['id'];
+        $params = $this->params['form'];
 
-        if (!$u_id)
+        $user_id = $params['id'];
+        $p_id = $params['photo_id'];
+        if(!$p_id)
+            $p_id = null;
+
+        if (!$user_id)
             die('Request not valid!!!!');
 
-        $user_id = $this->Session->read('id');
+        $u_id = $this->Session->read('id');
        
         $fields = array('Photo.id', 'Photo.user_id', 'Photo.name', 'Photo.filename','Photo.caption',
             'Photo.width','Photo.height',"LENGTH(photo) AS size",
             'Photo.created', 'Photo.modified', 'Photo.is_hidden', 'Photo.default_photo'
         );
 
-        if($u_id == $user_id) {
-            $query = array(
-                'conditions'=> array('user_id'=>$user_id),
-                'fields' => $fields,
-                'order' => array('Photo.is_hidden', 'Photo.created DESC'),
-                'recursive'=>0
-            );
-        } else {
-            $query = array(
-                'conditions' => array('user_id' => $u_id, 'is_hidden' => 0),
-                'fields' => $fields,
-                'order'=>'Photo.created DESC',
-                'recursive'=>0
-            );
-        }
+        $conditions = array('user_id' => $user_id);
+
+        if($u_id != $user_id) 
+            $conditions = array_push_assoc($conditions, 'is_hidden', 0);
+
+        if(!$p_id)
+            $conditions = array_push_assoc($conditions, 'id', $p_id);
+
+        $this->log($conditions);
+
+        $query = array(
+            'condition' => $conditions,
+            'fields' => $fields,
+            'order' => array('Photo.is_hidden', 'Photo.created DESC'),
+            'recursive'=>0
+        );
 
         $photo_ar = $this->Photo->find('all', $query);
 

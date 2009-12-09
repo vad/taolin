@@ -821,6 +821,8 @@ function showImageParam(imgWidth, imgHeight, url, filename, caption){
 
     var winBody = '<img id="'+filename+'" class="ante" style="min-height:70px;margin:auto auto;display:block;" src="'+window.config.img_path+'t480x480/'+filename+'.jpg"></img>';
 
+    winBody += '<span class="timeline-comments" onclick="openCommentWindow(\'Photo\', 1001)"><span class="underlineHover">12</span> <img src="js/portal/shared/icons/fam/comment.png" title="View comments"></span>';
+
     winBody += caption ? '<br /><div style="padding:5px 0 0 5px;font-family:Arial;">' + caption.replace(/\\n/g,"<br />").urlize().smilize() + '</div>' : '';
 
     var res = {"winWidth" : 530, "winBody": winBody };
