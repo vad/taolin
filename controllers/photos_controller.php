@@ -410,21 +410,7 @@ class PhotosController extends AppController {
 
         $user_id = $this->Session->read('id');
        
-        $photo = $this->Photo->find('first', array(
-                'conditions' => array(
-                    'Photo.id' => $this->params['form']['foreign_id']
-                ),
-                'fields' => array(
-                    'Photo.filename','Photo.name','Photo.caption','Photo.width','Photo.height'
-                ),
-                'recursive' => -1
-        ));
-
-        $tpl_params = $photo['Photo'];
-            
-        $imagefoldername = $this->Conf->get('Images.people_web_path'); 
-
-        $tpl_params['url'] = (Router::url('/')).'img/'.$imagefoldername.$tpl_params['filename'];
+        $pl_params['id'] = $this->params['form']['foreign_id'];
 
         $this->Comment->addComment($this->Photo, $this->params, $user_id, $tpl_params, 'photos-setdefaultphoto');
 
@@ -443,9 +429,26 @@ class PhotosController extends AppController {
             '{n}.Comment'
         );
         
+        $photo = $this->Photo->findById($id);
+        $params = array();
+        $params['id'] = $photo['Photo']['id'];
+        $params['name'] = $photo['Photo']['name'];
+        $params['filename'] = substr_replace($photo['Photo']['filename'], '.jpg', strrpos($photo['Photo']['filename'], '.'));
+        $params['img_path'] = $this->Conf->get('Images.people_web_path');
+
+        App::import("Model", 'Template');
+        $template = new Template();
+        $res = $template->findByName('photo-details');
+        $tpl = $res['Template']['temp'];
+        App::import('Vendor','h2o/h2o');
+        App::import('Vendor','filters');
+
+        $details = h2o($tpl, array('autoescape' => false))->render($params);
+        
         $this->set('json', array(
             'success' => TRUE,
-            'comments' => $comments)
+            'comments' => $comments,
+            'details' => $details)
         );
     }
 
