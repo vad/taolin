@@ -36,6 +36,10 @@ CommentWindow = function(model_alias, foreign_id) {
                     var details = this.store.reader.jsonData.details;
                     $("#commented-event").css({'background':'#ECEFF5','margin':'auto auto','padding':'10px 5px'}); // Styling
                     $("#commented-event").html(details);
+
+                    // check if the window is out of the browser view
+                    var pos = this.getPosition(true);
+                    this.setPosition(pos[0], pos[1] > 0 ? pos[1] : 0);
                 }
                 ,scope: this
             }
