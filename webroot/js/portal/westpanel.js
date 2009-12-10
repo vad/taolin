@@ -150,11 +150,11 @@ westPanel = new Ext.Panel({
                 westPanel.showTools = ((!reqid) || (reqid == window.user.id));
                 showText(westPanel.showTools, 'user-profile-edit-div'); // Shows tools and Edit box only if the showed profile belongs to the user
 
-                if (('photo' in jsondata.user) && (jsondata.user.photo)){
-                    Ext.get("user_photo").dom.src = jsondata.user.photo;
-                } else {
-                    Ext.get("user_photo").dom.src = 'img/nophoto_small.png';
-                }
+                if (('photo' in jsondata.user) && (jsondata.user.photo))
+                    $("#user_photo").attr('src', jsondata.user.photo.src);
+                
+                else
+                    $("#user_photo").attr('src', 'img/nophoto_small.png');
                 
                 var mod_description = jsondata.user.mod_description;
                 // call the methods urlize and smilize only if the object is not null

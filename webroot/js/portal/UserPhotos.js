@@ -205,6 +205,16 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             if(this.store.lastOptions.params.u_id == window.user.id)
                 this.store.reload(); 
         }, this);
+
+        eventManager.on("addcomment", function(model){ 
+            if(model && model === 'photos') 
+                this.store.reload(); 
+        }, this);
+
+        eventManager.on("removecomment", function(model){ 
+            if(model && model === 'photos') 
+                this.store.reload(); 
+        }, this);
         
         Ext.ux.fbk.sonet.UserPublications.superclass.onRender.apply(
             this, arguments

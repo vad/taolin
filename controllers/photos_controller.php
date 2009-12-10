@@ -228,7 +228,7 @@ class PhotosController extends AppController {
 
                                 $p_id = $this->Photo->id;
 
-                                $this->Photo->addtotimeline(array("id" => $p_id), null, 'photos-uploadphoto', $user_id, 'Photo', $p_id);
+                                $this->Photo->addtotimeline(array("p_id" => $p_id), null, 'photos-uploadphoto', $user_id, 'Photo', $p_id);
                             }
                         }
 

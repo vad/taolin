@@ -91,7 +91,7 @@ class UsersController extends AppController {
 
         $conditions['Photo.default_photo'] = 1;
         $conditions['Photo.is_hidden'] = 0;
-        $fields = array('Photo.filename', 'Photo.is_hidden');
+        $fields = array('Photo.id', 'Photo.filename', 'Photo.is_hidden');
         $photo = $this->User->Photo->find('first', array(
             'conditions' => $conditions, 
             'recursive' => 0,
@@ -132,7 +132,8 @@ class UsersController extends AppController {
              * original file extension with .jpg
              */
             $photo_jpg = substr_replace($photo['Photo']['filename'], '.jpg', strrpos($photo['Photo']['filename'], '.'));
-            $json['user']['photo'] = Router::url('/').$imagefoldername.'t140x140/'.$photo_jpg;
+            $json['user']['photo']['src'] = Router::url('/').$imagefoldername.'t140x140/'.$photo_jpg;
+            $json['user']['photo']['id'] = $photo['Photo']['id'];
         }
         
         if (!empty($user['Workplace'])){
