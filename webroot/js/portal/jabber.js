@@ -231,6 +231,8 @@ var jabber = {
       var timestamp;
       var node = aJSJaCPacket.getNode();
       
+      if (!aJSJaCPacket.getBody()) return; //if there's not a message, exit
+
       $(node).find('x').each(function(){
         x = $(this);
         if (x.attr('xmlns') == 'jabber:x:delay'){
