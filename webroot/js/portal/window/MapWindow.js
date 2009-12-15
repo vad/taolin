@@ -32,6 +32,15 @@
 
 Ext.namespace( 'Ext.ux.fbk.sonet' );
 
+function openMapWindow(building_id, id, source) {
+    var mw = new Ext.ux.fbk.sonet.MapWindow({
+        buildingId: building_id,
+        userId: id,
+        logparams: '{"source": "'+source+'", "user_id": "'+id+'"}'
+    });
+    mw.show();
+}
+
 Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
     id: 'map-window'
     ,title: 'Workplace'

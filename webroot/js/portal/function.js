@@ -1125,5 +1125,49 @@ $.extend(Ext.util.Format, {
     ,birth: function(d) {
         return Date.parseDate(d, "Y-m-d").format("F, d");
     }
+    /*,tagCloud: function(tags){
+
+        if(!tags) 
+            return '';
+
+        var min_font_size = 12;
+        var max_font_size = 22;
+
+        var max_count;
+        var min_count;
+        
+        var count;
+        var font_size;
+        var tag_cloud = '<br /><div><ul><img class="inline" src="js/portal/shared/icons/fam/tag_blue.png" /><b>Tag cloud</b><br />';
+
+        // Defining minimum and maximum count value
+        for(var i in tags){
+            if((tags[i].length < min_count) || (min_count == null))
+                min_count = tags[i].length;
+            else if((tags[i].length > max_count) || (max_count == null))
+                max_count = tags[i].length;
+        }
+
+        var spread = max_count - min_count;
+        if(spread == 0) 
+            spread = 1;
+       
+        for(var key in tags){
+            
+            count = tags[key].length;
+            font_size = min_font_size + (count - min_count) * ((max_font_size - min_font_size) / spread); 
+
+            //tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><a href="javascript:void(0)" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;" onclick="console.log(\''+key+'\')" title="'+key+' tagged '+count+' times">'+key+'</a><wbr></li>';
+            
+            tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><a href="javascript:void(0)" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;">'+key+'</a><wbr></li>';
+
+
+        }
+
+        return tag_cloud + '</ul></div>';
+    }*/
+    ,removeHttp: function(url){
+        return url.substr(0,7)==="http://" ? url.substr(7) : url;
+    }
 });
 

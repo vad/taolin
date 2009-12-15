@@ -57,10 +57,14 @@ var usertext_tpl = new Ext.XTemplate(
         '<div class="warning-message" style="text-align:left">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{sourceSuggestAs}\')">suggest {name} as a new {[window.config.appname]} champion!</a></div><br />',
     '</tpl>',
     '<tpl if="((personal_page) && (personal_page != \'null\'))">',
-        '<b>Home page:</b> <span><a href="{personal_page}" target="_blank">{[values.personal_page.substr(0,7)==="http://" ? values.personal_page.substr(7) : values.personal_page]}</a></span><br />',
+        '<b>Home page:</b> <span><a href="{personal_page}" target="_blank">{personal_page:removeHttp}</a></span><br />',
     '</tpl>',
     '<tpl if="building_id">',
-        '<b>Workplace:</b> <span><a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow(\{buildingId:{building_id}, userId: {id}, logparams:\'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id": "{id}"}') + '\'\})).show()">where\'s {gender:pronoun} office?</a></span><br />',
+        '<b>Workplace:</b>',
+        '<span>',
+            ' <a href="javascript:void(0)" onclick="openMapWindow({building_id}, {id}, \'user profile\')">where\'s {gender:pronoun} office?</a>',
+        '</span>',
+        '<br />',
     '</tpl>',
     '<tpl if="date_of_birth">',
         '<b>Date of birth:</b><span> {date_of_birth:birth}</span><br />',
@@ -82,7 +86,11 @@ var usertext_tpl = new Ext.XTemplate(
             '<ul style="padding: 5px 0 0 20px">', 
             '<tpl for="groups">',
                 '<li style="list-style-type:disc;">',
-                    '<a href="javascript:void(0)" onclick="groupDetails(\'{id}\', \'{name}\',\'{sourceGroupWindow}\')">{[values.description_en ? (values.description_en + \" - \") : (values.description_it ? (values.description_it + \" - \") : \"\")]}{name}</a>',
+                    '<a href="javascript:void(0)" onclick="groupDetails(\'{id}\', \'{name}\',\'{sourceGroupWindow}\')">',
+                        '<tpl if="description_en">{description_en} - </tpl>',
+                        '<tpl if="description_it">{description_it} - </tpl>',
+                        '{name}',
+                    '</a>',
                 '</li>',
             '</tpl>',
             '</ul>',
@@ -119,47 +127,6 @@ var usertext_tpl = new Ext.XTemplate(
     ,{
         compiled: true
         //,disableFormats: true
-        /*,tagCloud: function(tags){
-
-            if(!tags) 
-                return '';
-
-            var min_font_size = 12;
-            var max_font_size = 22;
-
-            var max_count;
-            var min_count;
-            
-            var count;
-            var font_size;
-            var tag_cloud = '<br /><div><ul><img class="inline" src="js/portal/shared/icons/fam/tag_blue.png" /><b>Tag cloud</b><br />';
-
-            // Defining minimum and maximum count value
-            for(var i in tags){
-                if((tags[i].length < min_count) || (min_count == null))
-                    min_count = tags[i].length;
-                else if((tags[i].length > max_count) || (max_count == null))
-                    max_count = tags[i].length;
-            }
-
-            var spread = max_count - min_count;
-            if(spread == 0) 
-                spread = 1;
-           
-            for(var key in tags){
-                
-                count = tags[key].length;
-                font_size = min_font_size + (count - min_count) * ((max_font_size - min_font_size) / spread); 
-
-                //tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><a href="javascript:void(0)" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;" onclick="console.log(\''+key+'\')" title="'+key+' tagged '+count+' times">'+key+'</a><wbr></li>';
-                
-                tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><a href="javascript:void(0)" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;">'+key+'</a><wbr></li>';
-
-
-            }
-
-            return tag_cloud + '</ul></div>';
-        }*/
     }
 );
 
