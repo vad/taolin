@@ -65,9 +65,7 @@ Timeline = Ext.extend(Ext.Panel, {
         Timeline.superclass.initComponent.apply(this, arguments);
     }
     ,onRender: function(){
-
-        timelineId = 'timeline';
-        timelineTemplate = new Ext.ux.fbk.sonet.XTemplate( 
+        var timelineTemplate = new Ext.XTemplate( 
             '<div>',
                 '<tpl>',
 
@@ -89,25 +87,25 @@ Timeline = Ext.extend(Ext.Panel, {
                     '<tpl for=".">',
                         '<div class="timeline-wrapper">',
                             '<tpl if="this.checkEventDate(date, xindex)">',
-                                '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{[this.formatDate(values.date, false)]}</b></span></div>',
+                                '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{date:naturalDate(false)}</b></span></div>',
                             '</tpl>',
                             '<tpl if="!(this.lastEventOfDay)">',
                                 '<hr class="large" />',
                             '</tpl>',
-                            '<tpl if="this.isOwner(user_id)">',
+                            '<tpl if="Ext.util.Format.isOwner(user_id)">',
                                 '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="{this.parent.id:getCmp}.deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
                             '</tpl>',
                             '<span style="color:#888888;font-size:90%;text-align:right;margin-left:5px;">',
                                 '<tpl if="(icon != null)">',
                                     '<img src="{icon}" class="size16x16" /> ',
                                 '</tpl>',
-                                '{[this.formatDate(values.date, true)]}',
+                                '{date:naturalDate(true)}',
                             '</span><br />',
                             '<table>',
                                 '<tr>',
                                     '<tpl if="(user_id==null)&&(user_photo==null || user_photo == \'\')">',
                                         '<td>',
-                                            '<span style="padding: 0 2px"></span>',
+                                            '<span style="padding:0 2px"></span>',
                                         '</td>',
                                     '</tpl>',
                                     // else
@@ -119,7 +117,7 @@ Timeline = Ext.extend(Ext.Panel, {
                                                 '</tpl>',
                                                 // else
                                                 '<tpl if="(user_photo!=null && user_photo != \'\')">',
-                                                    '<img style="padding:2px 0" src="{[window.config.img_path]}t40x40/{[this.photoExtToJpg(values.user_photo)]}" />',
+                                                    '<img style="padding:2px 0" src="{[window.config.img_path]}t40x40/{user_photo:photoExtToJpg}" />',
                                                 '</tpl>',
                                             '</div>',
                                         '</td>',
@@ -133,8 +131,8 @@ Timeline = Ext.extend(Ext.Panel, {
                             /* COMMENTS */
                             '<tpl if="commentsCount &gt; 0">',
                                 '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
-                                    '<span class="underlineHover">{[this.formatComments(values.commentsCount)]}</span>',
-                                    ' <img src="js/portal/shared/icons/fam/comment.png" title="View {[this.formatComments(values.commentsCount)]}">',
+                                    '<span class="underlineHover">{commentsCount:plural("comment")}</span>',
+                                    ' <img src="js/portal/shared/icons/fam/comment.png" title="View {commentsCount:plural("comment")}">',
                                 '</span>',
                             '</tpl>',
                             '<tpl if="commentsCount &lt;= 0">',
@@ -169,6 +167,7 @@ Timeline = Ext.extend(Ext.Panel, {
             '</div>'
             ,{
                 parent: this
+                ,compiled: true
                 ,disableFormats: false
                 ,processedDate: null // Current date being processed (belonging to the currently processed event)
                 ,lastEventOfDay: false // Last event of day
@@ -202,9 +201,6 @@ Timeline = Ext.extend(Ext.Panel, {
                     var limit = this.parent.view.store.baseParams.limit;
 
                     return (start + limit) >= total;
-                }
-                ,formatComments: function(cc){
-                    return Ext.util.Format.plural(cc, 'comment');
                 }
             }
         );
@@ -284,7 +280,7 @@ Timeline = Ext.extend(Ext.Panel, {
                 url : 'timelines/deleteevent/'+e_id ,
                 method: 'GET',
                 success: function(result, request){
-                    Ext.get("undodelevent-"+parentId).update('Event deleted. <a href="javascript:void(0)" "onclick="Ext.getCmp(\''+parentId+'\').undoDeleteTimelineEvent(' + e_id + ')">Undo</a> | <a href="javascript:showText(false, \'undodelevent-'+parentId+'\')">Hide</a>');
+                    Ext.get("undodelevent-"+parentId).update('Event deleted. <a href="javascript:void(0)" onclick="Ext.getCmp(\''+parentId+'\').undoDeleteTimelineEvent(' + e_id + ')">Undo</a> | <a href="javascript:showText(false, \'undodelevent-'+parentId+'\')">Hide</a>');
                     showText(true, 'undodelevent-'+parentId);
                     store.load();
                 },

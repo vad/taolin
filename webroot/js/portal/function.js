@@ -1175,5 +1175,41 @@ $.extend(Ext.util.Format, {
     ,urlize: function(s) {
         return s.urlize();
     }
+    ,photoExtToJpg: function(screenshot){
+        return this.substr(screenshot, 0, screenshot.lastIndexOf(".")) + '.jpg'; 
+    }
+    ,naturalDate: function(originalDate, printHours){
+        
+        // Formatting Date object in order to compare it
+        formattedDate = originalDate.toDateString();
+
+        var today = new Date(), yesterday = new Date();
+        yesterday.setDate(today.getDate() - 1);
+
+        // Comparing Date
+        if(formattedDate == today.toDateString()){
+            if(printHours){
+                var diff = Math.floor((today.getTime()-originalDate.getTime())/(1000*60));
+                if(diff == 0)
+                    return "just now"
+                else
+                    return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
+            } 
+            else return 'Today';
+        }
+        else if(formattedDate == yesterday.toDateString())
+            return printHours ? 'Yesterday at ' + originalDate.format('H:i') : 'Yesterday';
+        else{
+            if(today.getYear() == originalDate.getYear())
+                return printHours ? originalDate.format('F, d \\a\\t H:i') : originalDate.format('F, d');
+            else
+                return printHours ? originalDate.format('F, d Y \\a\\t H:i') : originalDate.format('F, d Y');
+        }
+    }
+    // Returns true if the owner of the timeline's event is the user
+    ,isOwner: function(u_id){
+        return window.user.id === u_id;
+    }
+
 });
 
