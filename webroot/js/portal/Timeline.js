@@ -74,13 +74,13 @@ Timeline = Ext.extend(Ext.Panel, {
                     /* PAGINATION */
                     '<tpl if="!(this.isFirstPage() && this.isLastPage())">',
                         '<div class="timeline-pagination">',
-                            '<div class="left-div" style="visibility:{[this.isFirstPage() ? "hidden" : ""]};">',
-                                '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(0)" ><img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/>Newest</span>',
-                                '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(1)"><img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/>Newer</span>',
+                            '<div class="left-div" style="visibility:<tpl if="this.isFirstPage()">hidden</tpl>">',
+                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(0)" ><img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/>Newest</span>',
+                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(1)"><img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/>Newer</span>',
                             '</div>',
-                            '<div class="right-div" style="visibility:{[this.isLastPage() ? "hidden" : ""]};">',
-                                '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(2)">Older<img src="img/icons/fugue/control-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
-                                '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(3)">Oldest<img src="img/icons/fugue/control-double-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
+                            '<div class="right-div" style="visibility:<tpl if="this.isLastPage()">hidden</tpl>">',
+                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older<img src="img/icons/fugue/control-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
+                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<img src="img/icons/fugue/control-double-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
                             '</div>',
                         '</div>',
                     '</tpl>',
@@ -95,7 +95,7 @@ Timeline = Ext.extend(Ext.Panel, {
                                 '<hr class="large" />',
                             '</tpl>',
                             '<tpl if="this.isOwner(user_id)">',
-                                '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="Ext.getCmp(\'{[this.parent.id]}\').deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
+                                '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="{this.parent.id:getCmp}.deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
                             '</tpl>',
                             '<span style="color:#888888;font-size:90%;text-align:right;margin-left:5px;">',
                                 '<tpl if="(icon != null)">',
@@ -105,39 +105,43 @@ Timeline = Ext.extend(Ext.Panel, {
                             '</span><br />',
                             '<table>',
                                 '<tr>',
-                                    '<tpl if="(user_photo!=null && user_photo != \'\')">',
+                                    '<tpl if="(user_id==null)&&(user_photo==null || user_photo == \'\')">',
+                                        '<td>',
+                                            '<span style="padding: 0 2px"></span>',
+                                        '</td>',
+                                    '</tpl>',
+                                    // else
+                                    '<tpl if="!((user_id==null)&&(user_photo==null || user_photo == \'\'))">',
                                         '<td valign=top>',
-                                            '<div style="text-align:center;width:50px;cursor:pointer;" onclick=\"showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')\">',
-                                                '<img style="padding:2px 0" src="{[window.config.img_path]}t40x40/{[this.photoExtToJpg(values.user_photo)]}" />',
+                                            '<div style="text-align:center;width:50px; <tpl if="deleted!=1">cursor:pointer" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')</tpl>">',
+                                                '<tpl if="(user_photo==null || user_photo == \'\')">',
+                                                    '<img style="padding:2px 0;" width="40" height="50" src="img/nophoto.png" />',
+                                                '</tpl>',
+                                                // else
+                                                '<tpl if="(user_photo!=null && user_photo != \'\')">',
+                                                    '<img style="padding:2px 0" src="{[window.config.img_path]}t40x40/{[this.photoExtToJpg(values.user_photo)]}" />',
+                                                '</tpl>',
                                             '</div>',
                                         '</td>',
                                     '</tpl>',
-                                    '<tpl if="(user_photo==null || user_photo == \'\')">',
-                                        '<tpl if="(user_id!=null)">',
-                                            '<td valign=top>',
-                                                '<div style="text-align:center;width:50px;cursor:pointer;" onclick=\"showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')\">',
-                                                    '<img style="padding:2px 0;" width="40" height="50" src="img/nophoto.png" />',
-                                                '</div>',
-                                            '</td>',
-                                        '</tpl>',
-                                        '<tpl if="(user_id==null)">',
-                                            '<td>',
-                                                '<span style="padding: 0 2px"></span>',
-                                            '</td>',
-                                        '</tpl>',
-                                    '</tpl>',
                                     '<td>',
-                                        '{[values.event.urlize()]} ',
+                                        '{event:urlize} ',
                                     '</td>',
                                 '</tr>',
                             '</table>',
 
                             /* COMMENTS */
                             '<tpl if="commentsCount &gt; 0">',
-                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><span class="underlineHover">{[this.formatComments(values.commentsCount)]}</span> <img src="js/portal/shared/icons/fam/comment.png" title="View {[this.formatComments(values.commentsCount)]}"></span>',
+                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
+                                    '<span class="underlineHover">{[this.formatComments(values.commentsCount)]}</span>',
+                                    ' <img src="js/portal/shared/icons/fam/comment.png" title="View {[this.formatComments(values.commentsCount)]}">',
+                                '</span>',
                             '</tpl>',
                             '<tpl if="commentsCount &lt;= 0">',
-                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})"><span class="underlineHover">Add a comment</span> <img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment"></span>',
+                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
+                                    '<span class="underlineHover">Add a comment</span>',
+                                        ' <img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment">',
+                                '</span>',
                             '</tpl>',
                             /* END OF COMMENTS */
 
@@ -148,13 +152,13 @@ Timeline = Ext.extend(Ext.Panel, {
                     /* PAGINATION */
                     '<tpl if="!(this.isFirstPage() && this.isLastPage())">',
                         '<div class="timeline-pagination">',
-                            '<div class="left-div" style="visibility:{[this.isFirstPage() ? "hidden" : ""]};">',
-                                '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(0)" ><img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/>Newest</span>',
-                                '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(1)"><img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/>Newer</span>',
+                            '<div class="left-div" style="visibility:<tpl if="this.isFirstPage()">hidden</tpl>">',
+                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(0)" ><img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/>Newest</span>',
+                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(1)"><img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/>Newer</span>',
                             '</div>',
-                            '<div class="right-div" style="visibility:{[this.isLastPage() ? "hidden" : ""]};">',
-                                '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(2)">Older<img src="img/icons/fugue/control-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
-                                '<span class="pagination-item" onclick="Ext.getCmp(\'{[this.parent.id]}\').paginateTimeline(3)">Oldest<img src="img/icons/fugue/control-double-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
+                            '<div class="right-div" style="visibility:<tpl if="this.isLastPage()">hidden</tpl>">',
+                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older<img src="img/icons/fugue/control-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
+                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<img src="img/icons/fugue/control-double-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
                             '</div>',
                         '</div>',
                     '</tpl>',
@@ -165,6 +169,7 @@ Timeline = Ext.extend(Ext.Panel, {
             '</div>'
             ,{
                 parent: this
+                ,disableFormats: false
                 ,processedDate: null // Current date being processed (belonging to the currently processed event)
                 ,lastEventOfDay: false // Last event of day
                 ,checkEventDate: function(eventDate, index){
@@ -207,7 +212,7 @@ Timeline = Ext.extend(Ext.Panel, {
         var store = new Ext.data.JsonStore({
             url: 'timelines/gettimeline',
             root: 'timeline',
-            fields: ['id','user_id','event','name','surname','login','user_photo','icon',{name: 'date', type: 'date', dateFormat: 'Y-m-d H:i:s'},'model_alias','foreign_id','commentsCount']
+            fields: ['id','user_id','event','name','surname','login','user_photo','icon',{name: 'date', type: 'date', dateFormat: 'Y-m-d H:i:s'},'model_alias','foreign_id','commentsCount', 'deleted']
             ,baseParams: {
                 limit: this.limit
                 ,u_id: this.userId

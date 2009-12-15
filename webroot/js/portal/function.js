@@ -1169,5 +1169,11 @@ $.extend(Ext.util.Format, {
     ,removeHttp: function(url){
         return url.substr(0,7)==="http://" ? url.substr(7) : url;
     }
+    ,getCmp: function(cmp) {
+        return 'Ext.getCmp(\''+cmp+'\')';
+    }
+    ,urlize: function(s) {
+        return s.urlize();
+    }
 });
 
