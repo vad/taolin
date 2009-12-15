@@ -1193,7 +1193,7 @@ $.extend(Ext.util.Format, {
                 if(diff == 0)
                     return "just now"
                 else
-                    return ((diff < 59) ? Ext.util.Format.plural(diff, "minute") : Ext.util.Format.plural(Math.floor(diff/60), "hour")) + " ago" ;
+                    return ((diff < 59) ? this.plural(diff, "minute") : this.plural(Math.floor(diff/60), "hour")) + " ago" ;
             } 
             else return 'Today';
         }
@@ -1206,10 +1206,11 @@ $.extend(Ext.util.Format, {
                 return printHours ? originalDate.format('F, d Y \\a\\t H:i') : originalDate.format('F, d Y');
         }
     }
-    // Returns true if the owner of the timeline's event is the user
-    ,isOwner: function(u_id){
-        return window.user.id === u_id;
-    }
-
 });
+
+    
+// Returns true if the owner of the timeline's event is the user
+function isOwner(u_id){
+    return window.user.id === u_id;
+}
 
