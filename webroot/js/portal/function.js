@@ -1113,3 +1113,17 @@ function openFirstLoginWizard(){
     });                                 
     win.show();
 }
+
+$.extend(Ext.util.Format, {
+    pronoun: function(gender) {
+        //gender = 2 => female
+        if(gender == '1') { //male
+            return 'his';
+        }
+        return 'her';
+    }
+    ,birth: function(d) {
+        return Date.parseDate(d, "Y-m-d").format("F, d");
+    }
+});
+

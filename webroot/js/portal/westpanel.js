@@ -19,7 +19,152 @@
 
 var pWidth = getBodySize(1/3)[0];
 var desiredPanelWidth = pWidth < 400 ? pWidth : 400; // 400px is the max. value
+                
+/* PROFILE TEMPLATES */
 
+var userinfo_tpl = new Ext.XTemplate(
+    '<div class="user-profile-class">',
+        '<b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
+        /* if own profile, prompt a shortcut to edit the profile */
+        '<tpl if="((reqid === \'\') || (reqid == window.user.id))">',
+            '<span style="padding-left:10px;"><a href="javascript:expandSettingsPanel()">Edit</a></span>',
+        '</tpl>',
+        '</b><br/><br/>',
+        '<tpl if="email">',
+            '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{sourceSendMail}\')"> <img title="Click here to email user" src="js/portal/shared/icons/fam/email.png" class="size16x16 inline"/> <a href="javascript:void(0)">{email}</a></span>',
+        '</tpl>',
+        '<tpl if="((phone) && (phone != \'0\'))">',
+            '<br /><b>Phone:</b><span> {phone}</span>',
+        '</tpl>',
+        '<tpl if="((phone2) && (phone2 != \'0\'))">',
+            '<br /><b>Phone 2:</b><span> {phone2}</span>',
+        '</tpl>',
+    '<div>',{
+        compiled: true
+        ,disableFormats: true
+    }
+);
+
+var usertext_tpl = new Ext.XTemplate(
+    '<div class="user-profile-class">',
+    '<span id="user-status"></span><br />',
+    /* check if the user is "chattable" */
+    '<tpl if="((reqid !== \'\') && (login) && (jabber.u_n !== login) && (active === \'1\'))">',
+        '<div class="user-item user-{login}" style="margin: 0 10px"><a href="javascript:void(0)" onclick=\'jabberui.createNewChatWindow(new JSJaCJID("{login}@fbk.eu"))\'>Chat with {name} {surname}</a></div><br />',
+    '</tpl>',
+    /* if s/he is not a champion, suggest as a champion! */
+    '<tpl if="((reqid !== \'\') && (active !== \'1\'))">',
+        '<div class="warning-message" style="text-align:left">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{sourceSuggestAs}\')">suggest {name} as a new {[window.config.appname]} champion!</a></div><br />',
+    '</tpl>',
+    '<tpl if="((personal_page) && (personal_page != \'null\'))">',
+        '<b>Home page:</b> <span><a href="{personal_page}" target="_blank">{[values.personal_page.substr(0,7)==="http://" ? values.personal_page.substr(7) : values.personal_page]}</a></span><br />',
+    '</tpl>',
+    '<tpl if="building_id">',
+        '<b>Workplace:</b> <span><a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow(\{buildingId:{building_id}, userId: {id}, logparams:\'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id": "{id}"}') + '\'\})).show()">where\'s {gender:pronoun} office?</a></span><br />',
+    '</tpl>',
+    '<tpl if="date_of_birth">',
+        '<b>Date of birth:</b><span> {date_of_birth:birth}</span><br />',
+    '</tpl>',
+    '<tpl if="home_address">',
+        '<br /><b>Lives in:</b><span> {home_address}</span><br />',
+    '</tpl>',
+    '<tpl if="carpooling">',
+        '<img class="inline" src="js/portal/shared/icons/fam/car.png" /> <b>Available for carpooling!</b><br />',
+    '</tpl>',
+
+    /*********************************************
+     * START Group description
+     *********************************************/
+    '<tpl if="groups_description">',
+        '<br /><b>{[window.config.defaultgroupname]}</b>',
+        '<br />',
+        '<span>',
+            '<ul style="padding: 5px 0 0 20px">', 
+            '<tpl for="groups">',
+                '<li style="list-style-type:disc;">',
+                    '<a href="javascript:void(0)" onclick="groupDetails(\'{id}\', \'{name}\',\'{sourceGroupWindow}\')">{[values.description_en ? (values.description_en + \" - \") : (values.description_it ? (values.description_it + \" - \") : \"\")]}{name}</a>',
+                '</li>',
+            '</tpl>',
+            '</ul>',
+        '</span><br />',
+    '</tpl>',
+    /*********************************************
+     * END Group description
+     *********************************************/
+    
+    /**********************************************
+     * START Social Networking
+     *********************************************/
+    '<tpl if="(linkedin) || (twitter) || (facebook)">', // if one of the social network's field is present...
+        '<b>Social networking on:</b><br />',
+        '<span style="padding-left:10px">',
+            '<tpl if="linkedin">',
+                '<a href="http://www.linkedin.com/in/{linkedin}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" class="size16x16 inline" style="padding-right: 10px;" title="linkedin"/></a>',
+            '</tpl>',
+            '<tpl if="twitter">',
+                '<a href="http://twitter.com/{twitter}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.twitter.com" class="size16x16 inline" style="padding-right: 10px;" title="twitter" /></a>',
+            '</tpl>',
+            '<tpl if="facebook">',
+                '<a href="{facebook}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16 inline" style="padding-right: 10px;" title="facebook"/></a>',
+            '</tpl>',
+        '</span><br /><br />',
+    '</tpl>',
+    /**********************************************
+     * END Social Networking
+     *********************************************/
+    '<tpl if="mod_description">',
+        '<b>About {name}:</b><span> {mod_description}</span>',
+    '</tpl>',
+    '</div>'
+    ,{
+        compiled: true
+        //,disableFormats: true
+        /*,tagCloud: function(tags){
+
+            if(!tags) 
+                return '';
+
+            var min_font_size = 12;
+            var max_font_size = 22;
+
+            var max_count;
+            var min_count;
+            
+            var count;
+            var font_size;
+            var tag_cloud = '<br /><div><ul><img class="inline" src="js/portal/shared/icons/fam/tag_blue.png" /><b>Tag cloud</b><br />';
+
+            // Defining minimum and maximum count value
+            for(var i in tags){
+                if((tags[i].length < min_count) || (min_count == null))
+                    min_count = tags[i].length;
+                else if((tags[i].length > max_count) || (max_count == null))
+                    max_count = tags[i].length;
+            }
+
+            var spread = max_count - min_count;
+            if(spread == 0) 
+                spread = 1;
+           
+            for(var key in tags){
+                
+                count = tags[key].length;
+                font_size = min_font_size + (count - min_count) * ((max_font_size - min_font_size) / spread); 
+
+                //tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><a href="javascript:void(0)" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;" onclick="console.log(\''+key+'\')" title="'+key+' tagged '+count+' times">'+key+'</a><wbr></li>';
+                
+                tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><a href="javascript:void(0)" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;">'+key+'</a><wbr></li>';
+
+
+            }
+
+            return tag_cloud + '</ul></div>';
+        }*/
+    }
+);
+
+
+/* WEST PANEL */
 westPanel = new Ext.Panel({
     region:'west',
     id:'west-panel',
@@ -110,7 +255,6 @@ westPanel = new Ext.Panel({
      * @param {String} source for logging porpouse, it records the place where the requests started
      */
     ,showUser: function(reqid, hidePanel, logparams){
-
         if (!reqid) reqid = '';
         if (!hidePanel) {
             hidePanel = false;
@@ -164,101 +308,11 @@ westPanel = new Ext.Panel({
                     mod_description=Ext.util.Format.htmlDecode(mod_description.replace(/(\n)/g,'<br />'));
                 }
 
-                var userinfo_tpl = new Ext.XTemplate(
-                    '<div class="user-profile-class">',
-                        '<b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
-                        /* if own profile, prompt a shortcut to edit the profile */
-                        '<tpl if="((this.reqid === \'\') || (this.reqid == window.user.id))">',
-                            '<span style="padding-left:10px;"><a href="javascript:expandSettingsPanel()">Edit</a></span>',
-                        '</tpl>',
-                        '</b><br/><br/>',
-                        '<tpl if="email">',
-                            '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{this.sourceSendMail}\')"> <img style="vertical-align:bottom;" title="Click here to email user" src="js/portal/shared/icons/fam/email.png" class="size16x16"/> <a href="javascript:void(0)">{email}</a></span>',
-                        '</tpl>',
-                        '<tpl if="((phone) && (phone != \'0\'))">',
-                            '<br /><b>Phone:</b><span> {phone}</span>',
-                        '</tpl>',
-                        '<tpl if="((phone2) && (phone2 != \'0\'))">',
-                            '<br /><b>Phone 2:</b><span> {phone2}</span>',
-                        '</tpl>',
-                    '<div>',{
-                        reqid: reqid
-                    }
-                );
-
-                var usertext_tpl = new Ext.XTemplate(
-                    '<div class="user-profile-class">',
-                    '<span id="user-status"></span><br />',
-                    /* check if the user is "chattable" */
-                    '<tpl if="((this.reqid !== \'\') && (login) && (jabber.u_n !== login) && (active === \'1\'))">',
-                        '<div class="user-item user-{login}" style="margin: 0 10px"><a href="javascript:void(0)" onclick=\'jabberui.createNewChatWindow(new JSJaCJID("{login}@fbk.eu"))\'>Chat with {name} {surname}</a></div><br />',
-                    '</tpl>',
-                    /* if s/he is not a champion, suggest as a champion! */
-                    '<tpl if="((this.reqid !== \'\') && (active !== \'1\'))">',
-                        '<div class="warning-message" style="text-align:left">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{this.sourceSuggestAs}\')">suggest {name} as a new {[window.config.appname]} champion!</a></div><br />',
-                    '</tpl>',
-                    '<tpl if="((personal_page) && (personal_page != \'null\'))">',
-                        '<b>Home page:</b> <span><a href="{personal_page}" target="_blank">{[values.personal_page.substr(0,7)==="http://" ? values.personal_page.substr(7) : values.personal_page]}</a></span><br />',
-                    '</tpl>',
-                    '<tpl if="building_id">',
-                        '<b>Workplace:</b> <span><a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow(\{buildingId:{building_id}, userId: {id}, logparams:\'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id": "{id}"}') + '\'\})).show()">where\'s {[this.getPronoun(values.gender)]} office?</a></span><br />',
-                    '</tpl>',
-                    '<tpl if="date_of_birth">',
-                        '<b>Date of birth:</b><span> {[Date.parseDate(values.date_of_birth, "Y-m-d").format("F, d")]}</span><br />',
-                    '</tpl>',
-                    '<tpl if="home_address">',
-                        '<br /><b>Lives in:</b><span> {home_address}</span><br />',
-                    '</tpl>',
-                    '<tpl if="carpooling">',
-                        '<img style="vertical-align:bottom;" src="js/portal/shared/icons/fam/car.png" /> <b>Available for carpooling!</b><br />',
-                    '</tpl>',
-
-                    /*********************************************
-                     * START Group description
-                     *********************************************/
-                    '<tpl if="groups_description">',
-                        '<br /><b>{[window.config.defaultgroupname]}</b>',
-                        '<br />',
-                        '<span>',
-                            '<ul style="padding: 5px 0 0 20px">', 
-                            '<tpl for="groups">',
-                                '<li style="list-style-type:disc;">',
-                                    '<a href="javascript:void(0)" onclick="groupDetails(\'{id}\', \'{name}\',\'{this.sourceGroupWindow}\')">{[values.description_en ? (values.description_en + \" - \") : (values.description_it ? (values.description_it + \" - \") : \"\")]}{name}</a>',
-                                '</li>',
-                            '</tpl>',
-                            '</ul>',
-                        '</span><br />',
-                    '</tpl>',
-                    /*********************************************
-                     * END Group description
-                     *********************************************/
                     
-                    /**********************************************
-                     * START Social Networking
-                     *********************************************/
-                    '<tpl if="(linkedin) || (twitter) || (facebook)">', // if one of the social network's field is present...
-                        '<b>Social networking on:</b><br />',
-                        '<span style="padding-left:10px">',
-                            '<tpl if="linkedin">',
-                                '<a href="http://www.linkedin.com/in/{linkedin}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="linkedin"/></a>',
-                            '</tpl>',
-                            '<tpl if="twitter">',
-                                '<a href="http://twitter.com/{twitter}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.twitter.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="twitter" /></a>',
-                            '</tpl>',
-                            '<tpl if="facebook">',
-                                '<a href="{facebook}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16" style="vertical-align: middle; padding-right: 10px;" title="facebook"/></a>',
-                            '</tpl>',
-                        '</span><br /><br />',
-                    '</tpl>',
-                    /**********************************************
-                     * END Social Networking
-                     *********************************************/
-                    '<tpl if="mod_description">',
-                        '<b>About {name}:</b><span> {this.mod_description}</span>',
-                    '</tpl>',
-                    '</div>'
-                    ,{
-                        reqid: reqid 
+                var tmpl_data = $.extend(true, {},
+                    jsondata.user,
+                    {
+                        reqid: reqid
                         ,mod_description: mod_description
                         ,sourceGroupWindow: Ext.util.Format.htmlEncode(
                             '{\"source\": \"user profile\", \"user_id\": \"'+westPanel.showedUser.id+'\"}'
@@ -269,65 +323,16 @@ westPanel = new Ext.Panel({
                         ,sourceSuggestAs: Ext.util.Format.htmlEncode(
                             '{\"source\": \"suggest as champion\", \"user_id\": \"'+westPanel.showedUser.id+'\"}'
                         )
-                        ,getPronoun: function(gender) {
-                            //gender = 2 => female
-                            if(gender == '1') { //male
-                                return 'his';
-                            } else {
-                                return 'her';
-                            }
-                        }
-                        ,tagCloud: function(tags){
-
-                            if(!tags) 
-                                return '';
-
-                            var min_font_size = 12;
-                            var max_font_size = 22;
-
-                            var max_count;
-                            var min_count;
-                            
-                            var count;
-                            var font_size;
-                            var tag_cloud = '<br /><div><ul><img style="vertical-align:bottom;" src="js/portal/shared/icons/fam/tag_blue.png" /><b>Tag cloud</b><br />';
- 
-                            // Defining minimum and maximum count value
-                            for(var i in tags){
-                                if((tags[i].length < min_count) || (min_count == null))
-                                    min_count = tags[i].length;
-                                else if((tags[i].length > max_count) || (max_count == null))
-                                    max_count = tags[i].length;
-                            }
-
-                            var spread = max_count - min_count;
-                            if(spread == 0) 
-                                spread = 1;
-                           
-                            for(var key in tags){
-                                
-                                count = tags[key].length;
-                                font_size = min_font_size + (count - min_count) * ((max_font_size - min_font_size) / spread); 
-
-                                //tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><a href="javascript:void(0)" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;" onclick="console.log(\''+key+'\')" title="'+key+' tagged '+count+' times">'+key+'</a><wbr></li>';
-                                
-                                tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><a href="javascript:void(0)" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;">'+key+'</a><wbr></li>';
-
-
-                            }
-
-                            return tag_cloud + '</ul></div>';
-                        }
                     }
-                    );
-                    
-                    userinfo_tpl.overwrite(Ext.get('user_info'), jsondata.user);
-                    usertext_tpl.overwrite(Ext.get('user_text'), jsondata.user);
-                
-                    if(jsondata.user.login)
-                        findChatStatus(reqid, jsondata.user.login);
-                }
-           });
+                );
+
+                userinfo_tpl.overwrite(Ext.get('user_info'), tmpl_data);
+                usertext_tpl.overwrite(Ext.get('user_text'), tmpl_data);
+            
+                if(jsondata.user.login)
+                    findChatStatus(reqid, jsondata.user.login);
+            }
+       });
     }
 
 });
