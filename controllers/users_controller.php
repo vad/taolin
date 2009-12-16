@@ -49,7 +49,7 @@ class UsersController extends AppController {
         $fields = array('User.id');
         $user = $this->User->findByLogin($login, $fields);
         
-        $this->set('id', $user[User][id]);
+        $this->set('json', (int)$user['User']['id']);
     }
 
     function getinfo($id=-1) {
@@ -215,14 +215,9 @@ class UsersController extends AppController {
         $this->User->recursive = 0;
 
         $formdata = $this->params['form'];
-        $limit = 5;
-        $start = 0;
 
-        if(!empty($formdata['limit']))
-            $limit = $formdata['limit'];
-         
-        if(!empty($formdata['start']))
-            $start = $formdata['start'];
+        $limit = get($formdata, 'limit', 5);
+        $start = get($formdata, 'start', 0);
 
         $query = $formdata['query'];
         $query = $this->san->escape($query);

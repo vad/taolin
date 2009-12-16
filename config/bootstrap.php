@@ -45,9 +45,19 @@
  *
  */
 
- // load the file config.php located in /app/config/
- Configure::load('config');
+// load the file config.php located in /app/config/
+Configure::load('config');
 
+/*
+ * get $a[$key] from the array $a or the $default value if $key is not in $a
+ *
+ */
+function get($a, $key, $default) {
+    if (array_key_exists($key, $a))
+        return $a[$key];
+    else
+        return $default;
+}
 
 //EOF
 ?>
