@@ -66,7 +66,7 @@ CommentWindow = function(model_alias, foreign_id) {
                                 '</div>',
                             '</td>',
                             '<td style="padding-left:10px;">',
-                                '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \''+ logSource +'\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
+                                '<a href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \''+ logSource +'\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
                                 '<div style="color:gray;padding-top:5px;font-size:90%;">{created:naturalDate(true)}</div>',
                             '</td>',
                             /*'<tpl if="this.isOwner(user_id)">',

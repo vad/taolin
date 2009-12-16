@@ -62,7 +62,7 @@ MathWidget = function(conf, panel_conf){
             ,anchor: '100%'
     	},{
             /* Using JQuery toggle to show/hide an originally hidden div */
-            html:  '<div style="padding:10px 0 5px 5px;"><img style="vertical-align:middle;" src="img/icons/fugue/information-balloon.png" /> <span class="underlineHover" onclick="$(\'#calcForm-math-help_'+this.getId()+'\').toggle(400)">Help</span></div><div id="calcForm-math-help_'+this.getId()+'" style="display:none;padding:10px 5px;background:#f6f6f6;">' + helpString + '</div>'
+            html:  '<div style="padding:10px 0 5px 5px;"><img style="vertical-align:middle;" src="img/icons/fugue/information-balloon.png" /> <span onclick="$(\'#calcForm-math-help_'+this.getId()+'\').toggle(400)">Help</span></div><div id="calcForm-math-help_'+this.getId()+'" style="display:none;padding:10px 5px;background:#f6f6f6;">' + helpString + '</div>'
         }
         ]
         ,keys:{
@@ -105,8 +105,8 @@ MathWidget = function(conf, panel_conf){
             ,anchor: '100%'
         },{
             xtype: 'label'
-            ,html:  '<div style="padding:10px 0 5px 5px;"><img style="vertical-align:middle;" src="img/icons/fugue/chart--pencil.png" /> <span id="demobutton_'+this.getId()+'" class="underlineHover">Demo</span> &nbsp; '
-            + '<img style="vertical-align:middle;" src="img/icons/fugue/information-balloon.png" /> <span id="helpbutton_graph_'+this.getId()+'" class="underlineHover">Help</span></div><div id="graphForm-math-help_'+this.getId()+'" style="display:none;padding: 10px 5px;background:#f6f6f6;">' + helpString + '</div>'
+            ,html:  '<div style="padding:10px 0 5px 5px;"><img style="vertical-align:middle;" src="img/icons/fugue/chart--pencil.png" /> <span id="demobutton_'+this.getId()+'">Demo</span> &nbsp; '
+            + '<img style="vertical-align:middle;" src="img/icons/fugue/information-balloon.png" /> <span id="helpbutton_graph_'+this.getId()+'">Help</span></div><div id="graphForm-math-help_'+this.getId()+'" style="display:none;padding: 10px 5px;background:#f6f6f6;">' + helpString + '</div>'
         },{
             //dummy component that is rendered at the end
             xtype:'component'

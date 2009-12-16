@@ -799,9 +799,9 @@ function preparePhoto(photo){
     var cc = photo['commentsCount'];
 
     if(cc > 0)
-        winBody += '<span style="padding-top:15px" class="timeline-comments" onclick="openCommentWindow(\'Photo\', '+photo['id']+')"><span class="underlineHover">'+Ext.util.Format.plural(cc, 'comment')+'</span> <img src="js/portal/shared/icons/fam/comment.png" title="View comments"></span>';
+        winBody += '<span style="padding-top:15px" class="timeline-comments" onclick="openCommentWindow(\'Photo\', '+photo['id']+')"><span>'+Ext.util.Format.plural(cc, 'comment')+'</span> <img src="js/portal/shared/icons/fam/comment.png" title="View comments"></span>';
     else
-        winBody += '<span style="padding-top:15px" class="timeline-comments" onclick="openCommentWindow(\'Photo\', '+photo['id']+')"><span class="underlineHover">Add a comment</span> <img src="js/portal/shared/icons/fam/comment.png" title="Add a comment"></span>';
+        winBody += '<span style="padding-top:15px" class="timeline-comments" onclick="openCommentWindow(\'Photo\', '+photo['id']+')"><span>Add a comment</span> <img src="js/portal/shared/icons/fam/comment.png" title="Add a comment"></span>';
 
     winBody += photo['caption'] ? '<br /><div style="padding:5px 0 0 5px;font-family:Arial;">' + photo['caption'].replace(/\\n/g,"<br />").urlize().smilize() + '</div>' : '';
 
