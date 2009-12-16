@@ -348,6 +348,13 @@ div.thumb *{
     position:absolute;
     margin:auto;
 }*/
+
+img.no-hover:hover {
+    border-color:#CCCCCC #CCCCCC #AAAAAA;
+    border-style:solid;
+    border-width:1px;
+}
+
 .ante {
     background:#EEEEEE none repeat scroll 0 0;
     border-color:#CCCCCC #CCCCCC #AAAAAA;

@@ -45,7 +45,7 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                     '<table><tr">' +
                         '<td style="padding-right:10px;">' + 
                             '<div class="user-photo-container" onmouseout="if (mouseLeaves(this, event)) {$(\'#edit-photo-button\').fadeOut(\'fast\');}" onmouseover="if (Ext.getCmp(\'west-panel\').showTools){$(\'#edit-photo-button\').fadeIn(\'fast\')}">' +
-                                '<img id="user_photo" class="ante" style="padding:1px;margin:5px;"/>' +
+                                '<img id="user_photo" class="ante no-hover" style="padding:1px;margin:5px;"/>' +
                                 '<div id="edit-photo-button" onclick="openImageChooser();" style="background: #DDE4FF;-moz-border-radius:3px;">' +
                                     '<span class="underlineHover">Change photo</span>' +
                                     '<img src="js/portal/shared/icons/fam/image_edit.png" class="size16x16" />' +
