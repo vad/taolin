@@ -260,6 +260,9 @@ Board = function(conf, panel_conf){
 
         var s = record.data.text;
 
+        if(!target2)
+            return true;
+
         if(expand){ 
             target.update(s.urlize().smilize().replace(/\n/g,"<br />"));
             target2.update('<a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View less</a>');
