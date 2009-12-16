@@ -47,6 +47,8 @@ Board = function(conf, panel_conf){
     this.maxTextLength = 150;
 
     this.eventManager = eventManager;
+    this.logSource = '{"source": "board widget", "widget_id": "'+this.portlet_id+'"}';
+    var fm = Ext.util.Format;
 
     this.form = new Ext.form.FormPanel({
         autoHeight: true
@@ -245,7 +247,7 @@ Board = function(conf, panel_conf){
             target.update(record.data.text.urlize().smilize().replace(/\n/g,"<br />"));
             target2.update('<br /><br /><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View less</a>');
         } else {
-            target.update(Ext.util.Format.ellipseOnBreak(record.data.text).urlize().smilize().replace(/\n/g,"<br />"));
+            target.update(fm.ellipseOnBreak(record.data.text).urlize().smilize().replace(/\n/g,"<br />"));
             gotoWidget(this.portlet_id);
             target2.update('<br /><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View more</a>');
         }
@@ -262,12 +264,11 @@ Board = function(conf, panel_conf){
     this.sendTo = function(row, recipient, name, surname ) {
         var text = this.view.store.getAt(row).json.text;
         var prefix = "Hi " + name + "! I\'m writing in response to the announcement you published on taolin board:\n\n";
-        var source = '{"source": "board widget", "widget_id": "'+this.portlet_id+'"}';
 
         if(recipient) 
-            new SendToWindow(prefix+text,[[recipient,name + " " + surname]], source);
+            new SendToWindow(prefix+text,[[recipient,name + " " + surname]], this.logSource);
         else 
-            new SendToWindow(prefix+text, null, source);
+            new SendToWindow(prefix+text, null, this.logSource);
     };
     
     this.view = new Ext.DataView({
@@ -325,7 +326,7 @@ Board = function(conf, panel_conf){
                             '<tpl if="email != null && email != \'\'">',
                                 '<img src="js/portal/shared/icons/fam/email.png" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');" title="Contact owner" />',
                             '</tpl>',
-                            '<img src="js/portal/shared/icons/fam/user.png" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "board widget", "widget_id": "{this.parent_id}"}') + '\')" title="View owner profile" style="padding: 0 10px;" />',
+                            '<img src="js/portal/shared/icons/fam/user.png" onclick="showUserInfo({user_id}, null, \'{this.logSource}\')" title="View owner profile" style="padding: 0 10px;" />',
                             '<tpl if="commentsCount &gt; 0">',
                                 '<span onclick="openCommentWindow(\'Board\',{id})">',
                                     '{commentsCount} <img src="js/portal/shared/icons/fam/comment.png" title="View comments" />',
@@ -338,7 +339,7 @@ Board = function(conf, panel_conf){
                         '<span style="color:#888888;font-size:90%;padding-right:15px;">',
                             'Created on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]} by ',
                         /* span's onclick lead to misfunctionalities of DataView.indexOf(someitem) */
-                            '<a style="color:#888888" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "board widget", "widget_id": "{this.parent_id}"}') + '\')">{name} {surname}</a>',
+                            '<a style="color:#888888" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'{this.logSource}\')">{name} {surname}</a>',
                             '<tpl if="email != null && email != \'\'">',
                                 ' <a style="color:#888888" href="javascript:void(0)" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');">&lt;{email}&gt;</a>',
                             '</tpl>',
@@ -365,9 +366,9 @@ Board = function(conf, panel_conf){
             '</div>',
         '</div>', 
         {
-            disableFormats: false
-            ,compiled:true
+            compiled:true
             ,maxTextLength: this.maxTextLength
+            ,logSource: fm.htmlEncode(this.logSource)
             ,pages: function(){
                 var min = Math.max(0,this.getPageNumber()-5);
                 var max = Math.min(min+10, Math.ceil(this.parent.view.store.reader.jsonData.totalCount/limit));
@@ -380,7 +381,7 @@ Board = function(conf, panel_conf){
             ,parent_id: this.portlet_id
             ,parent: this
             ,formatMsg: function(s) {
-                return Ext.util.Format.ellipseOnBreak(s, this.maxTextLength).urlize().smilize().replace(/\n/g,"<br />");
+                return fm.ellipseOnBreak(s, this.maxTextLength).urlize().smilize().replace(/\n/g,"<br />");
             }
             ,boardId: this.getId()
         }

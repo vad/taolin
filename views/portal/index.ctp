@@ -111,7 +111,6 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/usr/Multiselect/Multiselect.js');
     
     echo $javascript->link('portal/usr/Ext.ux.fbk.sonet.EventManager.js');
-    echo $javascript->link('portal/usr/Ext.ux.fbk.sonet.XTemplate.js');
     /* WIZARD WINDOW */
     
     echo $javascript->link('portal/usr/Ext.ux.WizardHeader.js');
