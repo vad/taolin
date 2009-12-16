@@ -864,7 +864,7 @@ function previewWidget(widgetid, widgetname, widgetdescription, screenshot, logp
     var winwidth = 280;
 
     if(screenshot){
-        widgetimg = 'class="ante" style="min-height:70px;" src="img/widget/t300x300/'+screenshot+'"';
+        widgetimg = 'class="ante no-hover" style="min-height:70px;" src="img/widget/t300x300/'+screenshot+'"';
         winwidth = 440; 
     }
 
@@ -1206,6 +1206,21 @@ $.extend(Ext.util.Format, {
                 return printHours ? originalDate.format('F, d Y \\a\\t H:i') : originalDate.format('F, d Y');
         }
     }
+    ,ellipseOnBreak: function(text, max){
+        if (text.length <= max) return text;
+        
+        var ellipsedText = this.ellipsis(text, max);
+
+        var lastBlank = ellipsedText.lastIndexOf(" ");
+        var lastNewLine = ellipsedText.lastIndexOf("\n");
+        
+        var checkedValue = Math.max(lastBlank,lastNewLine);
+
+        if(checkedValue <= max && checkedValue !== -1) 
+            return this.ellipsis(text, checkedValue + 3);
+        else 
+            return ellipsedText;
+    }
 });
 
     
@@ -1214,3 +1229,7 @@ function isOwner(u_id){
     return window.user.id === u_id;
 }
 
+// get o[key] if set, val otherwise
+function get(o, key, val) {
+    return (key in o ? o[key] : val);
+};

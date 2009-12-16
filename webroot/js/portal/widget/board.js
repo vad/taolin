@@ -39,7 +39,7 @@
 Board = function(conf, panel_conf){
     Ext.apply(this, panel_conf);
     
-    var limit = conf.items ? conf.items : 3;
+    var limit = get(conf, 'items', 3);
     var showExpired = conf.showExpired ? 1 : 0;
 
     this.currentPage = 1;
@@ -136,16 +136,19 @@ Board = function(conf, panel_conf){
             Ext.getDom(this.id + '-img-view-form2').src = 'js/portal/shared/icons/fam/delete.png';
             Ext.getDom(this.id + '-view-form2').style.color = 'red';
             Ext.getDom(this.id + '-view-form2').innerHTML = 'Hide insert message form';
-            this.form.form.findField('email').setValue(window.user.email ? window.user.email : '');
+            this.form.form.findField('email').setValue(get(window.user, 'email', ''));
             this.form.expand();
         }
         else {
-            Ext.getDom(this.id + '-img-view-form').src = 'img/add.png';
-            Ext.getDom(this.id + '-view-form').style.color = 'green';
-            Ext.getDom(this.id + '-view-form').innerHTML = 'Add new message';
-            Ext.getDom(this.id + '-img-view-form2').src = 'img/add.png';
-            Ext.getDom(this.id + '-view-form2').style.color = 'green';
-            Ext.getDom(this.id + '-view-form2').innerHTML = 'Add new message';
+            var id = this.id, icon = 'img/add.png', text = 'Add new message',
+                color = 'green';
+
+            Ext.getDom(id + '-img-view-form').src = icon;
+            Ext.getDom(id + '-view-form').style.color = color;
+            Ext.getDom(id + '-view-form').innerHTML = text;
+            Ext.getDom(id + '-img-view-form2').src = icon;
+            Ext.getDom(id + '-view-form2').style.color = color;
+            Ext.getDom(id + '-view-form2').innerHTML = text;
             this.form.collapse();
         }
     };
@@ -242,7 +245,7 @@ Board = function(conf, panel_conf){
             target.update(record.data.text.urlize().smilize().replace(/\n/g,"<br />"));
             target2.update('<br /><br /><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View less</a>');
         } else {
-            target.update(this.view.tpl.ellipseText(record.data.text).urlize().smilize().replace(/\n/g,"<br />"));
+            target.update(Ext.util.Format.ellipseOnBreak(record.data.text).urlize().smilize().replace(/\n/g,"<br />"));
             gotoWidget(this.portlet_id);
             target2.update('<br /><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View more</a>');
         }
@@ -268,24 +271,24 @@ Board = function(conf, panel_conf){
     };
     
     this.view = new Ext.DataView({
-        tpl: new Ext.ux.fbk.sonet.XTemplate(
+        tpl: new Ext.XTemplate(
         '<div class="nevede-widget">',
             '<tpl for=".">',
-                '<div id="'+this.getId()+'-{id}-wrapper" class="user-wrapper" style="background:{[xindex % 2 === 0 ? "white" : "#ECEFF5"]};text-align:left;">',
+                '<div id="{this.boardId}-{id}-wrapper" class="user-wrapper" style="background:{[xindex % 2 === 0 ? "white" : "#ECEFF5"]};text-align:left;">',
                 /* User owns the message */
-                    '<tpl if="this.isOwner(user_id)">',
-                        '<span id="'+this.getId()+'-{id}-text" class="x-editable" style="padding-right:15px;">',
-                            '{[this.ellipseText(values.text).urlize().smilize().replace(/\n/g,"<br />")]}',
+                    '<tpl if="isOwner(user_id)">',
+                        '<span id="{this.boardId}-{id}-text" class="x-editable" style="padding-right:15px;">',
+                            '{text:this.formatMsg}',
                         '</span>',
                         '<tpl if="(this.maxTextLength < text.length)">',
-                            '<span id="'+this.getId()+'-{id}-colexp">',
-                                '<br /><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText({id}, true)">View more</a>',
+                            '<span id="{this.boardId}-{id}-colexp">',
+                                '<br /><a href="javascript:void(0)" onclick="{this.boardId:getCmp}.formatText({id}, true)">View more</a>',
                             '</span>',
                         '</tpl>',
                         '<br /><br />',
                         '<span class="board-img">',
-                            '<img src="js/portal/shared/icons/fam/pencil.png" onclick="Ext.getCmp(\''+this.getId()+'\').startEditAds({id})" title="Edit this message" />',
-                            '<img src="js/portal/shared/icons/fam/cross.png" onclick="Ext.getCmp(\''+this.getId()+'\').deleteAds({id});" title="Delete this message" style="padding: 0 10px;" />',
+                            '<img src="js/portal/shared/icons/fam/pencil.png" onclick="{this.boardId:getCmp}.startEditAds({id})" title="Edit this message" />',
+                            '<img src="js/portal/shared/icons/fam/cross.png" onclick="{this.boardId:getCmp}.deleteAds({id});" title="Delete this message" style="padding: 0 10px;" />',
                             '<tpl if="commentsCount &gt; 0">',
                                 '<span onclick="openCommentWindow(\'Board\',{id})">',
                                     '{commentsCount} <img src="js/portal/shared/icons/fam/comment.png" title="View comments" />',
@@ -298,7 +301,7 @@ Board = function(conf, panel_conf){
                             '</tpl>',
                         '</span>',
                         '<span style="color:#888888;font-size:90%;">',
-                            'Created on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]}',
+                            'Created on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]} by me',
                         '</span><br />',
                        '<tpl if="expire_date!=null">',
                             '<span style="color:#888888;">',
@@ -308,19 +311,19 @@ Board = function(conf, panel_conf){
                     '</tpl>',
 
                 /* User is not the owner of the message */    
-                    '<tpl if="!this.isOwner(user_id)">',
-                        '<span id="'+this.getId()+'-{id}-text" style="padding-right:15px;">',
-                            '{[this.ellipseText(values.text).urlize().smilize().replace(/\n/g,"<br />")]}',
+                    '<tpl if="!isOwner(user_id)">',
+                        '<span id="{this.boardId}-{id}-text" style="padding-right:15px;">',
+                            '{text:this.formatMsg}',
                         '</span>',
                         '<tpl if="(this.maxTextLength < text.length)">',
-                            '<span id="'+this.getId()+'-{id}-colexp">',
-                                '<br /><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText({id}, true)">View more</a>',
+                            '<span id="{this.boardId}-{id}-colexp">',
+                                '<br /><a href="javascript:void(0)" onclick="{this.boardId:getCmp}.formatText({id}, true)">View more</a>',
                             '</span>',
                         '</tpl>',
                         '<br /><br />',
                         '<span class="board-img">',
                             '<tpl if="email != null && email != \'\'">',
-                                '<img src="js/portal/shared/icons/fam/email.png" onclick="Ext.getCmp(\''+this.getId()+'\').sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');" title="Contact owner" />',
+                                '<img src="js/portal/shared/icons/fam/email.png" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');" title="Contact owner" />',
                             '</tpl>',
                             '<img src="js/portal/shared/icons/fam/user.png" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "board widget", "widget_id": "{this.parent_id}"}') + '\')" title="View owner profile" style="padding: 0 10px;" />',
                             '<tpl if="commentsCount &gt; 0">',
@@ -337,7 +340,7 @@ Board = function(conf, panel_conf){
                         /* span's onclick lead to misfunctionalities of DataView.indexOf(someitem) */
                             '<a style="color:#888888" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "board widget", "widget_id": "{this.parent_id}"}') + '\')">{name} {surname}</a>',
                             '<tpl if="email != null && email != \'\'">',
-                                ' <a style="color:#888888" href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');">&lt;{email}&gt;</a>',
+                                ' <a style="color:#888888" href="javascript:void(0)" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');">&lt;{email}&gt;</a>',
                             '</tpl>',
                         '</span><br />',
                         '<tpl if="expire_date!=null">',
@@ -353,7 +356,7 @@ Board = function(conf, panel_conf){
             '<div style="padding-top:10px;" class="pages">Pages: ',
                 '<tpl for="this.pages()">',
                     '<tpl if="this.getPageNumber() != (values+1)">',
-                        '<a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage({.+1})" class="page">{.+1}</a>',
+                        '<a href="javascript:void(0)" onclick="{this.boardId:getCmp}.loadPage({.+1})" class="page">{.+1}</a>',
                     '</tpl>',
                     '<tpl if="this.getPageNumber() == (values+1)">',
                         '<span class="page">{.+1}</span>',
@@ -362,7 +365,10 @@ Board = function(conf, panel_conf){
             '</div>',
         '</div>', 
         {
-            pages: function(){
+            disableFormats: false
+            ,compiled:true
+            ,maxTextLength: this.maxTextLength
+            ,pages: function(){
                 var min = Math.max(0,this.getPageNumber()-5);
                 var max = Math.min(min+10, Math.ceil(this.parent.view.store.reader.jsonData.totalCount/limit));
 
@@ -371,29 +377,12 @@ Board = function(conf, panel_conf){
             ,getPageNumber: function(){
                 return this.parent.currentPage;
             }
-            ,ellipseText: function(text){
-                
-                if(text.length > this.maxTextLength){
-
-                    var ellipsedText = Ext.util.Format.ellipsis(text, this.maxTextLength);
-
-                    var lastBlank = ellipsedText.lastIndexOf(" ");
-                    var lastNewLine = ellipsedText.lastIndexOf("\n");
-                    
-                    var checkedValue = Math.max(lastBlank,lastNewLine);
-
-                    if(checkedValue <= this.maxTextLength && checkedValue !== -1) 
-                        return Ext.util.Format.ellipsis(text, checkedValue + 3);
-                    else 
-                        return ellipsedText;
-                }
-
-                else return text;
-
-            }
-            ,maxTextLength: this.maxTextLength
             ,parent_id: this.portlet_id
             ,parent: this
+            ,formatMsg: function(s) {
+                return Ext.util.Format.ellipseOnBreak(s, this.maxTextLength).urlize().smilize().replace(/\n/g,"<br />");
+            }
+            ,boardId: this.getId()
         }
         ),
 	    itemSelector: 'span:first-child',
