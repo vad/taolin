@@ -62,13 +62,25 @@ Ext.extend(Ext.DataView.LabelEditor, Ext.Editor, {
         if(!e.ctrlKey && !e.shiftKey){
             var item = this.view.findItemFromChild(target);
             e.stopEvent();
+
             var record = this.view.store.getAt(this.view.indexOf(item));
             var formattedString = record.data[this.dataIndex].replace(/(&#39;)/g,"\'");
+
+            // Adjusting the size of the editor
+
+            this.view.store.parent.formatText(record.id, true);
+
+            width = $(target).width() + 20;
+            height = $(target).height() + 20;
+            this.setSize(width, height);
+
             this.startEdit(target, unescape(formattedString));
             this.activeRecord = record;
-        }else{
-            e.preventDefault();
+
         }
+        else
+            e.preventDefault();
+        
     },
 
     onSave : function(ed, value){

@@ -204,14 +204,19 @@ Board = function(conf, panel_conf){
 
     this.modifyAds = function (a_id, newvalue){
        if(a_id){
-            var em = this.eventManager;
+            var board = this;
 
             Ext.Ajax.request({
                 url : 'boards/modifyads/',
                 params: {'ads_id': a_id, 'value': newvalue},
                 method: 'POST',
                 success: function(){
-                    em.fireEvent('newtimelineevent');
+                    eventManager.fireEvent('newtimelineevent');
+                    
+                    if(board.maxTextLength < newvalue.length)
+                        board.formatText(a_id, true);
+                    else
+                        board.formatText(a_id, false);
                 },
                 failure: function(){
                     Ext.Msg.show({
@@ -227,13 +232,23 @@ Board = function(conf, panel_conf){
     
     this.startEditAds = function(id){
 
-        var target = Ext.get(this.getId()+'-'+id+'-text');
-
-        var item = this.view.findItemFromChild(target);
-        var record = this.view.store.getAt(this.view.indexOf(item));
+        var l_e = this.view.initialConfig.plugins[0];
+        var t_id = this.getId()+'-'+id+'-text';
+        var target = Ext.get(t_id);
+        var record = this.view.store.getById(id);
         var formattedString = record.data.text.replace(/(&#39;)/g,"\'");//.replace(/\n/g,"<br />");
-        this.view.initialConfig.plugins[0].startEdit(target, unescape(formattedString));
-        this.view.initialConfig.plugins[0].activeRecord = record;
+
+        // Adjust editor size
+        this.formatText(id, true);
+
+        width = $('#'+t_id).width() + 20;
+        height = $('#'+t_id).height() + 20;
+
+        l_e.setSize(width, height);
+
+        // Start edit
+        l_e.startEdit(target, unescape(formattedString));
+        l_e.activeRecord = record;
     };
 
     this.formatText = function(id, expand){
@@ -243,14 +258,17 @@ Board = function(conf, panel_conf){
         var target = Ext.get(this.getId()+'-'+id+'-text');
         var target2 = Ext.get(this.getId()+'-'+id+'-colexp');
 
+        var s = record.data.text;
+
         if(expand){ 
-            target.update(record.data.text.urlize().smilize().replace(/\n/g,"<br />"));
-            target2.update('<br /><br /><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View less</a>');
+            target.update(s.urlize().smilize().replace(/\n/g,"<br />"));
+            target2.update('<a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View less</a>');
         } else {
-            target.update(fm.ellipseOnBreak(record.data.text).urlize().smilize().replace(/\n/g,"<br />"));
+            target.update(fm.ellipseOnBreak(s, this.maxTextLength).urlize().smilize().replace(/\n/g,"<br />"));
             gotoWidget(this.portlet_id);
-            target2.update('<br /><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View more</a>');
+            target2.update('<a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View more</a>');
         }
+        return true;
     }
 
     this.loadPage = function(nPage){
@@ -263,7 +281,7 @@ Board = function(conf, panel_conf){
 
     this.sendTo = function(row, recipient, name, surname ) {
         var text = this.view.store.getAt(row).json.text;
-        var prefix = "Hi " + name + "! I\'m writing in response to the announcement you published on taolin board:\n\n";
+        var prefix = "Hi " + name + "! I\'m writing in response to the announcement you published on the "+window.config.appname+" board:\n\n";
 
         if(recipient) 
             new SendToWindow(prefix+text,[[recipient,name + " " + surname]], this.logSource);
@@ -273,7 +291,7 @@ Board = function(conf, panel_conf){
     
     this.view = new Ext.DataView({
         tpl: new Ext.XTemplate(
-        '<div class="nevede-widget">',
+        '<div class="board-widget">',
             '<tpl for=".">',
                 '<div id="{this.boardId}-{id}-wrapper" class="user-wrapper" style="background:{[xindex % 2 === 0 ? "white" : "#ECEFF5"]};text-align:left;">',
                 /* User owns the message */
@@ -282,8 +300,9 @@ Board = function(conf, panel_conf){
                             '{text:this.formatMsg}',
                         '</span>',
                         '<tpl if="(this.maxTextLength < text.length)">',
-                            '<span id="{this.boardId}-{id}-colexp">',
-                                '<br /><a href="javascript:void(0)" onclick="{this.boardId:getCmp}.formatText({id}, true)">View more</a>',
+                            '<br /><br />',
+                            '<span class="expander" id="{this.boardId}-{id}-colexp">',
+                                '<a href="javascript:void(0)" onclick="{this.boardId:getCmp}.formatText({id}, true)">View more</a>',
                             '</span>',
                         '</tpl>',
                         '<br /><br />',
@@ -303,12 +322,11 @@ Board = function(conf, panel_conf){
                         '</span>',
                         '<span style="color:#888888;font-size:90%;">',
                             'Created on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]} by me',
-                        '</span><br />',
-                       '<tpl if="expire_date!=null">',
-                            '<span style="color:#888888;">',
+                            '<br />',
+                            '<tpl if="expire_date!=null">',
                                 'Expires on {[Date.parseDate(values.expire_date, "Y-m-d").format("F j, Y")]}',
-                            '</span><br />',
-                       '</tpl>',
+                            '</tpl>',
+                        '</span><br />',
                     '</tpl>',
 
                 /* User is not the owner of the message */    
@@ -317,8 +335,9 @@ Board = function(conf, panel_conf){
                             '{text:this.formatMsg}',
                         '</span>',
                         '<tpl if="(this.maxTextLength < text.length)">',
-                            '<span id="{this.boardId}-{id}-colexp">',
-                                '<br /><a href="javascript:void(0)" onclick="{this.boardId:getCmp}.formatText({id}, true)">View more</a>',
+                            '<br /><br />',
+                            '<span class="expander" id="{this.boardId}-{id}-colexp">',
+                                '<a href="javascript:void(0)" onclick="{this.boardId:getCmp}.formatText({id}, true)">View more</a>',
                             '</span>',
                         '</tpl>',
                         '<br /><br />',
@@ -343,18 +362,17 @@ Board = function(conf, panel_conf){
                             '<tpl if="email != null && email != \'\'">',
                                 ' <a style="color:#888888" href="javascript:void(0)" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');">&lt;{email}&gt;</a>',
                             '</tpl>',
-                        '</span><br />',
-                        '<tpl if="expire_date!=null">',
-                            '<span style="color:#888888;font-size:90%;">',
+                            '<br />',
+                            '<tpl if="expire_date!=null">',
                                 'Expires on {[Date.parseDate(values.expire_date, "Y-m-d").format("F j, Y")]}',
-                            '</span><br />',
-                        '</tpl>',
+                            '</tpl>',
+                        '</span><br />',
                     '</tpl>',
                 '</div>',
             '</tpl>',
 
             /* Paging... */
-            '<div style="padding-top:10px;" class="pages">Pages: ',
+            '<div style="padding-top:10px;" class="pages h-center">Pages: ',
                 '<tpl for="this.pages()">',
                     '<tpl if="this.getPageNumber() != (values+1)">',
                         '<a href="javascript:void(0)" onclick="{this.boardId:getCmp}.loadPage({.+1})" class="page">{.+1}</a>',
@@ -392,7 +410,6 @@ Board = function(conf, panel_conf){
         plugins: [
             new Ext.DataView.LabelEditor({
                 dataIndex: 'text',
-                autoSize: 'width',
                 /* False because we introduced another listeners for specialkey
                  * that saves edit on "Esc"
                  */
@@ -401,10 +418,12 @@ Board = function(conf, panel_conf){
                 hideEl : true,
                 listeners: {
                     'beforecomplete' : function(editor, newvalue, oldvalue) {
-                                            // if the value changed, save it!
-                                            // Maybe redundant, cause of ignoreNoChange = true in the plugin
+                                            // if the value changed, save it! Maybe this is redundant, cause of ignoreNoChange = true in the plugin
+                                            p = this.view.store.parent;
+
                                             if(newvalue != oldvalue)
-                                                this.activeRecord.store.parent.modifyAds(editor.activeRecord.data.id, newvalue);
+                                                p.modifyAds(editor.activeRecord.data.id, newvalue);
+
                                         }
                     ,'specialkey' : function(field, key) {
                                         /* If the key pressed is ESC (ESC key code = 27)
@@ -441,7 +460,7 @@ Board = function(conf, panel_conf){
                     scope: this
                 }
                 ,load: function(store, records, options){
-                        var boardwidget = $('#'+this.parent.getId()+' .nevede-widget');
+                        var boardwidget = $('#'+this.parent.getId()+' .board-widget');
                         var imgs = boardwidget.find('.board-img');
 
                         /* hoverIntent provided some problems with tooltip so we
@@ -465,7 +484,7 @@ Board = function(conf, panel_conf){
         defaults: { autoScroll: true },
         items: [{
             style: 'padding: 5px 5px 0 5px;',
-            html: '<div><img id="'+this.getId()+'-img-view-form2" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form2" class="underlineHover" style="color:green;text-align:left;line-height:150%;font-size:90%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div><img id="'+this.getId()+'-img-view-form2" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form2" style="color:green;text-align:left;line-height:150%;font-size:90%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
         },{
             html: '<div id="undodelads-'+this.getId()+'" class="undodel border_radius_5px" style="padding: 2px 0;margin: 2px 10px;"></div>',
             display: 'none',
@@ -474,7 +493,7 @@ Board = function(conf, panel_conf){
             items: this.view
         },{
             style: 'padding:5px;',
-            html: '<div style="overflow:hidden;"><span><a href="javascript:void()" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</a></span><img id="'+this.getId()+'-img-view-form" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form" class="underlineHover" style="color:green;text-align:left;line-height:150%;font-size:90%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div style="overflow:hidden;"><span><a href="javascript:void()" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</a></span><img id="'+this.getId()+'-img-view-form" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form" style="color:green;text-align:left;line-height:150%;font-size:90%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
         },{
             items: this.form
         }]
