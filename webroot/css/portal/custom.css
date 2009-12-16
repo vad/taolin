@@ -669,12 +669,16 @@ color:black;
     float: right;
     padding: 0 5px;
     font-size: 90%;
-    cursor: pointer;
     color: #555555;
 }
 
 .timeline-comments img {
     vertical-align: middle;
+}
+
+.timeline-comments span:hover {
+    text-decoration:underline;
+    cursor: pointer;
 }
 
 .timeline-pagination {
