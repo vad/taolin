@@ -50,7 +50,24 @@ class PortalsController extends AppController {
         $response['config']['jabber_domain'] = $this->Conf->get('Jabber.domain');
         $response['config']['logo'] = $this->Conf->get('Site.logo_url');
         $response['config']['background'] = $this->Conf->get('Site.background');
-        $response['user']['id'] = $this->Session->read('id');
+        
+        $u_id = $this->Session->read('id');
+
+        App::import('Model', 'User');
+        $users = new User();
+
+        $res = $users->find('first', array(
+                'conditions' => array('User.id' => $u_id)
+                ,'fields' => array(
+                    'id', 'login', 'name', 'surname', 
+                    'COALESCE(mod_email, email) AS "User__email"'
+                )
+                ,'recursive' => -1
+            )
+        );
+        
+        $response['user'] = $res['User'];
+        pr($response);
 
         $response['success'] = true;
         
