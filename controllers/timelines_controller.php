@@ -292,7 +292,7 @@ class TimelinesController extends AppController {
     /* 
      * Format timeline event applying parameters to template
      */
-    function prepareevent($event){
+    function prepareevent($event, $short=false){
 
         $parameters = $event['param'];
 
@@ -323,6 +323,7 @@ class TimelinesController extends AppController {
         
         $eventparam['timelineid'] = $event['id'];
         $eventparam['sitename'] = $this->Conf->get('Site.name');
+        $eventparam['short_version'] = $short;
 
         return h2o($event['temp'], array('autoescape' => false))->render($eventparam);
     }
@@ -431,7 +432,7 @@ class TimelinesController extends AppController {
         $this->ReadableTimeline->recursive = -1;
 
         $event = $this->ReadableTimeline->findById($id);
-        $details = $this->prepareevent($event['ReadableTimeline']);
+        $details = $this->prepareevent($event['ReadableTimeline'], true);
         pr($event);
 
         $this->set('json', array(
