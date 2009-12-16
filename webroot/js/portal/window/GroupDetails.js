@@ -158,7 +158,7 @@ GroupDetails.prototype = {
                     '</tpl>',
 	    			'<span style="padding:10px;"><b>{shortName}</b></span>',
                     /*'<tpl for="groups">',
-                        '<br /><span class="underlineHover" onclick="groupDetails(\'{id}\', \'{name}\', \'' + Ext.util.Format.htmlEncode('{"source": "group window", "group_id": "{id}"}') + '\')">{name}</span>',
+                        '<br /><span onclick="groupDetails(\'{id}\', \'{name}\', \'' + Ext.util.Format.htmlEncode('{"source": "group window", "group_id": "{id}"}') + '\')">{name}</span>',
                     '</tpl>',*/
                 '</div>',
 			'</tpl>', {
