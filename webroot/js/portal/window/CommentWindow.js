@@ -20,7 +20,8 @@
 
 CommentWindow = function(model_alias, foreign_id) {
 
-    this.model = Ext.util.Format.lowercase(model_alias) + 's';
+    var fm = Ext.util.Format;
+    this.model = fm.lowercase(model_alias) + 's';
     this.f_id = foreign_id;
 
     this.store = new Ext.data.JsonStore({
@@ -34,8 +35,13 @@ CommentWindow = function(model_alias, foreign_id) {
                 fn: function(){
                     this.center();
                     var details = this.store.reader.jsonData.details;
-                    $("#commented-event").css({'background':'#ECEFF5','margin':'auto auto','padding':'10px 5px'}); // Styling
-                    $("#commented-event").html(details);
+                    $("#commented-event")
+                        .css({
+                            'background':'#ECEFF5',
+                            'margin':'auto auto',
+                            'padding':'10px 5px'
+                        }) // Styling
+                        .html(details);
 
                     // check if the window is out of the browser view
                     var pos = this.getPosition(true);
@@ -46,21 +52,22 @@ CommentWindow = function(model_alias, foreign_id) {
         }
     });
 
+    var logSource = fm.htmlEncode('{"source": "comment", "id": "{id}"}');
     this.view = new Ext.DataView({
         store: this.store
-        ,tpl: new Ext.ux.fbk.sonet.XTemplate(
+        ,tpl: new Ext.XTemplate(
             '<tpl for=".">',
                 '<div class="comment border_radius_5px">',
                     '<table>',
                         '<tr>',
                             '<td valign=top>',
-                                '<div style="text-align:center;width:40px;cursor:pointer;padding-left:2px;" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')">',
+                                '<div style="text-align:center;width:40px;cursor:pointer;padding-left:2px;" onclick="showUserInfo({user_id}, null, \''+ logSource +'\')">',
                                     '<img style="padding:2px 0" src="photos/getphotofromuserid/{user_id}/40/40" title="View user\'s profile"/>',
                                 '</div>',
                             '</td>',
                             '<td style="padding-left:10px;">',
-                                '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "comment", "id": "{id}"}') + '\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
-                                '<div style="color:gray;padding-top:5px;font-size:90%;">{[this.formatDate(values.created, true)]}</div>',
+                                '<a class="underlineHover" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \''+ logSource +'\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
+                                '<div style="color:gray;padding-top:5px;font-size:90%;">{created:naturalDate(true)}</div>',
                             '</td>',
                             /*'<tpl if="this.isOwner(user_id)">',
                                 '<td style="right:10px; width:12px; position: absolute;">',
@@ -71,6 +78,9 @@ CommentWindow = function(model_alias, foreign_id) {
                     '</table>',
                 '</div>',
             '</tpl>'
+            ,{
+                compiled: true
+            }
         )
         ,emptyText: '<div style="padding:10px 5px;font-size:100%"><b><div class="warning-message">No comment yet! Be the first to comment!</b></div></div>'
 	    ,itemSelector: 'div.comment'

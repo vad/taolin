@@ -226,7 +226,7 @@ class BoardsController extends AppController {
 
         App::import("Model", 'Template');
         $template = new Template();
-        $res = $template->findByName('board-details');
+        $res = $template->findByName('boards-details');
         $tpl = $res['Template']['temp'];
         App::import('Vendor','h2o/h2o');
         App::import('Vendor','filters');
