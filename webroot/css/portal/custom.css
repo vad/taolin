@@ -525,6 +525,14 @@ color:black;
     font-weight: bold;
 }
 
+
+.board-menu { 
+    text-align:left;
+    line-height:150%;
+    font-size:90%;
+    font-family:Verdana;
+}
+
 /* PAGINATION */
 .pages a, .pages span {
     margin: 0 6px;

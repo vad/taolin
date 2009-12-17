@@ -491,7 +491,7 @@ Board = function(conf, panel_conf){
         defaults: { autoScroll: true },
         items: [{
             style: 'padding: 5px 5px 0 5px;',
-            html: '<div><img id="'+this.getId()+'-img-view-form2" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form2" style="color:green;text-align:left;line-height:150%;font-size:90%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div><img id="'+this.getId()+'-img-view-form2" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form2" class="u-hover board-menu" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
         },{
             html: '<div id="undodelads-'+this.getId()+'" class="undodel border_radius_5px" style="padding: 2px 0;margin: 2px 10px;"></div>',
             display: 'none',
@@ -500,7 +500,7 @@ Board = function(conf, panel_conf){
             items: this.view
         },{
             style: 'padding:5px;',
-            html: '<div style="overflow:hidden;"><span><a href="javascript:void()" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</a></span><img id="'+this.getId()+'-img-view-form" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form" style="color:green;text-align:left;line-height:150%;font-size:90%;font-family:Verdana;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div style="overflow:hidden;"><span class="u-hover board-menu"><a href="javascript:void()" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</a></span><img id="'+this.getId()+'-img-view-form" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form" class="u-hover board-menu" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
         },{
             items: this.form
         }]
