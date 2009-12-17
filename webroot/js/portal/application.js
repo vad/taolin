@@ -142,14 +142,14 @@ function application_init(){
                         '<li><a onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)">View your profile</a></li>' + 
                         '<li><a href="javascript:void(0)" onclick="expandSettingsPanel()">Edit your profile</a></li>' + 
                         '<li><a href="javascript:void(0)" onclick="openImageChooser()">Edit your photos</a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Edit your office location</a></li>' + 
+                        '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Edit your workplace position</a></li>' + 
                      '</ul>' +
                 '</li>' + 
                 '<li class="header"><a href="javascript:void(0)">Tools</a>' +
                     '<ul>' +
                         '<li><span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span></li>' +
                         '<li><a href="javascript:void(0)" onclick="addOrBounceWidget(&#39;Ext.ux.fbk.sonet.MetaSearch&#39;,&#39;string_identifier&#39;,&#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)">Search</a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Office locations of your colleagues</a></li>' + 
+                        '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Map of colleagues workplaces</a></li>' + 
                     '</ul>' +
                 '</li>' +
                 '<li class="header"><a href="./wiki" target="_blank">FBK Wiki</a></li>' +
@@ -164,12 +164,12 @@ function application_init(){
                     '<ul>' +
                         /* This software is open source released under aGPL. See http://www.fsf.org/licensing/licenses/agpl-3.0.html for more details. According to the license, you must place in every Web page served by Taolin a link where your user can download the source code. So, please, don't remove this link, you can move it in another part of the web page, though. */
                         '<li><a href="http://github.com/vad/taolin" target="_blank">Download the code</a></li>' +
-                        '<li><a href="http://github.com/vad/taolin/issues" target="_blank">Report an issue</a></li>' +
+                        //'<li><a href="http://github.com/vad/taolin/issues" target="_blank">Report an issue</a></li>' +
                     '</ul>' +
                 '</li>' +
                 '<li class="header last"><a href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
             '</ul>';
-    else // Simplified version for old, hated and unsupported browsers
+    else // Simplified version for old, stupidunsupported browsers
         main_menu = 
             '<ul id="main-menu">' +
                 '<li class="header"><a onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)">Personal profile</a></li>' + 
