@@ -41,7 +41,7 @@ CommentWindow = function(model_alias, foreign_id) {
                             'margin':'auto auto',
                             'padding':'10px 5px'
                         }) // Styling
-                        .html(details);
+                        .html(details.smilize().urlize());
 
                     // check if the window is out of the browser view
                     var pos = this.getPosition(true);

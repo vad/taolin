@@ -58,7 +58,7 @@ class BoardsController extends AppController {
             if(isset($this->params['form']['expire_date']) && !empty($this->params['form']['expire_date'])) $data['expire_date'] = $this->params['form']['expire_date'];
             $data['user_id'] = $uid;
 
-            $this->Board->save($data);
+            $this->Board->save($this->san->html($data));
             
             $response['success'] = true;
               

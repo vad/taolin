@@ -325,7 +325,10 @@ class TimelinesController extends AppController {
         $eventparam['sitename'] = $this->Conf->get('Site.name');
         $eventparam['short_version'] = $short;
 
-        return h2o($event['temp'], array('autoescape' => false))->render($eventparam);
+        return h2o(
+                $event['temp'],
+                array('autoescape' => false)
+            )->render($eventparam);
     }
 
 
