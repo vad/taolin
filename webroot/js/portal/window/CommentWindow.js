@@ -21,7 +21,7 @@
 CommentWindow = function(model_alias, foreign_id) {
 
     var fm = Ext.util.Format;
-    this.model = fm.lowercase(model_alias) + 's';
+    this.model = fm.lowercase(model_alias) + 's';  // Format model's name in order to use it in the ajax request (e.g.: 'Board' -> 'boards')
     this.f_id = foreign_id;
 
     this.store = new Ext.data.JsonStore({
@@ -96,9 +96,14 @@ CommentWindow = function(model_alias, foreign_id) {
         ,labelAlign: 'top'
         ,border: false
         ,frame: false
+        ,cls: 'form_settings'
+        ,layoutConfig: {
+            // layout-specific configs go here
+            labelSeparator: ''
+        }
         ,items: [{
             xtype: 'textarea'
-            ,fieldLabel: 'Add your comment'
+            ,fieldLabel: 'Add your comment<br /><span style="font-weight:normal;font-size:90%;">Please note that in this early version, <b>you can NOT delete comments</b>! Read your comment very carefully before submitting it!</span>'
             ,grow: true
             ,growMin: 25 
             ,growMax: 200
