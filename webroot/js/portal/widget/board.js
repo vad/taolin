@@ -261,7 +261,11 @@ Board = function(conf, panel_conf){
         var s = record.data.text;
 
         if(!target2)
+            return true; 
+        else if(s.length <= this.maxTextLength){
+            target2.update('');
             return true;
+        }
 
         if(expand){ 
             target.update(s.urlize().smilize().replace(/\n/g,"<br />"));
