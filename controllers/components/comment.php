@@ -23,9 +23,10 @@ class CommentComponent extends Object {
     var $cacheName = "cake_controller_timelines_last-timeline-events";
 
     function addComment(&$Model, $params, $user_id, $tpl_params = array(), $comment_type_name = null){
+        $mrClean = new Sanitize();
         
         $foreign_id = $params['form']['foreign_id'];
-        $text = $params['form']['comment'];
+        $text = $mrClean->html($params['form']['comment']);
 
         $comment = array('Comment' => array(
             'body' => $text,
@@ -60,7 +61,7 @@ class CommentComponent extends Object {
         $filter = array($Model->alias.'.id' => $foreign_id);
         $target = $Model->find('first', array(
             'conditions' => $filter,
-            'recursive' => FALSE
+            'recursive' => -1
         ));
         // if the target doesn't exist, returns an empty array
         if (!$target) return array();
@@ -71,7 +72,8 @@ class CommentComponent extends Object {
             'options' => array(
                 'conditions' => array(
                     'Comment.status' => 'pending'
-                )
+                ),
+                'recursive' => -1
             )
         ));
 
