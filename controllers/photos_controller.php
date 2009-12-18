@@ -226,7 +226,9 @@ class PhotosController extends AppController {
 
                                 $sanitized_desc = $this->san->html(str_replace('\'', '\\\'', $desc));
 
-                                $p_id = $this->Photo->id;
+                                $this->Photo->recursive = -1;
+                                $photo = $this->Photo->findByFilename($dest_file);
+                                $p_id = $photo['Photo']['id'];
 
                                 $this->Photo->addtotimeline(array("p_id" => $p_id), null, 'photos-uploadphoto', $user_id, 'Photo', $p_id);
                             }
