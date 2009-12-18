@@ -266,7 +266,7 @@ class TimelinesController extends AppController {
                     $event['event'] .= $event['subevent'];
                     
                     //hack
-                    $event['event'] .= sprintf(". <a href='javascript:void(0)' onclick=\"openCommentWindow('%s', %s)\">See all the comments</a>.", $event['model_alias'], $event['foreign_id']);
+                    $event['event'] .= sprintf(". <a href='javascript:void(0)' onclick=\"openCommentWindow('%s', %s)\">View comments</a>.", $event['model_alias'], $event['foreign_id']);
                 }
 
                 
@@ -408,6 +408,7 @@ class TimelinesController extends AppController {
         ));
 
         $tpl_params = $event['Timeline']['param'];
+        $tpl_params['comment'] = $this->params['form']['comment'];
         $comment_type_name = $event['Template']['name'];
 
         $this->Comment->addComment($this->Timeline, $this->params, $user_id, $tpl_params, $comment_type_name);

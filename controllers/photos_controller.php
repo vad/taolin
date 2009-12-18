@@ -410,7 +410,8 @@ class PhotosController extends AppController {
 
         $user_id = $this->Session->read('id');
        
-        $pl_params['id'] = $this->params['form']['foreign_id'];
+        $tpl_params['id'] = $this->params['form']['foreign_id'];
+        $tpl_params['comment'] = $this->params['form']['comment'];
 
         $this->Comment->addComment($this->Photo, $this->params, $user_id, $tpl_params, 'photos-setdefaultphoto');
 
@@ -435,6 +436,7 @@ class PhotosController extends AppController {
         $params['name'] = $photo['Photo']['name'];
         $params['filename'] = substr_replace($photo['Photo']['filename'], '.jpg', strrpos($photo['Photo']['filename'], '.'));
         $params['img_path'] = $this->Conf->get('Images.people_web_path');
+        $params['created'] = $photo['Photo']['created'];
 
         App::import("Model", 'Template');
         $template = new Template();
