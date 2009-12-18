@@ -146,7 +146,6 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/jabber.js');
     echo $javascript->link('portal/jabberui.js');
     echo $javascript->link('portal/settings.js');    
-    echo $javascript->link('portal/photoupload.js');    
     
     echo $javascript->link('portal/widget/buddylist.js');
     
@@ -162,6 +161,7 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/window/GroupDetails.js');
     echo $javascript->link('portal/window/MapWindow.js');
     echo $javascript->link('portal/window/PhotoChooser.js');
+    echo $javascript->link('portal/window/PhotoUploader.js');    
     echo $javascript->link('portal/window/SendToWindow.js');
     
   

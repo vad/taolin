@@ -277,6 +277,8 @@ PhotoChooser.prototype = {
 				    },{
 					    id: 'img-detail-panel',
     					region: 'east',
+                        header: true,
+                        title: 'Photo details',
 	    				split: true,
 		    	        autoScroll: true,
 			    		width: 300
@@ -334,7 +336,7 @@ PhotoChooser.prototype = {
 				},{
 					id: 'upload-btn',
 					text: 'Upload a photo',
-					handler: function(){ this.openPhotoUpload(); },
+					handler: function(){ new PhotoUploader(); },
 					scope: this
 				},{
 					id: 'ok-btn',
@@ -385,7 +387,7 @@ PhotoChooser.prototype = {
 		this.detailsTemplate = new Ext.XTemplate(
 			'<div class="details">',
 				'<tpl for=".">',
-					'<center><div style="padding:5px;"><img class="ante" src="{[window.config.img_path]}t240x240/{[this.photoExtToJpg(values.filename)]}"></center>',
+					'<center><div style="padding:5px;"><img class="ante no-hover" src="{[window.config.img_path]}t240x240/{[this.photoExtToJpg(values.filename)]}"></center>',
                     '<div class="details-info">',
 					'<br /><b>Image Name: </b>',
 					'<span style="padding-right:40px">{usedName}</span><span style="float: right; position: absolute; right: 20px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'name\', \'{usedName}\')">edit</a></span><br /><br />',
@@ -493,20 +495,6 @@ PhotoChooser.prototype = {
                 }
             });
         } 
-    }
-
-    ,openPhotoUpload: function(){
-     
-        var photoupload = new Ext.Window({
-                id: 'upload-window',
-                title: 'Upload a photo',
-                iconCls: 'upload-picture',
-                width: 600,
-                modal: true,
-                //autoHeight: true,
-                items: new PhotoUpload()
-        });
-        photoupload.show();
     }
 };
 
