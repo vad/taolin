@@ -204,7 +204,9 @@ class BoardsController extends AppController {
 
         $user_id = $this->Session->read('id');
         
-        $this->Comment->addComment($this->Board, $this->params, $user_id, null, 'boards-add');
+        $tpl_params['comment'] = $this->params['form']['comment'];
+
+        $this->Comment->addComment($this->Board, $this->params, $user_id, $tpl_params, 'boards-add');
 
         $this->set('json', array(
             'success' => TRUE
@@ -224,6 +226,7 @@ class BoardsController extends AppController {
         $params = array();
         $params['user'] = $msg['User'];
         $params['text'] = $msg['Board']['text'];
+        $params['created'] = $msg['Board']['created'];
 
         App::import("Model", 'Template');
         $template = new Template();

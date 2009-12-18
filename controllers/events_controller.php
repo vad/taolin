@@ -38,6 +38,7 @@ class EventsController extends AppController {
         $params['summary'] = $event['Event']['summary'];
         $params['start_time'] = $event['Event']['start_time'];
         $params['end_time'] = $event['Event']['end_time'];
+        $params['created'] = $event['Event']['created'];
 
         App::import("Model", 'Template');
         $template = new Template();
@@ -73,6 +74,7 @@ class EventsController extends AppController {
         ));
         
         $tpl_params = $event['Event'];
+        $tpl_params['comment'] = $this->params['form']['comment'];
 
         $this->Comment->addComment($this->Event, $this->params, $user_id, $tpl_params, 'timelineevent-newevent');
 
