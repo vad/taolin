@@ -90,6 +90,7 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                         autoHeight: true
                     },{
                         title: 'Timeline'
+                        ,header: false
                         ,xtype: 'timeline'
                         ,autoHeight: true
                         ,iconCls: null
