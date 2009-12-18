@@ -761,7 +761,7 @@ function resetJabberConnection(){
 
 function setChatStatus(chatStatus){
     
-    var chat_status = (chatStatus !== '' && chatStatus !== null) ? '<b>Chat status:</b> <span style="font-weight:normal;color:#888888;">' + chatStatus + '</span><br />' : ''; 
+    var chat_status = (chatStatus !== '' && chatStatus !== null) ? '<b>Chat status:</b> <span class="deco-text">' + chatStatus + '</span><br />' : ''; 
     Ext.get('user-status').update(chat_status);
 }
 

@@ -764,3 +764,9 @@ hr.small {
 hr.large {
     width:85%;
 }
+/* END HR */
+
+.deco-text {
+    font-weight: normal;
+    color: #808080;
+}
