@@ -82,7 +82,7 @@ CommentWindow = function(model_alias, foreign_id) {
                 compiled: true
             }
         )
-        ,emptyText: '<div style="padding:10px 5px;font-size:100%"><b><div class="warning-message">No comment yet! Be the first to comment!</b></div></div>'
+        ,emptyText: '<div style="padding:10px 5px;font-size:100%"><div class="warning-message"><b>No comment yet! Be the first to comment!</b></div></div>'
 	    ,itemSelector: 'div.comment'
         ,height: 300
         ,autoScroll: true
