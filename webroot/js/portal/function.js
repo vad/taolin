@@ -794,7 +794,7 @@ function findChatStatus(req, login){
 
 function preparePhoto(photo){
 
-    var winBody = '<img id="'+photo['filename']+'" class="ante" style="min-height:70px;margin:auto auto;display:block;" src="'+window.config.img_path+'t480x480/'+photo['filename']+'.jpg"></img>';
+    var winBody = '<img id="photo-'+photo['id']+'" class="ante no-hover" style="min-height:70px;margin:auto auto;display:block;" src="'+window.config.img_path+'t480x480/'+photo['filename']+'"></img>';
 
     var cc = photo['commentsCount'];
 
@@ -812,7 +812,7 @@ function preparePhoto(photo){
 
 function showPhotoWindow(photo){
 
-    photo['filename'] = Ext.util.Format.substr(photo['filename'], 0, photo['filename'].lastIndexOf("."));
+    photo['filename'] = Ext.util.Format.photoExtToJpg(photo['filename']);
     
     var res = preparePhoto(photo);
     var winTitle = Ext.util.Format.ellipsis(photo['name'], 50);
@@ -827,7 +827,7 @@ function showPhotoWindow(photo){
     });
 
     /* Todo: add this listeners only once!!! */
-    $('#'+photo['filename']).load(function(){
+    $('#photo-'+photo['id']).load(function(){
         img_window.getDialog().center();
     });
 }
@@ -1175,8 +1175,8 @@ $.extend(Ext.util.Format, {
     ,urlize: function(s) {
         return s.urlize();
     }
-    ,photoExtToJpg: function(screenshot){
-        return this.substr(screenshot, 0, screenshot.lastIndexOf(".")) + '.jpg'; 
+    ,photoExtToJpg: function(f){
+        return this.substr(f, 0, f.lastIndexOf(".")) + '.jpg'; 
     }
     ,naturalDate: function(originalDate, printHours){
         

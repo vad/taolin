@@ -110,10 +110,8 @@ PhotoChooser.prototype = {
                             Ext.example.msg('Success','Your default photo has been changed!');
                             Ext.getCmp('photo-chooser').store.load();
                             eventManager.fireEvent('newtimelineevent');
-                            if(filename && Ext.get('user_photo')) {
-                                filename_to_jpg = Ext.util.Format.substr(filename, 0, filename.lastIndexOf(".")) + ".jpg";
-                                Ext.get('user_photo').dom.src = window.config.img_path + "t140x140/" + filename_to_jpg;
-                            }
+                            if(filename && Ext.get('user_photo')) 
+                                Ext.get('user_photo').dom.src = window.config.img_path + "t140x140/" + Ext.util.Format.photoExtToJpg(filename);
                         },
                         failure: function(){
                             Ext.Msg.show({
@@ -288,9 +286,9 @@ PhotoChooser.prototype = {
 					handler: function(){ 
                                 var selNode = this.view.getSelectedNodes();
 		                        if(selNode && selNode.length > 0){ 
-                                    var data = this.lookup[selNode['0'].id]; 
+                                    var data = this.lookup[selNode['0'].id];
                                     if(data.is_hidden === '0'){
-                                        if(data.defaultPhoto === '0') this.setDefaultPhoto(data.id, data.url);
+                                        if(data.defaultPhoto === '0') this.setDefaultPhoto(data.id, data.filename);
                                     }
                                     else Ext.Msg.show({
                                             title: 'Warning!!!', 

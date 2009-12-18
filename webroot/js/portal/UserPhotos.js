@@ -146,8 +146,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                         photo["url"] = dv.store.getAt(index).get('url');
                         photo["caption"] = dv.store.getAt(index).get('caption'); 
 
-                        var orig_filename = dv.store.getAt(index).get('filename');
-                        photo["filename"] = Ext.util.Format.substr(orig_filename, 0, orig_filename.lastIndexOf("."));
+                        photo["filename"] = Ext.util.Format.photoExtToJpg(dv.store.getAt(index).get('filename'));
 
                         photo["imgWidth"] = parseInt(dv.store.getAt(index).get('width'));
                         photo["imgHeight"] = parseInt(dv.store.getAt(index).get('height'));
@@ -188,7 +187,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                             }   
                         });
 
-                        $('#'+photo['filename']).load(function(){
+                        $('#photo-'+photo['id']).load(function(){
                             img_window.getDialog().center();
                         });
 
