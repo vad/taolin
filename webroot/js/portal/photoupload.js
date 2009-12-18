@@ -23,7 +23,7 @@ PhotoUpload = function(){
         id: 'file-upload',
         fileUpload: true,
         autoWidth: true,
-        frame: true,
+        frame: false,
         autoHeight: true,
         bodyStyle: 'padding: 10px 10px 0 10px;',
         labelWidth: 70,
@@ -34,8 +34,9 @@ PhotoUpload = function(){
             msgTarget: 'side'
         },
         items: [{
-            html: '<div>Please upload a photo in which your face is visible, so that colleagues can recognize you when they meet you!</div>',
-            style: 'padding:0px 0px 20px 75px;'
+            html: '<div>Please upload a photo in which your face is visible, so that colleagues can recognize you when they meet you!</div>'
+            ,style: 'padding:0px 0px 20px 75px;'
+            ,border: false
         },{
             xtype: 'textfield',
             fieldLabel: 'Name',
@@ -69,9 +70,12 @@ PhotoUpload = function(){
             name: 'caption',
 			xtype: 'textarea',
 			grow: true,
+            growMax: 300,
             allowBlank: 'true'
         },{
-            html: '<br />' 
+            xtype: 'box',
+            autoEl: 'div',
+            height:30
         },{
             xtype: 'checkbox',
             boxLabel: ' Set this as your default photo',
@@ -109,22 +113,24 @@ PhotoUpload = function(){
                         url: 'photos/uploadphoto',
                         waitMsg: 'Uploading your photo...',
                         success: function(fp, o){
+
+                            var pc = Ext.getCmp('photo-chooser');
+
                             Ext.example.msg('Success', o.result.message);
                             if(fp.findField('default_photo').getValue()){
                                 var url = window.config.img_path+o.result.url;
-                                Ext.getCmp('photo-chooser').setDefaultPhoto(null, url);
+                                if(pc) pc.setDefaultPhoto(null, url);
                             }
                             
                             if(!fp.findField('is_hidden').getValue())
                                 eventManager.fireEvent('newtimelineevent');
 
                             Ext.getCmp('upload-window').close();
-                            Ext.getCmp('photo-chooser').store.load();
-                            
-                            eventManager.fireEvent("userphotochange"); // Fire a new event in order to reload the photos' store
+
+                            eventManager.fireEvent("userphotochange"); // Fire a new event in order to reload photos' store
                         },
                         failure: function(fp, o){
-                            Ext.example.msg('Failure!', 'We are sorry - Problem found in data transmission.<br /><br />'+ o.result.message, 15);
+                            Ext.example.msg('Failure!', 'We are sorry - Can not upload your picture, please send us a feedback reporting the problem<br />'+ o.result.message, 25);
                             Ext.getCmp('upload-window').close();
                         }
                     });
