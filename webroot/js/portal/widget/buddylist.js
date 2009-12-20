@@ -166,6 +166,7 @@ BuddyList = function(conf, panel_conf) {
         id:'buddylist',
         collapsible: true,
         autoHeight: true,
+        header: false,
         /*tbar: [{
             text: 'Logout',
             id: 'logout',
