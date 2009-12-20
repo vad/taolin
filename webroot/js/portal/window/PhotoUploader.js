@@ -164,6 +164,7 @@ PhotoUploader = function(){
     });
 
     this.show();
+    this.center();
 };
 
 Ext.extend(PhotoUploader, Ext.Window); 
