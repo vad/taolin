@@ -93,16 +93,14 @@ textarea{
 /* Did You Know? Div */
 
 #didyouknow_div {
-    margin-top:30px;
+    margin-top:27px;
     margin-bottom:3px;
 }
 
 #didyouknow_div table {
-    background: #fbc77d;
-    /*border-color: #fbc77d #fbc77d #BBBBBB;
-    border-style: solid;
-    border-width: 1px;*/
     margin:0 auto;
+    border: 1px solid orange;
+    background-color: #fbc77d;
 }
 
 #searchwidget_div {
@@ -123,12 +121,25 @@ textarea{
     visibility: hidden;
 }
 
-.warning-message {
-    border: 1px solid #FED22F;
-    background-color: #FFF0A5;
+.error-msg {
+    border: 2px solid #d00;
+    background-color: #fdc;
+    color: #500;
+}
+.warning-msg {
+    border: 2px solid orange;
+    background-color: #FFD35F;
+}
+.confirm-msg {
+    background-color: #E7FBDB;
+    border: 2px solid #A5D18A;
+}
+
+.confirm-msg, .warning-msg, .error-msg {
     margin: 5px;
     padding: 5px;
     text-align: center;
+    font-weight: bold;
 }
 
 .add_widgets a {

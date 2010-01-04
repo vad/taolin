@@ -54,7 +54,7 @@ var usertext_tpl = new Ext.XTemplate(
     '</tpl>',
     /* if s/he is not a champion, suggest as a champion! */
     '<tpl if="((reqid !== \'\') && (active !== \'1\'))">',
-        '<div class="warning-message" style="text-align:left">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{sourceSuggestAs}\')">suggest {name} as a new {[window.config.appname]} champion!</a></div><br />',
+        '<div class="confirm-msg" style="text-align:left">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{sourceSuggestAs}\')">suggest {name} as a new {[window.config.appname]} champion!</a></div><br />',
     '</tpl>',
     '<tpl if="((personal_page) && (personal_page != \'null\'))">',
         '<b>Home page:</b> <span><a href="{personal_page}" target="_blank">{personal_page:removeHttp}</a></span><br />',

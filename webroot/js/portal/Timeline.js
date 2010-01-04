@@ -53,7 +53,7 @@ Timeline = Ext.extend(Ext.Panel, {
     ,initComponent: function(){
         var config = {
             items: [{
-                html: '<div id="undodelevent-'+this.id+'" class="undodel"></div>',
+                html: '<div id="undodelevent-'+this.id+'" class="warning-msg" style="visibility: hidden; margin-right:20px !important;"></div>',
                 display: 'none',
                 autoHeight: true,
                 border: false
@@ -219,7 +219,7 @@ Timeline = Ext.extend(Ext.Panel, {
 
         var dv = new Ext.DataView({
             tpl: timelineTemplate,
-            emptyText: '<div style="padding:10px 5px;font-size:100%"><b><div class="warning-message">There are no events in timeline.</b></div></div>', 
+            emptyText: '<div style="padding:10px 5px;font-size:100%"><div class="warning-msg">There are no events in timeline.</div></div>', 
             store: store,
             itemSelector: 'div.timeline-wrapper',
             loadingText: 'Loading timeline...',

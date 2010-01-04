@@ -107,7 +107,12 @@ PhotoChooser.prototype = {
                         url : 'photos/setdefaultphoto/'+p_id ,
                         method: 'GET',
                         success: function(result, request){
-                            Ext.example.msg('Success','Your default photo has been changed!');
+
+                            var u = Ext.get("undodelphoto");
+                            u.removeClass(["warning-msg","error-msg"]).addClass("confirm-msg");
+                            u.update('Your default photo has been changed! [<a href="javascript:showText(false, \'undodelphoto\')">hide</a>]');
+                            showText(true, 'undodelphoto');
+
                             Ext.getCmp('photo-chooser').store.load();
                             eventManager.fireEvent('newtimelineevent');
                             if(filename && Ext.get('user_photo')) 
@@ -120,6 +125,11 @@ PhotoChooser.prototype = {
                                 width: 400,
                                 icon: Ext.MessageBox.WARNING
                             });
+
+                            var u = Ext.get("undodelphoto");
+                            u.removeClass(["warning-msg","confirm-msg"]).addClass("error-msg");
+                            u.update('Unable to change your default photo. [<a href="javascript:showText(false, \'undodelphoto\')">hide</a>]');
+                            showText(true, 'undodelphoto');
                         }
                     });
                 }
@@ -170,6 +180,12 @@ PhotoChooser.prototype = {
                                     params: {'p_id': photo_id, 'name': fname, 'value': text},
                                     method: 'POST',
                                     success: function(result, request){
+
+                                        var u = Ext.get("undodelphoto");
+                                        u.removeClass(["warning-msg","error-msg"]).addClass("confirm-msg");
+                                        u.update('Attribute '+fname+' successfully changed to "'+text.ellipse(30)+'" [<a href="javascript:showText(false, \'undodelphoto\')">hide</a>]');
+                                        showText(true, 'undodelphoto');
+
                                         Ext.getCmp('photo-chooser').store.load();
                             
                                         if(request.params.name === 'name' || request.params.name === 'caption')
@@ -182,6 +198,12 @@ PhotoChooser.prototype = {
                                             width: 400,
                                             icon: Ext.MessageBox.WARNING
                                         });
+
+                                        var u = Ext.get("undodelphoto");
+                                        u.removeClass(["warning-msg","confirm-mg"]).addClass("error-msg");
+                                        u.update('Attribute '+fname+' successfully changed to "'+text.ellipse(30)+'" [<a href="javascript:showText(false, \'undodelphoto\')">hide</a>]');
+                                        showText(true, 'undodelphoto');
+
                                     }
                                 });
                             }
@@ -222,7 +244,8 @@ PhotoChooser.prototype = {
 					region:'center',
 		            autoScroll: true,
 					items: [{
-						html: '<div id="undodelphoto" class="undodel"></div>',
+						html: '<div id="undodelphoto" class="warning-msg"></div>',
+                        display: false,
                         border: false
 					},{
                         items: this.view,
@@ -478,7 +501,9 @@ PhotoChooser.prototype = {
                                             
                     eventManager.fireEvent("userphotochange"); // Fire a new event in order to reload the photos' store
 
-                    Ext.get("undodelphoto").update('You have deleted a photo. <a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').undoDeletePhoto(' + p_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelphoto\')">hide this message</a>');
+                    var u = Ext.get("undodelphoto");
+                    u.removeClass(["confirm-msg","error-msg"]).addClass("warning-msg");
+                    u.update('You have deleted a photo. <a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').undoDeletePhoto(' + p_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelphoto\')">hide this message</a>');
                     
                     // Hide div containing the "Undo delete" message
                     showText(true, 'undodelphoto');

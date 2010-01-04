@@ -109,6 +109,7 @@ Board = function(conf, panel_conf){
                 
                 var boardStore = this.view.store;
                 var em = this.eventManager;
+                var w_id = this.getId();
 
                 this.form.getForm().submit(
                     {
@@ -117,6 +118,10 @@ Board = function(conf, panel_conf){
                         success: function(form,action){
                             var email = form.findField('email').getValue(); 
                             form.reset();
+                            var u = Ext.get('undodelads-'+w_id);
+                            u.removeClass('warning-msg').addClass('confirm-msg');
+                            u.update('Message created. [<a href="javascript:showText(false, \'undodelads-'+w_id+'\')">hide</a>]');      
+                            showText(true, 'undodelads-'+w_id);
                             form.findField('email').setValue(email);
                             boardStore.load();
                             em.fireEvent('newtimelineevent');
@@ -164,7 +169,9 @@ Board = function(conf, panel_conf){
                     url : 'boards/deleteads/'+ads_id ,
                     method: 'GET',
                     success: function(result, request){
-                        Ext.get('undodelads-'+w_id).update('Message deleted. <a href="javascript:void(0)" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelads-'+w_id+'\')">hide this message</a>');
+                        var u =  Ext.get('undodelads-'+w_id);
+                        u.removeClass('confirm-msg').addClass('warning-msg');
+                        u.update('Message deleted. <a href="javascript:void(0)" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelads-'+w_id+'\')">hide this message</a>');
                         showText(true, 'undodelads-'+w_id);
                         store.load();
                     },
@@ -493,7 +500,7 @@ Board = function(conf, panel_conf){
             style: 'padding: 5px 5px 0 5px;',
             html: '<div><img id="'+this.getId()+'-img-view-form2" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form2" class="u-hover board-menu" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
         },{
-            html: '<div id="undodelads-'+this.getId()+'" class="undodel border_radius_5px" style="padding: 2px 0;margin: 2px 10px;"></div>',
+            html: '<div id="undodelads-'+this.getId()+'" class="warning-msg border_radius_5px" style="padding: 2px 0;margin: 2px 10px; visibility: hidden;"></div>',
             display: 'none',
             border: false
 		},{
