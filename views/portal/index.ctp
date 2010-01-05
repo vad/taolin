@@ -77,7 +77,6 @@ if ($isdebugactive == 1) {
 
 <!-- WIZARD WINDOW -->
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/Ext.ux.Wizard.css' />
-<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/ToolbarLayout.css' />
 
 <script type="text/javascript">
     document.getElementById('loading-msg').innerHTML = 'Loading Core API...';
