@@ -407,8 +407,9 @@ class TimelinesController extends AppController {
                 'recursive' => 0
         ));
 
-        $tpl_params = $event['Timeline']['param'];
+        $tpl_params = json_decode($event['Timeline']['param'], true);
         $tpl_params['comment'] = $this->params['form']['comment'];
+
         $comment_type_name = $event['Template']['name'];
 
         $this->Comment->addComment($this->Timeline, $this->params, $user_id, $tpl_params, $comment_type_name);
