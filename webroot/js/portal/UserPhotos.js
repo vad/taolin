@@ -126,7 +126,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
 
         var dv = new Ext.DataView({
             tpl: tpl,
-            emptyText: '<div style="padding:10px 5px;font-size:100%"><div class="warning-message"><b>No photos for this user</b></div></div>', 
+            emptyText: '<div style="padding:10px 5px;" class="warning-message border_radius_5px">No photos for this user</div>', 
             store: this.store,
             loadingText: 'Please wait while loading...',
             itemSelector: 'div.thumb',

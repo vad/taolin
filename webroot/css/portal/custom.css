@@ -128,11 +128,12 @@ textarea{
 }
 .warning-msg {
     border: 2px solid orange;
-    background-color: #FFD35F;
+    background-color: #FCF6DF;
+    color: #BF5500;
 }
 .confirm-msg {
-    background-color: #E7FBDB;
     border: 2px solid #A5D18A;
+    background-color: #E7FBDB;
 }
 
 .confirm-msg, .warning-msg, .error-msg {
