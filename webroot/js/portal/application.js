@@ -148,10 +148,10 @@ function application_init(){
                 '<li class="header"><a href="javascript:void(0)">Tools</a>' +
                     '<ul>' +
                         '<li><span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span></li>' +
-                        '<li><a href="javascript:void(0)" onclick="addOrBounceWidget(&#39;Ext.ux.fbk.sonet.MetaSearch&#39;,&#39;string_identifier&#39;,&#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)">Search</a></li>' + 
+                        '<li><a href="javascript:void(0)" onclick="addOrBounceWidget(&#39;Ext.ux.fbk.sonet.MetaSearch&#39;,&#39;string_identifier&#39;,&#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)"><img src="js/portal/shared/icons/fam/magnifier.png" class="size16x16 inline"/> Search</a></li>' + 
                         '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Map of colleagues workplaces</a></li>' + 
                         '<li><a href="javascript:void(0)" onclick="new PhotoUploader()">Photo uploader</a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="new SendToWindow()">Send a mail</a></li>' + 
+                        '<li><a href="javascript:void(0)" onclick="new SendToWindow()"><img src="js/portal/shared/icons/fam/email.png" class="size16x16 inline" /> Send a mail</a></li>' + 
                     '</ul>' +
                 '</li>' +
                 '<li class="header"><a href="./wiki" target="_blank">FBK Wiki</a></li>' +
