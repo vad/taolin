@@ -36,7 +36,7 @@
 <link rel='StyleSheet' href='<?php echo $this->base ?>/webroot/extjs/resources/css/ext-all.css' />
 <link rel='StyleSheet' id="theme" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp.css' />
 
-<script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery-1.3.2.min.js'> </script>
+<script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery-1.4.min.js'> </script>
 <script type="text/javascript" src='<?php echo $this->base ?>/extjs/adapter/jquery/ext-jquery-adapter.js'> </script>
 
 <?php
