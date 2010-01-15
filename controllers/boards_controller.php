@@ -213,6 +213,23 @@ class BoardsController extends AppController {
         ));
     }
 
+    function delcomment($c_id){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+        
+        $u_id = $this->Session->read('id');
+
+        if($this->Comment->delComment($this->Board, $c_id, $u_id)){
+            $this->set('json', array(
+                'success' => TRUE
+            ));
+        }
+        else {
+            $this->set('json', array(
+                'success' => FALSE
+            ));
+        }
+    }
 
     function getcomments($id){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax

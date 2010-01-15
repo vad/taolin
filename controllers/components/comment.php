@@ -43,6 +43,21 @@ class CommentComponent extends Object {
         clearCache($this->cacheName, '', '');
     }
 
+    function delComment(&$Model, $c_id, $u_id){
+       
+        $owner = $Model->Comment->read('name', $c_id);
+
+        if($u_id == $owner['Comment']['name']){
+            
+            # clear cache
+            clearCache($this->cacheName, '', '');
+
+            return $Model->deleteComment($c_id);
+        }
+        else {
+            return false;
+        }
+    }
     
     function setupUserModel() {
         if ($this->user == null) {

@@ -69,20 +69,21 @@ CommentWindow = function(model_alias, foreign_id) {
                                 '<a href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \''+ logSource +'\')"><b>{user_name} {user_surname}</b></a> {[values.body.urlize().smilize()]}',
                                 '<div style="color:gray;padding-top:5px;font-size:90%;">{created:naturalDate(true)}</div>',
                             '</td>',
-                            /*'<tpl if="this.isOwner(user_id)">',
+                            '<tpl if="isOwner(user_id)">',
                                 '<td style="right:10px; width:12px; position: absolute;">',
-                                    '<img class="size12x12" src="js/portal/shared/icons/fam/cross.png" />',
+                                    '<a href="javascript:void" onclick="{this.parentId:getCmp}.deleteComment({id})"><img class="size12x12" src="js/portal/shared/icons/fam/cross.png" /></a>',
                                 '</td>',
-                            '</tpl>',*/
+                            '</tpl>',
                         '</tr>',
                     '</table>',
                 '</div>',
             '</tpl>'
             ,{
                 compiled: true
+                ,parentId: 'comments_window'
             }
         )
-        ,emptyText: '<div style="padding:10px 5px;font-size:100%"><div class="warning-message"><b>No comment yet! Be the first to comment!</b></div></div>'
+        ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">No comment yet! Be the first to comment!</div>'
 	    ,itemSelector: 'div.comment'
         ,height: 300
         ,autoScroll: true
@@ -103,7 +104,7 @@ CommentWindow = function(model_alias, foreign_id) {
         }
         ,items: [{
             xtype: 'textarea'
-            ,fieldLabel: 'Add your comment<br /><span style="font-weight:normal;font-size:90%;">Please note that in this early version, <b>you can NOT delete comments</b>! Read your comment very carefully before submitting it!</span>'
+            ,fieldLabel: 'Add your comment'
             ,grow: true
             ,growMin: 25 
             ,growMax: 200
@@ -143,6 +144,31 @@ CommentWindow = function(model_alias, foreign_id) {
             ,scope: this
         }]
     });
+                
+    this.deleteComment = function(c_id){
+        var model = this.model;
+        var store = this.view.store;
+        Ext.MessageBox.confirm('Confirm', 'Do you really want to do delete this comment?', function(btn){
+            if(btn == 'yes'){
+                Ext.Ajax.request({
+                    url : model+'/delcomment/'+c_id ,
+                    method: 'GET',
+                    success: function(result, request){
+                            eventManager.fireEvent("removecomment", model);
+                            store.reload();
+                    },
+                    failure: function(){
+                        Ext.Msg.show({
+                            title: 'Warning!',
+                            msg: '<center>Problem found in data transmission</center>',
+                            width: 400,
+                            icon: Ext.MessageBox.WARNING
+                        });
+                    }
+                });
+            }
+        });
+    }
 
     CommentWindow.superclass.constructor.call(this, {
         title: 'Comments'

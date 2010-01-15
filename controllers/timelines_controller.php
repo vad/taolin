@@ -199,16 +199,9 @@ class TimelinesController extends AppController {
              * they are two events in one:
              *   "Davide commented 'Marco uploaded a photo'"
              */
-            foreach ($events as &$event) { 
+            foreach ($events as $idx => &$event) { 
 
                 if (!$event['comment_id']) continue;
-
-                $out = $this->Template->findById($event['comment_template_id']); 
-                $short_template = $out['Template']['short_temp'];
-
-                $commented_event = array();
-                $commented_event['temp'] = $short_template;
-                $commented_event['param'] = $event['param'];
 
                 // find user's data for the commented event
                 $model_name = $event['model_alias'];
@@ -217,9 +210,23 @@ class TimelinesController extends AppController {
                 # explode: plugin.model_alias
                 $tmp = explode('.', $model_name);
                 $model_name = $tmp[count($tmp)-1];
+
+                // Check if the comment is not deleted. If not, skip this event
+                $comment_status = $this->Timeline->Comment->read('status', $event['comment_id']);
+                if($comment_status['Comment']['status'] == 'deleted') {
+                    unset($events[$idx]);
+                    continue;
+                }
                 
                 $model = new $model_name();
                 $model->create();
+
+                $out = $this->Template->findById($event['comment_template_id']); 
+                $short_template = $out['Template']['short_temp'];
+
+                $commented_event = array();
+                $commented_event['temp'] = $short_template;
+                $commented_event['param'] = $event['param'];
 
                 $res = $model->findById($event['foreign_id']);
                 $commented_user = $res['User'];
@@ -232,7 +239,7 @@ class TimelinesController extends AppController {
 
                 $event['subevent'] = $this->prepareevent($commented_event);
             }
-
+            pr($events);
 
             # retrieve users' photos 
             $users = Set::extract($events, '{n}.user_id');
@@ -422,6 +429,23 @@ class TimelinesController extends AppController {
         clearCache($this->cacheName, '', '');
     }
 
+    function delcomment($c_id){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+        
+        $u_id = $this->Session->read('id');
+
+        if($this->Comment->delComment($this->Timeline, $c_id, $u_id)){
+            $this->set('json', array(
+                'success' => TRUE
+            ));
+        }
+        else {
+            $this->set('json', array(
+                'success' => FALSE
+            ));
+        }
+    }
     
     function getcomments($id){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
