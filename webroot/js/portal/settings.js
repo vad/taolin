@@ -162,6 +162,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                         }
                         ,scope: this
                     }]
+                    ,buttonAlign: 'left'
                 }
             ]
         };
