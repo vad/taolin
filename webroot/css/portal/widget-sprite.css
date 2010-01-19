@@ -5,7 +5,7 @@
 .chat {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -42px !important;
 }
-.feedback {
+.email {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -78px !important;
 }
 .calculator {
@@ -20,72 +20,87 @@
 .feed {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -222px !important;
 }
-.chatwindowicon {
+.comment-icon {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -258px !important;
 }
-.picture {
+.comment-add {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -294px !important;
 }
-.upload-picture {
+.picture {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -330px !important;
 }
-.url-link {
+.upload-picture {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -366px !important;
 }
-.date {
+.url-link {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -402px !important;
 }
-.user {
+.date {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -438px !important;
 }
-.nav {
+.user {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -474px !important;
 }
-.settings {
+.nav {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -510px !important;
 }
-.user_info {
+.settings {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -546px !important;
 }
-.weather {
+.user_info {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -582px !important;
 }
-.groups {
+.weather {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -618px !important;
 }
-.nevede {
+.groups {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -654px !important;
 }
-.timeline {
+.nevede {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -690px !important;
 }
-.map {
+.timeline {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -726px !important;
 }
-.webcam {
+.map {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -762px !important;
 }
-.google {
+.webcam {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -798px !important;
 }
-.rememberthemilk {
+.google {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -834px !important;
 }
-.evernote {
+.rememberthemilk {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -870px !important;
 }
-.drill {
+.evernote {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -906px !important;
 }
-.disk {
+.drill {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -942px !important;
 }
-.secretariats {
+.disk {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -978px !important;
 }
-.childrenevents {
+.secretariats {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1014px !important;
 }
-.purchasing {
+.childrenevents {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1050px !important;
+}
+.purchasing {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1086px !important;
+}
+.double-prev {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1122px !important;
+}
+.prev {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1158px !important;
+}
+.next {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1194px !important;
+}
+.double-next {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1230px !important;
 }

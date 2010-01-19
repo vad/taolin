@@ -31,7 +31,7 @@ var userinfo_tpl = new Ext.XTemplate(
         '</tpl>',
         '</b><br/><br/>',
         '<tpl if="email">',
-            '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{sourceSendMail}\')"> <img title="Click here to email user" src="js/portal/shared/icons/fam/email.png" class="size16x16 inline"/> <a href="javascript:void(0)">{email}</a></span>',
+            '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{sourceSendMail}\')"><a class="sprited email" href="javascript:void(0)">{email}</a></span>',
         '</tpl>',
         '<tpl if="((phone) && (phone != \'0\'))">',
             '<br /><b>Phone:</b><span> {phone}</span>',

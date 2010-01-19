@@ -782,3 +782,10 @@ hr.large {
     font-weight: normal;
     color: #808080;
 }
+
+/* SPRITE */
+.sprited {
+    padding: 4px 0 4px 20px;
+    overflow: hidden;
+    margin-left: 4px;
+}

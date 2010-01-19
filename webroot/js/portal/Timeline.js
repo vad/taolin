@@ -29,6 +29,22 @@
     </code></pre>
 */
 
+/* PAGINATION */
+var pagination = 
+    '<tpl if="!(this.isFirstPage() && this.isLastPage())">'+
+        '<div class="timeline-pagination">'+
+            '<div class="left-div" style="visibility:<tpl if="this.isFirstPage()">hidden</tpl>">'+
+                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(0)"><img class="sprited double-prev"/>Newest</span>'+
+                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(1)"><img class="sprited prev"/>Newer</span>'+
+            '</div>'+
+            '<div class="right-div" style="visibility:<tpl if="this.isLastPage()">hidden</tpl>">'+
+                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older<img class="sprited next" /></span>'+
+                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<img class="sprited double-next" /></span>'+
+            '</div>'+
+        '</div>'+
+    '</tpl>';
+/* END OF PAGINATION */
+
 Timeline = Ext.extend(Ext.Panel, {
     border:false
     ,title:'Timeline'
@@ -67,103 +83,71 @@ Timeline = Ext.extend(Ext.Panel, {
     ,onRender: function(){
         var timelineTemplate = new Ext.XTemplate( 
             '<div>',
-                '<tpl>',
-
-                    /* PAGINATION */
-                    '<tpl if="!(this.isFirstPage() && this.isLastPage())">',
-                        '<div class="timeline-pagination">',
-                            '<div class="left-div" style="visibility:<tpl if="this.isFirstPage()">hidden</tpl>">',
-                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(0)" ><img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/>Newest</span>',
-                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(1)"><img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/>Newer</span>',
-                            '</div>',
-                            '<div class="right-div" style="visibility:<tpl if="this.isLastPage()">hidden</tpl>">',
-                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older<img src="img/icons/fugue/control-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
-                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<img src="img/icons/fugue/control-double-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
-                            '</div>',
-                        '</div>',
-                    '</tpl>',
-                    /* END OF PAGINATION */
-
-                    '<tpl for=".">',
-                        '<div class="timeline-wrapper">',
-                            '<tpl if="this.checkEventDate(date, xindex)">',
-                                '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{date:naturalDate(false)}</b></span></div>',
+                pagination,
+                '<tpl for=".">',
+                    '<div class="timeline-wrapper">',
+                        '<tpl if="this.checkEventDate(date, xindex)">',
+                            '<div style="padding:5px;margin:5px;border-bottom:1px solid #aaa;"><span style="padding: 0 5px;"><b>{date:naturalDate(false)}</b></span></div>',
+                        '</tpl>',
+                        '<tpl if="!(this.lastEventOfDay)">',
+                            '<hr class="large" />',
+                        '</tpl>',
+                        '<tpl if="isOwner(user_id)">',
+                            '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="{this.parent.id:getCmp}.deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
+                        '</tpl>',
+                        '<span style="color:#888888;font-size:90%;text-align:right;margin-left:5px;">',
+                            '<tpl if="(icon != null)">',
+                                '<img src="{icon}" class="size16x16" /> ',
                             '</tpl>',
-                            '<tpl if="!(this.lastEventOfDay)">',
-                                '<hr class="large" />',
-                            '</tpl>',
-                            '<tpl if="isOwner(user_id)">',
-                                '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="{this.parent.id:getCmp}.deleteTimelineEvent({id});" title="Delete this event" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
-                            '</tpl>',
-                            '<span style="color:#888888;font-size:90%;text-align:right;margin-left:5px;">',
-                                '<tpl if="(icon != null)">',
-                                    '<img src="{icon}" class="size16x16" /> ',
-                                '</tpl>',
-                                '{date:naturalDate(true)}',
-                            '</span><br />',
-                            '<table>',
-                                '<tr>',
-                                    '<tpl if="(user_id==null)&&(user_photo==null || user_photo == \'\')">',
-                                        '<td>',
-                                            '<span style="padding:0 2px"></span>',
-                                        '</td>',
-                                    '</tpl>',
-                                    // else
-                                    '<tpl if="!((user_id==null)&&(user_photo==null || user_photo == \'\'))">',
-                                        '<td valign=top>',
-                                            '<div style="text-align:center;width:50px; <tpl if="deleted!=1">cursor:pointer" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')</tpl>">',
-                                                '<tpl if="(user_photo==null || user_photo == \'\')">',
-                                                    '<img style="padding:2px 0;" width="40" height="50" src="img/nophoto.png" />',
-                                                '</tpl>',
-                                                // else
-                                                '<tpl if="(user_photo!=null && user_photo != \'\')">',
-                                                    '<img style="padding:2px 0" src="{[window.config.img_path]}t40x40/{user_photo:photoExtToJpg}" />',
-                                                '</tpl>',
-                                            '</div>',
-                                        '</td>',
-                                    '</tpl>',
+                            '{date:naturalDate(true)}',
+                        '</span><br />',
+                        '<table>',
+                            '<tr>',
+                                '<tpl if="(user_id==null)&&(user_photo==null || user_photo == \'\')">',
                                     '<td>',
-                                        '{event:urlize} ',
+                                        '<span style="padding:0 2px"></span>',
                                     '</td>',
-                                '</tr>',
-                            '</table>',
+                                '</tpl>',
+                                // else
+                                '<tpl if="!((user_id==null)&&(user_photo==null || user_photo == \'\'))">',
+                                    '<td valign=top>',
+                                        '<div style="text-align:center;width:50px; <tpl if="deleted!=1">cursor:pointer" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')</tpl>">',
+                                            '<tpl if="(user_photo==null || user_photo == \'\')">',
+                                                '<img style="padding:2px 0;" width="40" height="50" src="img/nophoto.png" />',
+                                            '</tpl>',
+                                            // else
+                                            '<tpl if="(user_photo!=null && user_photo != \'\')">',
+                                                '<img style="padding:2px 0" src="{[window.config.img_path]}t40x40/{user_photo:photoExtToJpg}" />',
+                                            '</tpl>',
+                                        '</div>',
+                                    '</td>',
+                                '</tpl>',
+                                '<td>',
+                                    '{event:urlize} ',
+                                '</td>',
+                            '</tr>',
+                        '</table>',
 
-                            /* COMMENTS */
-                            '<tpl if="commentsCount &gt; 0">',
-                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
-                                    '<span>{commentsCount:plural("comment")}</span>',
-                                    ' <img src="js/portal/shared/icons/fam/comment.png" title="View {commentsCount:plural("comment")}">',
-                                '</span>',
-                            '</tpl>',
-                            '<tpl if="commentsCount &lt;= 0">',
-                                '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
-                                    '<span>Add a comment</span>',
-                                        ' <img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment">',
-                                '</span>',
-                            '</tpl>',
-                            /* END OF COMMENTS */
+                        /* COMMENTS */
+                        '<tpl if="commentsCount &gt; 0">',
+                            '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
+                                '<span>{commentsCount:plural("comment")}</span>',
+                                '<span class="sprited comment-icon" title="View {commentsCount:plural("comment")}" />',
+                            '</span>',
+                        '</tpl>',
+                        '<tpl if="commentsCount &lt;= 0">',
+                            '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
+                                '<span>Add a comment</span>',
+                                '<span class="sprited comment-add" title="Add a comment" />',
+                            '</span>',
+                        '</tpl>',
+                        /* END OF COMMENTS */
 
-                        '</div>',
-                    '</tpl>',
-                    '<br />',
-
-                    /* PAGINATION */
-                    '<tpl if="!(this.isFirstPage() && this.isLastPage())">',
-                        '<div class="timeline-pagination">',
-                            '<div class="left-div" style="visibility:<tpl if="this.isFirstPage()">hidden</tpl>">',
-                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(0)" ><img src="img/icons/fugue/control-double-180-small.png" class="size16x16" style="vertical-align:top;"/>Newest</span>',
-                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(1)"><img src="img/icons/fugue/control-180-small.png" class="size16x16" style="vertical-align:top;"/>Newer</span>',
-                            '</div>',
-                            '<div class="right-div" style="visibility:<tpl if="this.isLastPage()">hidden</tpl>">',
-                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older<img src="img/icons/fugue/control-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
-                                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<img src="img/icons/fugue/control-double-000-small.png" class="size16x16" style="vertical-align:top;"/></span>',
-                            '</div>',
-                        '</div>',
-                    '</tpl>',
-                    /* END OF PAGINATION */
-
-                    '<br />',
+                    '</div>',
                 '</tpl>',
+                '<br />',
+                pagination,
+                '<br />',
             '</div>'
             ,{
                 parent: this
