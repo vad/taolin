@@ -70,7 +70,7 @@ CommentWindow = function(model_alias, foreign_id) {
                                 '<div style="color:gray;padding-top:5px;font-size:90%;">{created:naturalDate(true)}</div>',
                             '</td>',
                             '<tpl if="isOwner(user_id)">',
-                                '<td style="right:10px; width:12px; position: absolute;">',
+                                '<td style="right:10px; position: absolute;">',
                                     '<a href="javascript:void" onclick="{this.parentId:getCmp}.deleteComment({id})"><img class="size12x12" src="js/portal/shared/icons/fam/cross.png" /></a>',
                                 '</td>',
                             '</tpl>',
@@ -86,7 +86,6 @@ CommentWindow = function(model_alias, foreign_id) {
         ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">No comment yet! Be the first to comment!</div>'
 	    ,itemSelector: 'div.comment'
         ,height: 300
-        ,autoScroll: true
     });
 
     this.form = new Ext.form.FormPanel({
