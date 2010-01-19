@@ -98,15 +98,18 @@
 .map-edit {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1158px !important;
 }
-.double-prev {
+.user-icon {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1194px !important;
 }
-.prev {
+.double-prev {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1230px !important;
 }
-.next {
+.prev {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1266px !important;
 }
-.double-next {
+.next {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1302px !important;
+}
+.double-next {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1338px !important;
 }

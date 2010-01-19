@@ -325,12 +325,12 @@ Board = function(conf, panel_conf){
                             '<img src="js/portal/shared/icons/fam/cross.png" onclick="{this.boardId:getCmp}.deleteAds({id});" title="Delete this message" style="padding: 0 10px;" />',
                             '<tpl if="commentsCount &gt; 0">',
                                 '<span onclick="openCommentWindow(\'Board\',{id})">',
-                                    '{commentsCount} <img src="js/portal/shared/icons/fam/comment.png" title="View comments" />',
+                                    '{commentsCount} <span class="sprited comment-icon" title="View comments"></span>',
                                 '</span>',
                             '</tpl>',
                             '<tpl if="commentsCount &lt;= 0">',
                                 '<span onclick="openCommentWindow(\'Board\',{id})">',
-                                    '<img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment">',
+                                    '<span class="sprited comment-add" title="Add a comment"></span>',
                                 '</span>',
                             '</tpl>',
                         '</span>',
@@ -357,16 +357,18 @@ Board = function(conf, panel_conf){
                         '<br /><br />',
                         '<span class="board-img">',
                             '<tpl if="email != null && email != \'\'">',
-                                '<img src="js/portal/shared/icons/fam/email.png" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');" title="Contact owner" />',
+                                '<span class="sprited email" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');" title="Contact owner"></span>',
                             '</tpl>',
-                            '<img src="js/portal/shared/icons/fam/user.png" onclick="showUserInfo({user_id}, null, \'{this.logSource}\')" title="View owner profile" style="padding: 0 10px;" />',
+                            '<span class="sprited user-icon" onclick="showUserInfo({user_id}, null, \'{this.logSource}\')" title="View owner profile"></span>',
                             '<tpl if="commentsCount &gt; 0">',
                                 '<span onclick="openCommentWindow(\'Board\',{id})">',
-                                    '{commentsCount} <img src="js/portal/shared/icons/fam/comment.png" title="View comments" />',
+                                    '{commentsCount}<span class="sprited comment-icon" title="View comments"></span>',
                                 '</span>',
                             '</tpl>',
                             '<tpl if="commentsCount &lt;= 0">',
-                                '<span onclick="openCommentWindow(\'Board\',{id})"><img src="js/portal/shared/icons/fam/comment_add.png" title="Add a comment"></span>',
+                                '<span onclick="openCommentWindow(\'Board\',{id})">',
+                                    '<span class="sprited comment-add" title="Add a comment"></span>',
+                                '</span>',
                             '</tpl>',
                         '</span>',
                         '<span style="color:#888888;font-size:90%;padding-right:15px;">',
@@ -474,18 +476,18 @@ Board = function(conf, panel_conf){
                     scope: this
                 }
                 ,load: function(store, records, options){
-                        var boardwidget = $('#'+this.parent.getId()+' .board-widget');
-                        var imgs = boardwidget.find('.board-img');
+                    var boardwidget = $('#'+this.parent.getId()+' .board-widget');
+                    var imgs = boardwidget.find('.board-img');
 
-                        /* hoverIntent provided some problems with tooltip so we
-                         * decided to switch back to hover even if it doesn't
-                         * completely work with IE */
+                    /* hoverIntent provided some problems with tooltip so we
+                     * decided to switch back to hover even if it doesn't
+                     * completely work with IE */
 
-                        boardwidget.hover(function(){
-                                            imgs.css({visibility: 'visible'});
-                                        }, function(){
-                                            imgs.css({visibility: 'hidden'});
-                        });
+                    boardwidget.hover(function(){
+                                        imgs.css({visibility: 'visible'});
+                                    }, function(){
+                                        imgs.css({visibility: 'hidden'});
+                    });
                 }
             }
             ,parent: this

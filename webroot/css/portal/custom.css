@@ -741,10 +741,7 @@ color:black;
 }
 
 .board-img img{
-    vertical-align: middle;
     cursor: pointer;
-    width: 13px;
-    height: 13px;
 }
 
 .board-img span{
