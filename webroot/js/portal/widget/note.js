@@ -102,6 +102,9 @@ Note = function(conf, panel_conf){
                             var note_foreground = (b > 127) ? 'black' : 'white';
                             $('#'+this.id+' .note-text-area').css('color', note_foreground);
                         }
+
+                        var ta = this.form.items.first(); //this is a closure for the setTimeout
+                        setTimeout(function(){ta.autoSize();}, 500);
                     },
                     scope: this
                 }
