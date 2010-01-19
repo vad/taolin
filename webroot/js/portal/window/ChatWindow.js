@@ -37,7 +37,7 @@ ChatWindow = Ext.extend(Ext.Window, {
     constrain:true,
     closeAction: 'hide',
     layout:'anchor',
-    cls:'comment',
+    cls:'comment-icon',
  
     /* Runtime Variables */
    
