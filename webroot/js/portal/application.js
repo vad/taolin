@@ -139,10 +139,10 @@ function application_init(){
             '<ul id="main-menu">' +
                 '<li class="header"><a href="javascript:void(0)">Personal profile</a>' +
                     '<ul>' +
-                        '<li><a onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)">View your profile</a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="expandSettingsPanel()">Edit your profile</a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="openImageChooser()">Edit your photos</a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Edit your workplace position</a></li>' + 
+                        '<li><a onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)"><span class="sprited user-icon">View your profile</span></a></li>' + 
+                        '<li><a href="javascript:void(0)" onclick="expandSettingsPanel()"><span class="sprited user-edit">Edit your profile</span></a></li>' + 
+                        '<li><a href="javascript:void(0)" onclick="openImageChooser()"><span class="sprited image-edit">Edit your photos</span></a></li>' + 
+                        '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()"><span class="sprited map-edit">Edit your workplace position</span></a></li>' + 
                      '</ul>' +
                 '</li>' + 
                 '<li class="header"><a href="javascript:void(0)">Tools</a>' +
