@@ -58,10 +58,11 @@ Note = function(conf, panel_conf){
             ,ctCls:'note-text-container'
             ,name: 'text'
             ,emptyText: 'Write here your notes...'
-            ,anchor: '0 80%'  // anchor width by percentage and height by raw adjustment
-            ,grow: true
+            ,anchor: '0 15%'  // anchor width by percentage and height by raw adjustment
+            ,grow:true
             ,value:conf.text
             ,enableKeyEvents:true
+            ,style:'border:1px solid transparent' // avoid horizontal scrollbar
             ,listeners: {
                 keyup: {
                     fn: function(t, e) {
