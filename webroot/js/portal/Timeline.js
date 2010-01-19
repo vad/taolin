@@ -34,12 +34,12 @@ var pagination =
     '<tpl if="!(this.isFirstPage() && this.isLastPage())">'+
         '<div class="timeline-pagination">'+
             '<div class="left-div" style="visibility:<tpl if="this.isFirstPage()">hidden</tpl>">'+
-                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(0)"><img class="sprited double-prev"/>Newest</span>'+
-                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(1)"><img class="sprited prev"/>Newer</span>'+
+                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(0)"><span class="sprited double-prev"></span>Newest</span>'+
+                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(1)"><span class="sprited prev"></span>Newer</span>'+
             '</div>'+
             '<div class="right-div" style="visibility:<tpl if="this.isLastPage()">hidden</tpl>">'+
-                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older<img class="sprited next" /></span>'+
-                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<img class="sprited double-next" /></span>'+
+                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older<span class="sprited next" /></span></span>'+
+                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<span class="sprited double-next" /></span></span>'+
             '</div>'+
         '</div>'+
     '</tpl>';
