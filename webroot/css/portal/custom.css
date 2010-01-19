@@ -789,3 +789,26 @@ hr.large {
 .l18 {
     line-height:18px;
 }
+
+.meteo_date_header {
+    text-align: center;
+    background:none repeat scroll 0 0 #F4F9FE;
+    border: 1px solid #BDDAF8;
+    color: #042F96;
+    font-size:1.2em;
+    font-weight:bold;
+    padding:3px 10px;
+    margin: 0px 20px;
+}
+
+.meteo_desc {
+    font-size: 15px;
+    line-height: 120%;
+}
+
+.meteo_desc li {
+    margin-left: 0;
+    margin-right: 5%;
+    margin-top: .5em;
+    margin-bottom: .5em;
+}

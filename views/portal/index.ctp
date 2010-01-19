@@ -137,6 +137,7 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/widget/board.js');
     echo $javascript->link('portal/widget/metasearch.js');
     echo $javascript->link('portal/widget/webcamcanteen.js');
+    echo $javascript->link('portal/widget/meteotrentino.js');
 
     echo $javascript->link('/fbk/js/gestint.js');
     echo $javascript->link('/fbk/js/childrenevent.js');
