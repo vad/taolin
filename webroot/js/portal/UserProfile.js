@@ -48,7 +48,7 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                                 '<img id="user_photo" class="ante no-hover" style="padding:1px;margin:5px;"/>' +
                                 '<div id="edit-photo-button" onclick="openImageChooser();" style="background: #DDE4FF;-moz-border-radius:3px;">' +
                                     '<span class="u-hover">Change photo</span>' +
-                                    '<img src="js/portal/shared/icons/fam/image_edit.png" class="size16x16" />' +
+                                    '<img class="sprited image-edit l18" />' +
                                 '</div>' +
                             '</div>' +
                         '</td>' +
@@ -58,16 +58,13 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                     '</tr></table>' + 
                     '<div id="user-profile-edit-div" class="edit_div border_radius_5px" style="margin: 15px 30px; !important">' +
                         '<div onclick="expandSettingsPanel();">' +
-                            '<img src="js/portal/shared/icons/fam/user_edit.png" class="size16x16"/>' +
-                            '<span class="u-hover">Edit your profile</span>' +
+                            '<span class="sprited user-edit l18 u-hover">Edit your profile</span>' +
                         '</div>' +
                         '<div onclick="openImageChooser();">' +
-                            '<img src="img/icons/fugue/image--pencil.png" class="size16x16"/>' +
-                            '<span class="u-hover">Edit your photos</span>' +
+                            '<span class="sprited image-edit l18 u-hover">Edit your photos</span>' +
                         '</div>' +
                         '<div onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">' +
-                           '<img src="js/portal/shared/icons/fam/map_edit.png" class="size16x16"/>' +
-                           '<span class="u-hover">Edit workplace</span>' + 
+                           '<span class="sprited map-edit l18 u-hover">Edit workplace</span>' + 
                         '</div>' +
                     '</div>'  
             },{           

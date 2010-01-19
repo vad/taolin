@@ -445,7 +445,6 @@ div.thumb span {
     padding:5px;
     text-align:left;
     margin: auto auto;
-    line-height:100%;
     font-family: Verdana;
 }
 .edit_div img{
@@ -788,4 +787,8 @@ hr.large {
     padding: 4px 0 4px 20px;
     overflow: hidden;
     margin-left: 4px;
+}
+
+.l18 {
+    line-height:18px;
 }
