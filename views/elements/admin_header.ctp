@@ -28,7 +28,7 @@
   );
 ?>
 <div id="header">
-  <h1><a href="<? echo $this->base ?>/admin/">Taolin administration site</a></h1>
+  <h1><a href="<? echo $this->base ?>/admin/"><? echo $conf->get('Site.name') ?> administration site</a></h1>
   <div id="user-navigation">
     <ul>
       <li><a href="<? echo $conf->get('Site.url') ?>">Back to <? echo $conf->get('Site.name') ?></a></li>
