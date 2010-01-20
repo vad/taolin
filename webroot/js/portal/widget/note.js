@@ -58,7 +58,7 @@ Note = function(conf, panel_conf){
             ,ctCls:'note-text-container'
             ,name: 'text'
             ,emptyText: 'Write here your notes...'
-            ,anchor: '0 15%'  // anchor width by percentage and height by raw adjustment
+            ,anchor: '0 90%'  // anchor width by percentage and height by raw adjustment
             ,grow:true
             ,value:conf.text
             ,enableKeyEvents:true
