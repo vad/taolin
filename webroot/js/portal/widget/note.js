@@ -58,7 +58,7 @@ Note = function(conf, panel_conf){
             ,ctCls:'note-text-container'
             ,name: 'text'
             ,emptyText: 'Write here your notes...'
-            ,anchor: '0 90%'  // anchor width by percentage and height by raw adjustment
+            ,anchor: '0'  // anchor width by percentage and height by raw adjustment
             ,grow:true
             ,value:conf.text
             ,enableKeyEvents:true
@@ -103,8 +103,8 @@ Note = function(conf, panel_conf){
                             $('#'+this.id+' .note-text-area').css('color', note_foreground);
                         }
 
-                        var ta = this.form.items.first(); //this is a closure for the setTimeout
-                        setTimeout(function(){ta.autoSize();}, 500);
+                        var ta = this.form.items.first();
+                        ta.autoSize.defer(500, ta);
                     },
                     scope: this
                 }

@@ -50,7 +50,12 @@ Feedback = function(conf, panel_conf){
             cls: 'feedback_text',
             grow: true,
             name: 'text'
-            ,anchor: '0 50%'  // anchor width by percentage and height by raw adjustment
+            ,anchor: '0'  // anchor width by percentage and height by raw adjustment
+            ,listeners: {
+                render: function(t){
+                            t.autoSize.defer(500, t);
+                        }
+            }
         }],
 
         buttons: [{

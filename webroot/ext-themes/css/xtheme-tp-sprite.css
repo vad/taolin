@@ -1,0 +1,28 @@
+
+.x-tbar-page-first {
+    background:url(../images/tp/grid/paging-sprite.png?v=VERSION) no-repeat scroll -10px -10px !important;
+}
+.x-item-disabled .x-tbar-page-first {
+    background:url(../images/tp/grid/paging-sprite.png?v=VERSION) no-repeat scroll -10px -46px !important;
+}
+.x-tbar-page-prev {
+    background:url(../images/tp/grid/paging-sprite.png?v=VERSION) no-repeat scroll -10px -82px !important;
+}
+.x-item-disabled .x-tbar-page-prev {
+    background:url(../images/tp/grid/paging-sprite.png?v=VERSION) no-repeat scroll -10px -118px !important;
+}
+.x-tbar-page-next {
+    background:url(../images/tp/grid/paging-sprite.png?v=VERSION) no-repeat scroll -10px -154px !important;
+}
+.x-item-disabled .x-tbar-page-next {
+    background:url(../images/tp/grid/paging-sprite.png?v=VERSION) no-repeat scroll -10px -190px !important;
+}
+.x-tbar-page-last {
+    background:url(../images/tp/grid/paging-sprite.png?v=VERSION) no-repeat scroll -10px -226px !important;
+}
+.x-item-disabled .x-tbar-page-last {
+    background:url(../images/tp/grid/paging-sprite.png?v=VERSION) no-repeat scroll -10px -262px !important;
+}
+.x-tbar-loading {
+    background:url(../images/tp/grid/paging-sprite.png?v=VERSION) no-repeat scroll -10px -298px !important;
+}
