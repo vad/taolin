@@ -175,7 +175,7 @@ CommentWindow = function(model_alias, foreign_id) {
         ,autoHeight: true
         ,width: 500
         ,resizable: true
-        ,iconCls:'chatwindowicon'
+        ,iconCls:'comment-icon'
         ,constrain: true
         ,items: [{
             html: '<div id="commented-event"></div>'
