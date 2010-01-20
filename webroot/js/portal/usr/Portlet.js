@@ -227,6 +227,26 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
                     field.value = this.widgetConf[x.name];
                 */
             }
+            else if(x.type=='combobox'){
+                field.xtype = 'combo';
+                field.fieldLabel = x.description ? x.description : x.name;
+
+                dt = new Array();
+
+                for (var o in x.opt){
+                    field[o] = x.opt[o];
+                } 
+
+                for (var k in x.values){ //create combobox's items
+                    dt.push([k, x.values[k]]);
+                }
+
+                field.store = new Ext.data.SimpleStore({
+                    fields: x.fields,
+                    data: dt
+                });
+
+            }
             field.name = x.name;
             this.confForm.add(field);
         }
