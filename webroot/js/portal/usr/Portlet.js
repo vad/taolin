@@ -246,6 +246,14 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
                     data: dt
                 });
 
+                /* If the controlled item is already present in the user
+                 * parameters (i.e. the user already choose that option) 
+                 * then the combobox is rendered with that default value.
+                 * More details about user params here: http://wiki.github.com/vad/taolin/userparams
+                 */
+                if(this.widgetConf[x.name]){
+                    field.value = x.values[this.widgetConf[x.name]];
+                }
             }
             field.name = x.name;
             this.confForm.add(field);
