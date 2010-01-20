@@ -298,7 +298,7 @@ function addwidget(w_id, logparams){
                 var conf = Ext.util.JSON.decode(result.responseText)[0];
                 createNewPortlet(conf);
                 eventManager.fireEvent('newtimelineevent');
-                gotoWidget(w_id, false, logparams);
+                gotoWidget(conf.id, false, logparams);
             },
             failure: function(){
                 Ext.Msg.show({

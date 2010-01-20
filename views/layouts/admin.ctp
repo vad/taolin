@@ -23,7 +23,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Taolin admin backend</title>
+	<title><? echo $conf->get('Site.name') ?> admin backend</title>
   <link rel="stylesheet" href="<? echo $this->base ?>/css/admin/web-app-theme/stylesheets/base.css" type="text/css" media="screen" />
   <link rel="stylesheet" id="current-theme" href="<? echo $this->base ?>/css/admin/web-app-theme/stylesheets/themes/drastic-dark/style.css" type="text/css" media="screen" />
   <link rel="stylesheet" href="<? echo $this->base ?>/css/admin/custom.css" type="text/css" media="screen" />
