@@ -22,26 +22,13 @@
 MeteoTrentino = function(conf, panel_conf){
     Ext.apply(this, panel_conf);
 
-    var url = '';
-    var xslt = '';
+    var l = conf.selected;
 
-    switch (conf.lang){
-        case 'EN':
-            url = conf.url_en;
-            xslt = conf.xslt_en;
-            break;
-        case 'IT':
-            url = conf.url_it;
-            xslt = conf.xslt_it;
-            break;
-        case 'DE':
-            url = conf.url_de;
-            xslt = conf.xslt_de;
-            break;
-        default:
-            url = conf.url_en;
-            xslt = conf.xslt_en;
-    }
+    if(!(l in conf.lang))
+        l = conf.defaultValue;
+
+    var url = conf.lang[l].url;
+    var xslt = conf.lang[l].xslt_file;
 
     this.loadW = function(){
         
