@@ -101,15 +101,21 @@
 .user-icon {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1194px !important;
 }
-.double-prev {
+.delete-icon {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1230px !important;
 }
-.prev {
+.add-icon {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1266px !important;
 }
-.next {
+.double-prev {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1302px !important;
 }
-.double-next {
+.prev {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1338px !important;
+}
+.next {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1374px !important;
+}
+.double-next {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1410px !important;
 }

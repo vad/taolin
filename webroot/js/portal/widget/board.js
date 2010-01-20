@@ -136,26 +136,18 @@ Board = function(conf, panel_conf){
     });
 
     this.showAddAdsForm = function(){
+        var jThis = $('#'+this.id);
         if(this.form.collapsed) {
-            Ext.getDom(this.id + '-img-view-form').src = 'js/portal/shared/icons/fam/delete.png';
-            Ext.getDom(this.id + '-view-form').style.color = 'red';
-            Ext.getDom(this.id + '-view-form').innerHTML = 'Hide insert message form';
-            Ext.getDom(this.id + '-img-view-form2').src = 'js/portal/shared/icons/fam/delete.png';
-            Ext.getDom(this.id + '-view-form2').style.color = 'red';
-            Ext.getDom(this.id + '-view-form2').innerHTML = 'Hide insert message form';
-            this.form.form.findField('email').setValue(get(window.user, 'email', ''));
+            jThis.find('.add-icon').removeClass('add-icon').addClass('delete-icon');
+            jThis.find('.show-hide').html('Hide insert message form').css('color', 'red');
+
+            jThis.find('input[type="email"]').val(get(window.user, 'email', ''));
             this.form.expand();
         }
         else {
-            var id = this.id, icon = 'img/add.png', text = 'Add new message',
-                color = 'green';
+            jThis.find('.delete-icon').removeClass('delete-icon').addClass('add-icon');
+            jThis.find('.show-hide').html('Add new message').css('color', 'green');
 
-            Ext.getDom(id + '-img-view-form').src = icon;
-            Ext.getDom(id + '-view-form').style.color = color;
-            Ext.getDom(id + '-view-form').innerHTML = text;
-            Ext.getDom(id + '-img-view-form2').src = icon;
-            Ext.getDom(id + '-view-form2').style.color = color;
-            Ext.getDom(id + '-view-form2').innerHTML = text;
             this.form.collapse();
         }
     };
@@ -500,7 +492,7 @@ Board = function(conf, panel_conf){
         defaults: { autoScroll: true },
         items: [{
             style: 'padding: 5px 5px 0 5px;',
-            html: '<div><img id="'+this.getId()+'-img-view-form2" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form2" class="u-hover board-menu" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div><span style="margin-right:5px;" class="sprited add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
         },{
             html: '<div id="undodelads-'+this.getId()+'" class="warning-msg border_radius_5px" style="padding: 2px 0;margin: 2px 10px; visibility: hidden;"></div>',
             display: 'none',
@@ -509,7 +501,7 @@ Board = function(conf, panel_conf){
             items: this.view
         },{
             style: 'padding:5px;',
-            html: '<div style="overflow:hidden;"><span class="u-hover board-menu"><a href="javascript:void()" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</a></span><img id="'+this.getId()+'-img-view-form" style="margin-right:5px;" width="10px" height="10px" src="img/add.png" /> <span id="'+this.getId()+'-view-form" class="u-hover board-menu" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div style="overflow:hidden;"><span class="u-hover board-menu"><a href="javascript:void()" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</a></span><span style="margin-right:5px;" class="sprited add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
         },{
             items: this.form
         }]
