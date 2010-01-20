@@ -7,12 +7,14 @@
                 <div class="meteo_desc">
                     <b>Weather evolution: </b><xsl:value-of select="EvoluzioneTempo"/>
                 </div>
-                <br /><div>Published on <xsl:value-of select="Pubblicato"/> h. 13 next: <xsl:value-of select="ProssimaEmissione"/></div>
+                <br /><div>Published on <xsl:value-of select="Pubblicato"/> h. 13 - Next: <xsl:value-of select="ProssimaEmissione"/></div>
             </div>
-            <hr class="large" />
+            <hr class="large" style="margin-bottom: 10px !important;" />
         </div>
         <div id="meteo_oggi">
             <div class="meteo_date_header">Weather forecast for today, <xsl:value-of select="Oggi/Data"/></div>
+            <xsl:variable name="cieloDesc"><xsl:value-of select="Oggi/CieloDesc"/></xsl:variable>
+            <xsl:if test="not($cieloDesc='')"><div style="text-align:center;margin-top: 15px;font-size: 15px;"><b>General report: </b><xsl:value-of select="Oggi/CieloDesc"/></div></xsl:if>
             <table cols="2" width="90%" style="margin: auto auto;padding-top:20px;">
                 <tr>
                     <td width="50%">
@@ -22,7 +24,6 @@
                     </td>
                     <td width="50%" valign="top">
                         <div class="meteo_desc">
-                            <p><xsl:value-of select="Oggi/CieloDesc"/></p>
                             <ul>
                                 <li><b>Precipitation: </b> <xsl:value-of select="Oggi/PrecInten"/> - <xsl:value-of select="Oggi/PrecEstens"/></li>
                                 <li><b>Precipitation probability: </b> <xsl:value-of select="Oggi/PrecProb"/></li>
@@ -30,9 +31,9 @@
                                 <xsl:if test="not($ventiDesc='')"><li><b>Wind description: </b> <xsl:value-of select="Oggi/VentiDesc"/></li></xsl:if>
                                 <li><b>Temperature: </b> <xsl:value-of select="Oggi/TempDesc"/></li>
                                 <li>
-                                    <ul style="text-indent: 1em !important">
-                                        <li><b> - Valley: </b> max <xsl:value-of select="Oggi/TempMaxValle"/>°C</li>
-                                        <li><b> - Mountain (2000m): </b> max <xsl:value-of select="Oggi/TempMaxQuota"/>°C</li>
+                                    <ul style="padding-left:40px !important">
+                                        <li style="list-style-type:square;"><b>Valley: </b> max <xsl:value-of select="Oggi/TempMaxValle"/>°C</li>
+                                        <li style="list-style-type:square;"><b>Mountain (2000m): </b> max <xsl:value-of select="Oggi/TempMaxQuota"/>°C</li>
                                     </ul>
                                 </li>
                             </ul>
@@ -52,19 +53,18 @@
                 <img src="{Domani/imgtrentino2}"/>
             </div>
             <div class="meteo_desc">
-                <p>
-                    <xsl:value-of select="Domani/CieloDesc"/>
-                </p>
-                <p>
-                    <b>Precipitation: </b> <xsl:value-of select="Oggi/PrecInten"/> -  <xsl:value-of select="Oggi/PrecEstens"/> <br/>
-                    <b>Precipitation probability: </b> <xsl:value-of select="Domani/PrecProb"/><br/>
-                    <b>Wind: </b> <xsl:value-of select="Domani/VentiDesc"/><br/>
+                <ul>
+                    <li><b>Precipitation: </b> <xsl:value-of select="Oggi/PrecInten"/> -  <xsl:value-of select="Oggi/PrecEstens"/></li>
+                    <li><b>Precipitation probability: </b> <xsl:value-of select="Domani/PrecProb"/></li>
+                    <li><b>Wind: </b> <xsl:value-of select="Domani/VentiDesc"/></li>
                     <xsl:variable name="ventiDescDom"><xsl:value-of select="Domani/VentiDesc"/></xsl:variable>
-                    <xsl:if test="not($ventiDescDom='')"><b>Wind description: </b>  <xsl:value-of select="Domani/VentiDesc"/><br/></xsl:if>
-                    <b>Temperature: </b>  <xsl:value-of select="Domani/TempDesc"/><br/>
-                    <b>Temperature: </b>  min <xsl:value-of select="Domani/TempMinValle"/>°C / max <xsl:value-of select="Domani/TempMaxValle"/>°C (valley)<br/>
-                    <b>Temperature: </b> min <xsl:value-of select="Domani/TempMinQuota"/>°C / max <xsl:value-of select="Domani/TempMaxQuota"/>°C (mountain 2000m)
-                </p>
+                    <xsl:if test="not($ventiDescDom='')"><li><b>Wind description: </b> <xsl:value-of select="Domani/VentiDesc"/></li></xsl:if>
+                    <li><b>Temperature: </b>  <xsl:value-of select="Domani/TempDesc"/></li>
+                    <ul style="padding-left:40px !important">
+                        <li style="list-style-type:square;"><b>Valley: </b>  min <xsl:value-of select="Domani/TempMinValle"/>°C / max <xsl:value-of select="Domani/TempMaxValle"/>°C</li>
+                        <li style="list-style-type:square;"><b>Mountain (2000m): </b> min <xsl:value-of select="Domani/TempMinQuota"/>°C / max <xsl:value-of select="Domani/TempMaxQuota"/>°C)</li>
+                    </ul>
+                </ul>
             </div>
         </div>
         <div id="meteo_dopodomani">

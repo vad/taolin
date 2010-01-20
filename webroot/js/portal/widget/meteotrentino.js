@@ -24,11 +24,6 @@ MeteoTrentino = function(conf, panel_conf){
 
     var url = '';
     var xslt = '';
-    var langs = {
-        'IT': 'Italian'
-        ,'EN': 'English'
-        ,'DE': 'German'
-    }
 
     switch (conf.lang){
         case 'EN':
@@ -80,37 +75,21 @@ MeteoTrentino = function(conf, panel_conf){
 
     }
 
-    this.langFlags = function(){
-        
-        var s = '';
-        var pref = '<a href="javascript:void" onclick="Ext.getCmp(\''+this.getId()+'\').setPref(\'lang\', \'';
-        var middle = '\'); Ext.getCmp(\''+this.getId()+'\').updateWidget();">';
-        var end = '</a>';
-    
-        for (var l in langs){
-            if (conf.lang === l)
-                continue;
-            s += pref + l + middle + langs[l] + end + ' ';        
-        }
-        return s;
-    }
-
     MeteoTrentino.superclass.constructor.call(this, {
         autoHeight: true,
         autoWidth: true,
         defaults: { autoScroll: true },
         items: [{
             html: 
-                '<div id="'+this.getId()+'-forecast-overview" style="padding:10px 20px;"></div>' 
+                '<div id="'+this.getId()+'-forecast-overview" style="padding:5px 20px;"></div>' 
                 +'<div id="'+this.getId()+'-forecast-detailedview" style="padding:5px;"></div>' 
-                +'<div style="float:right;padding:10px;font-weight:bold;">'+this.langFlags()+'</div>'
+                +'<div style="float:right;padding:10px;font-weight:bold;"><span class="sprited gear"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</a></span></div>'
             ,border: false
             ,autoHeight: true
         }]
     });
 
     this.loadW();
-    
 
 };
 Ext.extend(MeteoTrentino, Ext.Panel);
