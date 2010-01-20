@@ -11,7 +11,7 @@
             </div>
             <hr class="large" style="margin-bottom: 10px !important;" />
         </div>
-        <div id="meteo_oggi">
+        <div id="today" class="meteo_forecast">
             <div class="meteo_date_header">Weather forecast for <xsl:value-of select="Oggi/Data"/></div>
             <xsl:variable name="cieloDesc"><xsl:value-of select="Oggi/CieloDesc"/></xsl:variable>
             <xsl:if test="not($cieloDesc='')"><div style="text-align:center;margin-top: 15px;font-size: 15px;"><b>General report: </b><xsl:value-of select="Oggi/CieloDesc"/></div></xsl:if>
@@ -42,7 +42,7 @@
                 </tr>
             </table>
         </div>
-        <div id="meteo_domani">
+        <div id="tomorrow" class="meteo_forecast">
             <div class="meteo_date_header">Weather forecast for <xsl:value-of select="Domani/Data"/></div>
             <div class="meteo_image">
                 <h2>Morning</h2>
@@ -67,7 +67,7 @@
                 </ul>
             </div>
         </div>
-        <div id="meteo_dopodomani">
+        <div id="day_after_tomorrow" class="meteo_forecast">
             <div class="meteo_date_header">Weather forecast for <xsl:value-of select="DopoDomani/Data"/></div>
             <div class="meteo_image">
                 <h2>Morning</h2>

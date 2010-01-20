@@ -30,7 +30,9 @@ MeteoTrentino = function(conf, panel_conf){
     var url = conf.lang[l].url;
     var xslt = conf.lang[l].xslt_file;
 
-    this.loadW = function(){
+    this.html = '';
+
+    this.loadForecast = function(){
         
         var p = this;
 
@@ -39,7 +41,8 @@ MeteoTrentino = function(conf, panel_conf){
             params: {'url': url, 'xslt': xslt},
             method: 'POST',
             success: function(result, request){
-                p.applyHtml(result.responseText);
+                p.html = result.responseText;
+                p.renderForecast();
             },
             failure: function(result, request){
                 $('#'+p.getId()+'-forecast-overview').html('<div class="error-msg">Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!</div>');
@@ -47,19 +50,66 @@ MeteoTrentino = function(conf, panel_conf){
         });
     };
 
-    this.applyHtml = function(html){
+    this.renderForecast = function(){
 
         var ov = $('#' +this.getId()+'-forecast-overview');
         var dv = $('#' +this.getId()+'-forecast-detailedview');
 
-        if(html === null || html === '')
+        if(this.html === null || this.html === '')
             ov.html('<div class="error-msg">Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!</div>');
 
-        var doc = $("<div>").html(html);
+        var doc = $("<div>").html(this.html);
 
         ov.html(doc.find('#meteo_sintesi'));
-        dv.html(doc.find('#meteo_oggi')); 
 
+        var f = doc.find('.meteo_forecast');
+        
+        f.not('#today').hide();
+        
+        dv.html(f);
+
+        this.visualize();
+    }
+
+    this.visualize = function(day){
+        
+        var ov = $('#' +this.getId()+'-forecast-overview');
+        var dv = $('#' +this.getId()+'-forecast-detailedview');
+        var lk = $('#' +this.getId()+'-forecast-links');
+
+        var w_id = this.getId();
+
+        var days = {
+            'today': 'Today', 
+            'tomorrow': 'Tomorrow', 
+            'day_after_tomorrow': 'Day after tomorrow'
+        };
+
+        var link = 'javascript:Ext.getCmp(\''+w_id+'\').visualize(\'{0}\')';
+
+        if(this.html === null || this.html === '')
+            ov.html('<div class="error-msg">Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!</div>');
+
+        lk.html('');
+
+        if (day == null || day == '')
+            day = 'today';
+
+        for (var d in days){
+            
+            v = days[d];
+
+            if (d === day){
+                dv.find('#'+d).show();
+                lk.append($('<span>').text(v));
+            }
+            else {
+                dv.find('#'+d).hide();
+                lk.append($('<a>').attr('href', String.format(link,d)).text(v));
+            }
+        }
+
+        lk.children().css('padding', '5px 10px')
     }
 
     MeteoTrentino.superclass.constructor.call(this, {
@@ -69,15 +119,16 @@ MeteoTrentino = function(conf, panel_conf){
         items: [{
             html: 
                 '<div id="'+this.getId()+'-forecast-overview" style="padding:5px 20px;"></div>' 
-                +'<div id="'+this.getId()+'-forecast-detailedview" style="padding:5px;"></div>' 
-                +'<div style="float:right;padding:10px;font-weight:bold;"><span class="sprited gear"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</a></span></div>'
+                +'<div id="'+this.getId()+'-forecast-detailedview" style="padding:5px;"></div>'
+                + '<hr class="large">'
+                +'<div id="'+this.getId()+'-forecast-links" style="padding:5px;text-align:center;"></div>'
+                +'<div style="float:right;padding:10px;font-weight:bold;"><span class="sprited gears"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</a></span></div>'
             ,border: false
             ,autoHeight: true
         }]
     });
 
-    this.loadW();
-
+    this.loadForecast();
+    
 };
 Ext.extend(MeteoTrentino, Ext.Panel);
-
