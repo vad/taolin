@@ -107,15 +107,24 @@
 .add-icon {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1266px !important;
 }
-.double-prev {
+.help-icon {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1302px !important;
 }
-.prev {
+.gears {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1338px !important;
 }
-.next {
+.chart-icon {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1374px !important;
 }
-.double-next {
+.double-prev {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1410px !important;
+}
+.prev {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1446px !important;
+}
+.next {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1482px !important;
+}
+.double-next {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1518px !important;
 }
