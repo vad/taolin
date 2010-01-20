@@ -461,44 +461,8 @@ ul.x-tab-strip-bottom{
 	background-image: url(../images/tp/grid/grid-blue-split.gif);
 }*/
 
-.x-tbar-page-first{
-	background-image: url(../images/tp/grid/page-first.png) !important;
-}
-
-.x-tbar-loading{
-	background-image: url(../images/tp/grid/refresh.png) !important;
-}
-
-.x-tbar-page-last{
-	background-image: url(../images/tp/grid/page-last.png) !important;
-}
-
-.x-tbar-page-next{
-	background-image: url(../images/tp/grid/page-next.png) !important;
-}
-
-.x-tbar-page-prev{
-	background-image: url(../images/tp/grid/page-prev.png) !important;
-}
-
 .x-item-disabled .x-tbar-loading{
-	background-image: url(../images/tp/grid/loading.gif) !important;
-}
-
-.x-item-disabled .x-tbar-page-first{
-	background-image: url(../images/tp/grid/page-first-disabled.png) !important;
-}
-
-.x-item-disabled .x-tbar-page-last{
-	background-image: url(../images/tp/grid/page-last-disabled.png) !important;
-}
-
-.x-item-disabled .x-tbar-page-next{
-	background-image: url(../images/tp/grid/page-next-disabled.png) !important;
-}
-
-.x-item-disabled .x-tbar-page-prev{
-	background-image: url(../images/tp/grid/page-prev-disabled.png) !important;
+	background: transparent url(../images/tp/grid/loading.gif) !important;
 }
 
 .x-paging-info {

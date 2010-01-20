@@ -496,9 +496,6 @@ textarea.note-text-area {
 }
 
 /* THEME HACK */
-.x-tbar-loading { 
-    background-image:url(../../ext-themes/images/default/grid/done.gif) !important; 
-}
 .x-panel-mc .x-panel-body, .x-form-item-label {
 color:black !important;
 }
