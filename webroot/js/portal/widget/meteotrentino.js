@@ -121,9 +121,8 @@ MeteoTrentino = function(conf, panel_conf){
             html: 
                 '<div id="'+this.getId()+'-forecast-overview" style="padding:5px 20px;"></div>' 
                 +'<div id="'+this.getId()+'-forecast-detailedview" style="padding:5px;"></div>'
-                + '<hr class="large">'
                 +'<div id="'+this.getId()+'-forecast-links" style="padding:5px;text-align:center;"></div>'
-                +'<div style="float:right;padding:10px;font-weight:bold;"><span class="sprited gears"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</a></span></div>'
+                +'<div style="float:right;padding:10px;font-weight:bold;"><span style="margin: 10px:"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.updateWidget()">Reload</a></span> - <span style="margin: 20px:"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</a></span></div>'
             ,border: false
             ,autoHeight: true
         }]
