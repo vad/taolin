@@ -38,8 +38,8 @@ var pagination =
                 '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(1)"><span class="sprited prev"></span>Newer</span>'+
             '</div>'+
             '<div class="right-div" style="visibility:<tpl if="this.isLastPage()">hidden</tpl>">'+
-                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older<span class="sprited next" /></span></span>'+
-                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<span class="sprited double-next" /></span></span>'+
+                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older<span class="sprited next"></span></span>'+
+                '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<span class="sprited double-next"></span></span>'+
             '</div>'+
         '</div>'+
     '</tpl>';
@@ -132,13 +132,13 @@ Timeline = Ext.extend(Ext.Panel, {
                         '<tpl if="commentsCount &gt; 0">',
                             '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
                                 '<span>{commentsCount:plural("comment")}</span>',
-                                '<span class="sprited comment-icon" title="View {commentsCount:plural("comment")}" />',
+                                '<span class="sprited comment-icon" title="View {commentsCount:plural("comment")}"></span>',
                             '</span>',
                         '</tpl>',
                         '<tpl if="commentsCount &lt;= 0">',
                             '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
                                 '<span>Add a comment</span>',
-                                '<span class="sprited comment-add" title="Add a comment" />',
+                                '<span class="sprited comment-add" title="Add a comment"></span>',
                             '</span>',
                         '</tpl>',
                         /* END OF COMMENTS */
