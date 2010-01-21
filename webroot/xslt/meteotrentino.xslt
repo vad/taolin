@@ -90,6 +90,24 @@
                 </p>
             </div>
         </div>
+        <div id="next_days" class="meteo_forecast">
+        <xsl:for-each select="GiorniSuccessivi">
+            <div class="meteo_desc" style="padding: 5px 10px;margin:auto;">
+                <table>
+                    <tr>
+                        <td width="80px">
+                            <img src="{icona}"/>
+                        </td>
+                        <td>
+                            <div><b>Date: </b><xsl:value-of select="Data"/></div>
+                            <xsl:variable name="cieloDesc"><xsl:value-of select="CieloDesc"/></xsl:variable>
+                            <xsl:if test="not($cieloDesc='')"><xsl:value-of select="CieloDesc"/></xsl:if>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </xsl:for-each>
+        </div>
         </xsl:for-each>
     </xsl:template>
 </xsl:stylesheet>  

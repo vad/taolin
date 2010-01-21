@@ -82,7 +82,8 @@ MeteoTrentino = function(conf, panel_conf){
         var days = {
             'today': 'Today', 
             'tomorrow': 'Tomorrow', 
-            'day_after_tomorrow': 'Day after tomorrow'
+            'day_after_tomorrow': 'Day after tomorrow',
+            'next_days': 'Next days'
         };
 
         var link = 'javascript:Ext.getCmp(\''+w_id+'\').visualize(\'{0}\')';
