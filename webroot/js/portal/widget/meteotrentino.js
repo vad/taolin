@@ -70,7 +70,7 @@ MeteoTrentino = function(conf, panel_conf){
 
         this.visualize();
     }
-
+    
     this.visualize = function(day){
         
         var ov = $('#' +this.getId()+'-forecast-overview');
@@ -78,13 +78,6 @@ MeteoTrentino = function(conf, panel_conf){
         var lk = $('#' +this.getId()+'-forecast-links');
 
         var w_id = this.getId();
-
-        var days = {
-            'today': 'Today', 
-            'tomorrow': 'Tomorrow', 
-            'day_after_tomorrow': 'Day after tomorrow',
-            'next_days': 'Next days'
-        };
 
         var link = 'javascript:Ext.getCmp(\''+w_id+'\').visualize(\'{0}\')';
 
@@ -96,21 +89,19 @@ MeteoTrentino = function(conf, panel_conf){
         if (day == null || day == '')
             day = 'today';
 
-        for (var d in days){
-            
-            v = days[d];
-
-            if (d === day){
-                dv.find('#'+d).show();
-                lk.append($('<span>').text(v));
+        dv.children().each(function(){
+            var id = $(this).attr('id');
+            var label = $(this).attr('label');
+            if(id == day){
+                lk.append($('<span>').text(label));
+                $(this).show();
+            } else {
+                lk.append($('<a>').attr('href', String.format(link,id)).text(label));
+                $(this).hide();
             }
-            else {
-                dv.find('#'+d).hide();
-                lk.append($('<a>').attr('href', String.format(link,d)).text(v));
-            }
-        }
+        });
 
-        lk.children().css('padding', '5px 10px')
+        lk.children().css({'padding' : '10px', 'font-size' : '13px'});
     }
 
     MeteoTrentino.superclass.constructor.call(this, {
@@ -119,10 +110,10 @@ MeteoTrentino = function(conf, panel_conf){
         defaults: { autoScroll: true },
         items: [{
             html: 
-                '<div id="'+this.getId()+'-forecast-overview" style="padding:5px 20px;"></div>' 
+                '<div style="margin: 15px 0; text-align:center;"><span id="'+this.getId()+'-forecast-links" class="confirm-msg"></span></div>'
+                +'<div id="'+this.getId()+'-forecast-overview" style="padding:5px 20px;"></div>' 
                 +'<div id="'+this.getId()+'-forecast-detailedview" style="padding:5px;"></div>'
-                +'<div id="'+this.getId()+'-forecast-links" style="padding:5px;text-align:center;"></div>'
-                +'<div style="float:right;padding:10px;font-weight:bold;"><span style="margin: 10px:"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.updateWidget()">Reload</a></span> - <span style="margin: 20px:"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</a></span></div>'
+                +'<div style="float:right;padding:10px;font-weight:bold;"><span style="margin: 10px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.updateWidget()">Reload</a></span><span style="margin: 10px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</a></span></div>'
             ,border: false
             ,autoHeight: true
         }]
