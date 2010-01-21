@@ -134,7 +134,7 @@ Feedback = function(conf, panel_conf){
         },{
             style: 'padding:5px'
         },{
-            html: '<div style="padding-left:15px;"><img id="'+this.view.id+'-img-view-detail" style="vertical-align:middle;cursor:pointer;" src="img/icons/fugue/chevron.png" /> <span id="'+this.view.id+'-view-detail" onclick="Ext.getCmp(\''+this.getId() +'\').viewFeedbacks()">See your 5 latest feedbacks</span></div>'
+            html: '<div style="padding-left:15px;" onclick="Ext.getCmp(\''+this.getId() +'\').viewFeedbacks()"><img id="'+this.view.id+'-img-view-detail" style="vertical-align:middle;cursor:pointer;" src="img/icons/fugue/chevron.png" /> <span id="'+this.view.id+'-view-detail" class="u-hover">See your 5 latest feedbacks</span></div>'
         },{
             style: 'padding:5px'
         },{
