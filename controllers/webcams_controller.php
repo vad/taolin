@@ -39,8 +39,8 @@ class WebcamsController extends AppController {
     function gettime(){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
-        $sStart = '10:45';
-        $sEnd   = '10:48';
+        $sStart = '11:55';
+        $sEnd   = '14:03';
         $message = 'Service available from 12 to 14 on working days';
         $interval = 30;
         
@@ -54,7 +54,7 @@ class WebcamsController extends AppController {
         $softEnd->modify("-1 minute");
         $duration = $this->diff($end, $start);
 
-        if ($now > $softEnd) { // todo: end -> end + 30s
+        if ($now > $softEnd) {
             $start = date_create("tomorrow $sStart");
             $end = date_create("tomorrow $sEnd");
             $sec4firstshot = $this->diff($start, $now);
