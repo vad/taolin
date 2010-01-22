@@ -49,7 +49,7 @@ WebcamCanteen = Ext.extend(Ext.Panel, {
     ,initComponent: function(){
         var config = {
             items: [{
-                html: '<div id="webcam_' + this.getId() + '" style="background:#f3f3f3"><img src="'+Ext.BLANK_IMAGE_URL+'" style="margin:auto;display:none"><p></p></div>',
+                html: '<div id="webcam_' + this.getId() + '" style="background:#f3f3f3"><img src="'+Ext.BLANK_IMAGE_URL+'" style="margin:auto;display:none"><p style="background:white"></p></div>',
                 display: 'none',
                 autoHeight: true,
                 border: true 

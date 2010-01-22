@@ -119,34 +119,25 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
             }],
             
             buttons: [{
-                text: 'Change',
-                handler: function(){
-                    this.confForm.getForm().submit(
-                        {
-                            url:'users_widgets/changeconf',
-                            //waitMsg:'Saving Data...',
-                            scope:this,
-                            success: function(form,action){
-                                this.remove(this.items.items[0], true);
-                                this.confForm = null;
-                                
-                                this.updateWidget(action.result.widget);
-                            }
-                    }
-                    );
-                },
-                scope: this,
-                formBind: true
-            }
-            ,{
-                text: 'Cancel'
-                ,handler: function(){
-                    this.remove(this.items.items[0], true);
-                    this.confForm = null;
+                    text: 'Change'
+                    ,handler: this.submit
+                    ,scope: this
+                    ,formBind: true
                 }
+                ,{
+                    text: 'Cancel'
+                    ,handler: function(){
+                        this.remove(this.items.items[0], true);
+                        this.confForm = null;
+                    }
+                    ,scope: this
+                }
+            ]
+            ,keys:{
+                key: Ext.EventObject.ENTER
+                ,fn: function(){this.submit()}
                 ,scope: this
             }
-            ]
         });
       
         var field;
@@ -262,7 +253,7 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
         this.insert(0, this.confForm);
         this.doLayout();
     }
-    ,setPref:function(pref, value, callback){
+    ,setPref:function(pref, value, callback){ // set a single settings
 
         var params = {id: this.getId()};
         params[pref] = value;
@@ -273,6 +264,21 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
             ,params: params
             ,callback: callback
        });
+    }
+    ,submit: function(){ //submit the form and set all the settings
+        this.confForm.getForm().submit(
+            {
+                url:'users_widgets/changeconf',
+                //waitMsg:'Saving Data...',
+                scope:this,
+                success: function(form,action){
+                    this.remove(this.items.items[0], true);
+                    this.confForm = null;
+                    
+                    this.updateWidget(action.result.widget);
+                }
+        }
+        );
     }
 });
 Ext.reg('portlet', Ext.ux.Portlet);
