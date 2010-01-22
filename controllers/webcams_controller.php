@@ -18,8 +18,6 @@
   *
   */
 
-uses('sanitize');
-
 class WebcamsController extends AppController {
     var $name = 'Webcams';
     var $helpers = array('Html','Form','Javascript');
@@ -30,55 +28,49 @@ class WebcamsController extends AppController {
         parent::beforeFilter();
 
         $this->checkSession();
-        $this->san = new Sanitize();
     }
 
 
-    function getseconds($hours) {
-        $time = explode(':', $hours);
-        $secs = (intval($time[0])*3600) + (intval($time[1])*60);
-        return $secs;
+    function diff($d1, $d2) {
+        return (intval($d1->format('U')) - intval($d2->format('U')));
     }
 
 
     function gettime(){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
-        define('TOTALSECS',86400);
-        define('FIRSTSHOTSCRIPT','11:55');
-        define('LASTSHOTSCRIPT','14:03');
-        define('SERVICEMESSAGE','Service available from 12 to 14 on working days');
-        $totalshots=256;
-        $intervalshots = 30;
+        $sStart = '10:45';
+        $sEnd   = '10:48';
+        $message = 'Service available from 12 to 14 on working days';
+        $interval = 30;
         
-        $sec4firstshot = 0; 
-        
-        $first = $this->getseconds(FIRSTSHOTSCRIPT);
-        $last = $this->getseconds(LASTSHOTSCRIPT);
-        $today = getdate();
-        $duration = $totalshots * $intervalshots;
-        
-        $elapsedsecs = (($today['hours']*60)*60)+($today['minutes']*60)+($today['seconds']);
-        
-        if ($elapsedsecs <= $first) {
-            $sec4firstshot = ($first - $elapsedsecs);
-        }
+        $sec4firstshot = 0;
 
-        if (($elapsedsecs > $first) && ($elapsedsecs <= $last)) {
+        $start = date_create("today $sStart");
+        $end = date_create("today $sEnd");
+        $now = date_create("now");
+
+        $softEnd = clone $end;
+        $softEnd->modify("-1 minute");
+        $duration = $this->diff($end, $start);
+
+        if ($now > $softEnd) { // todo: end -> end + 30s
+            $start = date_create("tomorrow $sStart");
+            $end = date_create("tomorrow $sEnd");
+            $sec4firstshot = $this->diff($start, $now);
+        } else if ($now > $start) {
+            $start = $now;
             $sec4firstshot = 0;
-            $duration = $last - $elapsedsecs;
-        }
-
-        if ($elapsedsecs > $last) {
-            $sec4firstshot = TOTALSECS - $elapsedsecs + $first;
+            $duration = $this->diff($end, $now);
+        } else {
+            $sec4firstshot = $this->diff($start, $now);
         }
         
         $info['sec4firstshot'] = $sec4firstshot;
         $info['duration'] = $duration;
-        $info['interval'] = $intervalshots;
-        $info['servicemessage'] = SERVICEMESSAGE;
-        $response['webcam'] = $info;
-        $this->set('json', $response);
+        $info['interval'] = $interval;
+        $info['servicemessage'] = $message;
+        $this->set('json', $info);
     }
 
 

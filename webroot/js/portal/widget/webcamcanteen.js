@@ -66,13 +66,13 @@ WebcamCanteen = Ext.extend(Ext.Panel, {
             url: 'webcams/gettime',
             scope: this,
             success: function (result, request) {
-                var data = Ext.util.JSON.decode(result.responseText).webcam;
+                var data = Ext.util.JSON.decode(result.responseText);
                 Ext.apply(this, data);
 
                 $('#webcam_'+ webcamid +'> p')
                     .text(this.servicemessage);
 
-                this.reloadTask = {
+                var task = {
                     run: function(){
                         var dateNow = new Date().getTime();
                         var img1 = "webcams/getsnapshot?v=" + dateNow;
@@ -84,8 +84,7 @@ WebcamCanteen = Ext.extend(Ext.Panel, {
                                 .end()
                                 .find('p')
                                     .hide();
-                        }
-                        else {
+                        } else {
                             $('#webcam_' + webcamid)
                                 .find('img')
                                     .hide()
@@ -99,6 +98,7 @@ WebcamCanteen = Ext.extend(Ext.Panel, {
                     ,scope: this
                     ,duration: this.duration * 1000
                 };
+                this.reloadTask = task;
                 this.dTask = new Ext.util.DelayedTask(
                     function(){
                         Ext.TaskMgr.start(this.reloadTask);
