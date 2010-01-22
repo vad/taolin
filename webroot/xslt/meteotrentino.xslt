@@ -64,7 +64,7 @@
                     <li><b>Temperature: </b>  <xsl:value-of select="Domani/TempDesc"/></li>
                     <ul style="padding-left:30px !important">
                         <li style="list-style-type:square;"><b>Valley: </b>  min <xsl:value-of select="Domani/TempMinValle"/>°C / max <xsl:value-of select="Domani/TempMaxValle"/>°C</li>
-                        <li style="list-style-type:square;"><b>Mountain (2000m): </b> min <xsl:value-of select="Domani/TempMinQuota"/>°C / max <xsl:value-of select="Domani/TempMaxQuota"/>°C)</li>
+                        <li style="list-style-type:square;"><b>Mountain (2000m): </b> min <xsl:value-of select="Domani/TempMinQuota"/>°C / max <xsl:value-of select="Domani/TempMaxQuota"/>°C</li>
                     </ul>
                 </ul>
             </div>
