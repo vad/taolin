@@ -1,9 +1,6 @@
 [submodule "webroot/extjs"]
 	path = webroot/extjs
 	url = git://github.com/probonogeek/extjs.git
-[submodule "plugins/commentable"]
-	path = plugins/commentable
-	url = git://github.com/josegonzalez/cakephp-commentable-behavior.git
 [submodule "vendors/h2o"]
 	path = vendors/h2o
 	url = git://github.com/speedmax/h2o-php.git
@@ -13,3 +10,6 @@
 [submodule "webroot/admin-media/codemirror"]
 	path = webroot/admin-media/codemirror
 	url = git://github.com/marijnh/CodeMirror.git
+[submodule "plugins/commentable"]
+	path = plugins/commentable
+	url = git://github.com/vad/cakephp-commentable-behavior.git
