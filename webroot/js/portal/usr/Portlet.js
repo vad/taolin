@@ -119,81 +119,71 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
             }],
             
             buttons: [{
-                text: 'Change',
-                handler: function(){
-                    this.confForm.getForm().submit(
-                        {
-                            url:'users_widgets/changeconf',
-                            //waitMsg:'Saving Data...',
-                            scope:this,
-                            success: function(form,action){
-                                this.remove(this.items.items[0], true);
-                                this.confForm = null;
-                                
-                                this.updateWidget(action.result.widget);
-                            }
-                    }
-                    );
-                },
-                scope: this,
-                formBind: true
-            }
-            ,{
-                text: 'Cancel'
-                ,handler: function(){
-                    this.remove(this.items.items[0], true);
-                    this.confForm = null;
+                    text: 'Change'
+                    ,handler: this.submit
+                    ,scope: this
+                    ,formBind: true
                 }
+                ,{
+                    text: 'Cancel'
+                    ,handler: function(){
+                        this.remove(this.items.items[0], true);
+                        this.confForm = null;
+                    }
+                    ,scope: this
+                }
+            ]
+            ,keys:{
+                key: Ext.EventObject.ENTER
+                ,fn: function(){this.submit()}
                 ,scope: this
             }
-            ]
         });
       
-        var field;
-        for (var i=0, x; x = this.userParams[i++];){
-            field = {};
-            if(x.type=='string') {
-                field.xtype = 'textfield';
-                field.fieldLabel = x.description ? x.description : x.name;
-                field.anchor = '100%';
+        for (var i=0, x, field; x = this.userParams[i++];){
+            switch (x.type) {
+            case 'string':
+            case 'integer':
+                field = {
+                    xtype: 'textfield'
+                    ,fieldLabel: get(x, 'description', x.name)
+                    ,anchor: '100%'
+                };
                 if (this.widgetConf[x.name])
                     field.value = this.widgetConf[x.name];
-            }
-            else if(x.type=='integer') {
-                field.xtype = 'textfield';
-                field.fieldLabel = x.description ? x.description : x.name;
-                field.anchor = '100%';
-                if (this.widgetConf[x.name])
-                    field.value = this.widgetConf[x.name];
-            }
-            else if(x.type=='boolean') {
-                field.xtype = 'checkbox';
-                field.boxLabel = x.description ? x.description : x.name;
-                field.hideLabel = true;
+                break;
+            case 'boolean':
+                field = {
+                    xtype: 'checkbox'
+                    ,boxLabel: get(x, 'description', x.name)
+                    ,hideLabel: true
+                };
                 if (this.widgetConf[x.name])
                     field.checked = this.widgetConf[x.name];
-            }
-            else if(x.type=='color') {
-                field.xtype = 'colorpickerfield';
-                field.fieldLabel = x.description ? x.description : x.name;
-                field.anchor = '100%';
+                break;
+            case 'color':
+                field = {
+                    xtype: 'colorpickerfield'
+                    ,fieldLabel: get(x, 'description', x.name)
+                    ,anchor: '100%'
+                };
                 if (this.widgetConf[x.name])
                     field.value = this.widgetConf[x.name];
-            }
-            else if(x.type=='BooleanList') {
-                field.xtype = 'checkboxgroup';
-                field.fieldLabel = x.description ? x.description : x.name;
-                field.cls = 'boolean-list';
-                field.anchor = '100%';
-                field.columns = 1;
-                field.items = new Array();
+                break;
+            case 'BooleanList':
+                field = {
+                    xtype: 'checkboxgroup'
+                    ,fieldLabel: get(x, 'description', x.name)
+                    ,cls: 'boolean-list'
+                    ,anchor: '100%'
+                    ,columns: 1
+                    ,items: new Array()
+                };
                 
                 var i = 0;
                 for (var k in x.values){ //create checkboxes
                     // use key as checkbox label unless a title has been specified
-                    var label = k;
-                    if ('title' in x.values[k])
-                        label = x.values[k].title;
+                    var label = get(x.values[k], 'title', k);
 
                     var cb = { //checkbox
                         xtype: 'checkbox'
@@ -226,16 +216,16 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
                 if (this.widgetConf[x.name])
                     field.value = this.widgetConf[x.name];
                 */
-            }
-            else if(x.type=='combobox'){
-                field.xtype = 'combo';
-                field.fieldLabel = x.description ? x.description : x.name;
+                break;
+            case 'combobox':
+                field = {
+                    xtype: 'combo'
+                    ,fieldLabel: get(x, 'description', x.name)
+                };
 
-                dt = new Array();
+                var dt = new Array();
 
-                for (var o in x.opt){
-                    field[o] = x.opt[o];
-                } 
+                Ext.apply(field, x.opt);
 
                 for (var k in x.values){ //create combobox's items
                     dt.push([k, x.values[k]]);
@@ -254,6 +244,7 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
                 if(this.widgetConf[x.name]){
                     field.value = x.values[this.widgetConf[x.name]];
                 }
+                break;
             }
             field.name = x.name;
             this.confForm.add(field);
@@ -262,7 +253,7 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
         this.insert(0, this.confForm);
         this.doLayout();
     }
-    ,setPref:function(pref, value, callback){
+    ,setPref:function(pref, value, callback){ // set a single settings
 
         var params = {id: this.getId()};
         params[pref] = value;
@@ -273,6 +264,21 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
             ,params: params
             ,callback: callback
        });
+    }
+    ,submit: function(){ //submit the form and set all the settings
+        this.confForm.getForm().submit(
+            {
+                url:'users_widgets/changeconf',
+                //waitMsg:'Saving Data...',
+                scope:this,
+                success: function(form,action){
+                    this.remove(this.items.items[0], true);
+                    this.confForm = null;
+                    
+                    this.updateWidget(action.result.widget);
+                }
+        }
+        );
     }
 });
 Ext.reg('portlet', Ext.ux.Portlet);
