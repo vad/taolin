@@ -103,7 +103,7 @@
                 <table>
                     <tr>
                         <td width="80px">
-                            <img src="{icona}"/>
+                            <img src="{icona}" title="{descicona}"/>
                         </td>
                         <td style="text-align: left">
                             <div><b>Date: </b><xsl:value-of select="Data"/>
