@@ -134,7 +134,7 @@ function application_init(){
 
     var main_menu;
 
-    if(!Ext.isIE6)
+    if(!Ext.isIE6 && !Ext.isIE7)
         main_menu =
             '<ul id="main-menu">' +
                 '<li class="header"><a href="javascript:void(0)">Personal profile</a>' +
@@ -201,7 +201,7 @@ function application_init(){
         + '<div class="left-element">'
             + '<img src="'+window.config.logo+'" qtip="taolin logo" style="padding-left:10px"/>'
         + '</div>'
-        + '<div id="didyouknow_div" style="'+(Math.random() > 0.3?'display:none;':'')+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:xx-small;">[Hide this message]</a></td></tr></table></span></div>';
+        + '<div id="didyouknow_div" style="'+(Math.random() > 0.3?'display:none;':'')+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:xx-small;">[Close this message]</a></td></tr></table></span></div>';
 
     window.viewport = new Ext.Viewport({
         layout:'border',

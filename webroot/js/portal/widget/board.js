@@ -120,7 +120,7 @@ Board = function(conf, panel_conf){
                             form.reset();
                             var u = Ext.get('undodelads-'+w_id);
                             u.removeClass('warning-msg').addClass('confirm-msg');
-                            u.update('Message created. [<a href="javascript:showText(false, \'undodelads-'+w_id+'\')">hide</a>]');      
+                            u.update('Message created. [<a href="javascript:showText(false, \'undodelads-'+w_id+'\')">close</a>]');      
                             showText(true, 'undodelads-'+w_id);
                             form.findField('email').setValue(email);
                             boardStore.load();
@@ -163,7 +163,7 @@ Board = function(conf, panel_conf){
                     success: function(result, request){
                         var u =  Ext.get('undodelads-'+w_id);
                         u.removeClass('confirm-msg').addClass('warning-msg');
-                        u.update('Message deleted. <a href="javascript:void(0)" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelads-'+w_id+'\')">hide this message</a>');
+                        u.update('Message deleted. <a href="javascript:void(0)" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelads-'+w_id+'\')">close this message</a>');
                         showText(true, 'undodelads-'+w_id);
                         store.load();
                     },
