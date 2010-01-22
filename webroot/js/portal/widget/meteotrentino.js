@@ -105,21 +105,29 @@ MeteoTrentino = function(conf, panel_conf){
     }
 
     MeteoTrentino.superclass.constructor.call(this, {
-        autoHeight: true,
-        autoWidth: true,
-        defaults: { autoScroll: true },
-        items: [{
+        autoHeight: true
+        ,autoWidth: true
+        ,defaults: { 
+            autoScroll: true 
+        }
+        ,items: [{
             html: 
-                '<div style="margin: 15px 0; text-align:center;"><span id="'+this.getId()+'-forecast-links" class="confirm-msg"></span></div>'
-                +'<div id="'+this.getId()+'-forecast-overview" style="padding:5px 20px;"></div>' 
-                +'<div id="'+this.getId()+'-forecast-detailedview" style="padding:5px;"></div>'
-                +'<div style="float:right;padding:10px;font-weight:bold;"><span style="margin: 10px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.updateWidget()">Reload</a></span><span style="margin: 10px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</a></span></div>'
+                '<div id ="'+this.getId()+'-forecast">'
+                    +'<div style="margin: 15px 0; text-align:center;"><span id="'+this.getId()+'-forecast-links" class="confirm-msg"></span></div>'
+                    +'<div id="'+this.getId()+'-forecast-overview" style="padding:5px 20px;"></div>' 
+                    +'<div id="'+this.getId()+'-forecast-detailedview" style="padding:5px;"></div>'
+                    +'<div style="float:right;padding:10px;font-weight:bold;"><span style="margin: 10px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.updateWidget()">Reload</a></span><span style="margin: 10px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</a></span></div>'
+                +'</div>'
             ,border: false
             ,autoHeight: true
         }]
+        ,listeners: {
+            render: function(){
+                this.doLayout(); // TO DO: do this only if it is collapsed
+                this.loadForecast()
+            }
+        }
     });
 
-    this.loadForecast();
-    
 };
 Ext.extend(MeteoTrentino, Ext.Panel);
