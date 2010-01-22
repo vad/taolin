@@ -110,7 +110,7 @@ PhotoChooser.prototype = {
 
                             var u = Ext.get("undodelphoto");
                             u.removeClass(["warning-msg","error-msg"]).addClass("confirm-msg");
-                            u.update('Your default photo has been changed! [<a href="javascript:showText(false, \'undodelphoto\')">hide</a>]');
+                            u.update('Your default photo has been changed! [<a href="javascript:showText(false, \'undodelphoto\')">close</a>]');
                             showText(true, 'undodelphoto');
 
                             Ext.getCmp('photo-chooser').store.load();
@@ -128,7 +128,7 @@ PhotoChooser.prototype = {
 
                             var u = Ext.get("undodelphoto");
                             u.removeClass(["warning-msg","confirm-msg"]).addClass("error-msg");
-                            u.update('Unable to change your default photo. [<a href="javascript:showText(false, \'undodelphoto\')">hide</a>]');
+                            u.update('Unable to change your default photo. [<a href="javascript:showText(false, \'undodelphoto\')">close</a>]');
                             showText(true, 'undodelphoto');
                         }
                     });
@@ -183,7 +183,7 @@ PhotoChooser.prototype = {
 
                                         var u = Ext.get("undodelphoto");
                                         u.removeClass(["warning-msg","error-msg"]).addClass("confirm-msg");
-                                        u.update('Attribute '+fname+' successfully changed to "'+text.ellipse(30)+'" [<a href="javascript:showText(false, \'undodelphoto\')">hide</a>]');
+                                        u.update('Attribute '+fname+' successfully changed to "'+text.ellipse(30)+'" [<a href="javascript:showText(false, \'undodelphoto\')">close</a>]');
                                         showText(true, 'undodelphoto');
 
                                         Ext.getCmp('photo-chooser').store.load();
@@ -201,7 +201,7 @@ PhotoChooser.prototype = {
 
                                         var u = Ext.get("undodelphoto");
                                         u.removeClass(["warning-msg","confirm-mg"]).addClass("error-msg");
-                                        u.update('Attribute '+fname+' successfully changed to "'+text.ellipse(30)+'" [<a href="javascript:showText(false, \'undodelphoto\')">hide</a>]');
+                                        u.update('Attribute '+fname+' successfully changed to "'+text.ellipse(30)+'" [<a href="javascript:showText(false, \'undodelphoto\')">close</a>]');
                                         showText(true, 'undodelphoto');
 
                                     }
@@ -503,7 +503,7 @@ PhotoChooser.prototype = {
 
                     var u = Ext.get("undodelphoto");
                     u.removeClass(["confirm-msg","error-msg"]).addClass("warning-msg");
-                    u.update('You have deleted a photo. <a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').undoDeletePhoto(' + p_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelphoto\')">hide this message</a>');
+                    u.update('You have deleted a photo. <a href="javascript:void(0)" onclick="Ext.getCmp(\'photo-chooser\').undoDeletePhoto(' + p_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelphoto\')">close this message</a>');
                     
                     // Hide div containing the "Undo delete" message
                     showText(true, 'undodelphoto');

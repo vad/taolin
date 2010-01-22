@@ -246,8 +246,7 @@ function removeWidget(w_id){
             method: 'GET',
             success: function(result, request){
                 var w_name = Ext.util.JSON.decode(result.responseText)['widget_name'];
-                //Ext.fly('didyouknow_div').update('<span id="didyouknow_span"><table><tr><td style="padding:0 10px;">Widget '+w_name+' has been removed. <b><a href="javascript:void(0)" onclick="undoRemoveWidget('+w_id+')">Undo this action</a></b> or <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').hide();" style="font-size:90%;">hide this message</a></td></tr></table></span>');
-                $("#didyouknow_span tr").replaceWith('<tr><td style="padding:0 10px;">Widget '+w_name+' has been removed. <b><a href="javascript:void(0)" onclick="undoRemoveWidget('+w_id+')">Undo this action</a></b> or <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').toggle();" style="font-size:90%;">hide this message</a></td></tr>');
+                $("#didyouknow_span tr").html($('<td>').css('padding','0 10px').html('Widget '+w_name+' has been removed. <b><a href="javascript:void(0)" onclick="undoRemoveWidget('+w_id+')">Undo this action</a></b> or <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').toggle();" style="font-size:90%;">close this message</a>'));
                 $('#didyouknow_div').show();
             },
             failure: function(){
