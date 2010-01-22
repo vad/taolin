@@ -445,7 +445,7 @@ function createNewPortlet(conf, use_widget_position){
     widget.setPortletTitle = function(title) {Ext.getCmp(this.portlet_id).setTitle(title);};
     widget.setPref = function(pref, value, callback) {Ext.getCmp(this.portlet_id).setPref(pref, value, callback);};
 
-    widget.addEvents('fullscreen', 'downsize');
+    widget.addEvents('fullscreen', 'downsize', 'collapse', 'expand');
 }
 
 /* This function open the window containing the details of the group */

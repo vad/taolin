@@ -41,6 +41,11 @@ tools = [{
                 url : 'users_widgets/collapsewidget/'+panel.el.id+'/'+action
                 ,method: 'GET'
             });
+
+            // raise collapse/expand event
+            var widget = panel.items.last();
+            widget.fireEvent(action, widget);
+
             panel.toggleCollapse(true);
         }
     },{
