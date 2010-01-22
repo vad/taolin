@@ -49,7 +49,7 @@ WebcamCanteen = Ext.extend(Ext.Panel, {
     ,initComponent: function(){
         var config = {
             items: [{
-                html: '<div id="webcam_' + this.getId() + '"><img class="webcam-img" src="img/nowebcamservice.jpg"><p class="webcam-p"/></div>',
+                html: '<div id="webcam_' + this.getId() + '"><img src="'+Ext.BLANK_IMAGE_URL+'" style="display:none"><p></p></div>',
                 display: 'none',
                 autoHeight: true,
                 border: true 
@@ -66,41 +66,48 @@ WebcamCanteen = Ext.extend(Ext.Panel, {
             url: 'webcams/gettime',
             scope: this,
             success: function (result, request) {
-                var data = Ext.util.JSON.decode(result.responseText);
-                this.sec4firstshot = data.webcam.sec4firstshot;
-                this.duration = data.webcam.duration;
-                this.interval = data.webcam.interval; 
-                this.servicemessage = data.webcam.servicemessage;
-                $('#webcam_' + webcamid + ' img.webcam-img').hide();
-                $('#webcam_' + webcamid + ' p.webcam-p').text(this.servicemessage);
-                 var task = {
-                        run: function(){
-                                var dateNow = new Date().getTime();
-                                var img1="webcams/getsnapshot?v=" + dateNow;
-                                if(task.taskRunCount < (this.duration / this.interval)){
-                                    $('#webcam_' + webcamid + ' img.webcam-img').show();
-                                    $('#webcam_' + webcamid + ' img.webcam-img').attr("src",img1);
-                                    $('#webcam_' + webcamid + ' p.webcam-p').hide();
-                                }
-                                else {
-                                    $('#webcam_' + webcamid + ' img.webcam-img').hide();
-                                    $('#webcam_' + webcamid + ' p.webcam-p').show();
-                                    Ext.getCmp(this.portlet_id).updateWidget();
-                                }
-                        }
-                        ,interval: this.interval * 1000
-                        ,scope: this
-                        ,duration: this.duration * 1000
-                    };
-                    this.reloadTask = task;
-                    this.dTask = new Ext.util.DelayedTask(
-                                function(){
-                                    Ext.TaskMgr.start(this.reloadTask);
-                                }
-                                ,this);
+                var data = Ext.util.JSON.decode(result.responseText).webcam;
+                Ext.apply(this, data);
 
-                    this.dTask.delay(this.sec4firstshot * 1000);
-                }
+                $('#webcam_'+ webcamid +'> p')
+                    .text(this.servicemessage);
+
+                this.reloadTask = {
+                    run: function(){
+                        var dateNow = new Date().getTime();
+                        var img1 = "webcams/getsnapshot?v=" + dateNow;
+                        if(task.taskRunCount < (this.duration / this.interval)){
+                            $('#webcam_' + webcamid)
+                                .find('img')
+                                    .attr("src",img1)
+                                    .show()
+                                .end()
+                                .find('p')
+                                    .hide();
+                        }
+                        else {
+                            $('#webcam_' + webcamid)
+                                .find('img')
+                                    .hide()
+                                .end()
+                                .find('p')
+                                    .show();
+                            Ext.getCmp(this.portlet_id).updateWidget();
+                        }
+                    }
+                    ,interval: this.interval * 1000
+                    ,scope: this
+                    ,duration: this.duration * 1000
+                };
+                this.dTask = new Ext.util.DelayedTask(
+                    function(){
+                        Ext.TaskMgr.start(this.reloadTask);
+                    }
+                    ,this
+                );
+
+                this.dTask.delay(this.sec4firstshot * 1000);
+            }
         });
         WebcamCanteen.superclass.onRender.apply(this, arguments);
     }

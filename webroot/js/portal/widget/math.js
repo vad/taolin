@@ -79,7 +79,7 @@ MathWidget = function(conf, panel_conf){
             this.items.get(1).setValue(res);
         }
         ,buttons: [{
-            text: 'Evaluate'
+            text: 'Result'
             ,handler: function(){this.calcForm.evaluate()}
             ,scope:this
         }]
