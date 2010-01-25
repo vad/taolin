@@ -113,19 +113,20 @@ function application_init(){
     // preparing text for Did you know messages
     var aDyk = ['Did you know that you can <span class="add_widgets right-element" style="float:none;position:relative;padding:0;"><a href="javascript:openAddWidgetsModalWindow()">Add widgets</a></span>? <span class="add_widgets right-element" style="float:none;position:relative;padding:0;"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span>.',
         'Did you know that you can <a href="javascript:expandSettingsPanel()">Edit your profile</a>? <a href="javascript:expandSettingsPanel()">Edit your profile</a>.',
-        'Did you know that you can expand fullscreen widgets clicking on <img width=20px height=1px src="ext/resources/images/default/s.gif" class="x-tool x-tool-maximize" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
-        'Did you know that you can configure a widget clicking on <img width=20px height=1px src="ext/resources/images/default/s.gif" class="x-tool x-tool-gear" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
-        'Did you know that you can minimize your widget clicking on <img width=20px height=1px src="ext/resources/images/default/s.gif" class="x-tool x-tool-toggle" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
-        'Did you know that you can remove a widget clicking on <img width=20px height=1px src="ext/resources/images/default/s.gif" class="x-tool x-tool-close" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
+        'Did you know that you can expand fullscreen widgets clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-maximize" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
+        'Did you know that you can configure a widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-gear" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
+        'Did you know that you can minimize your widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-toggle" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
+        'Did you know that you can remove a widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-close" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can move widgets dragging the title bar?',
         'Did you know that you can edit your photos and add a new one? <a href="javascript:void(0)" onclick="openImageChooser()">Edit your photo</a>.',
         'Did you know that you can set taolin as your homepage? Read <a href="./pages/make_homepage_help" target="_blank">the instructions</a>!',
         'Did you know that you can view other people photos gallery by clicking on one of their photos?',
         'Did you know that there is a <a href="./pages/privacy_policy" target="_blank">privacy policy</a> about how your data are used? <a href="./pages/privacy_policy" target="_blank">Read the privacy policy</a>!',
-        'Did you know that you can edit your workplace and view other\'s on a  map? <a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "did you know", "user_id":""}') + '\'})).show()">Edit!</a>',
+        'Did you know that you can edit your workplace and view other\'s on a  map? <a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: {source: \'did you know\', user_id:\'\'}})).show()">Edit!</a>',
         'Did you know that you can suggest a colleague of yours as new champion on her/his profile?'
     ];
     var dyk = aDyk[Math.floor(Math.random()*aDyk.length)]; // pick a random string out of aDyk
+    var dyk = aDyk[11];
 
     /*
      * Main menu:
@@ -201,7 +202,7 @@ function application_init(){
         + '<div class="left-element">'
             + '<img src="'+window.config.logo+'" qtip="taolin logo" style="padding-left:10px"/>'
         + '</div>'
-        + '<div id="didyouknow_div" style="'+(Math.random() > 0.3?'display:none;':'')+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:xx-small;">[Close this message]</a></td></tr></table></span></div>';
+        + '<div id="didyouknow_div" style="'+(Math.random() > 1.3?'display:none;':'')+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:xx-small;">[Close this message]</a></td></tr></table></span></div>';
 
     window.viewport = new Ext.Viewport({
         layout:'border',

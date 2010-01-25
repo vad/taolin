@@ -36,7 +36,7 @@ function openMapWindow(building_id, id, source) {
     var mw = new Ext.ux.fbk.sonet.MapWindow({
         buildingId: building_id,
         userId: id,
-        logparams: '{"source": "'+source+'", "user_id": "'+id+'"}'
+        logparams: {source: source, user_id: id}
     });
     mw.show();
 }
@@ -178,7 +178,7 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
 
         if (!req.buildingId)
             req.buildingId = this.buildingSelect.getValue();
-        req.src = logparams;
+        req.src = Ext.util.JSON.encode(logparams);
 
         Ext.Ajax.request({
             url: 'workplaces/getinbuilding/'
@@ -187,21 +187,22 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
             ,success: function (result, request) {
                 var data = Ext.util.JSON.decode(result.responseText);
                 var bi = data.buildingInfo;
+                var pi = parseInt;
 
                 // php gives us strings (...)
-                bi.left = parseInt(bi.left);
-                bi.right = parseInt(bi.right);
-                bi.top = parseInt(bi.top);
-                bi.bottom = parseInt(bi.bottom);
-                bi.width = parseInt(bi.width);
-                bi.height = parseInt(bi.height);
+                bi.left   = pi(bi.left);
+                bi.right  = pi(bi.right);
+                bi.top    = pi(bi.top);
+                bi.bottom = pi(bi.bottom);
+                bi.width  = pi(bi.width);
+                bi.height = pi(bi.height);
 
                 this.buildingInfo = bi;
 
                 this.store = new Ext.data.JsonStore({
-                    data:data
-                    ,root:'workplaces'
-                    ,fields:['x', 'y', "user_id","name","surname","phone"]
+                    data: data
+                    ,root: 'workplaces'
+                    ,fields: ['x', 'y', "user_id","name","surname","phone"]
                 });
 
                 if (!this.initialized) {
@@ -236,7 +237,7 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
         var tpl = new Ext.XTemplate(
             '<map name="floormap">',
                 '<tpl for=".">',
-                    '<area shape="circle" coords="{[this.fromNormalizedCoord(values.x, values.y)]},16" title="{name} {surname}" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "map window"}') + '\')" />',
+                    '<area shape="circle" coords="{[this.fromNormalizedCoord(values.x, values.y)]},16" title="{name} {surname}" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, {source: \'map window\'})" />',
                 '</tpl>',
             '</map>',
             {
@@ -361,7 +362,7 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
         y = y*(bi.bottom - bi.top) + bi.top;
 
         // scale independency
-        zoomLevel = image.width()/bi.width;
+        var zoomLevel = image.width()/bi.width;
         x *= zoomLevel;
         y *= zoomLevel;
 
@@ -383,7 +384,7 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
         var bi = this.buildingInfo;
 
         // zoom independency
-        zoomLevel = image.width()/bi.width;
+        var zoomLevel = image.width()/bi.width;
         x /= zoomLevel;
         y /= zoomLevel;
 
@@ -404,22 +405,19 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
         e.preventDefault();
         var image = $("#building-maps img.map");
         var dim = image.data("dim");
-        var offset = image.offset({scroll: false});
+        var offset = image.offset();
         var mw = Ext.getCmp('map-window');
 
         var clickX = e.pageX - offset.left;
         var clickY = e.pageY - offset.top;
         var nc = mw.toNormalizedCoord({x: clickX, y: clickY});
+        nc.building = mw.buildingSelect.getValue();
 
         Ext.Ajax.request({
             url : 'workplaces/save/'
             ,method: 'POST'
             ,scope: mw
-            ,params: {
-                x: nc.x
-                ,y: nc.y
-                ,building: mw.buildingSelect.getValue()
-            }
+            ,params: nc
             ,success: function ( result, request ) {
                 Ext.example.msg('Workplace', 'Position saved on the map');
                 eventManager.fireEvent('newtimelineevent');
@@ -436,10 +434,10 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
         var cfg = $(icon).data("cfg");
 
         dim.allowPan = false;
-        image.click(this.mouseClicked);
         dim.cursor = 'crosshair';
-        image.css('cursor', dim.cursor);
-
+        image
+            .click(this.mouseClicked)
+            .css('cursor', dim.cursor);
         
         this.enableMainToolIcon(icon);
     }
@@ -451,9 +449,10 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
         var dim = image.data("dim");
 
         dim.allowPan = true;
-        image.unbind('click', this.mouseClicked);
-        image.css('cursor', dim.panCursor);
         dim.cursor = dim.panCursor;
+        image
+            .unbind('click', this.mouseClicked)
+            .css('cursor', dim.panCursor);
         
         this.enableMainToolIcon(icon);
     }
