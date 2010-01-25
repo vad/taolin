@@ -126,7 +126,6 @@ function application_init(){
         'Did you know that you can suggest a colleague of yours as new champion on her/his profile?'
     ];
     var dyk = aDyk[Math.floor(Math.random()*aDyk.length)]; // pick a random string out of aDyk
-    var dyk = aDyk[11];
 
     /*
      * Main menu:
@@ -202,7 +201,7 @@ function application_init(){
         + '<div class="left-element">'
             + '<img src="'+window.config.logo+'" qtip="taolin logo" style="padding-left:10px"/>'
         + '</div>'
-        + '<div id="didyouknow_div" style="'+(Math.random() > 1.3?'display:none;':'')+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:xx-small;">[Close this message]</a></td></tr></table></span></div>';
+        + '<div id="didyouknow_div" style="'+(Math.random() > 0.3?'display:none;':'')+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:xx-small;">[Close this message]</a></td></tr></table></span></div>';
 
     window.viewport = new Ext.Viewport({
         layout:'border',
