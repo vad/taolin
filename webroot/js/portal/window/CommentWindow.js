@@ -32,16 +32,41 @@ CommentWindow = function(model_alias, foreign_id) {
         ,autoLoad: true
         ,listeners:{
             load: {
-                fn: function(){
+                fn: function(store, records, options){
+
+                    var details = store.reader.jsonData.details;
+                    var created = Ext.util.Format.date(
+                            this.store.reader.jsonData.created.split(" ")[0],
+                            'd F, Y'
+                    );
+
+                    /* If this is the first time that the window is loaded
+                     * then create the commented event's html
+                     */ 
+                    if ( !$("#commented-event").html().length ) 
+                        $("#commented-event")
+                            .empty()
+                            .append(
+                                $('<div>')
+                                .css({
+                                    'margin-bottom': '3px',
+                                    'font-size': '90%',
+                                    'font-variant': 'small-caps'
+                                })
+                                .text(created)
+                            )
+                            .append(
+                                $('<div>')
+                                .html(details.smilize().urlize())
+                            )
+                            .css({
+                                'background':'#ECEFF5',
+                                'margin':'auto auto',
+                                'padding':'10px 5px'
+                            }); // Styling
+
+                    // Center the window
                     this.center();
-                    var details = this.store.reader.jsonData.details;
-                    $("#commented-event")
-                        .css({
-                            'background':'#ECEFF5',
-                            'margin':'auto auto',
-                            'padding':'10px 5px'
-                        }) // Styling
-                        .html(details.smilize().urlize());
 
                     // check if the window is out of the browser view
                     var pos = this.getPosition(true);

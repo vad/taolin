@@ -24,12 +24,6 @@ class TimelinesController extends AppController {
     var $uses = array('Photo','ReadableTimeline','Template','Timeline');
     var $components = array('Comment');
     var $cacheName = "cake_controller_timelines_last-timeline-events";
-    // used in gettemplates for "Davide commented Marco's message
-    // in the board"-like events
-    var $shortTemplates = array(
-        "Board" => "{{ user | userify timelineid }}'s message in the board widget",
-        "Timeline" => "{{ user | userify timelineid }}'s event"
-    );
 
     function beforeFilter()
     {
@@ -197,7 +191,7 @@ class TimelinesController extends AppController {
             /*
              * find comments events
              * they are two events in one:
-             *   "Davide commented 'Marco uploaded a photo'"
+             *   "Davide commented on 'Marco uploaded a photo'"
              */
             foreach ($events as $idx => &$event) { 
 
@@ -467,7 +461,9 @@ class TimelinesController extends AppController {
         $this->set('json', array(
             'success' => TRUE,
             'comments' => $comments,
-            'details' => $details)
+            'details' => $details,
+            'created' => $event['ReadableTimeline']['date']
+            )
         );
     }
 
