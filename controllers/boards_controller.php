@@ -243,7 +243,6 @@ class BoardsController extends AppController {
         $params = array();
         $params['user'] = $msg['User'];
         $params['text'] = $msg['Board']['text'];
-        $params['created'] = $msg['Board']['created'];
 
         App::import("Model", 'Template');
         $template = new Template();
@@ -257,7 +256,9 @@ class BoardsController extends AppController {
         $this->set('json', array(
             'success' => TRUE,
             'comments' => $comments,
-            'details' => $details)
+            'details' => $details,
+            'created' => $msg['Board']['created']
+            )
         );
     }
 

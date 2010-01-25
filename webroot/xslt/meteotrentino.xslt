@@ -14,7 +14,7 @@
         <div id="today" class="meteo_forecast" label="Today">
             <div class="meteo_date_header">Weather forecast for <xsl:value-of select="Oggi/Data"/></div>
             <xsl:variable name="cieloDesc"><xsl:value-of select="Oggi/CieloDesc"/></xsl:variable>
-            <xsl:if test="not($cieloDesc='')"><div style="text-align:center;margin-top: 15px;font-size: 15px;"><b>General report: </b><xsl:value-of select="Oggi/CieloDesc"/></div></xsl:if>
+            <xsl:if test="not($cieloDesc='')"><div class="meteo_report"><b>General report: </b><xsl:value-of select="Oggi/CieloDesc"/></div></xsl:if>
             <table cols="2" width="90%" style="margin: auto auto;padding-top:20px;">
                 <tr>
                     <td width="50%">
@@ -46,16 +46,17 @@
         <div id="tomorrow" class="meteo_forecast" label="Tomorrow">
             <div class="meteo_date_header">Weather forecast for <xsl:value-of select="Domani/Data"/></div>
             <xsl:variable name="cieloDesc"><xsl:value-of select="Domani/CieloDesc"/></xsl:variable>
-            <xsl:if test="not($cieloDesc='')"><div style="text-align:center;margin-top: 15px;font-size: 15px;"><b>General report: </b><xsl:value-of select="Domani/CieloDesc"/></div><br /></xsl:if>
+            <xsl:if test="not($cieloDesc='')"><div class="meteo_report"><b>General report: </b><xsl:value-of select="Domani/CieloDesc"/></div><br /></xsl:if>
             <div class="meteo_image">
                 <h2>Morning</h2>
                 <img src="{Domani/imgtrentino}"/>
             </div>
+            <hr class="small" />
             <div class="meteo_image">
                 <h2>Afternoon/Evening</h2>
                 <img src="{Domani/imgtrentino2}"/>
             </div>
-            <div class="meteo_desc">
+            <div class="meteo_desc" style="margin-top:20px">
                 <ul>
                     <li><b>Precipitation: </b> <xsl:value-of select="Oggi/PrecInten"/> -  <xsl:value-of select="Oggi/PrecEstens"/></li>
                     <li><b>Precipitation probability: </b> <xsl:value-of select="Domani/PrecProb"/></li>
@@ -73,16 +74,17 @@
         <div id="day_after_tomorrow" class="meteo_forecast" label="Day after tomorrow">
             <div class="meteo_date_header">Weather forecast for <xsl:value-of select="DopoDomani/Data"/></div>
             <xsl:variable name="cieloDesc"><xsl:value-of select="DopoDomani/CieloDesc"/></xsl:variable>
-            <xsl:if test="not($cieloDesc='')"><div style="text-align:center;margin-top: 15px;font-size: 15px;"><b>General report: </b><xsl:value-of select="DopoDomani/CieloDesc"/></div><br /></xsl:if>
+            <xsl:if test="not($cieloDesc='')"><div class="meteo_report"><b>General report: </b><xsl:value-of select="DopoDomani/CieloDesc"/></div><br /></xsl:if>
             <div class="meteo_image">
                 <h2>Morning</h2>
                 <img src="{DopoDomani/imgtrentino}"/>
             </div>
+            <hr class="small" />
             <div class="meteo_image">
                 <h2>Afternoon/Evening</h2>
                 <img src="{DopoDomani/imgtrentino2}"/>
             </div>
-            <div class="meteo_desc">
+            <div class="meteo_desc" style="margin-top:20px">
                 <ul>
                     <li><b>Precipitation: </b> <xsl:value-of select="DopoDomani/PrecInten"/> -  <xsl:value-of select="DopoDomani/PrecEstens"/> </li>
                     <li><b>Precipitation probability: </b> <xsl:value-of select="DopoDomani/PrecProb"/></li>

@@ -38,7 +38,6 @@ class EventsController extends AppController {
         $params['summary'] = $event['Event']['summary'];
         $params['start_time'] = $event['Event']['start_time'];
         $params['end_time'] = $event['Event']['end_time'];
-        $params['created'] = $event['Event']['created'];
 
         App::import("Model", 'Template');
         $template = new Template();
@@ -52,7 +51,9 @@ class EventsController extends AppController {
         $this->set('json', array(
             'success' => TRUE,
             'comments' => $comments,
-            'details' => $details)
+            'details' => $details,
+            'created' => $event['Event']['created']
+            )
         );
     }
     

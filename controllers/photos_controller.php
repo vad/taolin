@@ -456,7 +456,6 @@ class PhotosController extends AppController {
         $params['name'] = $photo['Photo']['name'];
         $params['filename'] = substr_replace($photo['Photo']['filename'], '.jpg', strrpos($photo['Photo']['filename'], '.'));
         $params['img_path'] = $this->Conf->get('Images.people_web_path');
-        $params['created'] = $photo['Photo']['created'];
 
         App::import("Model", 'Template');
         $template = new Template();
@@ -470,7 +469,9 @@ class PhotosController extends AppController {
         $this->set('json', array(
             'success' => TRUE,
             'comments' => $comments,
-            'details' => $details)
+            'details' => $details,
+            'created' => $photo['Photo']['created']
+            )
         );
     }
 

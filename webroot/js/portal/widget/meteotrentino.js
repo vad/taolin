@@ -45,7 +45,7 @@ MeteoTrentino = function(conf, panel_conf){
                 p.renderForecast();
             },
             failure: function(result, request){
-                $('#'+p.getId()+'-forecast-overview').html('<div class="error-msg">Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!</div>');
+                $('#'+p.getId()+'-forecast-overview').html('<div').class('error-msg').text('Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!');
             }
         });
     };
@@ -82,7 +82,7 @@ MeteoTrentino = function(conf, panel_conf){
         var link = 'javascript:Ext.getCmp(\''+w_id+'\').visualize(\'{0}\')';
 
         if(this.html === null || this.html === '')
-            ov.html('<div class="error-msg">Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!</div>');
+            ov.html('<div').class('error-msg').text('Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!');
 
         lk.html('');
 
@@ -128,6 +128,5 @@ MeteoTrentino = function(conf, panel_conf){
             }
         }
     });
-
 };
 Ext.extend(MeteoTrentino, Ext.Panel);
