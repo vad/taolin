@@ -31,7 +31,7 @@ var userinfo_tpl = new Ext.XTemplate(
         '</tpl>',
         '</b><br/><br/>',
         '<tpl if="email">',
-            '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], \'{sourceSendMail}\')"><a class="sprited email" href="javascript:void(0)">{email}</a></span>',
+            '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], {sourceSendMail})"><a class="sprited email" href="javascript:void(0)">{email}</a></span>',
         '</tpl>',
         '<tpl if="((phone) && (phone != \'0\'))">',
             '<br /><b>Phone:</b><span> {phone}</span>',
@@ -54,7 +54,7 @@ var usertext_tpl = new Ext.XTemplate(
     '</tpl>',
     /* if s/he is not a champion, suggest as a champion! */
     '<tpl if="((reqid !== \'\') && (active !== \'1\'))">',
-        '<div class="confirm-msg" style="text-align:left">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', \'{sourceSuggestAs}\')">suggest {name} as a new {[window.config.appname]} champion!</a></div><br />',
+        '<div class="confirm-msg" style="text-align:left">{name} is not a champion. You can <a href="javascript:void(0)" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', {sourceSuggestAs})">suggest {name} as a new {[window.config.appname]} champion!</a></div><br />',
     '</tpl>',
     '<tpl if="((personal_page) && (personal_page != \'null\'))">',
         '<b>Home page:</b> <span><a href="{personal_page}" target="_blank">{personal_page:removeHttp}</a></span><br />',
@@ -86,7 +86,7 @@ var usertext_tpl = new Ext.XTemplate(
             '<ul style="padding: 5px 0 0 20px">', 
             '<tpl for="groups">',
                 '<li style="list-style-type:disc;">',
-                    '<a href="javascript:void(0)" onclick="groupDetails(\'{id}\', \'{name}\',\'{sourceGroupWindow}\')">',
+                    '<a href="javascript:void(0)" onclick="groupDetails(\'{id}\', \'{name}\',{parent.sourceGroupWindow})">',
                         '<tpl if="description_en">{description_en} - </tpl>',
                         '<tpl if="description_it">{description_it} - </tpl>',
                         '{name}',
@@ -219,7 +219,7 @@ westPanel = new Ext.Panel({
      * show selected user's profile
      * @param {Integer} reqid requested user's id
      * @param {bool} hidePanel if true the user profile panel has not to be shown
-     * @param {String} source for logging porpouse, it records the place where the requests started
+     * @param {Object} source for logging purpose, it records the place where the requests started
      */
     ,showUser: function(reqid, hidePanel, logparams){
         if (!reqid) reqid = '';
@@ -275,23 +275,24 @@ westPanel = new Ext.Panel({
                     mod_description=Ext.util.Format.htmlDecode(mod_description.replace(/(\n)/g,'<br />'));
                 }
 
-                    
+                var suid = westPanel.showedUser.id;
                 var tmpl_data = $.extend(true, {},
                     jsondata.user,
                     {
                         reqid: reqid
                         ,mod_description: mod_description
                         ,sourceGroupWindow: Ext.util.Format.htmlEncode(
-                            '{\"source\": \"user profile\", \"user_id\": \"'+westPanel.showedUser.id+'\"}'
+                            '{source: \'user profile\', user_id: '+suid+'}'
                         )
                         ,sourceSendMail: Ext.util.Format.htmlEncode(
-                            '{\"source\": \"user profile\", \"user_id\": \"'+westPanel.showedUser.id+'\"}'
+                            '{source: \'user profile\', user_id: '+suid+'}'
                         )
                         ,sourceSuggestAs: Ext.util.Format.htmlEncode(
-                            '{\"source\": \"suggest as champion\", \"user_id\": \"'+westPanel.showedUser.id+'\"}'
+                            '{source: \'suggest as champion\', user_id: '+suid+'}'
                         )
                     }
                 );
+    
 
                 userinfo_tpl.overwrite(Ext.get('user_info'), tmpl_data);
                 usertext_tpl.overwrite(Ext.get('user_text'), tmpl_data);

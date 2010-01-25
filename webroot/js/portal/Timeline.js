@@ -111,7 +111,7 @@ Timeline = Ext.extend(Ext.Panel, {
                                 // else
                                 '<tpl if="!((user_id==null)&&(user_photo==null || user_photo == \'\'))">',
                                     '<td valign=top>',
-                                        '<div style="text-align:center;width:50px; <tpl if="deleted!=1">cursor:pointer" onclick="showUserInfo({user_id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "timeline", "timeline_id": "{id}"}') + '\')</tpl>">',
+                                        '<div style="text-align:center;width:50px; <tpl if="deleted!=1">cursor:pointer" onclick="showUserInfo({user_id}, null, {source: \'timeline\', timeline_id: {id}})</tpl>">',
                                             '<tpl if="(user_photo==null || user_photo == \'\')">',
                                                 '<img style="padding:2px 0;" width="40" height="50" src="img/nophoto.png" />',
                                             '</tpl>',
