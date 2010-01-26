@@ -246,7 +246,7 @@ function removeWidget(w_id){
             method: 'GET',
             success: function(result, request){
                 var w_name = Ext.util.JSON.decode(result.responseText)['widget_name'];
-                $("#didyouknow_span tr").html($('<td>').css('padding','0 10px').html('Widget '+w_name+' has been removed. <b><a href="javascript:void(0)" onclick="undoRemoveWidget('+w_id+')">Undo this action</a></b> or <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').toggle();" style="font-size:90%;">close this message</a>'));
+                $("#didyouknow_span tr").html($('<td>').css('padding','0 10px').html('Widget '+w_name+' has been removed. <b><span class="a" onclick="undoRemoveWidget('+w_id+')">Undo this action</span></b> or <span class="a" onclick="$(\'#didyouknow_div\').toggle();" style="font-size:90%;">close this message</span>'));
                 $('#didyouknow_div').show();
             },
             failure: function(){
@@ -1157,9 +1157,9 @@ $.extend(Ext.util.Format, {
             count = tags[key].length;
             font_size = min_font_size + (count - min_count) * ((max_font_size - min_font_size) / spread); 
 
-            //tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><a href="javascript:void(0)" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;" onclick="console.log(\''+key+'\')" title="'+key+' tagged '+count+' times">'+key+'</a><wbr></li>';
+            //tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><span class="a" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;" onclick="console.log(\''+key+'\')" title="'+key+' tagged '+count+' times">'+key+'</span><wbr></li>';
             
-            tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><a href="javascript:void(0)" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;">'+key+'</a><wbr></li>';
+            tag_cloud += '<li style="display:inline !important;vertical-align: baseline !important;padding: 0 5px;margin: 0;"><span class="a" style="font-size:'+Math.floor(font_size)+'px;line-height: 1;">'+key+'</span><wbr></li>';
 
 
         }
