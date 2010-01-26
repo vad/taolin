@@ -552,11 +552,11 @@ color:black;
 }
 
 /* PAGINATION */
-.pages a, .pages span {
+.pages a, .pages .a, .pages span {
     margin: 0 6px;
 }
 
-.pages span {
+.pages .page {
     color:#A90A08;
 }
 /* PAGINATION */
