@@ -4,31 +4,31 @@
  *
  */
 
-#main-menu {   
+.dd-menu {   
     margin: 0;
     padding: 0;
     position:relative;
     z-index:10001;
 }
    
-#main-menu .header {
+.dd-menu .header {
     z-index: 10002;
     border-right: 1px solid #115393;
 }
    
-#main-menu .last {
+.dd-menu .last {
     border-right: 0pt none;
     z-index: 10002;
 }
  
-#main-menu li {    
+.dd-menu li {    
     float: left;
     list-style: none;
     font: 12px Tahoma, Arial;
     z-index:10003;
 }
 
-#main-menu li a {
+.dd-menu li .menu-item {
     display: block;
     padding: 0px 5px;
     color: #115393;
@@ -39,12 +39,12 @@
     white-space: nowrap;
 }
 
-#main-menu li a:hover {
+.dd-menu li .menu-item:hover {
     background: #C2D695;
     z-index: 10004;
 }
 
-#main-menu li ul {
+.dd-menu li ul {
     margin: 0;
     padding: 5px 0 0 0;
     position: fixed;
@@ -54,7 +54,7 @@
     border-bottom: 1px solid #115393;
 }
 
-#main-menu li ul li {
+.dd-menu li ul li {
     float: none;
     display: inline;
     z-index:10006;
@@ -62,14 +62,14 @@
     padding 2px;
 }
 
-#main-menu li ul li a {
+.dd-menu li ul li .menu-item {
     width: auto;
     background: white;
     z-index:10007;
     padding: 3px;
 }
 
-#main-menu li ul li a:hover {
+.dd-menu li ul li .menu-item:hover {
     background: #C2D695;
     z-index:10008;
 }

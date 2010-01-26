@@ -79,7 +79,7 @@ MeteoTrentino = function(conf, panel_conf){
 
         var w_id = this.getId();
 
-        var link = 'javascript:Ext.getCmp(\''+w_id+'\').visualize(\'{0}\')';
+        var link = 'Ext.getCmp(\''+w_id+'\').visualize(\'{0}\')';
 
         if(this.html === null || this.html === '')
             ov.html('<div').class('error-msg').text('Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!');
@@ -96,7 +96,7 @@ MeteoTrentino = function(conf, panel_conf){
                 lk.append($('<span>').text(label));
                 $(this).show();
             } else {
-                lk.append($('<a>').attr('href', String.format(link,id)).text(label));
+                lk.append($('<span>').addClass('a').attr('onclick', String.format(link,id)).text(label));
                 $(this).hide();
             }
         });
@@ -116,7 +116,7 @@ MeteoTrentino = function(conf, panel_conf){
                     +'<div style="margin: 15px 0; text-align:center;"><span id="'+this.getId()+'-forecast-links" class="confirm-msg"></span></div>'
                     +'<div id="'+this.getId()+'-forecast-overview" style="padding:5px 20px;"></div>' 
                     +'<div id="'+this.getId()+'-forecast-detailedview" style="padding:5px;"></div>'
-                    +'<div style="float:right;padding:10px;font-weight:bold;"><span style="margin: 10px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.updateWidget()">Reload</a></span><span style="margin: 10px;"><a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</a></span></div>'
+                    +'<div style="float:right;padding:10px;font-weight:bold;"><span class="a" style="margin: 10px;" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.updateWidget()">Reload</span><span style="margin: 10px;" class="a" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</span></div>'
                 +'</div>'
             ,border: false
             ,autoHeight: true

@@ -119,7 +119,7 @@ Nevede = function(conf, panel_conf){
         ,'<div class="pages h-center">Pages: '
         ,'<tpl for="this.pages()">'
             ,'<tpl if="this.getPageNumber() != xindex">'
-                ,'<a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage({.+1})" class="page">{.+1}</a>'
+                ,'<span class="a" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage({.+1})" class="page">{.+1}</span>'
             ,'</tpl>'
             ,'<tpl if="this.getPageNumber() == xindex">'
                 ,'<span class="page">{.+1}</span>'

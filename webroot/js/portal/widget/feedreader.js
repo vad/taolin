@@ -100,7 +100,7 @@ FeedReader = function(conf, panel_conf){
         tpl: new Ext.Template(
             '<div><b>Summary:</b> {description}</div>',
             '<div style="margin-top:20px"><span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{url}" target="_blank">more...</a></span>',
-            '<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="javascript:Ext.getCmp(\''+feedId+'\').grid.sendTo()">Email to</a> | </span></div>'
+            '<span style="float:right;padding-bottom:3px;padding-right:3px;"><span class="a" onclick="Ext.getCmp(\''+feedId+'\').grid.sendTo()">Email to</span> | </span></div>'
         )
         ,listeners: {
             expand: function(){

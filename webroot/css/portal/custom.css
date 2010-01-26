@@ -38,6 +38,16 @@ a:hover {
     text-decoration:underline;
 }
 
+.a {
+    text-decoration:none;
+    color: #115393;
+}
+
+.a:hover {
+    text-decoration:underline;
+    cursor: pointer;
+}
+
 .desktop .x-column-layout-ct {
     overflow-x:hidden !important;
 }
@@ -143,7 +153,7 @@ textarea{
     font-weight: bold;
 }
 
-.add_widgets a {
+.add_widgets {
   color: green !important;
 }
 
@@ -542,11 +552,11 @@ color:black;
 }
 
 /* PAGINATION */
-.pages a, .pages span {
+.pages a, .pages .a, .pages span {
     margin: 0 6px;
 }
 
-.pages span {
+.pages .page {
     color:#A90A08;
 }
 /* PAGINATION */
@@ -641,7 +651,7 @@ color:black;
 .details-info {
     padding-left: 5px;
 }
-.details-info a {
+.details-info .a, .details-info a {
     font-weight: bold;
 }
 

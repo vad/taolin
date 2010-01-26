@@ -111,18 +111,18 @@ function application_init(){
     }
    
     // preparing text for Did you know messages
-    var aDyk = ['Did you know that you can <span class="add_widgets right-element" style="float:none;position:relative;padding:0;"><a href="javascript:openAddWidgetsModalWindow()">Add widgets</a></span>? <span class="add_widgets right-element" style="float:none;position:relative;padding:0;"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span>.',
-        'Did you know that you can <a href="javascript:expandSettingsPanel()">Edit your profile</a>? <a href="javascript:expandSettingsPanel()">Edit your profile</a>.',
+    var aDyk = ['Did you know that you can <span class="right-element" style="float:none;position:relative;padding:0;"><span class="a add_widgets" onclick="openAddWidgetsModalWindow()"><b>Add widgets</b></span></span>? <span class="right-element" style="float:none;position:relative;padding:0;"><span class="a add_widgets" onclick="openAddWidgetsModalWindow()"><b>Add widgets</b></a></span>.',
+        'Did you know that you can <span class="a" onclick="expandSettingsPanel()">Edit your profile</span>? <span class="a" onclick="expandSettingsPanel()">Edit your profile</span>.',
         'Did you know that you can expand fullscreen widgets clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-maximize" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can configure a widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-gear" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can minimize your widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-toggle" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can remove a widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-close" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can move widgets dragging the title bar?',
-        'Did you know that you can edit your photos and add a new one? <a href="javascript:void(0)" onclick="openImageChooser()">Edit your photo</a>.',
+        'Did you know that you can edit your photos and add a new one? <span class="a" onclick="openImageChooser()">Edit your photo</span>.',
         'Did you know that you can set taolin as your homepage? Read <a href="./pages/make_homepage_help" target="_blank">the instructions</a>!',
         'Did you know that you can view other people photos gallery by clicking on one of their photos?',
         'Did you know that there is a <a href="./pages/privacy_policy" target="_blank">privacy policy</a> about how your data are used? <a href="./pages/privacy_policy" target="_blank">Read the privacy policy</a>!',
-        'Did you know that you can edit your workplace and view other\'s on a  map? <a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: {source: \'did you know\', user_id:\'\'}})).show()">Edit!</a>',
+        'Did you know that you can edit your workplace and view other\'s on a  map? <span class="a" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: {source: \'did you know\', user_id:\'\'}})).show()">Edit!</span>',
         'Did you know that you can suggest a colleague of yours as new champion on her/his profile?'
     ];
     var dyk = aDyk[Math.floor(Math.random()*aDyk.length)]; // pick a random string out of aDyk
@@ -136,53 +136,53 @@ function application_init(){
 
     if(!Ext.isIE6 && !Ext.isIE7)
         main_menu =
-            '<ul id="main-menu">' +
-                '<li class="header"><a href="javascript:void(0)">Personal profile</a>' +
+            '<ul class="dd-menu">' +
+                '<li class="header"><span class="a menu-item">Personal profile</span>' +
                     '<ul>' +
-                        '<li><a onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)"><span class="sprited user-icon">View your profile</span></a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="expandSettingsPanel()"><span class="sprited user-edit">Edit your profile</span></a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="openImageChooser()"><span class="sprited image-edit">Edit your photos</span></a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()"><span class="sprited map-edit">Edit your workplace position</span></a></li>' + 
+                        '<li><span class="a menu-item" onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)"><span class="sprited user-icon">View your profile</span></span></li>' + 
+                        '<li><span class="a menu-item" onclick="expandSettingsPanel()"><span class="sprited user-edit">Edit your profile</span></span></li>' + 
+                        '<li><span class="a menu-item" onclick="openImageChooser()"><span class="sprited image-edit">Edit your photos</span></span></li>' + 
+                        '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()"><span class="sprited map-edit">Edit your workplace position</span></span></li>' + 
                      '</ul>' +
                 '</li>' + 
-                '<li class="header"><a href="javascript:void(0)">Tools</a>' +
+                '<li class="header"><span class="a menu-item">Tools</span>' +
                     '<ul>' +
-                        '<li><span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span></li>' +
-                        '<li><a href="javascript:void(0)" onclick="addOrBounceWidget(&#39;Ext.ux.fbk.sonet.MetaSearch&#39;,&#39;string_identifier&#39;,&#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)"><span class="sprited search">Search</span></a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Map of colleagues workplaces</a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="new PhotoUploader()">Photo uploader</a></li>' + 
-                        '<li><a href="javascript:void(0)" onclick="new SendToWindow()"><span class="sprited email">Send an email</span></a></li>' + 
+                        '<li><span class="menu-item a add_widgets" onclick="openAddWidgetsModalWindow()">Add widgets</span></li>' +
+                        '<li><span class="a menu-item" onclick="addOrBounceWidget(&#39;Ext.ux.fbk.sonet.MetaSearch&#39;,&#39;string_identifier&#39;,&#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)"><span class="sprited search">Search</span></span></li>' + 
+                        '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Map of colleagues workplaces</span></li>' + 
+                        '<li><span class="a menu-item" onclick="new PhotoUploader()">Photo uploader</a></li>' + 
+                        '<li><span class="a menu-item" onclick="new SendToWindow()"><span class="sprited email">Send an email</span></span></li>' + 
                     '</ul>' +
                 '</li>' +
-                '<li class="header"><a href="./wiki" target="_blank">FBK Wiki</a></li>' +
-                '<li class="header"><a href="javascript:void(0)" onclick="showMainTimeline()">Timeline</a></li>' +
-                '<li class="header"><a href="javascript:void(0)">Info</a>' +
+                '<li class="header"><a class="menu-item" href="./wiki" target="_blank">FBK Wiki</a></li>' +
+                '<li class="header"><span class="a menu-item" onclick="showMainTimeline()">Timeline</span></li>' +
+                '<li class="header"><span class="a menu-item">Info</span>' +
                     '<ul>' +
-                        '<li><a href="./pages/help" target="_blank">FAQ - Help</a></li>' +
-                        '<li><a href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
+                        '<li><a class="menu-item" href="./pages/help" target="_blank">FAQ - Help</a></li>' +
+                        '<li><a class="menu-item" href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
                     '</ul>' +
                 '</li>' +
-                '<li class="header"><a href="javascript:void(0)">' + window.config.appname + '</a>' +
+                '<li class="header"><span class="a menu-item">' + window.config.appname + '</span>' +
                     '<ul>' +
                         /* This software is open source released under aGPL. See http://www.fsf.org/licensing/licenses/agpl-3.0.html for more details. According to the license, you must place in every Web page served by Taolin a link where your user can download the source code. So, please, don't remove this link, you can move it in another part of the web page, though. */
-                        '<li><a href="http://github.com/vad/taolin" target="_blank">Download the code</a></li>' +
-                        //'<li><a href="http://github.com/vad/taolin/issues" target="_blank">Report an issue</a></li>' +
+                        '<li><a class="menu-item" href="http://github.com/vad/taolin" target="_blank">Download the code</a></li>' +
+                        //'<li><a class="menu-item" href="http://github.com/vad/taolin/issues" target="_blank">Report an issue</a></li>' +
                     '</ul>' +
                 '</li>' +
-                '<li class="header last"><a href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
+                '<li class="header last"><a class="menu-item" href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
             '</ul>';
     else // Simplified version for old, stupidunsupported browsers
         main_menu = 
-            '<ul id="main-menu">' +
-                '<li class="header"><a onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)" href="javascript:void(0)">Personal profile</a></li>' + 
-                '<li class="header"><span class="add_widgets"><a href="javascript:void(0)" onclick="openAddWidgetsModalWindow()">Add widgets</a></span></li>' +
-                '<li class="header"><a href="./wiki" target="_blank">FBK Wiki</a></li>' +
-                '<li class="header"><a href="javascript:void(0)" onclick="showMainTimeline()">Timeline</a></li>' +
-                '<li class="header"><a href="./pages/help" target="_blank">FAQ - Help</a></li>' +
-                '<li class="header"><a href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
+            '<ul class="dd-menu">' +
+                '<li class="header"><span class="a menu-item" onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)">Personal profile</span></li>' + 
+                '<li class="header"><span class="menu-item a add_widgets" onclick="openAddWidgetsModalWindow()">Add widgets</span></li>' +
+                '<li class="header"><a class="menu-item" href="./wiki" target="_blank">FBK Wiki</a></li>' +
+                '<li class="header"><span class="a menu-item" onclick="showMainTimeline()">Timeline</span></li>' +
+                '<li class="header"><a class="menu-item" href="./pages/help" target="_blank">FAQ - Help</a></li>' +
+                '<li class="header"><a class="menu-item" href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
                 /* This software is open source released under aGPL. See http://www.fsf.org/licensing/licenses/agpl-3.0.html for more details. According to the license, you must place in every Web page served by Taolin a link where your user can download the source code. So, please, don't remove this link, you can move it in another part of the web page, though. */
-                '<li class="header"><a href="http://github.com/vad/taolin" target="_blank">Download the code</a>' +
-                '<li class="header last"><a href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
+                '<li class="header"><a class="menu-item" href="http://github.com/vad/taolin" target="_blank">Download the code</a>' +
+                '<li class="header last"><a class="menu-item" href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
             '</ul>';
 
     /** 
@@ -201,7 +201,7 @@ function application_init(){
         + '<div class="left-element">'
             + '<img src="'+window.config.logo+'" qtip="taolin logo" style="padding-left:10px"/>'
         + '</div>'
-        + '<div id="didyouknow_div" style="'+(Math.random() > 0.3?'display:none;':'')+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:xx-small;">[Close this message]</a></td></tr></table></span></div>';
+        + '<div id="didyouknow_div" style="'+(Math.random() > 0.3?'display:none;':'')+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <span class="a" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:x-small;">[close this message]</span></td></tr></table></span></div>';
 
     window.viewport = new Ext.Viewport({
         layout:'border',
@@ -277,12 +277,12 @@ function application_init(){
      */
    
     // Styling: add an image (an arrow) at the end of each menu voice that has a sub-menu
-    $('#main-menu .header:has(ul)').each(function(idx, element){
-        $(this).find('a:first').append('<img class="arrow" style="vertical-align:top;" src="js/portal/shared/icons/fam/bullet_arrow_down.png">');
+    $('.dd-menu .header:has(ul)').each(function(idx, element){
+        $(this).find('.a:first').append('<img class="arrow" style="vertical-align:top;" src="js/portal/shared/icons/fam/bullet_arrow_down.png">');
     });
 
     // Adding hover
-    $('#main-menu .header:has(ul)').hover(
+    $('.dd-menu .header:has(ul)').hover(
         function(){
             $(this).find('ul').css({visibility: 'visible'});
             $(this).find('img.arrow').attr('src','js/portal/shared/icons/fam/bullet_arrow_up.png');

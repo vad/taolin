@@ -120,7 +120,7 @@ Board = function(conf, panel_conf){
                             form.reset();
                             var u = Ext.get('undodelads-'+w_id);
                             u.removeClass('warning-msg').addClass('confirm-msg');
-                            u.update('Message created. [<a href="javascript:showText(false, \'undodelads-'+w_id+'\')">close</a>]');      
+                            u.update('Message created. [<span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close</span>]');      
                             showText(true, 'undodelads-'+w_id);
                             form.findField('email').setValue(email);
                             boardStore.load();
@@ -163,7 +163,7 @@ Board = function(conf, panel_conf){
                     success: function(result, request){
                         var u =  Ext.get('undodelads-'+w_id);
                         u.removeClass('confirm-msg').addClass('warning-msg');
-                        u.update('Message deleted. <a href="javascript:void(0)" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</a> or <a href="javascript:showText(false, \'undodelads-'+w_id+'\')">close this message</a>');
+                        u.update('Message deleted. <span class="a" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</span> or <span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close this message</span>');
                         showText(true, 'undodelads-'+w_id);
                         store.load();
                     },
@@ -268,11 +268,11 @@ Board = function(conf, panel_conf){
 
         if(expand){ 
             target.update(s.urlize().smilize().replace(/\n/g,"<br />"));
-            target2.update('<a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View less</a>');
+            target2.update('<span class="a" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View less</span>');
         } else {
             target.update(fm.ellipseOnBreak(s, this.maxTextLength).urlize().smilize().replace(/\n/g,"<br />"));
             gotoWidget(this.portlet_id);
-            target2.update('<a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View more</a>');
+            target2.update('<span class="a" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View more</span>');
         }
         return true;
     }
@@ -308,7 +308,7 @@ Board = function(conf, panel_conf){
                         '<tpl if="(this.maxTextLength < text.length)">',
                             '<br /><br />',
                             '<span class="expander" id="{this.boardId}-{id}-colexp">',
-                                '<a href="javascript:void(0)" onclick="{this.boardId:getCmp}.formatText({id}, true)">View more</a>',
+                                '<span class="a" onclick="{this.boardId:getCmp}.formatText({id}, true)">View more</span>',
                             '</span>',
                         '</tpl>',
                         '<br /><br />',
@@ -343,7 +343,7 @@ Board = function(conf, panel_conf){
                         '<tpl if="(this.maxTextLength < text.length)">',
                             '<br /><br />',
                             '<span class="expander" id="{this.boardId}-{id}-colexp">',
-                                '<a href="javascript:void(0)" onclick="{this.boardId:getCmp}.formatText({id}, true)">View more</a>',
+                                '<span class="a" onclick="{this.boardId:getCmp}.formatText({id}, true)">View more</span>',
                             '</span>',
                         '</tpl>',
                         '<br /><br />',
@@ -366,9 +366,9 @@ Board = function(conf, panel_conf){
                         '<span style="color:#888888;font-size:90%;padding-right:15px;">',
                             'Created on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]} by ',
                         /* span's onclick lead to misfunctionalities of DataView.indexOf(someitem) */
-                            '<a style="color:#888888" href="javascript:void(0)" onclick="showUserInfo({user_id}, null, \'{this.logSource}\')">{name} {surname}</a>',
+                            '<span class="a" onclick="showUserInfo({user_id}, null, \'{this.logSource}\')" style="color:#888888">{name} {surname}</span>',
                             '<tpl if="email != null && email != \'\'">',
-                                ' <a style="color:#888888" href="javascript:void(0)" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');">&lt;{email}&gt;</a>',
+                                ' <span class="a" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');" style="color:#888888">&lt;{email}&gt;</span>',
                             '</tpl>',
                             '<br />',
                             '<tpl if="expire_date!=null">',
@@ -383,7 +383,7 @@ Board = function(conf, panel_conf){
             '<div style="padding-top:10px;" class="pages h-center">Pages: ',
                 '<tpl for="this.pages()">',
                     '<tpl if="this.getPageNumber() != (values+1)">',
-                        '<a href="javascript:void(0)" onclick="{this.boardId:getCmp}.loadPage({.+1})" class="page">{.+1}</a>',
+                        '<span class="a" onclick="{this.boardId:getCmp}.loadPage({.+1})" class="page">{.+1}</span>',
                     '</tpl>',
                     '<tpl if="this.getPageNumber() == (values+1)">',
                         '<span class="page">{.+1}</span>',
@@ -413,7 +413,7 @@ Board = function(conf, panel_conf){
         }
         ),
 	    itemSelector: 'span:first-child',
-        emptyText: '<div style="padding:10px;">There are no messages on the board, what about <a href="javascript:void(0)" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">creating a new one</a>?</div><br />',
+        emptyText: '<div style="padding:10px;">There are no messages on the board, what about <span class="a" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">creating a new one</span>?</div><br />',
         loadingText: 'Loading announcements, please wait...',
         plugins: [
             new Ext.DataView.LabelEditor({
@@ -476,9 +476,9 @@ Board = function(conf, panel_conf){
                      * completely work with IE */
 
                     boardwidget.hover(function(){
-                                        imgs.css({visibility: 'visible'});
-                                    }, function(){
-                                        imgs.css({visibility: 'hidden'});
+                            imgs.css({visibility: 'visible'});
+                        }, function(){
+                            imgs.css({visibility: 'hidden'});
                     });
                 }
             }
@@ -501,7 +501,7 @@ Board = function(conf, panel_conf){
             items: this.view
         },{
             style: 'padding:5px;',
-            html: '<div style="overflow:hidden;"><span class="u-hover board-menu"><a href="javascript:void()" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</a></span><span style="margin-right:5px;" class="sprited add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div style="overflow:hidden;"><span class="u-hover board-menu"><span class="a" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</span></span><span style="margin-right:5px;" class="sprited add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
         },{
             items: this.form
         }]
