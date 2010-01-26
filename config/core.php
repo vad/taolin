@@ -227,4 +227,10 @@
  */
 	//Cache::config('default', array('engine' => 'Eaccelerator'));
 	Cache::config('default', array('engine' => 'File'));
+/**
+  * Defining the file name to be used for caching gettimeline's queries
+  * Currentuly used in controller/timelines.php and in controllers/components/comment.php
+  *
+  */
+    define('TIMELINE_CACHE_FILENAME', "cake_controller_timelines_last-timeline-events");
 ?>

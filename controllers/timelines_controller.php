@@ -23,7 +23,7 @@ class TimelinesController extends AppController {
     var $helpers = array('Html','Form');
     var $uses = array('Photo','ReadableTimeline','Template','Timeline');
     var $components = array('Comment');
-    var $cacheName = "cake_controller_timelines_last-timeline-events";
+    var $cacheName = TIMELINE_CACHE_FILENAME;
 
     function beforeFilter()
     {
@@ -100,6 +100,7 @@ class TimelinesController extends AppController {
      * gettimeline function retrieves events out of readable_timelines table
      */
     function gettimeline(){
+
         //Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax
         if (array_key_exists('debug', $this->params['url']))
             Configure::write('debug', '2');

@@ -20,7 +20,7 @@
 
 class CommentComponent extends Object {
     var $user = null;
-    var $cacheName = "cake_controller_timelines_last-timeline-events";
+    var $cacheName = TIMELINE_CACHE_FILENAME;
 
     function addComment(&$Model, $params, $user_id, $tpl_params = array(), $comment_type_name = null){
         $mrClean = new Sanitize();
