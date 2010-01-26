@@ -114,7 +114,7 @@ Note = function(conf, panel_conf){
             ,text:'Automatically save'
             ,style:'color:gray;'
         },{
-            html:'<a href="javascript:Ext.getCmp(\''+this.getId()+'\').form.sendTo()" style="float:right">Email to</a>'
+            html:'<span class="a" onclick="Ext.getCmp(\''+this.getId()+'\').form.sendTo()" style="float:right;margin-right:5px;">Email to</span>'
         }],
         saveText:function() {
             var text = this.items.items[0].getValue();
