@@ -651,7 +651,7 @@ color:black;
 .details-info {
     padding-left: 5px;
 }
-.details-info a {
+.details-info .a, .details-info a {
     font-weight: bold;
 }
 
