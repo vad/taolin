@@ -288,11 +288,11 @@ var jabber = {
       roster.clear();
 
       if (jabber.keepOffline){
-        Ext.getCmp('buddylist').items.first().view.emptyText = 'You are offline. Click <a href="javascript:resetJabberConnection()">here</a> to connect.';
+        Ext.getCmp('buddylist').items.first().view.emptyText = 'You are offline. Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to connect.';
         return;
       }
       
-      Ext.getCmp('buddylist').items.first().view.emptyText = 'There has been problems connecting to the server. Click <a href="javascript:resetJabberConnection()">here</a> to try again. Possible problems: (1) If you are visiting taolin in more than one tab, please close all but one tab. (2) You changed your password recently, please logout and login again with the new password.';
+      Ext.getCmp('buddylist').items.first().view.emptyText = 'There has been problems connecting to the server. Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to try again. Possible problems: (1) If you are visiting taolin in more than one tab, please close all but one tab. (2) You changed your password recently, please logout and login again with the new password.';
       
       if (jabber.nTrials++ < jabber.maxTrials){
         jabberui.init(jabber.status.presence, jabber.status.status, jabber.status.type);
