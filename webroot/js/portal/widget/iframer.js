@@ -51,7 +51,7 @@ Iframer = function(json){
         defaults: {
             autoScroll: true
         },
-        html: '<iframe style="border: none;padding: 5px;" src="'+json.iframe_src_url+'" width="98%" height="'+correctHeight+'" ></iframe>'
+        html: '<div style="text-align:center;padding:2px;"><iframe style="border: none;" src="'+json.iframe_src_url+'" width="100%" height="'+correctHeight+'"></iframe></div>'
     });
     
     /** We cannot change the height on the fly using onload and a javascript function because at run time 
