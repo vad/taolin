@@ -77,7 +77,7 @@ Events = function(conf, panel_conf){
                 ,'<div><p>No description available</p></div>'
             ,'</tpl>'
             ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{uid}" target="_blank">more...</a></span>'
-            ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="javascript:Ext.getCmp(\''+eventId+'\').sendTo()">Email to</a> | </span>'
+            ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><span class="a" onclick="Ext.getCmp(\''+eventId+'\').sendTo()">Email to</span> | </span>'
         )
         ,listeners: {
             expand: function(){
