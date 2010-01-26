@@ -129,18 +129,16 @@ Timeline = Ext.extend(Ext.Panel, {
                         '</table>',
 
                         /* COMMENTS */
-                        '<tpl if="commentsCount &gt; 0">',
-                            '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
+                        '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
+                            '<tpl if="commentsCount &gt; 0">',
                                 '<span>{commentsCount:plural("comment")}</span>',
                                 '<span class="sprited comment-icon" title="View {commentsCount:plural("comment")}"></span>',
-                            '</span>',
-                        '</tpl>',
-                        '<tpl if="commentsCount &lt;= 0">',
-                            '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
+                            '</tpl>',
+                            '<tpl if="commentsCount &lt;= 0">',
                                 '<span>Add a comment</span>',
                                 '<span class="sprited comment-add" title="Add a comment"></span>',
-                            '</span>',
-                        '</tpl>',
+                            '</tpl>',
+                        '</span>',
                         /* END OF COMMENTS */
 
                     '</div>',

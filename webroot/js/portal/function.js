@@ -608,7 +608,7 @@ function getIdFromJidNode(jidnode){
         url : 'users/getidfromjidnode/'+jidnode ,
         method: 'GET',
         success: function ( result, request ) {
-            showUserInfo(result.responseText, null, '{"source": "chat"}');
+            showUserInfo(result.responseText, null, {source: "chat"});
         }
     });
 }
@@ -736,16 +736,6 @@ function range(/*[start,] stop[, step]*/) {
     return a;
 }
 
-//don't bother me if i've no console.*
-/*if (!window.console){
-    console = {};
-    aAttr = ['log', 'time', 'timeEnd'];
-    var attr;
-    for (attr in aAttr){
-        console[attr] = function(s){};
-    }
-}*/
-
 /***************************************************************************
  * CHAT FUNCTIONS
  * To not be considered if the chat is not present (e.g. in the demo version)
@@ -761,7 +751,7 @@ function resetJabberConnection(){
 
 function setChatStatus(chatStatus){
     
-    var chat_status = (chatStatus !== '' && chatStatus !== null) ? '<b>Chat status:</b> <span class="deco-text">' + chatStatus + '</span><br />' : ''; 
+    var chat_status = (chatStatus) ? '<b>Chat status:</b> <span class="deco-text">' + chatStatus + '</span><br />' : ''; 
     Ext.get('user-status').update(chat_status);
 }
 
@@ -769,19 +759,19 @@ function findChatStatus(req, login){
 
     var chat_status = '';
 
-    if((req != null) && (req != "") && (roster) && (roster != null)){
-        for(var i=0;i < roster.online.length; i++){
-            if((roster && roster.online[i].jid._node === login) && (roster.online[i].status != '')) {
-                setChatStatus(roster.online[i].fancyStatus);
+    if (roster) {
+        if(req){
+            for(var i=0;i < roster.online.length; i++){
+                if((roster && roster.online[i].jid._node === login) && (roster.online[i].status != '')) {
+                    setChatStatus(roster.online[i].fancyStatus);
+                }
+            }
+        } else { // my status
+            if((jabber.status) && (jabber.status != null) && (jabber.status != '')){
+                setChatStatus(jabber.status.status.htmlEnc().smilize().urlize());
             }
         }
-    }
-    else if(req == null || req == ''){
-        if((jabber.status) && (jabber.status != null) && (jabber.status != '')){
-            setChatStatus(jabber.status.status.htmlEnc().smilize().urlize());
-        }
-    }
-    else{
+    } else {
         setChatStatus('');
     }
 } 
@@ -791,36 +781,39 @@ function findChatStatus(req, login){
  * END CHAT FUNCTIONS
  *
  **************************************************************************/
+photoWindowTemplate = new Ext.XTemplate(
+    '<img id="photo-{id}" class="ante no-hover" style="min-height:70px;margin:auto auto;display:block;" src="{[config.img_path]}t480x480/{filename}" />',
+    /* COMMENTS */
+    '<span class="timeline-comments" onclick="openCommentWindow(\'Photo\',{id})">',
+        '<tpl if="commentsCount &gt; 0">',
+            '<span>{commentsCount:plural("comment")}</span>',
+            '<span class="sprited comment-icon" title="View {commentsCount:plural("comment")}"></span>',
+        '</tpl>',
+        '<tpl if="commentsCount &lt;= 0">',
+            '<span>Add a comment</span>',
+            '<span class="sprited comment-add" title="Add a comment"></span>',
+        '</tpl>',
+    '</span>',
+    /* END OF COMMENTS */
+    '<tpl if="caption">',
+        '<br />',
+        '<div style="padding:5px 0 0 5px;font-family:Arial;">{[values.caption.replace(/\\n/g,"<br />").urlize().smilize()]}</div>',
+    '</tpl>'
+    ,{
+        compiled:true
+    }
+);
 
-function preparePhoto(photo){
-
-    var winBody = '<img id="photo-'+photo['id']+'" class="ante no-hover" style="min-height:70px;margin:auto auto;display:block;" src="'+window.config.img_path+'t480x480/'+photo['filename']+'"></img>';
-
-    var cc = photo['commentsCount'];
-
-    if(cc > 0)
-        winBody += '<span style="padding-top:15px" class="timeline-comments" onclick="openCommentWindow(\'Photo\', '+photo['id']+')"><span>'+Ext.util.Format.plural(cc, 'comment')+'</span> <img src="js/portal/shared/icons/fam/comment.png" title="View comments"></span>';
-    else
-        winBody += '<span style="padding-top:15px" class="timeline-comments" onclick="openCommentWindow(\'Photo\', '+photo['id']+')"><span>Add a comment</span> <img src="js/portal/shared/icons/fam/comment.png" title="Add a comment"></span>';
-
-    winBody += photo['caption'] ? '<br /><div style="padding:5px 0 0 5px;font-family:Arial;">' + photo['caption'].replace(/\\n/g,"<br />").urlize().smilize() + '</div>' : '';
-
-    var res = {"winWidth" : 530, "winBody": winBody };
-
-    return res;
-}
 
 function showPhotoWindow(photo){
-
     photo['filename'] = Ext.util.Format.photoExtToJpg(photo['filename']);
     
-    var res = preparePhoto(photo);
     var winTitle = Ext.util.Format.ellipsis(photo['name'], 50);
 
     var img_window = Ext.Msg.show({ 
-        width: res["winWidth"], 
+        width: 530, 
         title: winTitle,  
-        msg: res["winBody"],  
+        msg: photoWindowTemplate.apply(photo),
         buttons: {no: "Close"},
         closable: true,
         iconCls: 'picture'
