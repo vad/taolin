@@ -240,9 +240,10 @@ class TimelinesController extends AppController {
             $users_photo = $this->Photo->find('all',
                 array(
                     'conditions' => array(
-                        'user_id' => $users,
-                        'default_photo' => 1,
-                        'is_hidden' => 0
+                        'Photo.user_id' => $users,
+                        'Photo.default_photo' => 1,
+                        'Photo.deleted' => 0,
+                        'Photo.is_hidden' => 0
                     ),
                     'fields' => array('User.id', 'Photo.filename'),
                     'recursive' => 0
