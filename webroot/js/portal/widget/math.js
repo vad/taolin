@@ -62,7 +62,7 @@ MathWidget = function(conf, panel_conf){
             ,anchor: '100%'
     	},{
             /* Using JQuery toggle to show/hide an originally hidden div */
-            html:  '<div style="padding:10px 0 5px 5px;"><a onclick="$(\'#calcForm-math-help_'+this.getId()+'\').toggle(400)" src="javascript:void(0)" class="sprited help-icon">Help</a></div><div id="calcForm-math-help_'+this.getId()+'" style="display:none;padding:10px 5px;background:#f6f6f6;">' + helpString + '</div>'
+            html:  '<div style="padding:10px 0 5px 5px;"><span onclick="$(\'#calcForm-math-help_'+this.getId()+'\').toggle(400)" class="a sprited help-icon">Help</span></div><div id="calcForm-math-help_'+this.getId()+'" style="display:none;padding:10px 5px;background:#f6f6f6;">' + helpString + '</div>'
         }
         ]
         ,keys:{
@@ -105,8 +105,8 @@ MathWidget = function(conf, panel_conf){
             ,anchor: '100%'
         },{
             xtype: 'label'
-            ,html:  '<div style="padding:10px 0 5px 5px;"><a id="demobutton_'+this.getId()+'" src="javascript:void(0)" class="sprited chart-icon">Demo</a> &nbsp; '
-            + '<a id="helpbutton_graph_'+this.getId()+'" src="javascript:void(0)" class="sprited help-icon">Help</a></div><div id="graphForm-math-help_'+this.getId()+'" style="display:none;padding: 10px 5px;background:#f6f6f6;">' + helpString + '</div>'
+            ,html:  '<div style="padding:10px 0 5px 5px;"><span id="demobutton_'+this.getId()+'" class="sprited chart-icon a">Demo</span> &nbsp; '
+            + '<a id="helpbutton_graph_'+this.getId()+'" class="sprited help-icon a">Help</span></div><div id="graphForm-math-help_'+this.getId()+'" style="display:none;padding: 10px 5px;background:#f6f6f6;">' + helpString + '</div>'
         },{
             //dummy component that is rendered at the end
             xtype:'component'
