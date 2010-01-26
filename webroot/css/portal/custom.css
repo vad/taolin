@@ -38,6 +38,16 @@ a:hover {
     text-decoration:underline;
 }
 
+.a {
+    text-decoration:none;
+    color: #115393;
+}
+
+.a:hover {
+    text-decoration:underline;
+    cursor: pointer;
+}
+
 .desktop .x-column-layout-ct {
     overflow-x:hidden !important;
 }
