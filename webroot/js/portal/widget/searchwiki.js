@@ -104,19 +104,15 @@ SearchWiki = Ext.extend(Ext.Panel, {
             ,listeners: {
                 beforeload: function(store, options) {
 
-                    var term;
-                    if(this.parent.parent && Ext.getCmp(this.parent.parent.id+'-searchfield')) 
-                        term = Ext.getCmp(this.parent.parent.id+'-searchfield').getValue();
-                    else if(store.parent.searchfield) term = store.parent.searchfield.getValue();
-                    //else term = 'searched';
+                    var term = options.params.srsearch;
 
                     var emptyText;
                     
                     if (term)
-                        emptyText =  '<div style="padding:10px 5px 10px 5px;">No pages found.<br />'+
-                        'Please <a target="_blank" href="'+this.pagesUrl+(term ? term : 'searched')+'?action=edit">start the <i>'+term+'</i> page</a> in '+this.wikiName+'</div>';
+                        emptyText = '<div style="padding:10px 5px 10px 5px;">No pages found.<br />'+
+                        'Please <a target="_blank" href="'+this.pagesUrl+term+'?action=edit">start the <i>'+term+'</i> page</a> in '+this.wikiName+'</div>';
                     else
-                        emptyText =  '<div style="padding:10px 5px 10px 5px;">No pages found</div>';
+                        emptyText = '<div style="padding:10px 5px 10px 5px;">No pages found</div>';
                     
                     store.parent.items.first().emptyText = emptyText;
                 }
@@ -171,15 +167,20 @@ SearchWiki = Ext.extend(Ext.Panel, {
 
         this.view = new Ext.DataView({
             tpl: new Ext.XTemplate( 
-                    '<p>Search results for <i>{[this.searchfield.getValue()]}</i>:</p>'
+                    '<p>Search results for <i>{[this.search()]}</i>:</p>'
                     ,'<tpl for=".">'
                     ,'<p><a href="{this.pagesUrl}{title}" target="_blank">{title}</a></p>'
                     ,'</tpl>'
-                    ,'<span><a target="_blank" style="float:right;padding:3px;" href="{this.pagesUrl}Special:Search?search={[this.searchfield.getValue()]}&fulltext=Search">More results...</a></span>'
+                    ,'<span><a target="_blank" style="float:right;padding:3px;" href="{this.pagesUrl}Special:Search?search={[this.search()]}&fulltext=Search">More results...</a></span>'
                 ,{
+                    compiled: true,
+                    disableFormats: true,
                     pagesUrl: this.pagesUrl,
-                    searchfield: this.searchfield
-            }),
+                    store: this.store,
+                    search: function(){
+                        return this.store.baseParams.srsearch;
+                    }
+                }),
             emptyText: '<div style="padding:10px 5px 10px 5px;">Search for pages in <a href="'+this.wikiUrl+'" target=_blank">'+this.wikiDescription+'</a></div>', 
             deferEmptyText: false,
             store: this.store,
