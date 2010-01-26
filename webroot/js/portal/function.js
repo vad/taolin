@@ -32,8 +32,8 @@ function setPortalConfiguration(f){
         method: 'GET',
         success: function(result, request){
             var json_decode = Ext.util.JSON.decode(result.responseText);
-            window['config'] = json_decode.config;
-            window['user'] = json_decode.user;
+            window.config = json_decode.config;
+            window.user = json_decode.user;
             if (f) f();
         }
     });
@@ -49,7 +49,6 @@ function expandSettingsPanel(){
 }
 
 function showMainTimeline(){
-
     var timeline = 'timeline';
 
     if(Ext.getCmp(timeline).collapsed)
@@ -97,26 +96,26 @@ function showText(showtext, element){
     switch(showtext){  
         //determine the direction of travel  
         case false :  
-                //lets check to see if this is visible and if not then its already hidden :)  
-                if (slideMe.isVisible()) {  
-                    //if we get here then the element is visible  
-                    slideMe.slideOut('t', {  
-                        easing: 'easeOut',  
-                        duration: .5,  
-                        remove: false,  
-                        useDisplay: true  
-                    });  
-                }  
+            //lets check to see if this is visible and if not then its already hidden :)  
+            if (slideMe.isVisible()) {  
+                //if we get here then the element is visible  
+                slideMe.slideOut('t', {  
+                    easing: 'easeOut',  
+                    duration: .5,  
+                    remove: false,  
+                    useDisplay: true  
+                });  
+            }  
             break;  
         case true :  
-                //lets check to see if this is visible and if it is then we do nothing :)  
-                if (!slideMe.isVisible()) {  
-                    //if we get here then the element is visible  
-                    slideMe.slideIn('t', {  
-                        easing: 'easeOut',  
-                        duration: .5  
-                    }); 
-                }         
+            //lets check to see if this is visible and if it is then we do nothing :)  
+            if (!slideMe.isVisible()) {  
+                //if we get here then the element is visible  
+                slideMe.slideIn('t', {  
+                    easing: 'easeOut',  
+                    duration: .5  
+                }); 
+            }         
             break;  
         default :  
             //the default action is simply to toggle the element  
@@ -135,8 +134,8 @@ function performLogin(){
         url:'accounts/checkuser',
         method: 'POST',
         params: {
-            "username": document.getElementById('campouser').value,
-            "password": document.getElementById('campopass').value
+            username: $('#campouser').val(),
+            password: $('#campopass').val()
         }, 
         success: function(result, request) {
             var jsondata = Ext.util.JSON.decode(result.responseText);
@@ -222,41 +221,44 @@ Ext.example = function(){
 
 function logWidget(w_id, type, logparams){
     Ext.Ajax.request({
-            url : 'widgets/donothing/'+w_id+'/'+type ,
-            method: 'GET',
-            params: {src: logparams},
-            /*success: function(result, request){
-                console.log(type);
-            },*/
-            failure: function(){
-                Ext.Msg.show({
-                    title: 'Warning!',
-                    msg: '<center>Problem found in data transmission</center>',
-                    width: 400,
-                    icon: Ext.MessageBox.WARNING
-                });
-            }
+        url : 'widgets/donothing/'+w_id+'/'+type ,
+        method: 'GET',
+        params: {src: logparams},
+        failure: function(){
+            Ext.Msg.show({
+                title: 'Warning!',
+                msg: '<center>Problem found in data transmission</center>',
+                width: 400,
+                icon: Ext.MessageBox.WARNING
+            });
+        }
     });
 }
 
 
 function removeWidget(w_id){
     Ext.Ajax.request({
-            url : 'users_widgets/removewidget/'+w_id,
-            method: 'GET',
-            success: function(result, request){
-                var w_name = Ext.util.JSON.decode(result.responseText)['widget_name'];
-                $("#didyouknow_span tr").html($('<td>').css('padding','0 10px').html('Widget '+w_name+' has been removed. <b><a href="javascript:void(0)" onclick="undoRemoveWidget('+w_id+')">Undo this action</a></b> or <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').toggle();" style="font-size:90%;">close this message</a>'));
-                $('#didyouknow_div').show();
-            },
-            failure: function(){
-                Ext.Msg.show({
-                    title: 'Warning!',
-                    msg: '<center>Problem found in data transmission</center>',
-                    width: 400,
-                    icon: Ext.MessageBox.WARNING
-                });
-            }
+        url : 'users_widgets/removewidget/'+w_id,
+        method: 'GET',
+        success: function(result, request){
+            var w_name = Ext.util.JSON.decode(result.responseText)['widget_name'];
+            $("#didyouknow_span tr")
+                .html(
+                    $('<td>')
+                        .css('padding','0 10px')
+                        .html('Widget '+w_name+' has been removed. <b><a href="javascript:void(0)" onclick="undoRemoveWidget('+w_id+')">Undo this action</a></b> or <a href="javascript:void(0)" onclick="$(\'#didyouknow_div\').toggle();" style="font-size:90%;">close this message</a>'
+                        )
+                );
+            $('#didyouknow_div').show();
+        },
+        failure: function(){
+            Ext.Msg.show({
+                title: 'Warning!',
+                msg: '<center>Problem found in data transmission</center>',
+                width: 400,
+                icon: Ext.MessageBox.WARNING
+            });
+        }
     });
 }
 
@@ -931,8 +933,8 @@ function addOrBounceWidget(identifier, type, logparams){
                 params: {'type': type, 'value': identifier},
                 method: 'POST',
                 success: function(result, request){
-                    var jsondata = Ext.util.JSON.decode(result.responseText);
-                    previewWidget(jsondata[0].id, jsondata[0].name, jsondata[0].description, jsondata[0].screenshot, logparams);
+                    var widget = Ext.util.JSON.decode(result.responseText)['widget'];
+                    previewWidget(widget.id, widget.name, widget.description, widget.screenshot, logparams);
                 }
             });
         }

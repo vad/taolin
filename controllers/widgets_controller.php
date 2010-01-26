@@ -112,7 +112,7 @@ class WidgetsController extends AppController {
                 'recursive' => 0
             ));
 
-            $response[] = $widget['Widget'];
+            $response['widget'] = $widget['Widget'];
             $response['success'] = true;
         }
 
