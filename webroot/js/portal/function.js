@@ -246,7 +246,7 @@ function removeWidget(w_id){
                 .html(
                     $('<td>')
                         .css('padding','0 10px')
-                        .html('Widget '+w_name+' has been removed. <b><span class="a" onclick="undoRemoveWidget('+w_id+')">Undo this action</span></b> or <span class="a" onclick="$(\'#didyouknow_div\').toggle();" style="font-size:90%;">close this message</span>'
+                        .html('Widget '+w_name+' has been removed. <b><span class="a" onclick="undoRemoveWidget('+w_id+')">Undo this action</span></b> or <span class="a" onclick="$(\'#didyouknow_div\').hide();" style="font-size:90%;">close this message</span>'
                         )
                 );
             $('#didyouknow_div').show();
@@ -264,22 +264,22 @@ function removeWidget(w_id){
 
 
 function undoRemoveWidget(w_id){
-    $('#didyouknow_div').toggle();
+    $('#didyouknow_div').hide();
     Ext.Ajax.request({
-            url : 'users_widgets/undoremovewidget/'+w_id,
-            method: 'GET',
-            success: function(result, request){
-                var conf = Ext.util.JSON.decode(result.responseText)['widget'][0];
-                createNewPortlet(conf, true);
-            },
-            failure: function(){
-                Ext.Msg.show({
-                    title: 'Warning!',
-                    msg: '<center>Problem found in data transmission</center>',
-                    width: 400,
-                    icon: Ext.MessageBox.WARNING
-                });
-            }
+        url : 'users_widgets/undoremovewidget/'+w_id,
+        method: 'GET',
+        success: function(result, request){
+            var conf = Ext.util.JSON.decode(result.responseText)['widget'][0];
+            createNewPortlet(conf, true);
+        },
+        failure: function(){
+            Ext.Msg.show({
+                title: 'Warning!',
+                msg: '<center>Problem found in data transmission</center>',
+                width: 400,
+                icon: Ext.MessageBox.WARNING
+            });
+        }
     });
 }
 
@@ -292,43 +292,43 @@ function undoRemoveWidget(w_id){
 function addwidget(w_id, logparams){
 
     Ext.Ajax.request({
-            url : 'users_widgets/addwidget/'+w_id ,
-            method: 'GET',
-            params: {src: logparams},
-            success: function(result, request){
-                var conf = Ext.util.JSON.decode(result.responseText)[0];
-                createNewPortlet(conf);
-                eventManager.fireEvent('newtimelineevent');
-                gotoWidget(conf.id, false, logparams);
-            },
-            failure: function(){
-                Ext.Msg.show({
-                    title: 'Warning!',
-                    msg: '<center>Problem found in data transmission</center>',
-                    width: 400,
-                    icon: Ext.MessageBox.WARNING
-                });
-            }
+        url : 'users_widgets/addwidget/'+w_id ,
+        method: 'GET',
+        params: {src: logparams},
+        success: function(result, request){
+            var conf = Ext.util.JSON.decode(result.responseText)[0];
+            createNewPortlet(conf);
+            eventManager.fireEvent('newtimelineevent');
+            gotoWidget(conf.id, false, logparams);
+        },
+        failure: function(){
+            Ext.Msg.show({
+                title: 'Warning!',
+                msg: '<center>Problem found in data transmission</center>',
+                width: 400,
+                icon: Ext.MessageBox.WARNING
+            });
+        }
     });
 }
 
 function movewidgets(str){
 
     Ext.Ajax.request({
-            url : 'users_widgets/movewidgets/'+str ,
-            method: 'GET',
-            /*success: function(result, request){
-                Ext.MessageBox.alert(result.responseText);
-                console.log('Transtion done');
-            },*/
-            failure: function(){
-                Ext.Msg.show({
-                    title: 'Warning!',
-                    msg: '<center>Problem found in data transmission</center>',
-                    width: 400,
-                    icon: Ext.MessageBox.WARNING
-                });
-            }
+        url : 'users_widgets/movewidgets/'+str ,
+        method: 'GET',
+        /*success: function(result, request){
+            Ext.MessageBox.alert(result.responseText);
+            console.log('Transtion done');
+        },*/
+        failure: function(){
+            Ext.Msg.show({
+                title: 'Warning!',
+                msg: '<center>Problem found in data transmission</center>',
+                width: 400,
+                icon: Ext.MessageBox.WARNING
+            });
+        }
     });
 }
 
@@ -346,9 +346,9 @@ function setWidgetsPosition(){
     var result = '';
 
     for (var i=0; i<num_cols; i++) {
-        var col = pc.items.items[i];
-        for(var j=0; j<col.items.getCount(); j++){
-            result += col.items.items[j].id +'-' + i + '_';
+        var col = pc.items.items[i].items;
+        for(var j=0; j<col.getCount(); j++){
+            result += col.items[j].id +'-' + i + '_';
         }
     }
 
@@ -394,21 +394,22 @@ function getWidgetsPosition(){
  */
 
 function createNewPortlet(conf, use_widget_position){
-    var pc = Ext.getCmp('portal_central');
-    var col, widget;
+    var pc = Ext.getCmp('portal_central'),
+        col,
+        widget,
+        column = conf.col,
+        pos = conf.pos,
+        w_id = conf.id,
+        widget_conf = conf.widget_conf
+        portlet = conf.application_conf,
+        user_params = conf.user_params,
+        string_identifier = conf.string_identifier,
+        widget_id = conf.widget_id,
+        name = conf.name,
+        w_class = Ext.util.JSON.decode(string_identifier);
 
-    var column = conf.col;
-    var pos = conf.pos;
-    var w_id = conf.id;
-    var widget_conf = conf.widget_conf;
-    widget_conf['portlet_id'] = w_id;
-    var portlet = conf.application_conf;
-    var user_params = conf.user_params;
-    var string_identifier = conf.string_identifier;
-    var widget_id = conf.widget_id;
-    var name = conf.name;
+    widget_conf.portlet_id = w_id;
 
-    var w_class = Ext.util.JSON.decode(string_identifier);
 
     portlet.items = new w_class(widget_conf, {portlet_id: w_id});
     portlet.id = w_id;
@@ -444,8 +445,12 @@ function createNewPortlet(conf, use_widget_position){
 
     /* add a setPortletTitle function to all the widgets */
     widget = portlet.items.first();
-    widget.setPortletTitle = function(title) {Ext.getCmp(this.portlet_id).setTitle(title);};
-    widget.setPref = function(pref, value, callback) {Ext.getCmp(this.portlet_id).setPref(pref, value, callback);};
+    widget.setPortletTitle = function(title) {
+        Ext.getCmp(this.portlet_id).setTitle(title);
+    };
+    widget.setPref = function(pref, value, callback) {
+        Ext.getCmp(this.portlet_id).setPref(pref, value, callback);
+    };
 
     widget.addEvents('fullscreen', 'downsize', 'collapse', 'expand');
 }
@@ -454,18 +459,17 @@ function createNewPortlet(conf, use_widget_position){
 
 function groupDetails(group_id, group_name, log_params){
  
-    var group_win_id = 'group_details_window';
-    
-    var pc = $('#portal_central');
-    var pco = pc.offset();
-    var pcw = pc.width();
-    var window_width = Math.round(pcw*(19/20))
-    var pch = pc.height();
-    var window_height = Math.round(pch*(19/20));
-    var x = pco.left + (pcw - window_width) / 2.;
-    var y = pco.top + (pch - window_height) / 2.;
+    var group_win_id = 'group_details_window',
+        pc = $('#portal_central'),
+        pco = pc.offset(),
+        pcw = pc.width(),
+        window_width = Math.round(pcw*(19/20)),
+        pch = pc.height(),
+        window_height = Math.round(pch*(19/20)),
+        x = pco.left + (pcw - window_width) / 2.,
+        y = pco.top + (pch - window_height) / 2.,
+        group_window = Ext.getCmp(group_win_id);
 
-    var group_window = Ext.getCmp(group_win_id);
     if(group_window && (group_window.title != group_name))
         group_window.close();
     
@@ -541,6 +545,7 @@ hSmile = {
     ':-?\\[': hi+'smiley-red.png'+fi,
     ':-?\\(': hi+'smiley-sad.png'+fi,
     ':\'-?\\(': hi+'smiley-cry.png'+fi,
+    '\\;-?\\(': hi+'smiley-cry.png'+fi,
     ':-?\\o': hi+'smiley-surprise.png'+fi,
     ':-?\\|': hi+'smiley-neutral.png'+fi,
     ':-?S': hi+'smiley-confuse.png'+fi,
@@ -554,10 +559,8 @@ hSmile = {
  * @addon
  */
 String.prototype.smilize = function () {
-    var s = this;
     var ta = document.createElement("textarea");
-    ta.innerHTML = s.replace(/</g,"&lt;").replace(/>/g,"&gt;");
-    //$(ta).remove();
+    ta.innerHTML = this.replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
     return ta.value.multiReplace(hSmile);
 };
