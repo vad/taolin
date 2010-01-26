@@ -124,7 +124,7 @@ var usertext_tpl = new Ext.XTemplate(
         '<b>About {name}:</b><span> {mod_description}</span>',
     '</tpl>',
     '<tpl if="((!(mod_description) || (mod_description == \'\')) && isOwner(id))">',
-        '<b>About {name}: </b><span class="a" onclick="expandSettingsPanel()">describe yourself, your activities and your interests with few words</span>',
+        '<b>About {name}: </b><span class="a" onclick="expandSettingsPanel()">Describe yourself, your activities and your interests</span>',
     '</tpl>',
     '</div>'
     ,{
