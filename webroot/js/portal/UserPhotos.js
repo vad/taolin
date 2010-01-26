@@ -140,29 +140,29 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                           * (necessary to center the Ext.Msg element in the window)
                           */
                         
-                        var photo = new Array();
+                        var photo = {};
+                        var store = dv.store;
 
-                        photo['id'] = dv.store.getAt(index).get('id');
-                        photo["url"] = dv.store.getAt(index).get('url');
-                        photo["caption"] = dv.store.getAt(index).get('caption'); 
+                        photo['id']  = store.getAt(index).get('id');
+                        photo["url"] = store.getAt(index).get('url');
+                        photo["caption"] = store.getAt(index).get('caption'); 
 
-                        photo["filename"] = Ext.util.Format.photoExtToJpg(dv.store.getAt(index).get('filename'));
+                        photo["filename"] = Ext.util.Format.photoExtToJpg(store.getAt(index).get('filename'));
 
-                        photo["imgWidth"] = parseInt(dv.store.getAt(index).get('width'));
-                        photo["imgHeight"] = parseInt(dv.store.getAt(index).get('height'));
-                        photo['commentsCount'] = dv.store.getAt(index).get('commentsCount');
+                        photo["imgWidth"] = parseInt(store.getAt(index).get('width'));
+                        photo["imgHeight"] = parseInt(store.getAt(index).get('height'));
+                        photo['commentsCount'] = store.getAt(index).get('commentsCount');
 
-                        var imageValues = preparePhoto(photo);
-                        var winBody = imageValues["winBody"];
-                        var winWidth = imageValues["winWidth"];
-                        var winTitle = Ext.util.Format.ellipsis(dv.store.getAt(index).get('name'), 50);
+                        var winBody = photoWindowTemplate.apply(photo);
+                        var winWidth = 530;
+                        var winTitle = Ext.util.Format.ellipsis(store.getAt(index).get('name'), 50);
 
                         var winButtons = {no: "Close"};
 
-                        if(dv.store.getAt(index - 1) != null)
+                        if(store.getAt(index - 1) != null)
                             winButtons['ok'] = "Prev";
 
-                        if(dv.store.getAt(index + 1) != null)
+                        if(store.getAt(index + 1) != null)
                             winButtons['yes'] = "Next";
 
                         var img_window = Ext.Msg.show({  
