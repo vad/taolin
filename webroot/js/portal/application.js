@@ -55,6 +55,9 @@ function application_init(){
             ,removecomment: function(){
                 this.fireEvent('newtimelineevent');
             }
+            ,userphotochange: function(){
+                this.fireEvent('newtimelineevent');
+            }
         }
     });
 

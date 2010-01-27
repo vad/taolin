@@ -56,7 +56,13 @@ PhotoChooser.prototype = {
                     {name: 'modified'}
 			    ],
 			    listeners: {
-			    	'load': {fn:function(){ this.view.select(0); }, scope:this, single:false}
+			    	'load': {
+                        fn: function(){ 
+                            this.view.select(0); 
+                        }
+                        ,scope:this
+                        ,single:false
+                    }
 			    }
 			});
 
@@ -113,8 +119,7 @@ PhotoChooser.prototype = {
                             u.update('Your default photo has been changed! [<span class="a" onclick="showText(false, \'undodelphoto\')">close</span>]');
                             showText(true, 'undodelphoto');
 
-                            Ext.getCmp('photo-chooser').store.load();
-                            eventManager.fireEvent('newtimelineevent');
+                            eventManager.fireEvent('userphotochange');
                             if(filename && Ext.get('user_photo')) 
                                 Ext.get('user_photo').dom.src = window.config.img_path + "t140x140/" + Ext.util.Format.photoExtToJpg(filename);
                         },
@@ -141,7 +146,6 @@ PhotoChooser.prototype = {
                         url : 'photos/undodeletephoto/'+p_id ,
                         method: 'GET',
                         success: function(result, request){
-                            Ext.getCmp('photo-chooser').store.load();
                             
                             // Fire a new event in order to reload the photos' store
                             eventManager.fireEvent("userphotochange");
@@ -186,8 +190,6 @@ PhotoChooser.prototype = {
                                         u.update('Attribute '+fname+' successfully changed to "'+text.ellipse(30)+'" [<span class="a" onclick="showText(false, \'undodelphoto\')">close</span>]');
                                         showText(true, 'undodelphoto');
 
-                                        Ext.getCmp('photo-chooser').store.load();
-                            
                                         if(request.params.name === 'name' || request.params.name === 'caption')
                                             eventManager.fireEvent("userphotochange"); // Fire a new event in order to reload the photos' store
                                     },
@@ -218,7 +220,6 @@ PhotoChooser.prototype = {
                     params: {'p_id': photo_id, 'name': 'is_hidden', 'value': value},
                     method: 'POST',
                     success: function(result, request){
-                        Ext.getCmp('photo-chooser').store.load();
                         eventManager.fireEvent("userphotochange");
                     },
                     failure: function(){
@@ -292,7 +293,10 @@ PhotoChooser.prototype = {
         				        data : [['name', 'Name'],['size', 'File Size'],['created','Creation date'],['modified', 'Last Modified']]
 		        		    }),
 				    	    listeners: {
-					        	'select': {fn:this.sortImages, scope:this}
+					        	select: {
+                                    fn: this.sortImages
+                                    ,scope:this
+                                }
         				    }
 		        	    }]    
 				    },{
@@ -384,6 +388,10 @@ PhotoChooser.prototype = {
 	    this.win.show(el, callback);
 		this.callback = callback;
 		this.animateTarget = el;
+        eventManager.on("userphotochange", function(){ 
+                this.store.reload(); 
+        }, this);
+
 	}
 	
 	,initTemplates : function(){
@@ -496,8 +504,6 @@ PhotoChooser.prototype = {
                 url : 'photos/deletephoto/'+p_id ,
                 method: 'GET',
                 success: function(result, request){
-                    // Reload PhotoChooser store and even the store in the west-panel
-                    Ext.getCmp('photo-chooser').store.load();
                                             
                     eventManager.fireEvent("userphotochange"); // Fire a new event in order to reload the photos' store
 
