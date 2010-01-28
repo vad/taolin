@@ -268,8 +268,9 @@ function application_init(){
     };
     Ext.TaskMgr.start(task);
 
-    showFirstLoginWizard(); // check if first login wizard should be opened or not
-    
+    if(!window.user.privacy_policy_acceptance) // check if first login wizard should be opened or not
+        openFirstLoginWizard();
+
     setTimeout(function(){
         Ext.get('loading').remove();
         Ext.get('loading-mask').fadeOut({remove:true});
