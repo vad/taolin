@@ -160,6 +160,9 @@ class WidgetsController extends AppController {
             if ($this->Widget->save($this->data)) {
                 $this->Session->setFlash('Widget created.', 'admin_flash_message_success');
                 $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash('Widget not created.', 'admin_flash_message_error');
+                $this->redirect(array('action' => 'index'));
             }
         }
     }
