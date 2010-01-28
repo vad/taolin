@@ -25,6 +25,11 @@ $url = '/'.$this->params['url']['url'];
 <div id="wrapper">
   <div id="main">
     <div class="block">
+      <div class="secondary-navigation">
+        <ul><li class="first active"><a href='#top'>Widgets list</a></li></ul>
+        <ul><li><a href="<? echo $this->base.DS."admin/Widgets/add" ?>">Create a new widget</a></li></ul>
+        <div class="clear" />
+      </div>
       <div class="content">
         <div class="inner">
           <h2 class="title">Widgets list</h2>
