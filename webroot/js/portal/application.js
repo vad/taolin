@@ -199,11 +199,11 @@ function application_init(){
             + main_menu
         + '</div>'
         + '<div class="left-element">'
-            + '<img src="'+window.config.logo+'" qtip="taolin logo" style="padding-left:10px"/>'
+            + '<img src="'+config.logo+'" qtip="taolin logo" style="padding-left:10px"/>'
         + '</div>'
         + '<div id="didyouknow_div" style="'+(Math.random() > 0.3?'display:none;':'')+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <span class="a" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:x-small;">[close this message]</span></td></tr></table></span></div>';
 
-    window.viewport = new Ext.Viewport({
+    viewport = new Ext.Viewport({
         layout:'border',
         items:[{
             region:'north',
@@ -230,7 +230,7 @@ function application_init(){
             // Setting desktop background
             listeners:{
                 afterlayout: function(){
-                    $('.desktop .x-column-layout-ct').css('background','transparent url('+window.config.background+') repeat scroll 50% 50%');
+                    $('.desktop .x-column-layout-ct').css('background','transparent url('+config.background+') repeat scroll 50% 50%');
                 }
             }
         }, westPanel]
@@ -267,18 +267,15 @@ function application_init(){
 
     showFirstLoginWizard(); // check if first login wizard should be opened or not
     
-    setTimeout(function(){
-        Ext.get('loading').remove();
-        Ext.get('loading-mask').fadeOut({remove:true});
-    }, 2000);
-
     /** 
      * Menu 
      */
    
     // Styling: add an image (an arrow) at the end of each menu voice that has a sub-menu
-    $('.dd-menu .header:has(ul)').each(function(idx, element){
-        $(this).find('.a:first').append('<img class="arrow" style="vertical-align:top;" src="js/portal/shared/icons/fam/bullet_arrow_down.png">');
+    $('.dd-menu .header:has(ul)').each(function(){
+        $(this)
+            .find('.a:first')
+            .append('<img class="arrow" style="vertical-align:top;" src="js/portal/shared/icons/fam/bullet_arrow_down.png">');
     });
 
     // Adding hover

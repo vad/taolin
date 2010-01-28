@@ -381,6 +381,9 @@ function getWidgetsPosition(){
             for (var i=0; i<widgets.length; i++) {
                 createNewPortlet(widgets[i]);
             }
+            Ext.get('loading').remove();
+            Ext.get('loading-mask').fadeOut({remove:true});
+
         }
     });
 }
@@ -1231,3 +1234,4 @@ function isOwner(u_id){
 function get(o, key, val) {
     return (key in o ? o[key] : val);
 };
+
