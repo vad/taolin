@@ -74,7 +74,8 @@ Board = function(conf, panel_conf){
             name: 'email',
             vtype:'email',
             maxLength: 50,
-            anchor: '100%'
+            anchor: '100%',
+            value: get(window.user, 'email', '')
         },{
             xtype:'checkbox',
             fieldLabel: 'Does it expire?',
@@ -116,14 +117,17 @@ Board = function(conf, panel_conf){
                         url:'boards/add',
                         waitMsg:'Saving Data...',
                         success: function(form,action){
-                            var email = form.findField('email').getValue(); 
-                            form.reset();
+                            
+                            form.reset(); // Reset form to its default values
+                            
                             var u = Ext.get('undodelads-'+w_id);
                             u.removeClass('warning-msg').addClass('confirm-msg');
                             u.update('Message created. [<span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close</span>]');      
+
                             showText(true, 'undodelads-'+w_id);
-                            form.findField('email').setValue(email);
-                            boardStore.load();
+
+                            boardStore.load(); // Reload board's store
+
                             em.fireEvent('newtimelineevent');
                         }
                     }
@@ -141,7 +145,6 @@ Board = function(conf, panel_conf){
             jThis.find('.add-icon').removeClass('add-icon').addClass('delete-icon');
             jThis.find('.show-hide').html('Hide insert message form').css('color', 'red');
 
-            jThis.find('input[type="email"]').val(get(window.user, 'email', ''));
             this.form.expand();
         }
         else {
