@@ -128,3 +128,9 @@
 .double-next {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1518px !important;
 }
+.arrow-down {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1554px !important;
+}
+.arrow-up {
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1590px !important;
+}
