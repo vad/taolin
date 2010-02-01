@@ -33,7 +33,14 @@ $url = '/'.$this->params['url']['url'];
       <div class="content">
         <div class="inner">
           <h2 class="title">Widgets list</h2>
-
+          <div style="margin-bottom:20px">
+            <form class="form" action="<? echo $this->base ?>/admin/widgets" method="GET">
+              <input name="q" class="text_field" style="width: 200px"
+                <? echo isset($query) ? "value='$query'" : '' ?>
+              />
+              <input type="submit" class="button" value="Search" />
+            </form>
+          </div>
           <table class="table">
             <tr>
               <th class="first">Id</th>

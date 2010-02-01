@@ -37,7 +37,7 @@ class WidgetsController extends AppController {
         parent::beforeFilter();
 
         $this->checkSession();
-        $this->mrClean = new Sanitize();
+        $this->san = new Sanitize();
     }
 
 
@@ -129,6 +129,13 @@ class WidgetsController extends AppController {
     function admin_index(){
         Configure::write('debug', '0');
         $this->layout = 'admin';
+        
+        $url = $this->params['url'];
+        if (array_key_exists('q', $url) && $url['q']) { //check for a 'q' GET param
+            $q = $url['q'];
+            $this->paginate['conditions'] = array("name LIKE '%$q%'");
+            $this->set('query', $this->san->html($q));
+        }
 
         $this->paginate['fields'] = array('id', 'name', 'enabled',
             'getWidgetCount(id) AS "Widget__count"');
