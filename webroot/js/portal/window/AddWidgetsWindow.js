@@ -219,7 +219,7 @@ AddWidgetsWindow.prototype = {
     },
     
     clickAction : function(dv, index, node, e){
-        var logparams = '{"source": "add widget window"}'; 
+        var logparams = {source: "add widget window"}; 
         previewWidget(dv.store.getAt(index).get('id'), dv.store.getAt(index).get('name'),
             dv.store.getAt(index).get('description'), dv.store.getAt(index).get('screenshot'), logparams
         );

@@ -148,7 +148,7 @@ GroupDetails.prototype = {
 	initTemplates : function(){
 	    this.usersTemplate = new Ext.XTemplate(
 			'<tpl for=".">',
-				'<div class="thumb-wrap" id="{photo}{id}" onclick="showUserInfo({id}, null, \'' + Ext.util.Format.htmlEncode('{"source": "group window"}') + '\')">',
+				'<div class="thumb-wrap" id="{photo}{id}" onclick="showUserInfo({id}, null, {source: \'group window\')">',
                     /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
                     '<tpl if="(is_hidden == \'0\') && (filename != null)"><span></span>',
         				'<div class="thumb"><img style="padding:10px;" src="{[window.config.img_path]}t140x140/{[this.photoExtToJpg(values.filename)]}"></img></div>',

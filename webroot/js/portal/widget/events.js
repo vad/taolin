@@ -152,7 +152,10 @@ Events = function(conf, panel_conf){
                 )
             );
             var prefix = "Hi all!\nI think that you may be interested in:\n\n";
-            var logparams = '{"source": "events widget", "widget_id": "'+this.portlet_id+'"}';
+            var logparams = {
+                source: "events widget"
+                ,widget_id: this.portlet_id
+            };
 
             new SendToWindow(prefix+clean_desc, null, logparams);
         }
