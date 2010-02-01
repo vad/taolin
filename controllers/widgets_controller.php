@@ -133,7 +133,7 @@ class WidgetsController extends AppController {
         $url = $this->params['url'];
         if (array_key_exists('q', $url) && $url['q']) { //check for a 'q' GET param
             $q = $url['q'];
-            $this->paginate['conditions'] = array("name LIKE '%$q%'");
+            $this->paginate['conditions'] = array("name ILIKE '%$q%'");
             $this->set('query', $this->san->html($q));
         }
 
@@ -186,7 +186,11 @@ class WidgetsController extends AppController {
             if ($this->Widget->save($this->data)) {
                 $this->Session->setFlash('Widget updated.', 'admin_flash_message_success');
                 $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash('Widget not updated.', 'admin_flash_message_error');
+                $this->redirect(array('action' => 'index'));
             }
+
         }
 
     }
