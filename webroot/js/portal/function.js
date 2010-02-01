@@ -1168,7 +1168,6 @@ $.extend(Ext.util.Format, {
     ,imageThumbPath: function(img, width, height){
         var s = img.lastIndexOf("/");
         var path = this.substr(img, 0, s);
-        console.log(img, s, path);
         var filename = this.substr(img, s + 1, img.length - s);
         
         return String.format('{0}/t{1}x{2}/{3}', path, width, height, filename); 
