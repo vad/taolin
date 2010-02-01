@@ -121,13 +121,10 @@ PhotoUploader = function(){
                                 var url = window.config.img_path+o.result.url;
                                 if(pc) pc.setDefaultPhoto(null, url);
                             }
-                            
-                            if(!fp.findField('is_hidden').getValue())
-                                eventManager.fireEvent('newtimelineevent');
-
-                            this.close();
 
                             eventManager.fireEvent("userphotochange"); // Fire a new event in order to reload photos' store
+
+                            this.close();
                         },
                         failure: function(fp, o){
                             Ext.example.msg('Failure!', 'We are sorry - Can not upload your picture, please send us a feedback reporting the problem<br />'+ o.result.message, 25);

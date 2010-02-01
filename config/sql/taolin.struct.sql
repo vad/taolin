@@ -500,3 +500,13 @@ $BODY$
   LANGUAGE 'sql' VOLATILE
   COST 100;
 -- ALTER FUNCTION set_groups_description(integer) OWNER TO sonetdbmgr;
+
+CREATE OR REPLACE FUNCTION getwidgetcount(integer)
+  RETURNS bigint AS
+$BODY$
+    SELECT COUNT(*) AS result
+        FROM users_widgets
+        JOIN users ON users.id = user_id
+        WHERE users_widgets.widget_id = $1 AND users.deleted = 0 AND users_widgets.deleted = 0;
+$BODY$
+  LANGUAGE 'sql' VOLATILE

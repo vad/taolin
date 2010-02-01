@@ -60,7 +60,8 @@ class PortalsController extends AppController {
                 'conditions' => array('User.id' => $u_id)
                 ,'fields' => array(
                     'id', 'login', 'name', 'surname', 
-                    'COALESCE(mod_email, email) AS "User__email"'
+                    'COALESCE(mod_email, email) AS "User__email"',
+                    'privacy_policy_acceptance'
                 )
                 ,'recursive' => -1
             )

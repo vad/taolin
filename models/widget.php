@@ -21,6 +21,23 @@ class Widget extends AppModel
 {
     var $name = 'Widget';
     var $hasMany = 'UsersWidget';
+    var $validate = array(
+        'string_identifier' => array(
+            'rule' => 'notEmpty',
+            'last' => true,
+            'message' => 'String identifier field can not be empty'
+        ),
+        'name' => array(
+            'rule' => 'notEmpty',
+            'last' => true,
+            'message' => 'Name field can not be empty'
+        ),
+        'description' => array(
+            'rule' => 'notEmpty',
+            'last' => true,
+            'message' => 'Description field can not be empty'
+        )
+    );
 }
 
 ?>

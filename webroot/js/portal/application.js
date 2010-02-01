@@ -55,6 +55,9 @@ function application_init(){
             ,removecomment: function(){
                 this.fireEvent('newtimelineevent');
             }
+            ,userphotochange: function(){
+                this.fireEvent('newtimelineevent');
+            }
         }
     });
 
@@ -265,8 +268,9 @@ function application_init(){
     };
     Ext.TaskMgr.start(task);
 
-    showFirstLoginWizard(); // check if first login wizard should be opened or not
-    
+    if(!window.user.privacy_policy_acceptance) // check if first login wizard should be opened or not
+        openFirstLoginWizard();
+
     /** 
      * Menu 
      */

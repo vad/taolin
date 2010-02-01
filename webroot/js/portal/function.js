@@ -976,21 +976,6 @@ function getBodySize(ratio){
     return [body.width(), body.height()].map(function(x){return Math.round(x*ratio)});    
 }
 
-function showFirstLoginWizard(){
-    var win_size = getBodySize(9/10);
-    Ext.Ajax.request({
-        url: 'users/getprivacypolicyacceptance',
-        success: function(result, request){
-            var jsondata = Ext.util.JSON.decode(result.responseText);
-            if(!jsondata.user.privacy_policy_acceptance)
-                openFirstLoginWizard();
-        }
-        ,failure: function(){
-            openFirstLoginWizard();
-        }
-    });
-}
-
 function openFirstLoginWizard(){
     var win_size = getBodySize(9/10);
     var win = new Ext.Window({
