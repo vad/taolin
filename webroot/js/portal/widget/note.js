@@ -125,7 +125,7 @@ Note = function(conf, panel_conf){
 
             var text = this.items.items[0].getValue();
             var prefix = "Hi all!\nI think that you may be interested in:\n\n";
-            var logparams = '{"source": "note widget", "widget_id": "'+this.parent.portlet_id+'"}';
+            var logparams = {source: "note widget", widget_id: this.parent.portlet_id};
             new SendToWindow(prefix+text, null, logparams);
         }
     });

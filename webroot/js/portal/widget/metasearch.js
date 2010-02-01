@@ -122,7 +122,7 @@ Ext.ux.fbk.sonet.MetaSearch = Ext.extend(Ext.Panel, {
             var item = Ext.apply({
                 xtype: xtype,
                 hideToolbar: true,
-                logparams: '{"source":"meta search widget"}'
+                logparams: {source:"meta search widget"}
             }, se);
             
             tabs.push({
