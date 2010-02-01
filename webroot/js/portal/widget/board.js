@@ -370,7 +370,7 @@ Board = function(conf, panel_conf){
             '<div style="padding-top:10px;" class="pages h-center">Pages: ',
                 '<tpl for="this.pages()">',
                     '<tpl if="this.getPageNumber() != (values+1)">',
-                        '<span class="a" onclick="{this.boardId:getCmp}.loadPage({.+1})" class="page">{.+1}</span>',
+                        '<span class="a" onclick="{this.boardId:getCmp}.loadPage({.+1})">{.+1}</span>',
                     '</tpl>',
                     '<tpl if="this.getPageNumber() == (values+1)">',
                         '<span class="page">{.+1}</span>',
