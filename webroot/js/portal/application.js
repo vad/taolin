@@ -277,19 +277,17 @@ function application_init(){
    
     // Styling: add an image (an arrow) at the end of each menu voice that has a sub-menu
     $('.dd-menu .header:has(ul)').each(function(){
-        $(this)
-            .find('.a:first')
-            .append('<img class="arrow" style="vertical-align:top;" src="js/portal/shared/icons/fam/bullet_arrow_down.png">');
+        $(this).find('.a:first').append($('<span>').addClass('sprited arrow-down'));
     });
 
     // Adding hover
     $('.dd-menu .header:has(ul)').hover(
         function(){
+            $(this).find('.a:first .sprited').removeClass('arrow-down').addClass('arrow-up');
             $(this).find('ul').css({visibility: 'visible'});
-            $(this).find('img.arrow').attr('src','js/portal/shared/icons/fam/bullet_arrow_up.png');
         },function(){
+            $(this).find('.a:first .sprited').removeClass('arrow-up').addClass('arrow-down');
             $(this).find('ul').css({visibility: 'hidden'});
-            $(this).find('img.arrow').attr('src','js/portal/shared/icons/fam/bullet_arrow_down.png');
         }
     );
 }
