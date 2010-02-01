@@ -400,23 +400,18 @@ PhotoChooser.prototype = {
 				'<div class="thumb-wrap" id="{filename}">',
                     /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
 				    '<div class="thumb"><span></span>',
-                        '<img class="ante" style="padding:5px;" src="{[window.config.img_path]}t140x140/{[this.photoExtToJpg(values.filename)]}"></img>',
+                        '<img class="ante" style="padding:5px;" src="{[window.config.img_path]}t140x140/{filename:photoExtToJpg}"></img>',
                     '</div>',
 	    			'<span style="padding:5px;"><b>{shortName}</b></span>',
                 '</div>',
-			'</tpl>', {
-                // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)
-                photoExtToJpg: function(screenshot){
-                    return Ext.util.Format.substr(screenshot, 0, screenshot.lastIndexOf(".")) + '.jpg'; 
-                }
-            }
-		);
+			'</tpl>'
+        );
 		this.thumbTemplate.compile();
 		
 		this.detailsTemplate = new Ext.XTemplate(
 			'<div class="details">',
 				'<tpl for=".">',
-					'<center><div style="padding:5px;"><img class="ante no-hover" src="{[window.config.img_path]}t240x240/{[this.photoExtToJpg(values.filename)]}"></center>',
+					'<center><div style="padding:5px;"><img class="ante no-hover" src="{[window.config.img_path]}t240x240/{filename:photoExtToJpg}"></center>',
                     '<div class="details-info">',
 					'<br /><b>Image Name: </b>',
 					'<span style="padding-right:40px">{usedName}</span><span style="float: right; position: absolute; right: 20px;"><span class="a" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'name\', \'{usedName}\')">edit</span></span><br /><br />',
@@ -444,13 +439,8 @@ PhotoChooser.prototype = {
 					'<span>{formattedDescription}</span>',
                     '</div>',
 				'</tpl>',
-			'</div>', {
-                // Substitution of photo's filename extension to .jpg (since all the thumb are saved as .jpg)
-                photoExtToJpg: function(screenshot){
-                    return Ext.util.Format.substr(screenshot, 0, screenshot.lastIndexOf(".")) + '.jpg'; 
-                }
-            }
-		);
+			'</div>'
+        );
 		this.detailsTemplate.compile();
 	}
 	
