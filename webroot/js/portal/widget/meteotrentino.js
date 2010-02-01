@@ -56,7 +56,7 @@ MeteoTrentino = function(conf, panel_conf){
         var dv = $('#' +this.getId()+'-forecast-detailedview');
 
         if(this.html === null || this.html === '')
-            ov.html('<div class="error-msg">Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!</div>');
+            ov.html('<div>').addClass('error-msg').text('Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!');
 
         var doc = $("<div>").html(this.html);
 
@@ -64,13 +64,11 @@ MeteoTrentino = function(conf, panel_conf){
 
         var f = doc.find('.meteo_forecast');
         
-        f.not('#today').hide();
-        
         dv.html(f);
 
         this.visualize();
-    }
-    
+    };
+
     this.visualize = function(day){
         
         var ov = $('#' +this.getId()+'-forecast-overview');
@@ -82,12 +80,13 @@ MeteoTrentino = function(conf, panel_conf){
         var link = 'Ext.getCmp(\''+w_id+'\').visualize(\'{0}\')';
 
         if(this.html === null || this.html === '')
-            ov.html('<div>').addClass('error-msg').text('Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!');
+            ov.html('').html('<div>').addClass('error-msg').text('Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!');
 
         lk.html('');
 
-        if (day == null || day == '')
-            day = 'today';
+        if (typeof day == "undefined") {
+            day = "today";
+        }
 
         dv.children().each(function(){
             var id = $(this).attr('id');
@@ -102,7 +101,7 @@ MeteoTrentino = function(conf, panel_conf){
         });
 
         lk.children().css({'padding' : '10px', 'font-size' : '13px'});
-    }
+    };
 
     MeteoTrentino.superclass.constructor.call(this, {
         autoHeight: true
@@ -124,7 +123,7 @@ MeteoTrentino = function(conf, panel_conf){
         ,listeners: {
             render: function(){
                 this.doLayout(); // TO DO: do this only if it is collapsed
-                this.loadForecast()
+                this.loadForecast();
             }
         }
     });
