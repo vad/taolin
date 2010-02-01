@@ -45,7 +45,7 @@ MeteoTrentino = function(conf, panel_conf){
                 p.renderForecast();
             },
             failure: function(result, request){
-                $('#'+p.getId()+'-forecast-overview').html('<div').class('error-msg').text('Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!');
+                $('#'+p.getId()+'-forecast-overview').html('<div>').class('error-msg').text('Uh oh! Something apparently went wrong, please apoligize us and send us a feedback!');
             }
         });
     };
