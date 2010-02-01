@@ -50,8 +50,8 @@ $url = '/'.$this->params['url']['url'];
             </tr>
             <? foreach($widgets as $widget):
               $widget = $widget['Widget'];
+              echo '<tr class="'.(($widget['enabled'])?"active":"notActive").'">';
             ?>
-            <tr>
               <td><? echo $widget['id'] ?></td>
               <td><? echo $widget['name'] ?></td>
               <td><? echo $widget['count'] ?></td>
