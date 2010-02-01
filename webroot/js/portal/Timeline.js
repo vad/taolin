@@ -95,7 +95,7 @@ Timeline = Ext.extend(Ext.Panel, {
                         '<tpl if="isOwner(user_id)">',
                             '<span><img src="js/portal/shared/icons/fam/cross.png" onclick="{this.parent.id:getCmp}.deleteTimelineEvent({id});" title="Hide this" width="10px" height="10px" style="float:right;padding: 3px 3px 0 0;cursor:pointer;" /></span>',
                         '</tpl>',
-                        '<span style="color:#888888;font-size:90%;text-align:right;margin-left:5px;">',
+                        '<span class="date" style="text-align:right;margin-left:5px;">',
                             '<tpl if="(icon != null)">',
                                 '<img src="{icon}" class="size16x16" /> ',
                             '</tpl>',

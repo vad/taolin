@@ -154,7 +154,7 @@ FeedReader = function(conf, panel_conf){
                     }
                     value = String.format('{0} {1} {2}',
                         record.get('title'),
-                        "<span class='rss-item-date'>"+record.get('date')+"</span>",
+                        "<span class='date'>"+record.get('date')+"</span>",
                         htmlForNewItems
                     );
                     return value;
