@@ -42,8 +42,6 @@ class WidgetThumberShell extends Shell {
 
             );
 
-        $widget_path = 'webroot/img/widget/';
-
         // Importing components to be used
         App::import('Component','Thumber');
         $this->Thumber = new ThumberComponent(null);
@@ -65,7 +63,17 @@ class WidgetThumberShell extends Shell {
                 );
 
         foreach($widgets as $widget) {
-            if($this->Thumber->createthumb($widget['Widget']['screenshot'], $widget_path, true, $widget_format, 9, false))
+            $sc = $widget['Widget']['screenshot'];
+
+            $screenshot = substr(strrchr($sc, '/'), 1);
+            $wp = substr($sc, 0, - mb_strlen($screenshot));
+
+            if ( $wp == 'img/widget/' )
+                $widget_path = 'webroot/img/widget/';
+            else
+                $widget_path = "plugins/".substr($wp, 0, - mb_strlen(strstr($wp, '/')))."/vendors".strstr($wp, '/');
+
+            if($this->Thumber->createthumb($screenshot, $widget_path, true, $widget_format, 9, false))
                $total += 1;
         }
 
