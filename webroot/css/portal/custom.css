@@ -551,6 +551,11 @@ color:black;
     font-family:Verdana;
 }
 
+.reload { 
+    float:right;
+    padding:0 5px;
+}
+
 /* PAGINATION */
 .pages a, .pages .a, .pages span {
     margin: 0 6px;

@@ -74,7 +74,8 @@ Board = function(conf, panel_conf){
             name: 'email',
             vtype:'email',
             maxLength: 50,
-            anchor: '100%'
+            anchor: '100%',
+            value: get(window.user, 'email', '')
         },{
             xtype:'checkbox',
             fieldLabel: 'Does it expire?',
@@ -116,14 +117,17 @@ Board = function(conf, panel_conf){
                         url:'boards/add',
                         waitMsg:'Saving Data...',
                         success: function(form,action){
-                            var email = form.findField('email').getValue(); 
-                            form.reset();
+                            
+                            form.reset(); // Reset form to its default values
+                            
                             var u = Ext.get('undodelads-'+w_id);
                             u.removeClass('warning-msg').addClass('confirm-msg');
                             u.update('Message created. [<span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close</span>]');      
+
                             showText(true, 'undodelads-'+w_id);
-                            form.findField('email').setValue(email);
-                            boardStore.load();
+
+                            boardStore.load(); // Reload board's store
+
                             em.fireEvent('newtimelineevent');
                         }
                     }
@@ -135,23 +139,6 @@ Board = function(conf, panel_conf){
         }]
     });
 
-    this.showAddAdsForm = function(){
-        var jThis = $('#'+this.id);
-        if(this.form.collapsed) {
-            jThis.find('.add-icon').removeClass('add-icon').addClass('delete-icon');
-            jThis.find('.show-hide').html('Hide insert message form').css('color', 'red');
-
-            jThis.find('input[type="email"]').val(get(window.user, 'email', ''));
-            this.form.expand();
-        }
-        else {
-            jThis.find('.delete-icon').removeClass('delete-icon').addClass('add-icon');
-            jThis.find('.show-hide').html('Add new message').css('color', 'green');
-
-            this.form.collapse();
-        }
-    };
-    
     this.deleteAds = function(ads_id){
         var w_id = this.getId();
         var store = this.view.store;
@@ -413,7 +400,7 @@ Board = function(conf, panel_conf){
         }
         ),
 	    itemSelector: 'span:first-child',
-        emptyText: '<div style="padding:10px;">There are no messages on the board, what about <span class="a" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">creating a new one</span>?</div><br />',
+        emptyText: '<div style="warning-msg" style="margin:0 20px">There are no messages on the board</div>',
         loadingText: 'Loading announcements, please wait...',
         plugins: [
             new Ext.DataView.LabelEditor({
@@ -492,7 +479,7 @@ Board = function(conf, panel_conf){
         defaults: { autoScroll: true },
         items: [{
             style: 'padding: 5px 5px 0 5px;',
-            html: '<div><span style="margin-right:5px;" class="sprited add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div><span style="margin-right:5px;" class="sprited add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;">Add new message</span></div>'
         },{
             html: '<div id="undodelads-'+this.getId()+'" class="warning-msg border_radius_5px" style="padding: 2px 0;margin: 2px 10px; visibility: hidden;"></div>',
             display: 'none',
@@ -501,10 +488,39 @@ Board = function(conf, panel_conf){
             items: this.view
         },{
             style: 'padding:5px;',
-            html: '<div style="overflow:hidden;"><span class="u-hover board-menu"><span class="a" onclick="Ext.getCmp(\''+this.getId()+'\').loadPage(Ext.getCmp(\''+this.getId()+'\').currentPage);" style="float:right;cursor:pointer;padding:0 5px;">Reload</span></span><span style="margin-right:5px;" class="sprited add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;" onclick="Ext.getCmp(\''+this.getId()+'\').showAddAdsForm()">Add new message</span></div>'
+            html: '<div style="overflow:hidden;"><span class="board-menu a reload">Reload</span><span style="margin-right:5px;" class="sprited add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;">Add new message</span></div>'
         },{
             items: this.form
         }]
+        ,listeners: {
+            afterlayout: function(){
+
+                var b = this;
+                var p_id = this.getId();
+
+                $('#'+p_id+' .show-hide').click(
+                    function() {
+                        if(b.form.collapsed){
+                           $('#'+p_id+' .add-icon').removeClass('add-icon').addClass('delete-icon');
+                           $('#'+p_id+' .show-hide').html('Hide insert message form').css('color', 'red');
+                           b.form.expand();
+                        } else {
+                           $('#'+p_id+' .delete-icon').removeClass('delete-icon').addClass('add-icon');
+                           $('#'+p_id+' .show-hide').html('Add new message').css('color', 'green');
+                           bform.collapse();
+                        }
+                    }
+                );
+                
+                $('#'+p_id+' .reload').click(
+                    function() {
+                        b.loadPage(b.currentPage);
+                    }
+                );
+
+
+            }   
+        }
     });
 
     this.eventManager.on("addcomment", function(model){ 
