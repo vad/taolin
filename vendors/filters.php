@@ -5,7 +5,8 @@ class TimelineFilters extends FilterCollection {
     static function userify($user, $timelineid, $suffix = null){
         
         if(!$user['deleted'])
-            return sprintf('<a href="javascript:void(0)" onclick="showUserInfo(%d, null, \'{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;%d&quot;}\')">%s %s</a>', $user['id'], $timelineid, $user['name'], $user['surname']).$suffix;
+            return sprintf('<a href="javascript:void(0)" onclick="showUserInfo(%d, null, {source: \'timeline\', timeline_id: %d})">%s %s</a>',
+                $user['id'], $timelineid, $user['name'], $user['surname']).$suffix;
         else
             return $user['name']." ".$user['surname'].$suffix;
 

@@ -77,7 +77,7 @@ CommentWindow = function(model_alias, foreign_id) {
         }
     });
 
-    var logSource = fm.htmlEncode('{"source": "comment", "id": "{id}"}');
+    var uiLogSource = '{source: \'comment\', id: {id}}';
     this.view = new Ext.DataView({
         store: this.store
         ,tpl: new Ext.XTemplate(
@@ -86,12 +86,12 @@ CommentWindow = function(model_alias, foreign_id) {
                     '<table>',
                         '<tr>',
                             '<td valign=top>',
-                                '<div style="text-align:center;width:40px;cursor:pointer;padding-left:2px;" onclick="showUserInfo({user_id}, null, \''+ logSource +'\')">',
+                                '<div style="text-align:center;width:40px;cursor:pointer;padding-left:2px;" onclick="showUserInfo({user_id}, null, '+ uiLogSource +')">',
                                     '<img style="padding:2px 0" src="photos/getphotofromuserid/{user_id}/40/40" title="View user\'s profile"/>',
                                 '</div>',
                             '</td>',
                             '<td style="padding-left:10px;">',
-                                '<span class="a" onclick="showUserInfo({user_id}, null, \''+ logSource +'\')"><b>{user_name} {user_surname}</b></span> {[values.body.urlize().smilize()]}',
+                                '<span class="a" onclick="showUserInfo({user_id}, null, '+ uiLogSource +')"><b>{user_name} {user_surname}</b></span> {[values.body.urlize().smilize()]}',
                                 '<div style="color:gray;padding-top:5px;font-size:90%;">{created:naturalDate(true)}</div>',
                             '</td>',
                             '<tpl if="isOwner(user_id)">',
