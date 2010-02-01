@@ -865,7 +865,8 @@ function previewWidget(widgetid, widgetname, widgetdescription, screenshot, logp
     var winwidth = 280;
 
     if(screenshot){
-        widgetimg = 'class="ante no-hover" style="min-height:70px;" src="img/widget/t300x300/'+screenshot+'"';
+        var s = Ext.util.Format.imageThumbPath(screenshot, 300, 300);
+        widgetimg = 'class="ante no-hover" style="min-height:70px;" src="'+s+'"';
         winwidth = 440; 
     }
 
@@ -1163,6 +1164,13 @@ $.extend(Ext.util.Format, {
     }
     ,photoExtToJpg: function(f){
         return this.substr(f, 0, f.lastIndexOf(".")) + '.jpg'; 
+    }
+    ,imageThumbPath: function(img, width, height){
+        var s = img.lastIndexOf("/");
+        var path = this.substr(img, 0, s);
+        var filename = this.substr(img, s + 1, img.length - s);
+        
+        return String.format('{0}/t{1}x{2}/{3}', path, width, height, filename); 
     }
     ,naturalDate: function(originalDate, printHours){
         

@@ -172,13 +172,13 @@ AddWidgetsWindow.prototype = {
             '<tpl for=".">',
                 '<div class="thumb-wrap">',
                     '<div class="thumb">',
-                        '<tpl if="this.isNew(modified)">',
+                        '<tpl if="this.isNew(modified, 14)">',
                             '<div class="overlay, widget_new">',
                                 '<img src="img/new.png" width="50px" height="50px"/>',
                             '</div>',
                        '</tpl>',
                         '<tpl if="(screenshot)"><span></span>',
-                            '<img class="ante" src="img/widget/t140x140/{screenshot}" />',
+                            '<img class="ante" src="{screenshot:imageThumbPath(140, 140)}" />',
                         '</tpl>',
                         '<tpl if="(!screenshot)">',
                             '<img style="padding:5px;" src="img/image_error.png" />',
@@ -187,14 +187,15 @@ AddWidgetsWindow.prototype = {
                     '<span style="font-size:120%">{shortName}</span>',
                 '</div>',
             '</tpl>', {
-                isNew: function(modified){
+                compiled: true
+                ,disableFormats: false
+                ,isNew: function(modified, days){
                     var compare_date = new Date();
-                    compare_date.setDate(compare_date.getDate() - 14);       
+                    compare_date.setDate(compare_date.getDate() - days);       
                     return modified.getTime() > compare_date;
                 }
             }
         );
-        this.thumbTemplate.compile();
     },
     
     filter : function(){
