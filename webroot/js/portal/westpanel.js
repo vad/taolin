@@ -26,7 +26,7 @@ var userinfo_tpl = new Ext.XTemplate(
     '<div class="user-profile-class">',
         '<b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
         /* if own profile, prompt a shortcut to edit the profile */
-        '<tpl if="((reqid === \'\') || (reqid == window.user.id))">',
+        '<tpl if="((reqid === \'\') || (reqid == user.id))">',
             '<span style="padding-left:10px;" class="a" onclick="expandSettingsPanel()">Edit</span>',
         '</tpl>',
         '</b><br/><br/>',
@@ -54,7 +54,7 @@ var usertext_tpl = new Ext.XTemplate(
     '</tpl>',
     /* if s/he is not a champion, suggest as a champion! */
     '<tpl if="((reqid !== \'\') && (active !== \'1\'))">',
-        '<div class="confirm-msg" style="text-align:left">{name} is not a champion. You can <span class="a" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', {sourceSuggestAs})">suggest {name} as a new {[window.config.appname]} champion!</span></div><br />',
+        '<div class="confirm-msg" style="text-align:left">{name} is not a champion. You can <span class="a" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', {sourceSuggestAs})">suggest {name} as a new {[config.appname]} champion!</span></div><br />',
     '</tpl>',
     '<tpl if="((personal_page) && (personal_page != \'null\'))">',
         '<b>Home page:</b> <span><a href="{personal_page}" target="_blank">{personal_page:removeHttp}</a></span><br />',
@@ -80,7 +80,7 @@ var usertext_tpl = new Ext.XTemplate(
      * START Group description
      *********************************************/
     '<tpl if="groups_description">',
-        '<br /><b>{[window.config.defaultgroupname]}</b>',
+        '<br /><b>{[config.defaultgroupname]}</b>',
         '<br />',
         '<span>',
             '<ul style="padding: 5px 0 0 20px">', 
@@ -236,24 +236,25 @@ westPanel = new Ext.Panel({
         Ext.Ajax.request({
             url : 'users/getinfo/'+reqid,
             method: 'GET',
-            params: {src: logparams},
+            params: {src: Ext.util.JSON.encode(logparams)},
             success: function ( result, request ) {
                 /*
                  * Whenever this function shows user info it shall expand the
                  * accordion panel containing 'user_image' div
                  */
                 // Show user info (aka first tab of tabpanel)
-                Ext.getCmp('user_profile').items.items[1].setActiveTab(0);
 
-                var jsondata = Ext.util.JSON.decode(result.responseText);
+                Ext.getCmp('user_profile').items.items[1].setActiveTab(0);
+                var fm = Ext.util.Format,
+                    jsondata = Ext.util.JSON.decode(result.responseText),
+                    user_text = '';
                 westPanel.showedUser = jsondata.user;
 
-                var user_text = '';
 
-                if(reqid==='' && window.user.id===jsondata.user.id ) { //this call always gives access to this user data
-                    window.user.login = jsondata.user.login;
+                if(reqid==='' && user.id===jsondata.user.id ) { //this call always gives access to this user data
+                    user.login = jsondata.user.login;
                     if(jsondata.user.email) 
-                        window.user.email = jsondata.user.email;
+                        user.email = jsondata.user.email;
                 }
                 
                 westPanel.showPublik(jsondata.user.login);
@@ -261,7 +262,7 @@ westPanel = new Ext.Panel({
 
                 //save in a retrievable place if this photo is user's photo
                 //and then show tools
-                westPanel.showTools = ((!reqid) || (reqid == window.user.id));
+                westPanel.showTools = ((!reqid) || (reqid == user.id));
                 showText(westPanel.showTools, 'user-profile-edit-div'); // Shows tools and Edit box only if the showed profile belongs to the user
 
                 if (('photo' in jsondata.user) && (jsondata.user.photo))
@@ -275,23 +276,25 @@ westPanel = new Ext.Panel({
                 if(mod_description) {
                     mod_description=mod_description.urlize().smilize();
                     //replaces \n with <br /> for visualization in html
-                    mod_description=Ext.util.Format.htmlDecode(mod_description.replace(/(\n)/g,'<br />'));
+                    mod_description = fm.htmlDecode(mod_description.replace(/(\n)/g,'<br />'));
                 }
 
-                var suid = westPanel.showedUser.id;
+                var suid = westPanel.showedUser.id,
+                    encode = Ext.util.JSON.encode,
+                    userProfileSource = fm.htmlEncode(
+                        encode({source: 'user profile', user_id: suid})
+                    );
+
+
                 var tmpl_data = $.extend(true, {},
                     jsondata.user,
                     {
                         reqid: reqid
                         ,mod_description: mod_description
-                        ,sourceGroupWindow: Ext.util.Format.htmlEncode(
-                            '{source: \'user profile\', user_id: '+suid+'}'
-                        )
-                        ,sourceSendMail: Ext.util.Format.htmlEncode(
-                            '{source: \'user profile\', user_id: '+suid+'}'
-                        )
-                        ,sourceSuggestAs: Ext.util.Format.htmlEncode(
-                            '{source: \'suggest as champion\', user_id: '+suid+'}'
+                        ,sourceGroupWindow: userProfileSource
+                        ,sourceSendMail: userProfileSource
+                        ,sourceSuggestAs: fm.htmlEncode(
+                            encode({source: 'suggest as champion', user_id: suid})
                         )
                     }
                 );

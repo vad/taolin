@@ -62,7 +62,7 @@ UsersPortlet = function(json){
             listeners: {
                 click: function(dv, index, node, e) {
                     var id = dv.store.getAt(index).get('id');
-                    showUserInfo(id, null,'{"source": "user widget", "widget_id": "' + this.parent.ownerCt.id + '"}');
+                    showUserInfo(id, null, {source: "user widget", widget_id: this.parent.ownerCt.id});
                 }
             }
         })

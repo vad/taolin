@@ -39,16 +39,16 @@
 Board = function(conf, panel_conf){
     Ext.apply(this, panel_conf);
     
-    var limit = get(conf, 'items', 3);
-    var showExpired = conf.showExpired ? 1 : 0;
+    var limit = get(conf, 'items', 3)
+        ,showExpired = conf.showExpired ? 1 : 0
+        ,fm = Ext.util.Format;
 
     this.currentPage = 1;
 
     this.maxTextLength = 150;
 
     this.eventManager = eventManager;
-    this.logSource = '{"source": "board widget", "widget_id": "'+this.portlet_id+'"}';
-    var fm = Ext.util.Format;
+    this.logSource = {source: "board widget", widget_id: this.portlet_id};
 
     this.form = new Ext.form.FormPanel({
         autoHeight: true
@@ -120,11 +120,11 @@ Board = function(conf, panel_conf){
                             
                             form.reset(); // Reset form to its default values
                             
-                            var u = Ext.get('undodelads-'+w_id);
-                            u.removeClass('warning-msg').addClass('confirm-msg');
-                            u.update('Message created. [<span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close</span>]');      
-
-                            showText(true, 'undodelads-'+w_id);
+                            $('#undodelads-'+w_id)
+                                .removeClass('warning-msg')
+                                .addClass('confirm-msg')
+                                .html('Message created. [<span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close</span>]')
+                                .show();
 
                             boardStore.load(); // Reload board's store
 
@@ -148,10 +148,11 @@ Board = function(conf, panel_conf){
                     url : 'boards/deleteads/'+ads_id ,
                     method: 'GET',
                     success: function(result, request){
-                        var u =  Ext.get('undodelads-'+w_id);
-                        u.removeClass('confirm-msg').addClass('warning-msg');
-                        u.update('Message deleted. <span class="a" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</span> or <span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close this message</span>');
-                        showText(true, 'undodelads-'+w_id);
+                        $('#undodelads-'+w_id)
+                            .removeClass('confirm-msg')
+                            .addClass('warning-msg')
+                            .html('Message deleted. <span class="a" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</span> or <span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close this message</span>')
+                            .show();
                         store.load();
                     },
                     failure: function(){
@@ -281,7 +282,7 @@ Board = function(conf, panel_conf){
         else 
             new SendToWindow(prefix+text, null, this.logSource);
     };
-    
+
     this.view = new Ext.DataView({
         tpl: new Ext.XTemplate(
         '<div class="board-widget">',
@@ -300,18 +301,16 @@ Board = function(conf, panel_conf){
                         '</tpl>',
                         '<br /><br />',
                         '<span class="board-img">',
-                            '<img src="js/portal/shared/icons/fam/pencil.png" onclick="{this.boardId:getCmp}.startEditAds({id})" title="Edit this message" />',
-                            '<img src="js/portal/shared/icons/fam/cross.png" onclick="{this.boardId:getCmp}.deleteAds({id});" title="Delete this message" style="padding: 0 10px;" />',
-                            '<tpl if="commentsCount &gt; 0">',
-                                '<span onclick="openCommentWindow(\'Board\',{id})">',
+                            '<span class="sprited pencil-icon" onclick="{this.boardId:getCmp}.startEditAds({id})" title="Edit this message"></span>',
+                            '<span class="sprited delete-icon" onclick="{this.boardId:getCmp}.deleteAds({id});" title="Delete this message"></span>',
+                            '<span onclick="openCommentWindow(\'Board\',{id})">',
+                                '<tpl if="commentsCount &gt; 0">',
                                     '{commentsCount} <span class="sprited comment-icon" title="View comments"></span>',
-                                '</span>',
-                            '</tpl>',
-                            '<tpl if="commentsCount &lt;= 0">',
-                                '<span onclick="openCommentWindow(\'Board\',{id})">',
+                                '</tpl>',
+                                '<tpl if="commentsCount &lt;= 0">',
                                     '<span class="sprited comment-add" title="Add a comment"></span>',
-                                '</span>',
-                            '</tpl>',
+                                '</tpl>',
+                            '</span>',
                         '</span>',
                         '<span style="color:#888888;font-size:90%;">',
                             'Created on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]} by me',
@@ -338,7 +337,7 @@ Board = function(conf, panel_conf){
                             '<tpl if="email != null && email != \'\'">',
                                 '<span class="sprited email" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');" title="Contact owner"></span>',
                             '</tpl>',
-                            '<span class="sprited user-icon" onclick="showUserInfo({user_id}, null, \'{this.logSource}\')" title="View owner profile"></span>',
+                            '<span class="sprited user-icon" onclick="showUserInfo({user_id}, null, {this.logSource})" title="View owner profile"></span>',
                             '<tpl if="commentsCount &gt; 0">',
                                 '<span onclick="openCommentWindow(\'Board\',{id})">',
                                     '{commentsCount}<span class="sprited comment-icon" title="View comments"></span>',
@@ -353,7 +352,7 @@ Board = function(conf, panel_conf){
                         '<span style="color:#888888;font-size:90%;padding-right:15px;">',
                             'Created on {[Date.parseDate(values.created, "Y-m-d H:i:s").format("F j, Y")]} by ',
                         /* span's onclick lead to misfunctionalities of DataView.indexOf(someitem) */
-                            '<span class="a" onclick="showUserInfo({user_id}, null, \'{this.logSource}\')" style="color:#888888">{name} {surname}</span>',
+                            '<span class="a" onclick="showUserInfo({user_id}, null, {this.logSource})" style="color:#888888">{name} {surname}</span>',
                             '<tpl if="email != null && email != \'\'">',
                                 ' <span class="a" onclick="{this.boardId:getCmp}.sendTo(({[xindex]} - 1), \'{email}\',\'{name}\',\'{surname}\');" style="color:#888888">&lt;{email}&gt;</span>',
                             '</tpl>',
@@ -381,7 +380,7 @@ Board = function(conf, panel_conf){
         {
             compiled:true
             ,maxTextLength: this.maxTextLength
-            ,logSource: fm.htmlEncode(this.logSource)
+            ,logSource: fm.htmlEncode(Ext.util.JSON.encode(this.logSource))
             ,pages: function(){
                 var min = Math.max(0,this.getPageNumber()-5);
                 var max = Math.min(min+10, Math.ceil(this.parent.view.store.reader.jsonData.totalCount/limit));
@@ -478,17 +477,19 @@ Board = function(conf, panel_conf){
         autoWidth: true,
         defaults: { autoScroll: true },
         items: [{
-            style: 'padding: 5px 5px 0 5px;',
-            html: '<div><span style="margin-right:5px;" class="sprited add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;">Add new message</span></div>'
+            style: 'margin: 5px 5px 0 5px;'
+            ,html: '<div style="overflow:hidden;"><span style="margin-right:5px;" class="sprited add-icon menu-item l18"></span><span class="u-hover board-menu show-hide" style="color:green;">Add new message</span></div>'
+            ,cls: 'menu'
         },{
-            html: '<div id="undodelads-'+this.getId()+'" class="warning-msg border_radius_5px" style="padding: 2px 0;margin: 2px 10px; visibility: hidden;"></div>',
+            html: '<div id="undodelads-'+this.getId()+'" class="warning-msg border_radius_5px" style="padding: 2px 0;margin: 2px 10px; display: none;"></div>',
             display: 'none',
             border: false
 		},{
             items: this.view
         },{
             style: 'padding:5px;',
-            html: '<div style="overflow:hidden;"><span class="board-menu a reload">Reload</span><span style="margin-right:5px;" class="sprited add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;">Add new message</span></div>'
+            html: '<div style="overflow:hidden;"><span class="board-menu a reload">Reload</span><span style="margin-right:5px;" class="sprited menu-item add-icon l18"></span><span class="u-hover board-menu show-hide" style="color:green;">Add new message</span></div>'
+            ,cls: 'menu'
         },{
             items: this.form
         }]
@@ -498,27 +499,37 @@ Board = function(conf, panel_conf){
                 var b = this;
                 var p_id = this.getId();
 
-                $('#'+p_id+' .show-hide').click(
-                    function() {
-                        if(b.form.collapsed){
-                           $('#'+p_id+' .add-icon').removeClass('add-icon').addClass('delete-icon');
-                           $('#'+p_id+' .show-hide').html('Hide insert message form').css('color', 'red');
-                           b.form.expand();
-                        } else {
-                           $('#'+p_id+' .delete-icon').removeClass('delete-icon').addClass('add-icon');
-                           $('#'+p_id+' .show-hide').html('Add new message').css('color', 'green');
-                           bform.collapse();
-                        }
-                    }
-                );
-                
-                $('#'+p_id+' .reload').click(
-                    function() {
-                        b.loadPage(b.currentPage);
-                    }
-                );
-
-
+                $('#'+p_id)
+                    .find('.show-hide')
+                        .click(
+                            function() {
+                                var menus = $('#'+p_id)
+                                    .find('.menu-item')
+                                        .toggleClass('add-icon')
+                                        .toggleClass('delete-icon')
+                                    .end();
+                                if(b.form.collapsed){
+                                    menus
+                                        .find('.show-hide')
+                                            .html('Hide insert message form')
+                                            .css('color', 'red');
+                                    b.form.expand();
+                                } else {
+                                    menus
+                                        .find('.show-hide')
+                                            .html('Add new message')
+                                            .css('color', 'green');
+                                   b.form.collapse();
+                                }
+                            }
+                        )
+                    .end()
+                    .find('.reload')
+                        .click(
+                            function() {
+                                b.loadPage(b.currentPage);
+                            }
+                        );
             }   
         }
     });

@@ -43,7 +43,6 @@ SearchPublik = Ext.extend(Ext.Panel, {
     /** 
      * @cgf {String} logparams Parameters to be logged (for research purposes). Default to null
      */
-    //,logparams: '{"source":"search user widget", "widget_id": "' + this.portlet_id + '"}'
     ,logparams: null
     /**
      * @cfg {String} Path to banner image (height: 62px!). Default to null
@@ -59,8 +58,8 @@ SearchPublik = Ext.extend(Ext.Panel, {
     ,initComponent: function(){
 
        // If logparams is not defined (i.e. is null) define it!
-        if(!this.logparams) 
-            this.logparams = '{"source":"search publik widget", "widget_id": "' + this.portlet_id + '"}';
+       if(!this.logparams)
+            this.logparams = {source:"search publik widget", widget_id: this.portlet_id};
 
        this.store = new Ext.data.JsonStore({
             url: 'publiks/search/',
