@@ -32,8 +32,8 @@ function setPortalConfiguration(f){
         method: 'GET',
         success: function(result, request){
             var json_decode = Ext.util.JSON.decode(result.responseText);
-            window.config = json_decode.config;
-            window.user = json_decode.user;
+            config = json_decode.config;
+            user = json_decode.user;
             if (f) f();
         }
     });
@@ -223,7 +223,7 @@ function logWidget(w_id, type, logparams){
     Ext.Ajax.request({
         url : 'widgets/donothing/'+w_id+'/'+type ,
         method: 'GET',
-        params: {src: logparams},
+        params: {src: Ext.util.JSON.encode(logparams)},
         failure: function(){
             Ext.Msg.show({
                 title: 'Warning!',
@@ -294,7 +294,7 @@ function addwidget(w_id, logparams){
     Ext.Ajax.request({
         url : 'users_widgets/addwidget/'+w_id ,
         method: 'GET',
-        params: {src: logparams},
+        params: {src: Ext.util.JSON.encode(logparams)},
         success: function(result, request){
             var conf = Ext.util.JSON.decode(result.responseText)[0];
             createNewPortlet(conf);
@@ -429,12 +429,12 @@ function createNewPortlet(conf, use_widget_position){
     else
         portlet.tools = tools;
 
-    if(column < window.config.num_columns){
+    if(column < config.num_columns){
         col = pc.items.items[column];
         insert_position = 0;
     }
     else {
-        column = (column + pos) % window.config.num_columns;
+        column = (column + pos) % config.num_columns;
         col = pc.items.items[column];
         insert_position = col.items.items.length + 1;
     }
@@ -503,7 +503,7 @@ function suggestAsChampion(name, surname, login, email, logparams){
         multiline: true,  
         fn: function(btn, text){
             if(btn === 'ok') {
-                SendMail(window.config.contactus, window.user.login + ' suggested us ' + name + ' ' + surname + ' (login: ' + login + ', mail: ' + email + ') as a champion for taolin!\n\nMessage leaved by the user: ' + text, null, null, logparams);
+                SendMail(config.contactus, user.login + ' suggested us ' + name + ' ' + surname + ' (login: ' + login + ', mail: ' + email + ') as a champion for taolin!\n\nMessage leaved by the user: ' + text, null, null, logparams);
                 Ext.example.msg('Suggestion done!','You suggested ' + name + ' as a champion for taolin');
             }
         }
@@ -692,7 +692,7 @@ function SendMail(recipients, text, ccrecipients, bccrecipients, logparams){
     Ext.Ajax.request({
         url : 'users/sendmail'
         ,method:'POST'
-        ,params: {to:recipients, text:text, cc:ccrecipients, bcc:bccrecipients, src:logparams}
+        ,params: {to:recipients, text:text, cc:ccrecipients, bcc:bccrecipients, src:Ext.util.JSON.encode(logparams)}
         ,success: function(){
             Ext.example.msg('Your mail has been sent!', Ext.util.Format.ellipsis(text, 150));
         }
@@ -840,7 +840,7 @@ function showPicture(p_id){
             url:'photos/getphotos',
             method: 'POST',
             params: {
-                u_id: window.user.id,
+                u_id: user.id,
                 p_id: p_id
             }, 
             success: function(result, request) {
@@ -1088,7 +1088,7 @@ function openFirstLoginWizard(){
                 ,items: new Ext.ux.fbk.sonet.WizardSettings()
             },{     
                 index: 2
-                ,trailText: 'Further information about '+window.config.appname+'!'
+                ,trailText: 'Further information about '+config.appname+'!'
                 ,items: 
                     {
                         autoLoad: './pages/welcome_wizard_last_step'
@@ -1220,7 +1220,7 @@ $.extend(Ext.util.Format, {
     
 // Returns true if the owner of the timeline's event is the user
 function isOwner(u_id){
-    return window.user.id === u_id;
+    return user.id === u_id;
 }
 
 // get o[key] if set, val otherwise

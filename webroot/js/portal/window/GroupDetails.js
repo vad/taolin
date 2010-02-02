@@ -192,7 +192,7 @@ GroupDetails.prototype = {
         var window_id = this.config.id;
         Ext.Ajax.request({
             url: this.config.url,
-            params: {src: this.config.logparams},
+            params: {src: Ext.util.JSON.encode(this.config.logparams)},
             success: function(response, request) {
                 var data = Ext.decode(response.responseText);
                 Ext.getCmp(window_id).viewGroup.store.loadData(data);
