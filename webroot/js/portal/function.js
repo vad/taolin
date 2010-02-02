@@ -833,14 +833,17 @@ function showPhotoWindow(photo){
     });
 }
    
-function showPicture(p_id){
+function showPicture(p_id, u_id){
+
+    if(typeof u_id == 'undefined')
+        u_id = user.id
 
     if(p_id){
         Ext.Ajax.request({
             url:'photos/getphotos',
             method: 'POST',
             params: {
-                u_id: user.id,
+                u_id: u_id,
                 p_id: p_id
             }, 
             success: function(result, request) {
