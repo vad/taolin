@@ -685,7 +685,7 @@ color:black;
     min-height: 60px;
 }
 
-.timeline-wrapper a {
+.timeline-wrapper a, .a {
     font-weight: bold;
     font-size: 12px;
 }
