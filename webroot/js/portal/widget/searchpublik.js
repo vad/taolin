@@ -78,7 +78,7 @@ SearchPublik = Ext.extend(Ext.Panel, {
             ],
             baseParams: {
                 limit:5,
-                src: this.logparams
+                src: Ext.util.JSON.encode(this.logparams)
             },
             listeners:{
                 beforeload: function(){

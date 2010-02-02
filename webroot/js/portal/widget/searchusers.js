@@ -72,7 +72,7 @@ SearchUsers = Ext.extend(Ext.Panel, {
             
        // If logparams is not defined (i.e. is null) define it!
         if(!this.logparams) 
-            this.logparams = '{"source":"search user widget", "widget_id": "' + this.portlet_id + '"}';
+            this.logparams = {source:"search user widget", widget_id: this.portlet_id};
 
        this.store = new Ext.data.JsonStore({
             url: 'users/searchusers/',
@@ -82,7 +82,7 @@ SearchUsers = Ext.extend(Ext.Panel, {
             fields: ['id','name','surname','login','active'],
             baseParams: {
                 limit:5,
-                src: this.logparams
+                src: Ext.util.JSON.encode(this.logparams)
             },
             listeners: {
                 beforeload: function() {

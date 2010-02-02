@@ -63,7 +63,7 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                         '<div onclick="openImageChooser();">' +
                             '<span class="sprited image-edit l18 u-hover">Edit your photos</span>' +
                         '</div>' +
-                        '<div onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "user profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">' +
+                        '<div onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: {source: \'user profile\', user_id:\'\'}})).show()" style="padding:1px 0;">' +
                            '<span class="sprited map-edit l18 u-hover">Edit workplace</span>' + 
                         '</div>' +
                     '</div>'  

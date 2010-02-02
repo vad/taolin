@@ -48,13 +48,13 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
             items: [
                 {
                     html: '<div id="edit-div" class="edit_div border_radius_5px">' +
-                            '<div onclick="showUserInfo(null, null, \'' + Ext.util.Format.htmlEncode('{"source": "edit profile"}') + '\');" style="padding:1px 0;">' +
+                            '<div onclick="showUserInfo(null, null, {source: \'edit profile\'});" style="padding:1px 0;">' +
                                 '<span class="user_info sprited u-hover l18">View your profile</span>' +
                             '</div>' +
                             '<div onclick="openImageChooser();" style="padding:1px 0;">' +
                                 '<span class="sprited image-edit u-hover l18">Edit your photos</span>' +
                             '</div>' +
-                            '<div id="edit_workplace" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: \'' + Ext.util.Format.htmlEncode('{"source": "edit profile", "user_id":""}') + '\'})).show()" style="padding:1px 0;">' +
+                            '<div id="edit_workplace" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: {source: \'edit profile\', user_id:\'\'}})).show()" style="padding:1px 0;">' +
                                 '<span class="sprited map-edit u-hover l18">Edit workplace</span>' +
                             '</div>' +
                         '</div>' 

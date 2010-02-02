@@ -104,12 +104,14 @@ function application_init(){
         , this);
     */
     
-    window.config.num_columns = 2;
-    var columns = new Array();
-    for(var i=0; i< window.config.num_columns; i++){
+    config.num_columns = 2;
+    var columns = new Array(),
+        width = 1/config.num_columns;
+
+    for(var i=0; i< config.num_columns; i++){
         columns.push({
-                columnWidth:1/window.config.num_columns,
-                style:'padding:20px 10px 20px 10px'
+                columnWidth:width
+                ,style:'padding:20px 10px 20px 10px'
         });
     }
    
@@ -142,19 +144,19 @@ function application_init(){
             '<ul class="dd-menu">' +
                 '<li class="header"><span class="a menu-item">Personal profile</span>' +
                     '<ul>' +
-                        '<li><span class="a menu-item" onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)"><span class="sprited user-icon">View your profile</span></span></li>' + 
-                        '<li><span class="a menu-item" onclick="expandSettingsPanel()"><span class="sprited user-edit">Edit your profile</span></span></li>' + 
-                        '<li><span class="a menu-item" onclick="openImageChooser()"><span class="sprited image-edit">Edit your photos</span></span></li>' + 
-                        '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()"><span class="sprited map-edit">Edit your workplace position</span></span></li>' + 
+                        '<li><span class="a menu-item" onclick="showUserInfo(null, null, {source: \'logout_div\'})"><span class="sprited user-icon">View your profile</span></span></li>' +
+                        '<li><span class="a menu-item" onclick="expandSettingsPanel()"><span class="sprited user-edit">Edit your profile</span></span></li>' +
+                        '<li><span class="a menu-item" onclick="openImageChooser()"><span class="sprited image-edit">Edit your photos</span></span></li>' +
+                        '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()"><span class="sprited map-edit">Edit your workplace position</span></span></li>' +
                      '</ul>' +
                 '</li>' + 
                 '<li class="header"><span class="a menu-item">Tools</span>' +
                     '<ul>' +
                         '<li><span class="menu-item a add_widgets" onclick="openAddWidgetsModalWindow()">Add widgets</span></li>' +
-                        '<li><span class="a menu-item" onclick="addOrBounceWidget(&#39;Ext.ux.fbk.sonet.MetaSearch&#39;,&#39;string_identifier&#39;,&#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)"><span class="sprited search">Search</span></span></li>' + 
-                        '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Map of colleagues workplaces</span></li>' + 
-                        '<li><span class="a menu-item" onclick="new PhotoUploader()">Photo uploader</a></li>' + 
-                        '<li><span class="a menu-item" onclick="new SendToWindow()"><span class="sprited email">Send an email</span></span></li>' + 
+                        '<li><span class="a menu-item" onclick="addOrBounceWidget(\'Ext.ux.fbk.sonet.MetaSearch\',\'string_identifier\',{source: \'logout_div\'})"><span class="sprited search">Search</span></span></li>' +
+                        '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Map of colleagues workplaces</span></li>' +
+                        '<li><span class="a menu-item" onclick="new PhotoUploader()">Photo uploader</a></li>' +
+                        '<li><span class="a menu-item" onclick="new SendToWindow()"><span class="sprited email">Send an email</span></span></li>' +
                     '</ul>' +
                 '</li>' +
                 '<li class="header"><a class="menu-item" href="./wiki" target="_blank">FBK Wiki</a></li>' +
@@ -165,7 +167,7 @@ function application_init(){
                         '<li><a class="menu-item" href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
                     '</ul>' +
                 '</li>' +
-                '<li class="header"><span class="a menu-item">' + window.config.appname + '</span>' +
+                '<li class="header"><span class="a menu-item">' + config.appname + '</span>' +
                     '<ul>' +
                         /* This software is open source released under aGPL. See http://www.fsf.org/licensing/licenses/agpl-3.0.html for more details. According to the license, you must place in every Web page served by Taolin a link where your user can download the source code. So, please, don't remove this link, you can move it in another part of the web page, though. */
                         '<li><a class="menu-item" href="http://github.com/vad/taolin" target="_blank">Download the code</a></li>' +
@@ -177,14 +179,14 @@ function application_init(){
     else // Simplified version for old, stupidunsupported browsers
         main_menu = 
             '<ul class="dd-menu">' +
-                '<li class="header"><span class="a menu-item" onclick="showUserInfo(null, null, &#39;{&quot;source&quot;: &quot;logout_div&quot;}&#39;)">Personal profile</span></li>' + 
+                '<li class="header"><span class="a menu-item" onclick="showUserInfo(null, null, {source: \'logout_div\'})">Personal profile</span></li>' + 
                 '<li class="header"><span class="menu-item a add_widgets" onclick="openAddWidgetsModalWindow()">Add widgets</span></li>' +
                 '<li class="header"><a class="menu-item" href="./wiki" target="_blank">FBK Wiki</a></li>' +
                 '<li class="header"><span class="a menu-item" onclick="showMainTimeline()">Timeline</span></li>' +
                 '<li class="header"><a class="menu-item" href="./pages/help" target="_blank">FAQ - Help</a></li>' +
                 '<li class="header"><a class="menu-item" href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
                 /* This software is open source released under aGPL. See http://www.fsf.org/licensing/licenses/agpl-3.0.html for more details. According to the license, you must place in every Web page served by Taolin a link where your user can download the source code. So, please, don't remove this link, you can move it in another part of the web page, though. */
-                '<li class="header"><a class="menu-item" href="http://github.com/vad/taolin" target="_blank">Download the code</a>' +
+                '<li class="header"><a class="menu-item" href="http://github.com/vad/taolin" target="_blank">Download the code</a></li>' +
                 '<li class="header last"><a class="menu-item" href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
             '</ul>';
 
@@ -268,7 +270,7 @@ function application_init(){
     };
     Ext.TaskMgr.start(task);
 
-    if(!window.user.privacy_policy_acceptance) // check if first login wizard should be opened or not
+    if(!user.privacy_policy_acceptance) // check if first login wizard should be opened or not
         openFirstLoginWizard();
 
     /** 
