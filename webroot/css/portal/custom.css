@@ -739,6 +739,7 @@ color:black;
 
 .pagination-item:hover {
     border: 2px solid #5EA0E3;
+    margin: 0 1px;
 }
 
 .board-img{
