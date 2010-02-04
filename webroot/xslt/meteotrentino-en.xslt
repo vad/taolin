@@ -100,7 +100,8 @@
             <hr class="large" style="margin-bottom: 10px !important;" />
         </div>
         <div id="next_days" class="meteo_forecast" label="Next days">
-        <xsl:for-each select="GiorniSuccessivi">
+            <div class="meteo_date_header">Weather forecast from <xsl:value-of select="GiorniSuccessivi[1]/Data"/> to <xsl:value-of select="GiorniSuccessivi[last()]/Data"/></div>
+            <xsl:for-each select="GiorniSuccessivi">
             <div class="meteo_desc" style="margin: 15px 50px;">
                 <table>
                     <tr>
@@ -117,7 +118,7 @@
                     </tr>
                 </table>
             </div>
-        </xsl:for-each>
+            </xsl:for-each>
             <hr class="large" style="margin-bottom: 10px !important;" />
         </div>
         </xsl:for-each>
