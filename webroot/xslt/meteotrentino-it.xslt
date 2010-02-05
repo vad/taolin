@@ -44,7 +44,7 @@
             <hr class="large" style="margin-bottom: 10px !important;" />
         </div>
         <div id="tomorrow" class="meteo_forecast" label="Domani">
-            <div class="meteo_date_header">Previsioni per il giorno<xsl:value-of select="Domani/Data"/></div>
+            <div class="meteo_date_header">Previsioni per il giorno <xsl:value-of select="Domani/Data"/></div>
             <xsl:variable name="cieloDesc"><xsl:value-of select="Domani/CieloDesc"/></xsl:variable>
             <xsl:if test="not($cieloDesc='')"><div class="meteo_report"><b>Condizioni del cielo: </b><xsl:value-of select="Domani/CieloDesc"/></div><br /></xsl:if>
             <div class="meteo_image">
@@ -58,8 +58,8 @@
             </div>
             <div class="meteo_desc" style="margin-top:20px">
                 <ul>
-                    <li><b>Precipitazioni: </b> <xsl:value-of select="Oggi/PrecInten"/> -  <xsl:value-of select="Oggi/PrecEstens"/></li>
-                    <li><b>Probabilità precipitazioni: </b> <xsl:value-of select="Domani/PrecProb"/></li>
+                    <li><b>Precipitazioni: </b> <xsl:value-of select="Domani/PrecInten"/> -  <xsl:value-of select="Domani/PrecEstens"/></li>
+                    <li><b>Probabilità precipitazioni: </b> <xsl:value-of select="Domani/PrecipProb"/></li>
                     <xsl:variable name="ventiDescDom"><xsl:value-of select="Domani/VentiDesc"/></xsl:variable>
                     <xsl:if test="not($ventiDescDom='')"><li><b>Venti: </b> <xsl:value-of select="Domani/VentiDesc"/></li></xsl:if>
                     <li><b>Temperature: </b>  <xsl:value-of select="Domani/TempDesc"/></li>
@@ -87,7 +87,7 @@
             <div class="meteo_desc" style="margin-top:20px">
                 <ul>
                     <li><b>Precipitazioni: </b> <xsl:value-of select="DopoDomani/PrecInten"/> -  <xsl:value-of select="DopoDomani/PrecEstens"/> </li>
-                    <li><b>Probabilità precipitazioni: </b> <xsl:value-of select="DopoDomani/PrecProb"/></li>
+                    <li><b>Probabilità precipitazioni: </b> <xsl:value-of select="DopoDomani/PrecipProb"/></li>
                     <xsl:variable name="ventiDescDopDom"><xsl:value-of select="DopoDomani/VentiDesc"/></xsl:variable>
                     <xsl:if test="not($ventiDescDopDom='')"><li><b>Venti: </b> <xsl:value-of select="DopoDomani/VentiDesc"/></li></xsl:if>
                     <li><b>Temperature: </b><xsl:value-of select="DopoDomani/TempDesc"/></li>
