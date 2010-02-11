@@ -473,8 +473,12 @@ function groupDetails(group_id, group_name, log_params){
         y = pco.top + (pch - window_height) / 2.,
         group_window = Ext.getCmp(group_win_id);
 
-    if(group_window && (group_window.title != group_name))
-        group_window.close();
+    if(group_window){
+        if(group_window.title != group_name)
+            group_window.close();
+        else
+            return true;
+    }
     
     group_window = new GroupDetails({ 
         id: group_win_id
