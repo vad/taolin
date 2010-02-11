@@ -7,7 +7,7 @@
                 <div class="meteo_desc">
                     <b>Weather evolution: </b><xsl:value-of select="EvoluzioneTempo"/>
                 </div>
-                <br /><div>Published on <u><xsl:value-of select="Pubblicato"/></u> h. 13 - Next: <xsl:value-of select="ProssimaEmissione"/></div>
+                <br /><div>Published on <u><xsl:value-of select="Pubblicato"/></u> - Next: <xsl:value-of select="ProssimaEmissione"/></div>
             </div>
             <hr class="large" style="margin-bottom: 10px !important;" />
         </div>
@@ -105,15 +105,24 @@
             <div class="meteo_desc" style="margin: 15px 50px;">
                 <table>
                     <tr>
-                        <td width="80px">
-                            <img src="{icona}" title="{descicona}"/>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td><b><xsl:value-of select="Data"/></b></td>
+                                </tr>
+                                <tr>
+                                    <td width="80px">
+                                        <img src="{icona}" title="{descicona}"/>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
-                        <td style="text-align: left">
-                            <div><b>Date: </b><xsl:value-of select="Data"/>
+                        <td style="text-align: left;padding-left: 20px;">
                             <xsl:variable name="cieloDesc"><xsl:value-of select="CieloDesc"/></xsl:variable>
-                            <xsl:if test="not($cieloDesc='')"> - <xsl:value-of select="CieloDesc"/></xsl:if></div>
+                            <xsl:if test="not($cieloDesc='')"><div><b>Sky condition: </b><xsl:value-of select="CieloDesc"/></div></xsl:if>
+                            <div><b>Temperature (valley):</b> min <xsl:value-of select="TempMinValle"/> / max <xsl:value-of select="TempMaxValle"/></div>
                             <xsl:variable name="precProb"><xsl:value-of select="PrecipProb"/></xsl:variable>
-                            <xsl:if test="not($precProb='')"><div><b>Precipitation probability: </b><xsl:value-of select="PrecipProb"/></div></xsl:if>
+                            <xsl:if test="not($precProb='')"><div><b>Prrecipitation probability: </b><xsl:value-of select="PrecipProb"/></div></xsl:if>
                         </td>
                     </tr>
                 </table>
