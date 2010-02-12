@@ -26,13 +26,13 @@
                         <div class="meteo_desc">
                             <ul>
                                 <!--<li><b>Niederschläge: </b> <xsl:value-of select="Oggi/PrecInten"/> - <xsl:value-of select="Oggi/PrecEstens"/></li>-->
-                                <li><b>Wahrscheinlichkeit von Niederschlägen:</b> <xsl:value-of select="Oggi/PrecProb"/></li>
+                                <li><b>Wahrscheinlichkeit von Niederschlägen: </b> <xsl:value-of select="Oggi/PrecProb"/></li>
                                 <xsl:variable name="ventiDesc"><xsl:value-of select="Oggi/VentiDesc"/></xsl:variable>
                                 <xsl:if test="not($ventiDesc='')"><li><b>Wind: </b> <xsl:value-of select="Oggi/VentiDesc"/></li></xsl:if>
                                 <li><b>Temperaturen: </b> <xsl:value-of select="Oggi/TempDesc"/></li>
                                 <li>
                                     <ul style="padding-left:30px !important">
-                                        <li style="list-style-type:square;"><b>Tal </b> max <xsl:value-of select="Oggi/TempMaxValle"/>°C</li>
+                                        <li style="list-style-type:square;"><b>Tal: </b> max <xsl:value-of select="Oggi/TempMaxValle"/>°C</li>
                                         <li style="list-style-type:square;"><b>Gebirge (2000m): </b> max <xsl:value-of select="Oggi/TempMaxQuota"/>°C</li>
                                     </ul>
                                 </li>
