@@ -39,7 +39,7 @@ MathWidget = function(conf, panel_conf){
     google.load('visualization', '1', {callback: f,
         packages:'scatterchart'});
 
-    var helpString = 'Type any math expression and push \"Enter\". Examples: \"3+4\" or \"2 * pow(2,5)\".<br /><a target=\"_blank\" href=\"http://www.w3schools.com/jsref/jsref_obj_math.asp\">List of available functions</a>';
+    var helpString = 'Type any math expression and push \"Enter\". Examples: \"3+4\" or \"2 * pow(2,5)\".<br /><a target=\"_blank\" href=\"http://www.w3schools.com/jsref/jsref_obj_math.asp\">Here\'s a list of available functions</a>';
 
     this.calcForm = new Ext.form.FormPanel({
         autoHeight: true
@@ -106,7 +106,7 @@ MathWidget = function(conf, panel_conf){
         },{
             xtype: 'label'
             ,html:  '<div style="padding:10px 0 5px 5px;"><span id="demobutton_'+this.getId()+'" class="sprited chart-icon a">Demo</span> &nbsp; '
-            + '<a id="helpbutton_graph_'+this.getId()+'" class="sprited help-icon a">Help</span></div><div id="graphForm-math-help_'+this.getId()+'" style="display:none;padding: 10px 5px;background:#f6f6f6;">' + helpString + '</div>'
+            + '<span id="helpbutton_graph_'+this.getId()+'" class="sprited help-icon a">Help</span></div><div id="graphForm-math-help_'+this.getId()+'" style="display:none;padding: 10px 5px;background:#f6f6f6;">' + helpString + '</div>'
         },{
             //dummy component that is rendered at the end
             xtype:'component'
