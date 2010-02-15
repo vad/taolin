@@ -99,7 +99,7 @@
             </div>
             <hr class="large" style="margin-bottom: 10px !important;" />
         </div>
-        <div id="next_days" class="meteo_forecast" label="Nächsten Tagen">
+        <div id="next_days" class="meteo_forecast" label="nächste Tage">
             <div class="meteo_date_header">Prognose für die Zeit von <xsl:value-of select="GiorniSuccessivi[1]/Data"/> bis <xsl:value-of select="GiorniSuccessivi[last()]/Data"/></div>
             <xsl:for-each select="GiorniSuccessivi">
             <div class="meteo_desc" style="margin: 15px 50px;">
