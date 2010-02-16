@@ -283,6 +283,23 @@ Board = function(conf, panel_conf){
             new SendToWindow(prefix+text, null, this.logSource);
     };
 
+    this.setup = function(){
+        var boardwidget = $('#'+this.getId()+' .board-widget');
+        /* hoverIntent provided some problems with tooltip so we
+         * decided to switch back to hover even if it doesn't
+         * completely work with IE */
+
+        boardwidget.hover(function(){
+                $(this)
+                    .find('.board-img')
+                    .css({visibility: 'visible'});
+            }, function(){
+                $(this)
+                    .find('.board-img')
+                    .css({visibility: 'hidden'});
+        });
+    };
+
     this.view = new Ext.DataView({
         tpl: new Ext.XTemplate(
         '<div class="board-widget">',
@@ -411,7 +428,7 @@ Board = function(conf, panel_conf){
                 ignoreNoChange: true,
                 hideEl : true,
                 listeners: {
-                    'beforecomplete' : function(editor, newvalue, oldvalue) {
+                    beforecomplete : function(editor, newvalue, oldvalue) {
                                             // if the value changed, save it! Maybe this is redundant, cause of ignoreNoChange = true in the plugin
                                             p = this.view.store.parent;
 
@@ -419,7 +436,7 @@ Board = function(conf, panel_conf){
                                                 p.modifyAds(editor.activeRecord.data.id, newvalue);
 
                                         }
-                    ,'specialkey' : function(field, key) {
+                    ,specialkey : function(field, key) {
                                         /* If the key pressed is ESC (ESC key code = 27)
                                          * complete the edit of the field
                                          */
@@ -454,18 +471,8 @@ Board = function(conf, panel_conf){
                     scope: this
                 }
                 ,load: function(store, records, options){
-                    var boardwidget = $('#'+this.parent.getId()+' .board-widget');
-                    var imgs = boardwidget.find('.board-img');
+                    this.parent.setup();
 
-                    /* hoverIntent provided some problems with tooltip so we
-                     * decided to switch back to hover even if it doesn't
-                     * completely work with IE */
-
-                    boardwidget.hover(function(){
-                            imgs.css({visibility: 'visible'});
-                        }, function(){
-                            imgs.css({visibility: 'hidden'});
-                    });
                 }
             }
             ,parent: this
@@ -530,7 +537,9 @@ Board = function(conf, panel_conf){
                                 b.loadPage(b.currentPage);
                             }
                         );
-            }   
+
+                this.setup.defer(500, this);
+            }
         }
     });
 
