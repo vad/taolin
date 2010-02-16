@@ -30,9 +30,12 @@ tools = [{
         id:'toggle',
         qtip:'Collapse/expand',
         handler :function(e, target, panel){
-            var action;
+            var action,
+                widget = panel.items.last();
+
             if (panel.collapsed) {
                 action = 'expand';
+                widget.doLayout.defer(500, widget);
             } else {
                 action = 'collapse';
             }
@@ -43,7 +46,6 @@ tools = [{
             });
 
             // raise collapse/expand event
-            var widget = panel.items.last();
             widget.fireEvent(action, widget);
 
             panel.toggleCollapse(true);
@@ -52,13 +54,15 @@ tools = [{
         id:'maximize',
         qtip:'Full screen',
         handler:function(e, target, panel){
-            var mp = Ext.getCmp(panel.el.id);
-            var portal_central = Ext.getCmp('portal_central');
-            var found;
+            var mp = Ext.getCmp(panel.el.id)
+                ,portal_central = Ext.getCmp('portal_central')
+                ,found
+                ,i
+                ,j;
 
-            for (var i=0, col; col=portal_central.items.items[i++];) {
+            for (i=0, col; col=portal_central.items.items[i++];) {
                 found = false;
-                for (var j=0, p; p=col.items.items[j++];) {
+                for (j=0, p; p=col.items.items[j++];) {
                     if (mp == p){
                         found = true;
                         col.columnWidth = .99;
