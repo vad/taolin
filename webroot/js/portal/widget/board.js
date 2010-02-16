@@ -452,8 +452,10 @@ Board = function(conf, panel_conf){
         ],
 	    store: new Ext.data.JsonStore({
             autoLoad: true,
-            url: 'boards/getads',
-            method: 'POST',
+            proxy : new Ext.data.HttpProxy({
+                method: 'GET',
+                url: 'boards/getads'
+            }),
             root: 'boards',
             totalProperty: 'totalCount',
             fields: ['id','user_id','text','email','created','expire_date','name','surname','commentsCount'],

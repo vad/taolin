@@ -77,15 +77,17 @@ class BoardsController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
-        if(!empty($this->params['form']['limit'])){ 
-            $limit = $this->params['form']['limit'];
+        $data = $this->params['url'];
+
+        if(!empty($data['limit'])){ 
+            $limit = $data['limit'];
             $this->paginate['limit'] = $limit;
         }
         
-        if(!empty($this->params['form']['start'])) 
-            $page = $this->params['form']['start'] / $this->paginate['limit'];
+        if(!empty($data['start'])) 
+            $page = $data['start'] / $this->paginate['limit'];
 
-        if(!empty($this->params['form']['show_expired']) && ($this->params['form']['show_expired'] == 1)){
+        if(!empty($data['show_expired']) && ($data['show_expired'] == 1)){
             $conditions = null;
         }else{
             $today = date("Y-m-d");
