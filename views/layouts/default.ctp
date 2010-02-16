@@ -38,13 +38,15 @@
 <link rel='StyleSheet' id="theme" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp.css' />
 
 <script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery-1.4.1.min.js'> </script>
-<script type="text/javascript" src='<?php echo $this->base ?>/extjs/adapter/jquery/ext-jquery-adapter.js'> </script>
+<!-- <script type="text/javascript" src='<?php echo $this->base ?>/extjs/adapter/jquery/ext-jquery-adapter.js'> </script> -->
+<script type="text/javascript" src='<?php echo $this->base ?>/js/ext-jquery-adapter.js'> </script>
 
 <?php
 $isdebugactive = $conf->get('Site.jsdebug');
 if ($isdebugactive == 1) {
 ?>
-    <script type="text/javascript" src='<?php echo $this->base ?>/extjs/ext-all-debug.js'> </script>
+    <!-- <script type="text/javascript" src='<?php echo $this->base ?>/extjs/ext-all-debug.js'> </script> -->
+    <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-all-debug.js'> </script>
 <?php
 } else {
 ?>

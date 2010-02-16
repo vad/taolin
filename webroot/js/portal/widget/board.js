@@ -190,15 +190,16 @@ Board = function(conf, panel_conf){
     };
 
     this.modifyAds = function (a_id, newvalue){
-       if(a_id){
+        if(a_id){
             var board = this;
 
             Ext.Ajax.request({
                 url : 'boards/modifyads/',
-                params: {'ads_id': a_id, 'value': newvalue},
+                params: {ads_id: a_id, value: newvalue},
                 method: 'POST',
                 success: function(){
                     eventManager.fireEvent('newtimelineevent');
+                    console.log(a_id);
                     
                     if(board.maxTextLength < newvalue.length)
                         board.formatText(a_id, true);
@@ -275,7 +276,7 @@ Board = function(conf, panel_conf){
 
     this.sendTo = function(row, recipient, name, surname ) {
         var text = this.view.store.getAt(row).json.text;
-        var prefix = "Hi " + name + "! I\'m writing in response to the announcement you published on the "+window.config.appname+" board:\n\n";
+        var prefix = "Hi " + name + "! I\'m writing in response to the announcement you published on the "+config.appname+" board:\n\n";
 
         if(recipient) 
             new SendToWindow(prefix+text,[[recipient,name + " " + surname]], this.logSource);
@@ -290,7 +291,7 @@ Board = function(conf, panel_conf){
                 '<div id="{this.boardId}-{id}-wrapper" class="user-wrapper" style="background:{[xindex % 2 === 0 ? "white" : "#ECEFF5"]};text-align:left;">',
                 /* User owns the message */
                     '<tpl if="isOwner(user_id)">',
-                        '<span id="{this.boardId}-{id}-text" class="x-editable" style="padding-right:15px;">',
+                        '<span id="{this.boardId}-{id}-text" class="text x-editable" style="padding-right:15px;">',
                             '{text:this.formatMsg}',
                         '</span>',
                         '<tpl if="(this.maxTextLength < text.length)">',
@@ -307,7 +308,7 @@ Board = function(conf, panel_conf){
                                 '<tpl if="commentsCount &gt; 0">',
                                     '{commentsCount} <span class="sprited comment-icon" title="View comments"></span>',
                                 '</tpl>',
-                                '<tpl if="commentsCount &lt;= 0">',
+                                '<tpl if="commentsCount == 0">',
                                     '<span class="sprited comment-add" title="Add a comment"></span>',
                                 '</tpl>',
                             '</span>',
@@ -323,7 +324,7 @@ Board = function(conf, panel_conf){
 
                 /* User is not the owner of the message */    
                     '<tpl if="!isOwner(user_id)">',
-                        '<span id="{this.boardId}-{id}-text" style="padding-right:15px;">',
+                        '<span id="{this.boardId}-{id}-text" style="padding-right:15px;" class="text">',
                             '{text:this.formatMsg}',
                         '</span>',
                         '<tpl if="(this.maxTextLength < text.length)">',
@@ -398,7 +399,7 @@ Board = function(conf, panel_conf){
             ,boardId: this.getId()
         }
         ),
-	    itemSelector: 'span:first-child',
+	    itemSelector: '.text',
         emptyText: '<div style="warning-msg" style="margin:0 20px">There are no messages on the board</div>',
         loadingText: 'Loading announcements, please wait...',
         plugins: [
@@ -525,7 +526,7 @@ Board = function(conf, panel_conf){
                         )
                     .end()
                     .find('.reload')
-                        .click(
+                        .bind('click.reload',
                             function() {
                                 b.loadPage(b.currentPage);
                             }
