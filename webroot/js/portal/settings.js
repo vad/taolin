@@ -32,7 +32,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
     }
     ,monitorValid: true
     ,waitMsgTarget: true
-    ,url:'users/getusersettings'
+    ,method:'GET'
     ,onRender:function(){
         Ext.ux.fbk.sonet.Settings.superclass.onRender.apply(this, arguments);
 
@@ -175,11 +175,11 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
     },
     onFailure:function(form, action){
         Ext.Msg.show({
-                title: 'Error!',
-                msg: '<center><b>Your data has not been saved!</b><br /><br />Please check your data or submit a feedback to us.</center>',
-                width: 400,
-                buttons: Ext.MessageBox.OK,
-                icon: Ext.MessageBox.ERROR
-                });
+            title: 'Error!',
+            msg: '<center><b>Your data has not been saved!</b><br /><br />Please check your data or submit a feedback to us.</center>',
+            width: 400,
+            buttons: Ext.MessageBox.OK,
+            icon: Ext.MessageBox.ERROR
+        });
     }
 });

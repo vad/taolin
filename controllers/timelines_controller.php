@@ -114,12 +114,14 @@ class TimelinesController extends AppController {
         $limit_default = 15;
         $start_default = 0;
 
-        $u_id = $this->params['form']['u_id'];
+        $params = $this->params['url'];
 
-        $limit = get($this->params['form'], 'limit', $limit_default);
-        $start = get($this->params['form'], 'start', $start_default);
+        $u_id = $params['u_id'];
 
-        $cache = !(array_key_exists('nocache', $this->params['url']));
+        $limit = get($params, 'limit', $limit_default);
+        $start = get($params, 'start', $start_default);
+
+        $cache = !(array_key_exists('nocache', $params['url']));
 
         if($u_id != null){
             $conditions = array('user_id' => $u_id, 'date <= \''.date('Y-m-d H:i:s').'\'');

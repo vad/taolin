@@ -188,7 +188,10 @@ Timeline = Ext.extend(Ext.Panel, {
         );
 
         var store = new Ext.data.JsonStore({
-            url: 'timelines/gettimeline',
+            proxy : new Ext.data.HttpProxy({
+                method: 'GET',
+                url: 'timelines/gettimeline'
+            }),
             root: 'timeline',
             fields: ['id','user_id','event','name','surname','login','user_photo','icon',{name: 'date', type: 'date', dateFormat: 'Y-m-d H:i:s'},'model_alias','foreign_id','commentsCount', 'deleted']
             ,baseParams: {
