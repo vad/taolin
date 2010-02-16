@@ -199,7 +199,6 @@ Board = function(conf, panel_conf){
                 method: 'POST',
                 success: function(){
                     eventManager.fireEvent('newtimelineevent');
-                    console.log(a_id);
                     
                     if(board.maxTextLength < newvalue.length)
                         board.formatText(a_id, true);
