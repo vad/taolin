@@ -31,14 +31,14 @@ var jabber = {
    * @param {JSJaCHttpBindingConnection} con
    */
   setupCon: function(con){
-    con.registerHandler('message', jabber.handle.message);
-    con.registerHandler('presence', jabber.handle.presence);
-    con.registerHandler('onconnect', jabber.handle.connected);
-    con.registerHandler('ondisconnect', jabber.handle.disconnected);
-    con.registerIQGet('query', NS_TIME, jabber.handle.iqTime);
-    con.registerIQSet('query', NS_ROSTER, jabber.handle.iqRosterSet);
-    con.registerHandler('iq', 'query', NS_ROSTER, jabber.handle.iqRoster);
-    con.registerHandler('iq', jabber.handle.iq);
+    con.registerHandler('message', this.handle.message);
+    con.registerHandler('presence', this.handle.presence);
+    con.registerHandler('onconnect', this.handle.connected);
+    con.registerHandler('ondisconnect', this.handle.disconnected);
+    con.registerIQGet('query', NS_TIME, this.handle.iqTime);
+    con.registerIQSet('query', NS_ROSTER, this.handle.iqRosterSet);
+    con.registerHandler('iq', 'query', NS_ROSTER, this.handle.iqRoster);
+    con.registerHandler('iq', this.handle.iq);
   },
   
   doLogin: function(username, password){
@@ -110,7 +110,7 @@ var jabber = {
   },
   addRosterItem: function(buddy){
     var iq = new JSJaCIQ();
-    iq.setFrom(jabber.myJid);
+    iq.setFrom(this.myJid);
     iq.setType('set');
     iq.setID('roster_set');
     var query = iq.setQuery(NS_ROSTER);
@@ -125,7 +125,7 @@ var jabber = {
   },
 
   setPresence: function(show, status, type) {
-    jabber.status = {presence:show, status:status, type:type};
+    this.status = {presence:show, status:status, type:type};
                    
     var presence = new JSJaCPresence();
     presence.setShow(show);
@@ -134,7 +134,7 @@ var jabber = {
     this.send(presence);
 
     //save status in the west panel
-    if(westPanel.showedUser && westPanel.showedUser.id === window.user.id){
+    if(westPanel.showedUser && westPanel.showedUser.id === user.id){
       setChatStatus(status.htmlEnc().smilize().urlize());
     }
   },
@@ -144,25 +144,26 @@ var jabber = {
   },
   handle: {
     iq: function(iq){
+      var j = jabber;
       if (iq.getType() != 'result') {
         var roster = new JSJaCIQ();
         roster.setIQ(null, 'result', iq.getID());
         roster.setQuery(NS_ROSTER);
-        this.send(roster);
+        j.send(roster);
         //console.log("Reply test: " + iq.reply().xml());
       }
       if (iq.getID() == 'reg') {        
-        var status = Ext.getCmp('status').getValue();
-        var presence = Ext.getCmp('presence').getValue();
-        jabber.setPresence(presence, status);
+        var status = Ext.getCmp('status').getValue()
+          ,presence = Ext.getCmp('presence').getValue();
+        j.setPresence(presence, status);
       }
     },
     
     message: function(aJSJaCPacket){
       // set current timestamp
-      var x;
-      var timestamp;
-      var node = aJSJaCPacket.getNode();
+      var x
+        ,timestamp
+        ,node = aJSJaCPacket.getNode();
       
       if (!aJSJaCPacket.getBody()) return; //if there's not a message, exit
 
@@ -196,13 +197,14 @@ var jabber = {
       }
 
       from.setResource(new String());
-      var presence = aJSJaCPacket.getShow();
       
-      var type = '';
+      var presence = aJSJaCPacket.getShow()
+        ,type = ''
+        ,status = '';
+
       if (aJSJaCPacket.getType()) {
         type = aJSJaCPacket.getType();
       }
-      var status = '';
       if (aJSJaCPacket.getStatus()) {
         status = aJSJaCPacket.getStatus();
       }      
@@ -211,24 +213,26 @@ var jabber = {
     },
 
     connected: function(){
+      var j = jabber;
       Ext.getCmp('buddylist').items.first().view.emptyText = 'Nobody';
-      jabber.getRoster();
+      j.getRoster();
       
-      jabber.setPresence(jabber.status.presence, jabber.status.status, jabber.status.type);
+      j.setPresence(j.status.presence, j.status.status, j.status.type);
     },
     
     disconnected: function(){
+      var j = jabber;
       roster.clear();
 
-      if (jabber.keepOffline){
+      if (j.keepOffline){
         Ext.getCmp('buddylist').items.first().view.emptyText = 'You are offline. Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to connect.';
         return;
       }
       
       Ext.getCmp('buddylist').items.first().view.emptyText = 'There has been problems connecting to the server. Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to try again. Possible problems: (1) If you are visiting taolin in more than one tab, please close all but one tab. (2) You changed your password recently, please logout and login again with the new password.';
       
-      if (jabber.nTrials++ < jabber.maxTrials){
-        jabberui.init(jabber.status.presence, jabber.status.status, jabber.status.type);
+      if (j.nTrials++ < j.maxTrials){
+        jabberui.init(j.status.presence, j.status.status, j.status.type);
       }
     },
     
@@ -243,22 +247,22 @@ var jabber = {
     },
 
     iqRoster: function(iq){
-      //console.log('iqRoster');
-      var q = iq.getQuery();
+      var q = iq.getQuery()
+        ,r = roster;
       
-      roster.clear(); //i hope the new roster replaces the old one...
+      r.clear(); //i hope the new roster replaces the old one...
       $(q).find('item').each(function(){
-        var t = $(this);
-        var b = new Buddy(t.attr('jid'), t.attr('subscription'),
+        var t = $(this)
+          ,b = new Buddy(t.attr('jid'), t.attr('subscription'),
           t.attr('name'), t.find('group').text());
-        roster.roster.push(b);
+        r.roster.push(b);
       });
 
-      roster.flushPresence();
+      r.flushPresence();
     },
     
     iqRosterSet: function(iq){
-      jabber.handle.iqRoster(iq);
+      this.handle.iqRoster(iq);
     }
   }
 };
@@ -274,34 +278,37 @@ var jabber = {
  * @param {String} type
  */
 var Buddy = function(jid, subscription, name, group, presence, status, type){
-  this.jid = new JSJaCJID(jid);
-  this.subscription = subscription;
-  this.name = name;
-  this.group = group;
-  this.presence = presence;
-  this.status = status;
-  this.type = type;
+  Ext.apply(this, {
+    jid: new JSJaCJID(jid)
+    ,subscription: subscription
+    ,name: name
+    ,group: group
+    ,presence: presence
+    ,status: status
+    ,type: type
+  });
 
   for (var el in this) {
     if (typeof(this[el]) == 'undefined') 
       this[el] = '';
   }
-};
-/**
- * Compares self to another Buddy object
- * @param {Buddy} buddy
- */
-Buddy.prototype.compareTo = function (buddy) {
-  return this.jid.toString() == buddy.jid.toString();
-};
-/**
- * Updates buddy attributes without overwriting presence data
- * @param {Buddy} buddy
- */
-Buddy.prototype.update = function (buddy) {
-  this.jid = buddy.jid;
-  this.subscription = buddy.subscription;
-  this.name = buddy.name;
-  this.group = buddy.group;
+
+
+  /**
+   * Compares self to another Buddy object
+   * @param {Buddy} buddy
+   */
+  this.compareTo = function (buddy) {
+    return this.jid.toString() === buddy.jid.toString();
+  };
+
+
+  /**
+   * Updates buddy attributes without overwriting presence data
+   * @param {Buddy} buddy
+   */
+  this.update = function (buddy) {
+    Ext.copyTo(this, buddy, 'jid,subscription,name,group');
+  };
 };
 
