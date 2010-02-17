@@ -427,6 +427,31 @@ Board = function(conf, panel_conf){
                 cancelOnEsc: false,
                 ignoreNoChange: true,
                 hideEl : true,
+                onMouseDown: function(e, target){
+                    if(!e.ctrlKey && !e.shiftKey){
+                        var item = this.view.findItemFromChild(target);
+                        e.stopEvent();
+
+                        var record = this.view.store.getAt(this.view.indexOf(item));
+
+                        var s = record.data[this.dataIndex];
+
+                        var fs = Ext.util.Format.htmlDecode(s).replace(/(&#39;)/g,"\'").replace(/(&quot;)/g, "\"");
+                        
+                        // Adjusting the size of the editor
+                        this.view.store.parent.formatText(record.id, true);
+
+                        width = $(target).width() + 20;
+                        height = $(target).height() + 20;
+                        this.setSize(width, height);
+
+                        //this.startEdit(target, s);
+                        this.startEdit(target, unescape(fs));
+                        this.activeRecord = record;
+                    }else{
+                        e.preventDefault();
+                    }
+                },
                 listeners: {
                     beforecomplete : function(editor, newvalue, oldvalue) {
                                             // if the value changed, save it! Maybe this is redundant, cause of ignoreNoChange = true in the plugin
@@ -448,7 +473,15 @@ Board = function(conf, panel_conf){
                                         }
                                     }
                 }
+            }
+            ,new Ext.form.TextArea({
+                allowBlank: false,
+                growMin:90,
+                growMax:240,
+                grow:true,
+                selectOnFocus:true
             })
+        )
         ],
 	    store: new Ext.data.JsonStore({
             autoLoad: true,
