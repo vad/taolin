@@ -75,13 +75,6 @@ jabberui = function () {
             }
             return null;
         },
-        requestNewBuddy: function(jsjacjid){
-            Ext.MessageBox.confirm('Confirm new friend', 'Are you sure you want to add '+jsjacjid+' as a friend?',
-                function(approve){
-                    if (approve == 'yes') 
-                        jabber.addBuddy(new Buddy(jsjacjid._node+'@'+jsjacjid._domain, 'Fbk'));
-                });
-        },
         addMsg: function(chatId, msg, timestamp){
             var chatWindow = Ext.getCmp(chatId);
             if (chatWindow) {

@@ -10,7 +10,7 @@ var jabber = {
   init: function(presence, status, type){
     //oDbg = new JSJaCConsoleLogger(2);
     // Try to resume a session
-      this.status = {presence:presence, status:status, type:type};
+    this.status = {presence:presence, status:status, type:type};
     try {
       this.con = new JSJaCHttpBindingConnection();//{'oDbg': oDbg});
       setupCon(this.con);
@@ -35,8 +35,6 @@ var jabber = {
     con.registerHandler('presence', jabber.handle.presence);
     con.registerHandler('onconnect', jabber.handle.connected);
     con.registerHandler('ondisconnect', jabber.handle.disconnected);
-    con.registerHandler('failure', jabber.handle.failure);
-    con.registerIQGet('query', NS_VERSION, jabber.handle.iqVersion);
     con.registerIQGet('query', NS_TIME, jabber.handle.iqTime);
     con.registerIQSet('query', NS_ROSTER, jabber.handle.iqRosterSet);
     con.registerHandler('iq', 'query', NS_ROSTER, jabber.handle.iqRoster);
@@ -44,33 +42,36 @@ var jabber = {
   },
   
   doLogin: function(username, password){
-  
     try {
       // setup args for contructor
-      oArgs = new Object();
-      oArgs.httpbase = '/http-bind/';
-      oArgs.timerval = 2000;
+      var oArgs = {
+        httpbase: '/http-bind/'
+        ,timerval: 2000
+      }
       
       if (typeof(oDbg) != 'undefined') 
         oArgs.oDbg = oDbg;
       
       this.con = new JSJaCHttpBindingConnection(oArgs);
       
-      jabber.setupCon(this.con);
+      this.setupCon(this.con);
       
       // setup args for connect method
-      oArgs = new Object();
-      oArgs.domain = window.config.jabber_domain;
-      oArgs.server = window.config.jabber_server;
-      oArgs.username = username;
-      oArgs.pass = password;
-      oArgs.register = false;
-      oArgs.resource = Math.ceil(Math.random()*Math.pow(10,10));
+      oArgs = {
+        domain: config.jabber_domain
+        ,server: config.jabber_server
+        ,username: username
+        ,pass: password
+        ,register: false
+        ,resource: Math.ceil(Math.random()*Math.pow(10,10))
+      };
       //oArgs.authtype = 'nonsasl';
-      this.u_n = username;
-      this.p_w = password;
-      this.myJid = oArgs.username + oArgs.domain;
-      this.resource = oArgs.resource;
+      Ext.apply(this, {
+        u_n: username
+        ,p_w: password
+        ,myJid: oArgs.username + oArgs.domain
+        ,resource: oArgs.resource
+      });
       
       this.con.connect(oArgs);
     } 
@@ -122,45 +123,6 @@ var jabber = {
     query.appendChild(item);
     this.con.send(iq);
   },
-  addBuddy: function(buddy){
-    this.addRosterItem(buddy);
-    this.subscribe(buddy.jid);
-    return buddy.jid;
-  },
-
-  getRegFields: function(to){
-    var iq = new JSJaCIQ();
-    iq.setTo(to);
-    iq.setType('get');
-    iq.setID('reg_get');
-    iq.setQuery(NS_REGISTER);
-    this.send(iq);
-  },
-
-  register: function(to, fields) {
-    //this.unregister(to); // Unregister old account if possible
-    var iq = new JSJaCIQ();
-    iq.setTo(to);
-    iq.setType('set');
-    iq.setID('reg');
-    var query = iq.setQuery(NS_REGISTER);
-    for (field in fields) {
-      query.appendChild(
-        iq.buildNode(field, {}, fields[field])
-      );
-    }
-    this.send(iq);
-  },
-  
-  unregister: function(to) {
-    var iq = new JSJaCIQ();
-    iq.setTo(to);
-    iq.setType('set');
-    iq.setID('unreg');
-    var query = iq.setQuery(NS_REGISTER);
-    query.appendChild(iq.buildNode('remove', {}, ''));
-    this.send(iq);
-  },
 
   setPresence: function(show, status, type) {
     jabber.status = {presence:show, status:status, type:type};
@@ -173,39 +135,10 @@ var jabber = {
 
     //save status in the west panel
     if(westPanel.showedUser && westPanel.showedUser.id === window.user.id){
-        setChatStatus(status.htmlEnc().smilize().urlize());
+      setChatStatus(status.htmlEnc().smilize().urlize());
     }
   },
 
-  subscribe: function(jid){
-    this.__subscription(jid, 'subscribe');
-  },
-  
-  unsubscribe: function(jid){
-    this.__subscription(jid, 'unsubscribe');
-  },
-  
-  allowSubscription: function(jid){
-    this.__subscription(jid, 'subscribed');
-  },
-  
-  denySubscription: function(buddy){
-    this.__subscription(jid, 'unsubscribed');
-  },
-  
-  /**
-   * Sends a subscription packet of a specified type
-   * @param {JSJaCJID} buddy
-   * @param {String} subType
-   */
-  __subscription: function(jid, subType){
-    var presence = new JSJaCPacket('presence');
-    presence.setTo(jid);
-    presence.setType(subType);
-    this.send(presence);
-    return false;
-  },
-  
   isConnected: function(){
     return this.con.connected();
   },
@@ -297,18 +230,6 @@ var jabber = {
       if (jabber.nTrials++ < jabber.maxTrials){
         jabberui.init(jabber.status.presence, jabber.status.status, jabber.status.type);
       }
-    },
-    
-    failure: function(aJSJaCPacket){
-      alert("Failure: " + aJSJaCPacket.xml());
-    },
-    
-    iqVersion: function(iq){
-      this.send(iq.reply(
-        [iq.buildNode('name', 'yakalope test'),
-         iq.buildNode('version', JSJaC.Version),
-         iq.buildNode('os', navigator.userAgent)]));
-      return true;
     },
     
     iqTime: function(iq){
