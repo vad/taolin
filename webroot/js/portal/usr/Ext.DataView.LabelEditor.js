@@ -56,7 +56,6 @@ Ext.DataView.LabelEditor = Ext.extend(Ext.Editor, {
     onMouseDown : function(e, target){
         if(!e.ctrlKey && !e.shiftKey){
             var item = this.view.findItemFromChild(target);
-            store = this.view.store;
             e.stopEvent();
             var record = this.view.store.getAt(this.view.indexOf(item));
             this.startEdit(target, record.data[this.dataIndex]);

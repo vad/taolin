@@ -122,7 +122,6 @@ MeteoTrentino = function(conf, panel_conf){
         }]
         ,listeners: {
             render: function(){
-                this.doLayout(); // TO DO: do this only if it is collapsed
                 this.loadForecast();
             }
         }
