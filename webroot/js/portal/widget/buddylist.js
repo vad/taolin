@@ -43,7 +43,7 @@ var roster = {
     this.roster.push(buddy);    
   },
   flushPresence: function() {
-    //TODO: change this. Once buddies are readed, drop them from store 
+    //TODO: change this. Once buddies are read, drop them from store 
     for(var i=0, il=this.store.length; i<il; i++) {
         var b = this.store[i];
         this.setPresence(b.jid, b.presence, b.status, b.type);
@@ -104,29 +104,27 @@ var roster = {
             cssClass = Ext.util.CSS.getRule('body .'+ sCssClass, true);
     }
     
-    var sBulletPresence;
-    if (type == 'unavailable')
-        sBulletPresence = 'unavailable';
-    else
-        sBulletPresence = presence;
-
-    var sStyleBg = 'url(js/portal/shared/icons/fam/'+ hBullets[sBulletPresence] +') left no-repeat';
+    var sBulletPresence = (type === 'unavailable') ? 'unavailable' : presence
+        ,sStyleBg = 'url(js/portal/shared/icons/fam/'+ hBullets[sBulletPresence] +') left no-repeat';
     cssClass.style.background = sStyleBg;
 
-    for (var i=0, il=this.online.length; i<il; i++) {
-      if (this.online[i].jid.toString() == jid.toString()) {
-        this.online[i].presence = presence;
-        this.online[i].status = status.htmlEnc();
-        this.online[i].fancyStatus = status.htmlEnc().smilize().urlize();
-        this.online[i].type = type;
+    var online = this.online;
+    for (var i=0, il=online.length; i<il; i++) {
+        var buddy = online[i];
+        if (buddy.jid.toString() === jid.toString()) {
+            Ext.apply(buddy, {
+                presence: presence
+                ,status: status.htmlEnc()
+                ,fancyStatus: status.htmlEnc().smilize().urlize()
+                ,type: type
+            });
         
-        // If the buddy goes offline, remove from online list
-        if (type == 'unavailable') {
-         var buddy = this.online[i];
-         this.online.remove(this.online[i]);
-         this.roster.push(buddy);
-        }
-        break;
+            // If the buddy goes offline, remove from online list
+            if (type === 'unavailable') {
+                online.remove(buddy);
+                this.roster.push(buddy);
+            }
+            break;
       }
     }
     rosterStore.load();
@@ -138,7 +136,7 @@ var roster = {
   }
 };
 
-var rosterStore = new Ext.data.GroupingStore({
+rosterStore = new Ext.data.GroupingStore({
   id: 'rosterStore',
   proxy: new Ext.data.MemoryProxy(roster),
   reader: new Ext.data.JsonReader({
@@ -155,9 +153,11 @@ var rosterStore = new Ext.data.GroupingStore({
   sortInfo: {field: 'jid', direction: "ASC"},
   groupField: 'group'
 });
+/*
 rosterStore.on('loadexception', function(proxy, store, response, e) {
     console.log('loadexception: ' + e.message);
 });
+*/
 
 BuddyList = function(conf, panel_conf) {
     Ext.apply(this, panel_conf);
@@ -167,16 +167,30 @@ BuddyList = function(conf, panel_conf) {
         collapsible: true,
         autoHeight: true,
         header: false,
-        /*tbar: [{
-            text: 'Logout',
-            id: 'logout',
-            handler: function(){
-                jabber.quit()
-            },
-            scope: this
-        }],*/
+        buddyTpl: new Ext.XTemplate(
+            '<table style="width:100%"><tr>'
+                ,'<td style="vertical-align:middle;">'
+                    ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
+                        ,'<tpl if="presence">'
+                            ,'<span class="buddylistmessage" style="margin-left:10px;">{presence}</span>'
+                        ,'</tpl>'
+                    ,'</div>'
+                    ,'<tpl if="status">'
+                        ,'<div class="buddylistmessage" qtip="{status}" style="padding-right:2px;">'
+                            ,'{fancyStatus}'
+                        ,'</div>'
+                    ,'</tpl>'
+                ,'</td>'
+                ,'<td style="width:40px;text-align:center;">'
+                    ,'<img src="photos/getphotofromuserlogin/{[values.jid._node]}/40/40" />'
+                ,'</td>'
+            ,'</tr></table>'
+            ,{
+                compiled: true
+            }
+        ),
         listeners: {
-            'resize' : {
+            resize : {
                 fn: function(panel, panelWidth, panelHeight){ 
                     panel.items.first().setWidth(panelWidth);
                 }, 
@@ -193,27 +207,10 @@ BuddyList = function(conf, panel_conf) {
               columns: [{
                 id: 'jid',
                 dataIndex: 'jid',
+                buddyList: this,
+                myIndex: 0,
                 renderer: function (value, p, record) {
-                    var tpl = new Ext.XTemplate(
-                        '<table style="width:100%"><tr>'
-                            ,'<td style="vertical-align:middle;">'
-                                ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
-                                    ,'<tpl if="presence">'
-                                        ,'<span class="buddylistmessage" style="margin-left:10px;">{presence}</span>'
-                                    ,'</tpl>'
-                                ,'</div>'
-                                ,'<tpl if="status">'
-                                    ,'<div class="buddylistmessage" qtip="{status}" style="padding-right:2px;">'
-                                        ,'{fancyStatus}'
-                                    ,'</div>'
-                                ,'</tpl>'
-                            ,'</td>'
-                            ,'<td style="width:40px;text-align:center;">'
-                                ,'<img src="photos/getphotofromuserlogin/{[values.jid._node]}/40/40" />'
-                            ,'</td>'
-                        ,'</tr></table>'
-                    );
-                    return tpl.applyTemplate(record.data);
+                    return this.buddyList.buddyTpl.applyTemplate(record.data);
                 }},
                 {dataIndex: 'group', hidden: true},
                 {dataIndex: 'presence', hidden: true},
@@ -239,9 +236,9 @@ BuddyList = function(conf, panel_conf) {
                 },
                 resize : {
                     fn: function(panel, panelWidth, panelHeight){ 
-                        var presence = Ext.getCmp('presence');
-                        var status = Ext.getCmp('status');
-                        var width = panelWidth - (presence.width + 20); // Status's width
+                        var presence = Ext.getCmp('presence')
+                            ,status = Ext.getCmp('status')
+                            ,width = panelWidth - (presence.width + 20); // Status's width
                         if(width) // Check wether "width" is not NaN but a real number
                             status.setWidth(width);
                     }, 

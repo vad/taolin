@@ -190,7 +190,7 @@ var jabber = {
     presence: function(aJSJaCPacket){
       var from = new JSJaCJID(aJSJaCPacket.getFrom());
 
-      if ((from.getNode() == jabber.u_n) && (from.getResource() != jabber.resource) && (aJSJaCPacket.getType() == 'unavailable')) {
+      if ((from.getNode() === jabber.u_n) && (from.getResource() !== jabber.resource) && (aJSJaCPacket.getType() === 'unavailable')) {
         // if a disconnection message comes from another resource of this user, discard this message.
         // This check prevents that the users seems to be offline 30s after page refresh
         return false;
@@ -200,13 +200,14 @@ var jabber = {
       
       var presence = aJSJaCPacket.getShow()
         ,type = ''
-        ,status = '';
+        ,status = '',
+        tmp;
 
-      if (aJSJaCPacket.getType()) {
-        type = aJSJaCPacket.getType();
+      if (tmp = aJSJaCPacket.getType()) {
+        type = tmp;
       }
-      if (aJSJaCPacket.getStatus()) {
-        status = aJSJaCPacket.getStatus();
+      if (tmp = aJSJaCPacket.getStatus()) {
+        status = tmp;
       }      
 
       roster.setPresence(from, presence, status, type);
@@ -215,7 +216,7 @@ var jabber = {
     connected: function(){
       var j = jabber;
       Ext.getCmp('buddylist').items.first().view.emptyText = 'Nobody';
-      j.getRoster();
+      j.getRoster.defer(0,j);
       
       j.setPresence(j.status.presence, j.status.status, j.status.type);
     },
@@ -232,7 +233,8 @@ var jabber = {
       Ext.getCmp('buddylist').items.first().view.emptyText = 'There has been problems connecting to the server. Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to try again. Possible problems: (1) If you are visiting taolin in more than one tab, please close all but one tab. (2) You changed your password recently, please logout and login again with the new password.';
       
       if (j.nTrials++ < j.maxTrials){
-        jabberui.init(j.status.presence, j.status.status, j.status.type);
+        var status = j.status;
+        jabberui.init(status.presence, status.status, status.type);
       }
     },
     
@@ -249,12 +251,13 @@ var jabber = {
     iqRoster: function(iq){
       var q = iq.getQuery()
         ,r = roster;
-      
+     
+      //TODO: disable Buddylist refresh while inserting
       r.clear(); //i hope the new roster replaces the old one...
       $(q).find('item').each(function(){
         var t = $(this)
           ,b = new Buddy(t.attr('jid'), t.attr('subscription'),
-          t.attr('name'), t.find('group').text());
+            t.attr('name'), t.find('group').text());
         r.roster.push(b);
       });
 
@@ -262,7 +265,7 @@ var jabber = {
     },
     
     iqRosterSet: function(iq){
-      this.handle.iqRoster(iq);
+      this.iqRoster(iq);
     }
   }
 };
