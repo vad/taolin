@@ -262,7 +262,7 @@ BuddyList = function(conf, panel_conf) {
                     ]
                   }),
                   panel: this,
-                  value:conf.presence ? conf.presence : '',
+                  value:get(conf, 'presence', ''),
                   displayField: 'readablePresence',
                   valueField: 'presence',
                   iconClsField: 'iconClass',

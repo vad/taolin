@@ -413,16 +413,17 @@ function createNewPortlet(conf, use_widget_position){
 
     widget_conf.portlet_id = w_id;
 
-
-    portlet.items = new w_class(widget_conf, {portlet_id: w_id});
-    portlet.id = w_id;
-    portlet.widget_id = widget_id;
-    portlet.string_identifier = string_identifier;
-    portlet.hideCollapseTool = true;
-    portlet.title = name;
-    portlet.userParams = user_params; //user's configurable params (name, type, description)
-    portlet.widgetConf = widget_conf; //params value
-    portlet.lastConf = conf; //all the configuration
+    Ext.apply(portlet, {
+        items: new w_class(widget_conf, {portlet_id: w_id})
+        ,id: w_id
+        ,widget_id: widget_id
+        ,string_identifier: string_identifier
+        ,hideCollapseTool: true
+        ,title: name
+        ,userParams: user_params //user's configurable params (name, type, description)
+        ,widgetConf: widget_conf //params value
+        ,lastConf: conf //all the configuration
+    });
     
     if (user_params.length)
         portlet.tools = toolsconf;
@@ -580,9 +581,9 @@ String.prototype.smilize = function () {
  * @addon
  */
 String.prototype.getBrightness = function () {
-    var s = this;
-    var r,g,b;
-    var ir,ig,ib;
+    var s = this
+        ,r,g,b
+        ,ir,ig,ib;
 
     s = Ext.util.Format.trim(s);
     if (s[0] == '#') s = s.substring(1);
@@ -769,18 +770,21 @@ function setChatStatus(chatStatus){
 
 function findChatStatus(req, login){
 
-    var chat_status = '';
+    var chat_status = ''
+        ,j = jabber
+        ,r = roster
+        ,online = r.online;
 
-    if (roster) {
+    if (r) {
         if(req){
-            for(var i=0;i < roster.online.length; i++){
-                if((roster && roster.online[i].jid._node === login) && (roster.online[i].status != '')) {
-                    setChatStatus(roster.online[i].fancyStatus);
+            for(var i=0;i < online.length; i++){
+                if((r && online[i].jid._node === login) && (online[i].status != '')) {
+                    setChatStatus(online[i].fancyStatus);
                 }
             }
         } else { // my status
-            if((jabber.status) && (jabber.status != null) && (jabber.status != '')){
-                setChatStatus(jabber.status.status.htmlEnc().smilize().urlize());
+            if((j.status) && (j.status != null) && (j.status != '')){
+                setChatStatus(j.status.status.htmlEnc().smilize().urlize());
             }
         }
     } else {
@@ -868,8 +872,8 @@ function showPicture(p_id, u_id){
         
 function previewWidget(widgetid, widgetname, widgetdescription, screenshot, logparams){
 
-    var widgetimg = 'style="padding:5px;" src="img/image_error.png"';
-    var winwidth = 280;
+    var widgetimg = 'style="padding:5px;" src="img/image_error.png"'
+        ,winwidth = 280;
 
     if(screenshot){
         var s = Ext.util.Format.imageThumbPath(screenshot, 300, 300);
@@ -877,8 +881,8 @@ function previewWidget(widgetid, widgetname, widgetdescription, screenshot, logp
         winwidth = 440; 
     }
 
-    var wintitle = 'Add widget ' + widgetname + '?';
-    var winbody = '<div><img ' + widgetimg + ' /></div><br /><span style="font-size:120%">' + widgetdescription + '<br /><br />Add this widget?<br /></span>';
+    var wintitle = 'Add widget ' + widgetname + '?'
+        ,winbody = '<div><img ' + widgetimg + ' /></div><br /><span style="font-size:120%">' + widgetdescription + '<br /><br />Add this widget?<br /></span>';
 
     Ext.Msg.show({  
         title: wintitle,  
@@ -1173,9 +1177,9 @@ $.extend(Ext.util.Format, {
         return this.substr(f, 0, f.lastIndexOf(".")) + '.jpg'; 
     }
     ,imageThumbPath: function(img, width, height){
-        var s = img.lastIndexOf("/");
-        var path = this.substr(img, 0, s);
-        var filename = this.substr(img, s + 1, img.length - s);
+        var s = img.lastIndexOf("/")
+            ,path = this.substr(img, 0, s)
+            ,filename = this.substr(img, s + 1, img.length - s);
         
         return String.format('{0}/t{1}x{2}/{3}', path, width, height, filename); 
     }
@@ -1184,7 +1188,8 @@ $.extend(Ext.util.Format, {
         // Formatting Date object in order to compare it
         formattedDate = originalDate.toDateString();
 
-        var today = new Date(), yesterday = new Date();
+        var today = new Date(),
+            yesterday = (new Date());
         yesterday.setDate(today.getDate() - 1);
 
         // Comparing Date
@@ -1196,31 +1201,33 @@ $.extend(Ext.util.Format, {
                 else
                     return ((diff < 59) ? this.plural(diff, "minute") : this.plural(Math.floor(diff/60), "hour")) + " ago" ;
             } 
-            else return 'Today';
+            else
+                return 'Today';
         }
         else if(formattedDate == yesterday.toDateString())
             return printHours ? 'Yesterday at ' + originalDate.format('H:i') : 'Yesterday';
         else{
+            var format;
             if(today.getYear() == originalDate.getYear())
-                return printHours ? originalDate.format('F, d \\a\\t H:i') : originalDate.format('F, d');
+                format = printHours ? 'F, d \\a\\t H:i' : 'F, d'; 
             else
-                return printHours ? originalDate.format('F, d Y \\a\\t H:i') : originalDate.format('F, d Y');
+                format = printHours ? 'F, d Y \\a\\t H:i' : 'F, d Y';
+            
+            return originalDate.format(format);
         }
     }
     ,ellipseOnBreak: function(text, max){
-        if (text.length <= max) return text;
+        if (text.length <= max)
+            return text;
         
-        var ellipsedText = this.ellipsis(text, max);
-
-        var lastBlank = ellipsedText.lastIndexOf(" ");
-        var lastNewLine = ellipsedText.lastIndexOf("\n");
-        
-        var checkedValue = Math.max(lastBlank,lastNewLine);
+        var ellipsedText = this.ellipsis(text, max)
+            ,lastBlank = ellipsedText.lastIndexOf(" ")
+            ,lastNewLine = ellipsedText.lastIndexOf("\n")
+            ,checkedValue = Math.max(lastBlank,lastNewLine);
 
         if(checkedValue <= max && checkedValue !== -1) 
             return this.ellipsis(text, checkedValue + 3);
-        else 
-            return ellipsedText;
+        return ellipsedText;
     }
 });
 

@@ -216,7 +216,7 @@ var jabber = {
     connected: function(){
       var j = jabber;
       Ext.getCmp('buddylist').items.first().view.emptyText = 'Nobody';
-      j.getRoster.defer(0,j);
+      j.getRoster.defer(500,j);
       
       j.setPresence(j.status.presence, j.status.status, j.status.type);
     },
@@ -291,7 +291,7 @@ var Buddy = function(jid, subscription, name, group, presence, status, type){
     ,type: type
   });
 
-  for (var el in this) {
+  for (var el in ['presence','status','type']) {
     if (typeof(this[el]) == 'undefined') 
       this[el] = '';
   }
