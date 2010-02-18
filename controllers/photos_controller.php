@@ -390,6 +390,7 @@ class PhotosController extends AppController {
             $photo = imagecreatefromjpeg($photo_fs_dir.'t'.$width.'x'.$height.'/'.$photo_name);
 
             header('Content-Type: image/jpeg');
+            header('Cache-Control: max-age=3600, must-revalidate');
 
             imagejpeg($photo);
             imagedestroy($photo);
@@ -399,6 +400,7 @@ class PhotosController extends AppController {
             $photo = imagecreatefromgif("../webroot/ext/resources/images/default/s.gif");
             
             header('Content-Type: image/gif');
+            header('Cache-Control: max-age=3600, must-revalidate');
 
             imagegif($photo);
             imagedestroy($photo);
