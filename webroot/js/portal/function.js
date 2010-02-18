@@ -18,7 +18,7 @@
   */
 
 /* 
- * Functions used in the js files
+ * Functions used in js files
  */
 
 /*
@@ -589,11 +589,11 @@ String.prototype.getBrightness = function () {
     if (s[0] == '#') s = s.substring(1);
 
     r = s.substring(0, 2);
-    ir = parseInt('0x'+r);
+    ir = parseInt(r, 16);
     g = s.substring(2, 4);
-    ig = parseInt('0x'+g);
+    ig = parseInt(g, 16);
     b = s.substring(4, 6);
-    ib = parseInt('0x'+b);
+    ib = parseInt(b, 16);
 
     //w3c:
     //((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000

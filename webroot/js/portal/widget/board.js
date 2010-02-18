@@ -263,7 +263,7 @@ Board = function(conf, panel_conf){
             target2.update('<span class="a" onclick="Ext.getCmp(\''+this.getId()+'\').formatText('+id+', '+!expand+')">View more</span>');
         }
         return true;
-    }
+    };
 
     this.loadPage = function(nPage){
         this.view.store.load({
@@ -271,7 +271,7 @@ Board = function(conf, panel_conf){
                 start: limit*(nPage-1)
             }
         });
-    }
+    };
 
     this.sendTo = function(row, recipient, name, surname ) {
         var text = this.view.store.getAt(row).json.text;

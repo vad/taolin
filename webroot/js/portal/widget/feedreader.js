@@ -35,7 +35,7 @@ FeedReader = function(conf, panel_conf){
 
     var nItems = 5;
     if (conf.items){
-        nItems = parseInt(conf.items);
+        nItems = parseInt(conf.items, 10);
     }
     this.autoExpand = conf.autoExpand;
 

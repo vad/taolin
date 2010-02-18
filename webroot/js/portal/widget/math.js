@@ -67,7 +67,7 @@ MathWidget = function(conf, panel_conf){
         ]
         ,keys:{
             key: Ext.EventObject.ENTER
-            ,fn: function(){this.calcForm.evaluate()}
+            ,fn: function(){this.calcForm.evaluate();}
             ,scope: this
         }
         ,evaluate: function(){
@@ -80,7 +80,7 @@ MathWidget = function(conf, panel_conf){
         }
         ,buttons: [{
             text: 'Result'
-            ,handler: function(){this.calcForm.evaluate()}
+            ,handler: function(){this.calcForm.evaluate();}
             ,scope:this
         }]
     });
@@ -138,19 +138,19 @@ MathWidget = function(conf, panel_conf){
             var eq = this.items.get(0).getValue();
             var range = this.items.get(1).getValue();
             var commaPos = range.indexOf(',');
-            var llim = parseInt(range.substr(0,commaPos));
-            var ulim = parseInt(range.substr(commaPos+1));
+            var llim = parseInt(range.substr(0,commaPos), 10);
+            var ulim = parseInt(range.substr(commaPos+1), 10);
             
             this.parent.drawChart(eq, llim, ulim, 500, 2, el, w, h);
         }
         ,keys:{
             key: Ext.EventObject.ENTER
-            ,fn: function(){this.graphForm.plot()}
+            ,fn: function(){this.graphForm.plot();}
             ,scope: this
         }
         ,buttons: [{
             text: 'Plot'
-            ,handler: function(){this.graphForm.plot()}
+            ,handler: function(){this.graphForm.plot();}
             ,scope:this
         }]
     });

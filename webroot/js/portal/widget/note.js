@@ -69,7 +69,7 @@ Note = function(conf, panel_conf){
                         var kc = e.keyCode;
                         
                         // these keys don't trigger any change: if the key pressed was one of them, stop here
-                        if ((kc == e.ALT) || (kc == e.CTRL) || (kc == e.SHIFT) || (kc == 15) || (kc == e.UP) || (kc == e.DOWN) || (kc == e.LEFT) || (kc == e.RIGHT) || (kc == e.CAPS_LOCK) || (kc == e.HOME) || (kc == e.END) || (kc == 0))
+                        if ((kc == e.ALT) || (kc == e.CTRL) || (kc == e.SHIFT) || (kc == 15) || (kc == e.UP) || (kc == e.DOWN) || (kc == e.LEFT) || (kc == e.RIGHT) || (kc == e.CAPS_LOCK) || (kc == e.HOME) || (kc == e.END) || (kc === 0))
                             return;
                         
                         /* // ESC cause problems with the chat
@@ -94,13 +94,17 @@ Note = function(conf, panel_conf){
                 render : {
                     fn: function(){
                         Ext.getCmp(panel_conf.portlet_id).setTitle(note_title);
-                        if(note_background && note_background != '') {
-                            $('#'+this.id+' .note-text-container').css('background',note_background);
-                            
-                            // font color
-                            var b = note_background.getBrightness();
-                            var note_foreground = (b > 127) ? 'black' : 'white';
-                            $('#'+this.id+' .note-text-area').css('color', note_foreground);
+                        if(note_background && note_background !== '') {
+                            var b = note_background.getBrightness()
+                                ,note_foreground = (b > 127) ? 'black' : 'white';
+
+                            $('#'+this.id)
+                                .find('.note-text-container')
+                                    .css('background',note_background)
+                                .end()
+                                // font color
+                                .find('.note-text-area')
+                                    .css('color', note_foreground);
                         }
 
                         var ta = this.form.items.first();
