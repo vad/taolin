@@ -50,8 +50,6 @@ class PortalsController extends AppController {
         $response['config']['jabber_domain'] = $this->Conf->get('Jabber.domain');
         $response['config']['logo'] = $this->Conf->get('Site.logo_url');
         $response['config']['background'] = $this->Conf->get('Site.background');
-        
-        $u_id = $this->Session->read('id');
 
         App::import('Model', 'User');
         $users = new User();
@@ -68,6 +66,8 @@ class PortalsController extends AppController {
         );
         
         $response['user'] = $res['User'];
+        $response['user']['admin'] = $this->Acl->check(array('model' => 'User', 'foreign_key' => $u_id), 'admin');
+
         pr($response);
 
         $response['success'] = true;
