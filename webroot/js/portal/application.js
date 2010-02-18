@@ -139,6 +139,18 @@ function application_init(){
 
     var main_menu;
 
+    var admin_menu_item = 
+        '<li class="header"><span class="a menu-item">Admin</span>' +
+            '<ul>' +
+                '<li><a class="menu-item" href="./admin" target="_blank">Admin site</a></li>' +
+                '<li><a class="menu-item" href="./admin/portals/config" target="_blank">Configuration</a></li>' +
+                '<li><a class="menu-item" href="./admin/templates" target="_blank">Templates</a></li>' +
+                '<li><a class="menu-item" href="./admin/users" target="_blank">Users</a></li>' +
+                '<li><a class="menu-item" href="./admin/widgets" target="_blank">Widgets</a></li>' +
+            '</ul>' +
+        '</li>';
+    var simple_admin_menu_item = '<li class="header"><a class="menu-item" href="./admin" target="_blank">Admin site</a></li>';
+
     if(!Ext.isIE6 && !Ext.isIE7)
         main_menu =
             '<ul class="dd-menu">' +
@@ -174,6 +186,7 @@ function application_init(){
                         //'<li><a class="menu-item" href="http://github.com/vad/taolin/issues" target="_blank">Report an issue</a></li>' +
                     '</ul>' +
                 '</li>' +
+                (user.admin ? admin_menu_item : '' ) +
                 '<li class="header last"><a class="menu-item" href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
             '</ul>';
     else // Simplified version for old, stupidunsupported browsers
@@ -187,6 +200,7 @@ function application_init(){
                 '<li class="header"><a class="menu-item" href="./pages/privacy_policy" target="_blank">Privacy policy</a></li>' +
                 /* This software is open source released under aGPL. See http://www.fsf.org/licensing/licenses/agpl-3.0.html for more details. According to the license, you must place in every Web page served by Taolin a link where your user can download the source code. So, please, don't remove this link, you can move it in another part of the web page, though. */
                 '<li class="header"><a class="menu-item" href="http://github.com/vad/taolin" target="_blank">Download the code</a></li>' +
+                (user.admin ? simple_admin_menu_item : '' ) +
                 '<li class="header last"><a class="menu-item" href="./accounts/logout" onclick="jabber.quit()">Logout</a></li>' + 
             '</ul>';
 
