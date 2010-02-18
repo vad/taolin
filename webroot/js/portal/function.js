@@ -341,9 +341,9 @@ function movewidgets(str){
 
 function setWidgetsPosition(){
     
-    pc = Ext.getCmp('portal_central');
-    var num_cols = pc.items.getCount();
-    var result = '';
+    var pc = Ext.getCmp('portal_central')
+        ,num_cols = pc.items.getCount()
+        ,result = '';
 
     for (var i=0; i<num_cols; i++) {
         var col = pc.items.items[i].items;

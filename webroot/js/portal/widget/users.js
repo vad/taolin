@@ -31,9 +31,10 @@
 */
 
 
-UsersPortlet = function(json){
+UsersPortlet = function(conf){
+
     var store = new Ext.data.JsonStore({
-        url: json.url+'/5/'+json.showPhoto,
+        url: conf.url+'/5/'+conf.showPhoto,
         root: '',
         fields: ['id', 'name', 'surname', 'login']
     });
@@ -47,6 +48,9 @@ UsersPortlet = function(json){
                 '</div>',
             '</div>',
         '</tpl>'
+        ,{
+            compiled: true
+        }
     );
 
     UsersPortlet.superclass.constructor.call(this, {

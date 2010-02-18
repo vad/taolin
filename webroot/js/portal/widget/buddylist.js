@@ -26,6 +26,10 @@
   * <p>This widget show the user connected to the jabber server</p>
 */
 
+var fancyPresenceDict = {
+    dnd: 'do not disturb'
+};
+
 var roster = {
   // Online buddies
   online: [],
@@ -89,19 +93,15 @@ var roster = {
 
     var sCssClass = 'user-' + (jid.toString().split('@'))[0];
     // IE wants DIV, FF div... and the others? It's better to try to get both instead of using Ext.isIE
-    var rule = 'BODY .'+ sCssClass; 
-    var cssClass = Ext.util.CSS.getRule(rule, true); // for IE
-    if (!cssClass) // for FF
-        cssClass = Ext.util.CSS.getRule('body .'+ sCssClass, true);
+    var rule = 'body .'+ sCssClass; 
+    var cssClass = Ext.util.CSS.getRule(rule, true);
 
     if (!cssClass) { // if no cssClass has been found, create it
         var s = rule +" {\n}";
         Ext.util.CSS.createStyleSheet(s, rule);
 
         // now we need to get the class, so we can change its style
-        cssClass = Ext.util.CSS.getRule(rule, true); // for IE
-        if (!cssClass) // for FF
-            cssClass = Ext.util.CSS.getRule('body .'+ sCssClass, true);
+        cssClass = Ext.util.CSS.getRule(rule, true);
     }
     
     var sBulletPresence = (type === 'unavailable') ? 'unavailable' : presence
@@ -112,8 +112,13 @@ var roster = {
     for (var i=0, il=online.length; i<il; i++) {
         var buddy = online[i];
         if (buddy.jid.toString() === jid.toString()) {
+            var fancyPresence = presence;
+            if (presence in fancyPresenceDict)
+                fancyPresence = fancyPresenceDict[presence];
+
             Ext.apply(buddy, {
                 presence: presence
+                ,fancyPresence: fancyPresence
                 ,status: status.htmlEnc()
                 ,fancyStatus: status.htmlEnc().smilize().urlize()
                 ,type: type
@@ -172,7 +177,7 @@ BuddyList = function(conf, panel_conf) {
                 ,'<td style="vertical-align:middle;">'
                     ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
                         ,'<tpl if="presence">'
-                            ,'<span class="buddylistmessage" style="margin-left:10px;">{presence}</span>'
+                            ,'<span class="buddylistmessage" style="margin-left:10px;">{fancyPresence}</span>'
                         ,'</tpl>'
                     ,'</div>'
                     ,'<tpl if="status">'
@@ -187,6 +192,7 @@ BuddyList = function(conf, panel_conf) {
             ,'</tr></table>'
             ,{
                 compiled: true
+                ,disableFormats: true
             }
         ),
         listeners: {
@@ -276,9 +282,9 @@ BuddyList = function(conf, panel_conf) {
                         //combo.setValue(combo.store.collect('presence', true)[0]);
                     },
                     select: function (combo) {
-                      var status = Ext.getCmp('status').getValue();
-                      var presence = combo.getValue();
-                      var type;
+                      var status = Ext.getCmp('status').getValue()
+                        ,presence = combo.getValue()
+                        ,type;
                       
                       //store in DB
                       this.panel.setPref('presence', presence);
@@ -320,9 +326,9 @@ BuddyList = function(conf, panel_conf) {
                   ,onKeyUp: function (e) { 
                       this.collapse();
                       if (e.getKey() == Ext.EventObject.ENTER) {
-                        var status = Ext.getCmp('status');
-                        var sPresence = Ext.getCmp('presence').getValue();
-                        var sStatus = status.getEl().dom.value;
+                        var status = Ext.getCmp('status')
+                            ,sPresence = Ext.getCmp('presence').getValue()
+                            ,sStatus = status.getEl().dom.value;
                         
                         rec = new status.recordType({status: sStatus});
                         Ext.getCmp('status').store.add(rec);
@@ -343,8 +349,8 @@ BuddyList = function(conf, panel_conf) {
                         }
                     }
                     ,select: function (combo, record, index) { //change status from drop down menu
-                        var presence = Ext.getCmp('presence').getValue();
-                        var status = record.get('status');
+                        var presence = Ext.getCmp('presence').getValue()
+                            ,status = record.get('status');
                         
                         //store in DB
                         combo.panel.setPref('status', status, reloadTimeline);
@@ -354,8 +360,8 @@ BuddyList = function(conf, panel_conf) {
                     }
                     ,render: function(t){
 
-                        var presence, status, type;
-                        var cPresence = Ext.getCmp('presence');
+                        var presence, status, type
+                            ,cPresence = Ext.getCmp('presence');
                         
                         if (cPresence.value == 'invisible'){
                             presence = '';
