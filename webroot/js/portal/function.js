@@ -798,7 +798,7 @@ function findChatStatus(req, login){
  *
  **************************************************************************/
 photoWindowTemplate = new Ext.XTemplate(
-    '<img id="photo-{id}" class="ante no-hover" style="min-height:70px;margin:auto auto;display:block;" src="{[config.img_path]}t480x480/{filename}" />',
+    '<img id="photo-{id}" class="ante no-hover" style="min-height:70px;margin:auto auto;display:block;" src="{[config.img_path]}t480x480/{filename}" /><br />',
     /* COMMENTS */
     '<span class="timeline-comments" onclick="openCommentWindow(\'Photo\',{id})">',
         '<tpl if="commentsCount &gt; 0">',
