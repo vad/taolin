@@ -121,7 +121,7 @@ Board = function(conf, panel_conf){
                             form.reset(); // Reset form to its default values
                             
                             $('#undodelads-'+w_id)
-                                .removeClass('warning-msg')
+                                .removeClass('warning-msg error-msg')
                                 .addClass('confirm-msg')
                                 .html('Message created. [<span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close</span>]')
                                 .show();
@@ -129,7 +129,19 @@ Board = function(conf, panel_conf){
                             boardStore.load(); // Reload board's store
 
                             em.fireEvent('newtimelineevent');
+                        },
+                        failure: function(form, action){
+
+                            var data = Ext.util.JSON.decode(action.response.responseText);
+                            var error = get(data, 'error', 'Error - Can not save it'); 
+
+                            $('#undodelads-'+w_id)
+                               .removeClass('warning-msg confirm-msg')
+                               .addClass('error-msg')
+                               .html(error + ' [<span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close</span>]')
+                               .show();
                         }
+
                     }
                 );
                  
@@ -149,7 +161,7 @@ Board = function(conf, panel_conf){
                     method: 'GET',
                     success: function(result, request){
                         $('#undodelads-'+w_id)
-                            .removeClass('confirm-msg')
+                            .removeClass('confirm-msg error-msg')
                             .addClass('warning-msg')
                             .html('Message deleted. <span class="a" onclick="Ext.getCmp(\''+w_id+'\').undoDeleteAds(' + ads_id + ')">Undo</span> or <span class="a" onclick="showText(false, \'undodelads-'+w_id+'\')">close this message</span>')
                             .show();
@@ -416,7 +428,7 @@ Board = function(conf, panel_conf){
         }
         ),
 	    itemSelector: '.text',
-        emptyText: '<div style="warning-msg" style="margin:0 20px">There are no messages on the board</div>',
+        emptyText: '<div class="warning-msg" style="margin:0 20px">There are no messages on the board</div>',
         loadingText: 'Loading announcements, please wait...',
         plugins: [
             new Ext.DataView.LabelEditor({
@@ -507,7 +519,6 @@ Board = function(conf, panel_conf){
                 }
                 ,load: function(store, records, options){
                     this.parent.setup();
-
                 }
             }
             ,parent: this
