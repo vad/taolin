@@ -56,14 +56,14 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
       * @private
       */
     ,initComponent: function(){
-        var pc = $('#portal_central');
-        var pco = pc.offset();
-        var pcw = pc.width();
-        var window_width = Math.round(pcw*(19/20))
-        var pch = pc.height();
-        var window_height = Math.round(pch*(19/20));
-        var x = pco.left + (pcw - window_width) / 2.;
-        var y = pco.top + (pch - window_height) / 2.;
+        var pc = $('#portal_central')
+            ,pco = pc.offset()
+            ,pcw = pc.width()
+            ,window_width = Math.round(pcw*(19/20))
+            ,pch = pc.height()
+            ,window_height = Math.round(pch*(19/20))
+            ,x = pco.left + (pcw - window_width) / 2.
+            ,y = pco.top + (pch - window_height) / 2.
 
         var config = {
             width: window_width
@@ -100,7 +100,7 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
                 }, {
                     border: false,
                     items: [{
-                        html:'<div id="building-maps"><img class="map" src="extjs/resources/images/default/s.gif" /></div>'
+                        html:'<div id="building-maps"><img class="map" src="'+Ext.BLANK_IMAGE_URL+'" /></div>'
                     },{
                         html:'<div id="map-window-map" style="height:0"></div>'
                     }]
@@ -108,14 +108,14 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
             ]
             ,initialized: false
             ,mainTools: [{
-                    iconOn: 'http://www.openlayers.org/api/theme/default/img/pan_on.png'
-                    ,iconOff: 'http://www.openlayers.org/api/theme/default/img/pan_off.png'
+                    iconOn: 'img/icons/openlayers/pan_on.png'
+                    ,iconOff: 'img/icons/openlayers/pan_off.png'
                     ,text: 'Pan'
                     ,cls: 'pan-tool'
                     ,onclick: 'setPanTool'
                 },{
-                    iconOn: 'http://www.openlayers.org/api/theme/default/img/add_point_on.png'
-                    ,iconOff: 'http://www.openlayers.org/api/theme/default/img/add_point_off.png'
+                    iconOn: 'img/icons/openlayers/add_point_on.png'
+                    ,iconOff: 'img/icons/openlayers/add_point_off.png'
                     ,text: 'Mark you position'
                     ,cls: 'mark-tool'
                     ,onclick: 'setMarkTool'
@@ -185,24 +185,23 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
             ,scope: this
             ,params: req
             ,success: function (result, request) {
-                var data = Ext.util.JSON.decode(result.responseText);
-                var bi = data.buildingInfo;
-                var pi = parseInt;
+                var data = Ext.util.JSON.decode(result.responseText)
+                    ,bi = data.buildingInfo
+                    ,pi = parseInt;
 
                 // php gives us strings (...)
-                bi.left   = pi(bi.left);
-                bi.right  = pi(bi.right);
-                bi.top    = pi(bi.top);
-                bi.bottom = pi(bi.bottom);
-                bi.width  = pi(bi.width);
-                bi.height = pi(bi.height);
+                $('left,right,top,bottom,width,height'.split(','))
+                    .each(function() {
+                        bi[this] = pi(bi[this], 10);
+                    }
+                );
 
                 this.buildingInfo = bi;
 
                 this.store = new Ext.data.JsonStore({
                     data: data
                     ,root: 'workplaces'
-                    ,fields: ['x', 'y', "user_id","name","surname","phone"]
+                    ,fields: 'x,y,user_id,name,surname,phone'.split(',')
                 });
 
                 if (!this.initialized) {
@@ -263,8 +262,9 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
         });
 
         //bad hack to force the browser to read again the map
-        $("#building-maps img.map").attr('usemap', '#nonexistantmap');
-        $("#building-maps img.map").attr('usemap', '#floormap');
+        $("#building-maps img.map")
+            .attr('usemap', '#nonexistantmap')
+            .attr('usemap', '#floormap');
     }
     /**
       * @private
@@ -403,14 +403,13 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
       */
     ,mouseClicked: function(e){
         e.preventDefault();
-        var image = $("#building-maps img.map");
-        var dim = image.data("dim");
-        var offset = image.offset();
-        var mw = Ext.getCmp('map-window');
-
-        var clickX = e.pageX - offset.left;
-        var clickY = e.pageY - offset.top;
-        var nc = mw.toNormalizedCoord({x: clickX, y: clickY});
+        var image = $("#building-maps img.map")
+            ,dim = image.data("dim")
+            ,offset = image.offset()
+            ,mw = Ext.getCmp('map-window')
+            ,clickX = e.pageX - offset.left
+            ,clickY = e.pageY - offset.top
+            ,nc = mw.toNormalizedCoord({x: clickX, y: clickY});
         nc.building = mw.buildingSelect.getValue();
 
         Ext.Ajax.request({
@@ -475,10 +474,10 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
       * Zoom in (if possible)
       */
     ,zoomIn: function(){
-        var image = $("#building-maps img.map");
-        var dim = image.data('dim');
-        var mw = Ext.getCmp('map-window');
-        var zf = dim.zoomFactor;
+        var image = $("#building-maps img.map")
+            ,dim = image.data('dim')
+            ,mw = Ext.getCmp('map-window')
+            ,zf = dim.zoomFactor;
 
         if (image.zoomIn())
             mw.zoomMapTag(zf);
@@ -487,10 +486,10 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
       * Zoom out (if possible)
       */
     ,zoomOut: function(){
-        var image = $("#building-maps img.map");
-        var dim = image.data('dim');
-        var mw = Ext.getCmp('map-window');
-        var zf = dim.zoomFactor;
+        var image = $("#building-maps img.map")
+            ,dim = image.data('dim')
+            ,mw = Ext.getCmp('map-window')
+            ,zf = dim.zoomFactor;
 
         if (image.zoomOut())
             mw.zoomMapTag(1./zf);
@@ -538,9 +537,8 @@ Ext.ux.fbk.sonet.MapWindow = Ext.extend(Ext.Window, {
             $("#building-maps img.map").parent().append(tool);
             
             divCss.top = (i*18 + 10)+'px';
-            var div = $("<div><\/div>").addClass(tcfg.cls).css(divCss);
 
-            tool.wrap(div);
+            tool.wrap($("<div><\/div>").addClass(tcfg.cls).css(divCss));
         }
 
     }
