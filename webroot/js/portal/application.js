@@ -142,14 +142,14 @@ function application_init(){
     var admin_menu_item = 
         '<li class="header"><span class="a menu-item">Admin portal</span>' +
             '<ul>' +
-                '<li><a class="menu-item" href="./admin" target="_blank">Admin site</a></li>' +
-                '<li><a class="menu-item" href="./admin/portals/config" target="_blank">Configuration</a></li>' +
-                '<li><a class="menu-item" href="./admin/templates" target="_blank">Templates</a></li>' +
-                '<li><a class="menu-item" href="./admin/users" target="_blank">Users</a></li>' +
-                '<li><a class="menu-item" href="./admin/widgets" target="_blank">Widgets</a></li>' +
+                '<li><span class="menu-item"><a class="sprited help-icon" href="./admin" target="_blank">Admin main</a></span></li>' +
+                '<li><span class="menu-item"><a class="sprited gears" href="./admin/portals/config" target="_blank">Configuration</a></span></li>' +
+                '<li><span class="menu-item"><a class="sprited image-edit" href="./admin/templates" target="_blank">Templates</a></span></li>' +
+                '<li><span class="menu-item"><a class="sprited groups" href="./admin/users" target="_blank">Users</a></span></li>' +
+                '<li><span class="menu-item"><a class="sprited chart-icon" href="./admin/widgets" target="_blank">Widgets</a></span></li>' +
             '</ul>' +
         '</li>';
-    var simple_admin_menu_item = '<li class="header"><a class="menu-item" href="./admin" target="_blank">Admin portal</a></li>';
+    var simple_admin_menu_item = '<li class="header"><a class="menu-item sprited gears" href="./admin" target="_blank">Admin portal</a></li>';
 
     if(!Ext.isIE6 && !Ext.isIE7)
         main_menu =

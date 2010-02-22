@@ -840,3 +840,7 @@ hr.large {
     font-weight: normal;
     font-size: 90% !important;
 }
+
+.x-editable:hover {
+    background:lightYellow;
+}

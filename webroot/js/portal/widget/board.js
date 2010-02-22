@@ -94,11 +94,11 @@ Board = function(conf, panel_conf){
             }
         },
         new Ext.form.DateField({
-            fieldLabel: 'Expires on',
+            fieldLabel: 'Expiration date',
             name: 'expire_date',
             minValue: new Date(), // Can not expire before today ( today date === new Date() )
             format: 'Y-m-d',
-            readOnly: true,
+            editable: false,
             disabled: true,
             anchor: '100%'
         })
