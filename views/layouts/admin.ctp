@@ -34,7 +34,7 @@
   </style>
 
 
-  <script type="text/javascript" charset="utf-8" src="<? echo $this->base ?>/js/jquery/jquery-1.4.1.min.js"></script> 
+  <script type="text/javascript" charset="utf-8" src="<? echo $this->base ?>/js/jquery/jquery-1.4.2.min.js"></script> 
   <script type="text/javascript" charset="utf-8" src="<? echo $this->base ?>/js/admin/jquery.scrollTo.js"></script>   
   <script type="text/javascript" charset="utf-8" src="<? echo $this->base ?>/js/admin/jquery.localscroll.js"></script>
   <script type="text/javascript" charset="utf-8">
