@@ -22,7 +22,7 @@ class CommentComponent extends Object {
     var $user = null;
     var $cacheName = TIMELINE_CACHE_FILENAME;
 
-    function addComment(&$Model, $params, $user_id, $tpl_params = array(), $comment_type_name = null){
+    function addComment(&$Model, $params, $user_id, $tpl_params = array(), $comment_type_name = null, $model_alias = null){
         $mrClean = new Sanitize();
         
         $foreign_id = $params['form']['foreign_id'];
@@ -34,10 +34,15 @@ class CommentComponent extends Object {
             'email' => 'abc@example.com'
         ));
 
+        pr($Model);
+
         $out = $Model->createComment($foreign_id, $comment);
         $comment_id = $Model->Comment->id;
 
-        $Model->addtotimeline($tpl_params, null, 'comment', $user_id, $Model->alias, $foreign_id, $comment_id, $comment_type_name);
+        if(!$model_alias)
+            $model_alias = $Model->alias;
+
+        $Model->addtotimeline($tpl_params, null, 'comment', $user_id, $model_alias, $foreign_id, $comment_id, $comment_type_name);
         
         # clear cache
         clearCache($this->cacheName, '', '');
