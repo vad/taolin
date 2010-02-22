@@ -149,7 +149,7 @@ function application_init(){
                 '<li><span class="menu-item"><a class="sprited chart-icon" href="./admin/widgets" target="_blank">Widgets</a></span></li>' +
             '</ul>' +
         '</li>';
-    var simple_admin_menu_item = '<li class="header"><a class="menu-item sprited gears" href="./admin" target="_blank">Admin portal</a></li>';
+    var simple_admin_menu_item = '<li class="header"><a class="menu-item" href="./admin" target="_blank">Admin portal</a></li>';
 
     if(!Ext.isIE6 && !Ext.isIE7)
         main_menu =
