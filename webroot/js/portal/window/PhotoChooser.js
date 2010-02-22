@@ -181,10 +181,9 @@ PhotoChooser.prototype = {
                                 //var value = text.replace(/\'/g,"\\\'");
                                 Ext.Ajax.request({
                                     url : 'photos/setattribute/',
-                                    params: {'p_id': photo_id, 'name': fname, 'value': text},
+                                    params: {p_id: photo_id, name: fname, value: text},
                                     method: 'POST',
                                     success: function(result, request){
-
                                         var u = Ext.get("undodelphoto");
                                         u.removeClass(["warning-msg","error-msg"]).addClass("confirm-msg");
                                         u.update('Attribute '+fname+' successfully changed to "'+text.ellipse(30)+'" [<span class="a" onclick="showText(false, \'undodelphoto\')">close</span>]');
@@ -217,7 +216,7 @@ PhotoChooser.prototype = {
         
                 Ext.Ajax.request({
                     url : 'photos/setattribute/',
-                    params: {'p_id': photo_id, 'name': 'is_hidden', 'value': value},
+                    params: {p_id: photo_id, name: 'is_hidden', value: value},
                     method: 'POST',
                     success: function(result, request){
                         eventManager.fireEvent("userphotochange");

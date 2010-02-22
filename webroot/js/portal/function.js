@@ -519,6 +519,7 @@ function suggestAsChampion(name, surname, login, email, logparams){
 /*
  * very efficient, but only if hash keys has not regex metacharacters in
 */
+/*
 function multiReplace (str, hash) {
     var keys = [], key;
     for (key in hash) {
@@ -528,6 +529,7 @@ function multiReplace (str, hash) {
         return hash[$0];
     });
 }
+*/
 
 /**
  * Multiple replaces regexes. Not very efficent.
@@ -588,18 +590,14 @@ String.prototype.getBrightness = function () {
     s = Ext.util.Format.trim(s);
     if (s[0] == '#') s = s.substring(1);
 
-    r = s.substring(0, 2);
-    ir = parseInt(r, 16);
-    g = s.substring(2, 4);
-    ig = parseInt(g, 16);
-    b = s.substring(4, 6);
-    ib = parseInt(b, 16);
+    var rgb = new Array();
+    for (var i=0; i < s.length; i+=2) {
+        rgb.push(parseInt(s.substring(i, i+2), 16));
+    }
 
     //w3c:
     //((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
-    var brightness = (ir*299 + ig*587 + ib*114)/1000;
-
-    return brightness;
+    return (rgb[0]*299 + rgb[1]*587 + rgb[2]*114)/1000;
 };
 
 /**
