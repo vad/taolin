@@ -140,7 +140,7 @@ function application_init(){
     var main_menu;
 
     var admin_menu_item = 
-        '<li class="header"><span class="a menu-item">Admin</span>' +
+        '<li class="header"><span class="a menu-item">Admin portal</span>' +
             '<ul>' +
                 '<li><a class="menu-item" href="./admin" target="_blank">Admin site</a></li>' +
                 '<li><a class="menu-item" href="./admin/portals/config" target="_blank">Configuration</a></li>' +
@@ -149,7 +149,7 @@ function application_init(){
                 '<li><a class="menu-item" href="./admin/widgets" target="_blank">Widgets</a></li>' +
             '</ul>' +
         '</li>';
-    var simple_admin_menu_item = '<li class="header"><a class="menu-item" href="./admin" target="_blank">Admin site</a></li>';
+    var simple_admin_menu_item = '<li class="header"><a class="menu-item" href="./admin" target="_blank">Admin portal</a></li>';
 
     if(!Ext.isIE6 && !Ext.isIE7)
         main_menu =
