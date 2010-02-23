@@ -114,14 +114,16 @@ class CalendarsController extends AppController {
     function get() {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
+
+        $data = $this->params['url'];
         
-        if(!empty($this->params['form']['limit'])) 
-            $limit =$this->params['form']['limit'];
+        if(!empty($data['limit'])) 
+            $limit = $data['limit'];
         else
             $limit = 5;
         
-        if(!empty($this->params['form']['start'])) 
-            $start = $this->params['form']['start'];
+        if(!empty($data['start'])) 
+            $start = $data['start'];
         else
             $start = 0;
 

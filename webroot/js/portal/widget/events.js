@@ -32,22 +32,19 @@
 
 
 Events = function(conf, panel_conf){
-    Ext.apply(this, panel_conf);
+    Ext.apply(this, Ext.apply(panel_conf, {
+        currentPage: 1
+        ,autoExpand: conf.autoExpand
+        ,eventManager: eventManager
+    }));
     
-    var nItems = 5;
-    if (conf.items){
-        nItems = parseInt(conf.items);
-    }
-    this.currentPage = 1;
-    
-    this.autoExpand = conf.autoExpand;
+    var nItems = parseInt(get(conf, 'items', 5), 10);
 
-    this.eventManager = eventManager;
-
-    eventId = this.getId();
-    
     var store = new Ext.data.JsonStore({
-        url: 'calendars/get'
+        proxy : new Ext.data.HttpProxy({
+            method: 'GET',
+            url: 'calendars/get'
+        })
         ,root: 'events'
         ,totalProperty: 'totalCount'
         ,fields: ['id', 'end_time', 'start_time', 'summary', 'description', 'location', 'uid', 'commentsCount']
@@ -59,7 +56,7 @@ Events = function(conf, panel_conf){
                 
                 //expand rows if autoExpand is true
                 if (this.parent.autoExpand)
-                    for(i=store.data.length-1; i>=0; i--)
+                    for(var i=store.data.length-1; i>=0; i--)
                         this.parent.expander.toggleRow(i);
             }
         }
@@ -77,7 +74,11 @@ Events = function(conf, panel_conf){
                 ,'<div><p>No description available</p></div>'
             ,'</tpl>'
             ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{uid}" target="_blank">more...</a></span>'
-            ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><span class="a" onclick="Ext.getCmp(\''+eventId+'\').sendTo()">Email to</span> | </span>'
+            ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><span class="a" onclick="{eventId:getCmp}.sendTo()">Email to</span> | </span>'
+            ,{
+                eventId: this.getId()
+                ,compiled: true
+            }
         )
         ,listeners: {
             expand: function(){
@@ -122,7 +123,7 @@ Events = function(conf, panel_conf){
                     );
 
                     // comments
-                    value += String.format('<div class="comment-icons-text" style="float:right;color:gray;font-size:90%;" onclick="openCommentWindow(\'Event\', {0})">', record.get('id'), "<div>", Ext.util.Format.htmlEncode(record.get('summary')), "<b></b>");
+                    value += String.format('<div class="comment-icons-text" style="float:right;color:gray;font-size:90%;" onclick="openCommentWindow(\'Event\',{0},{source:\'event\',id:{0}});return false">', record.get('id'), "<div>", Ext.util.Format.htmlEncode(record.get('summary')), "<b></b>");
                     if (record.get('commentsCount'))
                         value += record.get('commentsCount') +' <img class="size12x12" style="vertical-align:bottom;" src="js/portal/shared/icons/fam/comment.png"/>';
                     else 

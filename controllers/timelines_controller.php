@@ -271,7 +271,11 @@ class TimelinesController extends AppController {
                     $event['event'] .= $event['subevent'];
                     
                     //hack
-                    $event['event'] .= sprintf(". <a href='javascript:void(0)' onclick=\"openCommentWindow('%s', %s)\">View comments</a>", $event['model_alias'], $event['foreign_id']);
+                    $event['event'] .= sprintf(". <a href='javascript:void(0)' onclick=\"openCommentWindow('%s', %s, {source:\'timeline\',id:%s})\">View comments</a>",
+                        $event['model_alias'],
+                        $event['foreign_id'],
+                        $event['id']
+                    );
                 }
 
                 
