@@ -47,12 +47,15 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
         ,listeners:{
             load: {
                 fn: function(store, records, options){
-
-                    var details = store.reader.jsonData.details;
-                    var created = Ext.util.Format.date(
-                            this.store.reader.jsonData.created.split(" ")[0],
+                    var data = store.reader.jsonData
+                        ,details = data.details
+                        //this is not about comments, but commented event!
+                        ,aDate = data.created.split(" ")[0].split('-')
+                        ,created = fm.date(
+                            // IE doesn't like '2000-02-01'-like date (it requires 'February 01, 2000')
+                            new Date(aDate[0], aDate[1] - 1, aDate[2]),
                             'd F, Y'
-                    );
+                        );
 
                     /* If this is the first time that the window is loaded
                      * then create the commented event's html
@@ -74,9 +77,9 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
                                 .html(details.smilize().urlize())
                             )
                             .css({
-                                'background':'#ECEFF5',
-                                'margin':'auto auto',
-                                'padding':'10px 5px'
+                                background:'#ECEFF5',
+                                margin:'auto auto',
+                                padding:'10px 5px'
                             }); // Styling
 
                     // Center the window
@@ -152,9 +155,8 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
         buttons: [{
             text: 'Comment'
             ,handler: function(){
-                
-                var store = this.view.store;
-                var model = this.model;
+                var store = this.view.store
+                    ,model = this.model;
 
                 this.form.getForm().submit(
                     {
@@ -184,8 +186,8 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
     });
                 
     t.deleteComment = function(c_id){
-        var model = this.model;
-        var store = this.view.store;
+        var model = this.model
+            ,store = this.view.store;
         Ext.MessageBox.confirm('Confirm', 'Do you really want to do delete this comment?', function(btn){
             if(btn == 'yes'){
                 Ext.Ajax.request({
@@ -208,7 +210,7 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
         });
     }
 
-    CommentWindow.superclass.constructor.call(this, {
+    CommentWindow.superclass.constructor.call(t, {
         title: 'Comments'
         ,id: 'comments_window'
         ,autoHeight: true
@@ -219,11 +221,11 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
         ,items: [{
             html: '<div id="commented-event"></div>'
         },{
-            items: this.view
+            items: t.view
             ,border: false
             ,autoScroll: true
         },{
-            items: this.form
+            items: t.form
             ,border: false
         }]
     });
