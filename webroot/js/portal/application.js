@@ -28,6 +28,9 @@ Ext.onReady(function(){
 
 Ext.BLANK_IMAGE_URL = 'extjs/resources/images/default/s.gif';
 
+// nsb stands for NOT SUPPORTED BROWSER
+nsb = (Ext.isIE6 || Ext.isIE7);
+
 //Ext.onReady(
 function application_init(){
 
@@ -130,28 +133,28 @@ function application_init(){
         'Did you know that you can edit your workplace and view other\'s on a  map? <span class="a" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: {source: \'did you know\', user_id:\'\'}})).show()">Edit!</span>',
         'Did you know that you can suggest a colleague of yours as new champion on her/his profile?'
     ];
-    var dyk = aDyk[Math.floor(Math.random()*aDyk.length)]; // pick a random string out of aDyk
+    var dyk = (nsb ? '<a href="http://getfirefox.com" target="_blank">DOWNLOAD AND USE FIREFOX</a> FOR A BETTER, FASTER USER EXPERIENCE!' : aDyk[Math.floor(Math.random()*aDyk.length)] /* pick a random string out of aDyk */);
 
     /*
      * Main menu:
      *  use .header class only for top-level menu voices
      */ 
 
-    var main_menu;
+    var main_menu = ''
+        ,admin_menu_item = 
+            '<li class="header"><span class="a menu-item">Admin portal</span>' +
+                '<ul>' +
+                    '<li><span class="menu-item"><a class="sprited help-icon" href="./admin" target="_blank">Admin main</a></span></li>' +
+                    '<li><span class="menu-item"><a class="sprited gears" href="./admin/portals/config" target="_blank">Configuration</a></span></li>' +
+                    '<li><span class="menu-item"><a class="sprited image-edit" href="./admin/templates" target="_blank">Templates</a></span></li>' +
+                    '<li><span class="menu-item"><a class="sprited groups" href="./admin/users" target="_blank">Users</a></span></li>' +
+                    '<li><span class="menu-item"><a class="sprited chart-icon" href="./admin/widgets" target="_blank">Widgets</a></span></li>' +
+                '</ul>' +
+            '</li>'
+        ,simple_admin_menu_item = 
+            '<li class="header"><a class="menu-item" href="./admin" target="_blank">Admin portal</a></li>';
 
-    var admin_menu_item = 
-        '<li class="header"><span class="a menu-item">Admin portal</span>' +
-            '<ul>' +
-                '<li><span class="menu-item"><a class="sprited help-icon" href="./admin" target="_blank">Admin main</a></span></li>' +
-                '<li><span class="menu-item"><a class="sprited gears" href="./admin/portals/config" target="_blank">Configuration</a></span></li>' +
-                '<li><span class="menu-item"><a class="sprited image-edit" href="./admin/templates" target="_blank">Templates</a></span></li>' +
-                '<li><span class="menu-item"><a class="sprited groups" href="./admin/users" target="_blank">Users</a></span></li>' +
-                '<li><span class="menu-item"><a class="sprited chart-icon" href="./admin/widgets" target="_blank">Widgets</a></span></li>' +
-            '</ul>' +
-        '</li>';
-    var simple_admin_menu_item = '<li class="header"><a class="menu-item" href="./admin" target="_blank">Admin portal</a></li>';
-
-    if(!Ext.isIE6 && !Ext.isIE7)
+    if(!nsb)
         main_menu =
             '<ul class="dd-menu">' +
                 '<li class="header"><span class="a menu-item">Personal profile</span>' +
@@ -211,6 +214,8 @@ function application_init(){
      * - logout menu
      * - "Did you know?" questions
      */
+
+    var dyk_style = (nsb ? 'color:darkRed;font-weight:bold;font-size:110%;' : (Math.random() > 0.3 ? 'display:none;':''));
     
     var clear_html = 
         '<div id="logout_div" class="right-element">'
@@ -220,7 +225,7 @@ function application_init(){
         + '<div class="left-element">'
             + '<img src="'+config.logo+'" qtip="taolin logo" style="padding-left:10px"/>'
         + '</div>'
-        + '<div id="didyouknow_div" style="'+(Math.random() > 0.3?'display:none;':'')+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <span class="a" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:x-small;">[close this message]</span></td></tr></table></span></div>';
+        + '<div id="didyouknow_div" style="'+dyk_style+'"><span id="didyouknow_span"><table class="border_radius_5px"><tr><td style="padding:0 10px;">'+dyk+' <span class="a" onclick="$(\'#didyouknow_div\').hide();" style="margin-left:10px;font-size:x-small;">[close this message]</span></td></tr></table></span></div>';
 
     viewport = new Ext.Viewport({
         layout:'border',

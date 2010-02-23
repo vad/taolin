@@ -31,6 +31,7 @@
 
 /* PAGINATION */
 var pagination = 
+    (!nsb ?
     '<tpl if="!(this.isFirstPage() && this.isLastPage())">'+
         '<div class="timeline-pagination">'+
             '<div class="left-div" style="visibility:<tpl if="this.isFirstPage()">hidden</tpl>">'+
@@ -42,7 +43,22 @@ var pagination =
                 '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<span class="sprited double-next"></span></span>'+
             '</div>'+
         '</div>'+
-    '</tpl>';
+    '</tpl>' 
+    :
+    // Simple pagination for not supported browsers
+    '<tpl if="!(this.isFirstPage() && this.isLastPage())">'+
+        '<div class="timeline-pagination">'+
+            '<div class="left-div" style="visibility:<tpl if="this.isFirstPage()">hidden</tpl>">'+
+                '<span class="a" style="padding: 0 10px;" onclick="{this.parent.id:getCmp}.paginateTimeline(0)">&lt;&lt; Newest</span>'+
+                '<span class="a" style="padding: 0 10px;" onclick="{this.parent.id:getCmp}.paginateTimeline(1)">&lt; Newer</span>'+
+            '</div>'+
+            '<div class="right-div" style="visibility:<tpl if="this.isLastPage()">hidden</tpl>">'+
+                '<span class="a" style="padding: 0 10px;" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older &gt;</span>'+
+                '<span class="a" style="padding: 0 10px;" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest &gt;&gt;</span>'+
+            '</div>'+
+        '</div>'+
+    '</tpl>'
+    );
 /* END OF PAGINATION */
 
 Timeline = Ext.extend(Ext.Panel, {
