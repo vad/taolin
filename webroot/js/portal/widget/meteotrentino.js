@@ -70,7 +70,7 @@ MeteoTrentino = function(conf, panel_conf){
     };
 
     this.visualize = function(day){
-        
+
         var ov = $('#' +this.getId()+'-forecast-overview');
         var dv = $('#' +this.getId()+'-forecast-detailedview');
         var lk = $('#' +this.getId()+'-forecast-links');
@@ -92,10 +92,24 @@ MeteoTrentino = function(conf, panel_conf){
             var id = $(this).attr('id');
             var label = $(this).attr('label');
             if(id == day){
-                lk.append($('<span>').text(label));
+
+                lk.append(
+                    $('<span>')
+                    .text(label)
+                );
+
                 $(this).show();
             } else {
-                lk.append($('<span>').addClass('a').attr('onclick', String.format(link,id)).text(label));
+
+                lk.append(
+                    $('<span>')
+                    .addClass('a')
+                    .click(function(){
+                        Ext.getCmp(w_id).visualize(id); 
+                    })
+                    .text(label)
+                );
+
                 $(this).hide();
             }
         });
