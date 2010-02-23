@@ -136,6 +136,7 @@ MeteoTrentino = function(conf, panel_conf){
         }]
         ,listeners: {
             render: function(){
+                this.doLayout();
                 this.loadForecast();
             }
         }
