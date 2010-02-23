@@ -32,14 +32,14 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
     title: 'Photos',
     autoHeight: true,
     initComponent: function(){
-        var config = {
-        };
-        Ext.apply(this, Ext.apply(this.initialConfig, config));
+        Ext.apply(this, this.initialConfig);
 
         this.store = new Ext.data.JsonStore({
-            url: 'photos/getphotos',
+            proxy : new Ext.data.HttpProxy({
+                method: 'GET',
+                url: 'photos/getphotos'
+            }),
             root: 'photos',
-            method: 'POST',
             fields: ['id', 'name', 'filename', 'user_id', 'caption', 'width', 'height', 'url', 'is_hidden','default_photo',{name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'commentsCount'],
             listeners:{
                 load: function(store, records, option){
@@ -58,13 +58,11 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
         this.prevTitle = this.title;
     },
     onRender: function(){
-        //this.store.load({params: {id: westPanel.showedUser.id}});
-
         var tpl = new Ext.XTemplate( 
             '{[this.resetPreviousPhotoVisibility()]}',
             '<tpl for=".">',
                 '<tpl if="this.showHeader(values.is_hidden)">',
-                    '<tpl if="this.previousPhotoVisibility == 0">',
+                    '<tpl if="this.previousPhotoVisibility === 0">',
                         '<div class="user-photos-header" style="padding-top: 15px;">',
                             'Public photos',
                         '</div>',
@@ -81,19 +79,17 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                 '<div style="padding:10px;" class="thumb-wrap">',
                     '<div class="thumb">',
                         /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
-                        '<span></span><img class="ante" style="padding:5px;cursor:pointer;" src="{[window.config.img_path]}t140x140/{filename:photoExtToJpg}" />',
+                        '<span></span><img class="ante" style="padding:5px;cursor:pointer;" src="{[config.img_path]}t140x140/{filename:photoExtToJpg}" />',
                     '</div>',
                     '<div style="float:right;font-size:90%;color:gray;cursor:pointer;">',
-                        '<tpl if="commentsCount &gt; 0">',
-                            '<span onclick="openCommentWindow(\'Photo\',{id})">',
+                        '<span onclick="openCommentWindow(\'Photo\',{id},{source:\'UserPhotos\',id:{id}})">',
+                            '<tpl if="commentsCount">',
                                 '{commentsCount} <span class="sprited comment-icon" title="View comments"></span>',
-                            '</span>',
-                        '</tpl>',
-                        '<tpl if="commentsCount &lt;= 0">',
-                            '<span onclick="openCommentWindow(\'Photo\',{id})">',
+                            '</tpl>',
+                            '<tpl if="!commentsCount">',
                                 '<span class="sprited comment-add" title="Add a comment"></span>',
-                            '</span>',
-                        '</tpl>',
+                            '</tpl>',
+                        '</span>',
                     '</div>',
                     '<span><b>{name}</b></span><br />',
                     '<span style="padding-bottom:5px;color:gray;font-size:90%;">{created:naturalDate(false)}</span><br />',
@@ -101,10 +97,11 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             '</tpl>',
             '</div>',
             {
+                compiled:true
                 /* Keeps track of the visibility of the previous photo
                  * Need this function to show the correct header
                  */
-                previousPhotoVisibility: null
+                ,previousPhotoVisibility: null
                 // Reset that value
                 ,resetPreviousPhotoVisibility: function(){
                     this.previousPhotoVisibility = null;
@@ -122,8 +119,6 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             }
         );
 
-        tpl.compile();
-
         var dv = new Ext.DataView({
             tpl: tpl,
             emptyText: '<div style="padding:10px 5px;" class="warning-message border_radius_5px">No photos for this user</div>', 
@@ -140,24 +135,24 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                           * (necessary to center the Ext.Msg element in the window)
                           */
                         
-                        var photo = {};
-                        var store = dv.store;
+                        var fm = Ext.util.Format
+                            ,store = dv.store
+                            ,record = store.getAt(index);
 
-                        photo['id']  = store.getAt(index).get('id');
-                        photo["url"] = store.getAt(index).get('url');
-                        photo["caption"] = store.getAt(index).get('caption'); 
+                        var photo = {
+                            id : record.get('id')
+                            ,url: record.get('url')
+                            ,caption: record.get('caption') 
+                            ,filename: fm.photoExtToJpg(record.get('filename'))
+                            ,imgWidth: parseInt(record.get('width'), 10)
+                            ,imgHeight: parseInt(record.get('height'), 10)
+                            ,commentsCount: record.get('commentsCount')
+                        };
 
-                        photo["filename"] = Ext.util.Format.photoExtToJpg(store.getAt(index).get('filename'));
-
-                        photo["imgWidth"] = parseInt(store.getAt(index).get('width'));
-                        photo["imgHeight"] = parseInt(store.getAt(index).get('height'));
-                        photo['commentsCount'] = store.getAt(index).get('commentsCount');
-
-                        var winBody = photoWindowTemplate.apply(photo);
-                        var winWidth = 530;
-                        var winTitle = Ext.util.Format.ellipsis(store.getAt(index).get('name'), 50);
-
-                        var winButtons = {no: "Close"};
+                        var winBody = photoWindowTemplate.apply(photo)
+                            ,winWidth = 530
+                            ,winTitle = fm.ellipsis(record.get('name'), 50)
+                            ,winButtons = {no: "Close"};
 
                         if(store.getAt(index - 1) != null)
                             winButtons['ok'] = "Prev";

@@ -33,14 +33,15 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
 
     if (!logparams)
         alert('No logparams!');
-    var fm = Ext.util.Format;
-    this.model = fm.lowercase(model_alias) + 's';  // Format model's name in order to use it in the ajax request (e.g.: 'Board' -> 'boards')
-    this.f_id = foreign_id;
+    var fm = Ext.util.Format
+        ,t = this;
+    t.model = fm.lowercase(model_alias) + 's';  // Format model's name in order to use it in the ajax request (e.g.: 'Board' -> 'boards')
+    t.f_id = foreign_id;
 
-    this.store = new Ext.data.JsonStore({
-        url: this.model + '/getcomments/' + this.f_id
+    t.store = new Ext.data.JsonStore({
+        url: t.model + '/getcomments/' + t.f_id
         ,root: 'comments'
-        ,method: 'GET'
+        ,baseParams: {src:Ext.util.JSON.encode(logparams)}
         ,fields: ['id','user_id','body', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'user_name', 'user_surname']
         ,autoLoad: true
         ,listeners:{
@@ -91,7 +92,7 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
     });
 
     var uiLogSource = '{source: \'comment\', id: {id}}';
-    this.view = new Ext.DataView({
+    t.view = new Ext.DataView({
         store: this.store
         ,tpl: new Ext.XTemplate(
             '<tpl for=".">',
@@ -126,7 +127,7 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
         ,height: 300
     });
 
-    this.form = new Ext.form.FormPanel({
+    t.form = new Ext.form.FormPanel({
         autoWidth: true
         ,autoHeight: true
         ,buttonAlign: 'center'
@@ -182,7 +183,7 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
         }]
     });
                 
-    this.deleteComment = function(c_id){
+    t.deleteComment = function(c_id){
         var model = this.model;
         var store = this.view.store;
         Ext.MessageBox.confirm('Confirm', 'Do you really want to do delete this comment?', function(btn){
@@ -227,7 +228,7 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
         }]
     });
 
-    this.show();
+    t.show();
 }
 
 Ext.extend(CommentWindow, Ext.Window);

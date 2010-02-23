@@ -39,7 +39,7 @@ class PhotosController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
-        $params = $this->params['form'];
+        $params = $this->params['url'];
 
         $user_id = $params['u_id'];
         $p_id = $params['p_id'];
