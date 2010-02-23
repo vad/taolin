@@ -28,6 +28,9 @@ Ext.onReady(function(){
 
 Ext.BLANK_IMAGE_URL = 'extjs/resources/images/default/s.gif';
 
+// nsb stands for NOT SUPPORTED BROWSER
+nsb = (Ext.isIE6 || Ext.isIE7);
+
 //Ext.onReady(
 function application_init(){
 
@@ -39,9 +42,6 @@ function application_init(){
     
     var qtip = Ext.QuickTips.getQuickTip();
     qtip.interceptTitles = true;
-
-    // nsb stands for NOT SUPPORTED BROWSER
-    nsb = (Ext.isIE6 || Ext.isIE7);
 
     eventManager = new Ext.ux.fbk.sonet.EventManager({
         name: "taolin-event-manager"
