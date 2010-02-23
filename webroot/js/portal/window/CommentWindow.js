@@ -18,8 +18,21 @@
 */
 
 
-CommentWindow = function(model_alias, foreign_id) {
+function openCommentWindow(model, foreign_key, logparams){
 
+    var comments_window = Ext.getCmp('comments_window');
+
+    if(comments_window) // if not exist
+        comments_window.close();
+
+    new CommentWindow(model, foreign_key, logparams); // Open a new comment window
+}
+
+
+CommentWindow = function(model_alias, foreign_id, logparams) {
+
+    if (!logparams)
+        alert('No logparams!');
     var fm = Ext.util.Format;
     this.model = fm.lowercase(model_alias) + 's';  // Format model's name in order to use it in the ajax request (e.g.: 'Board' -> 'boards')
     this.f_id = foreign_id;

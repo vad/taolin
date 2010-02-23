@@ -78,16 +78,6 @@ function openImageChooser(){
     showText(false, 'undodelphoto');
 }  
 
-function openCommentWindow(model, foreign_key){
-
-    var comments_window = Ext.getCmp('comments_window');
-
-    if(comments_window) // if not exist
-        comments_window.close();
-
-    new CommentWindow(model, foreign_key); // Open a new comment window
-}
-
 function showText(showtext, element){
     var slideMe = Ext.get(element); 
     if(!slideMe)
@@ -798,12 +788,12 @@ function findChatStatus(req, login){
 photoWindowTemplate = new Ext.XTemplate(
     '<img id="photo-{id}" class="ante no-hover" style="min-height:70px;margin:auto auto;display:block;" src="{[config.img_path]}t480x480/{filename}" /><br />',
     /* COMMENTS */
-    '<span class="timeline-comments" onclick="openCommentWindow(\'Photo\',{id})">',
+    '<span class="timeline-comments" onclick="openCommentWindow(\'Photo\',{id}, {source:\'photoWindow\',id:{id}})">',
         '<tpl if="commentsCount &gt; 0">',
             '<span>{commentsCount:plural("comment")}</span>',
             '<span class="sprited comment-icon" title="View {commentsCount:plural("comment")}"></span>',
         '</tpl>',
-        '<tpl if="commentsCount &lt;= 0">',
+        '<tpl if="!commentsCount">',
             '<span>Add a comment</span>',
             '<span class="sprited comment-add" title="Add a comment"></span>',
         '</tpl>',

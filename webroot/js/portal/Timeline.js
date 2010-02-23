@@ -129,7 +129,7 @@ Timeline = Ext.extend(Ext.Panel, {
                         '</table>',
 
                         /* COMMENTS */
-                        '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id})">',
+                        '<span class="timeline-comments" onclick="openCommentWindow(\'{model_alias}\',{foreign_id}, {source: \'timeline\', timeline_id: {id}})">',
                             '<tpl if="commentsCount &gt; 0">',
                                 '<span>{commentsCount:plural("comment")}</span>',
                                 '<span class="sprited comment-icon" title="View {commentsCount:plural("comment")}"></span>',
@@ -154,33 +154,34 @@ Timeline = Ext.extend(Ext.Panel, {
                 ,processedDate: null // Current date being processed (belonging to the currently processed event)
                 ,lastEventOfDay: false // Last event of day
                 ,checkEventDate: function(eventDate, index){
+                    var t = this;
 
                     if(index==1)
-                        this.processedDate = null;
+                        t.processedDate = null;
 
                     var formattedEventDate = eventDate.format('M, d Y');
 
-                    if(formattedEventDate!==this.processedDate){
-                        this.processedDate = formattedEventDate;
-                        this.lastEventOfDay = true;
-                    }
-                    else
-                        this.lastEventOfDay = false;
+                    if (formattedEventDate !== t.processedDate) {
+                        t.processedDate = formattedEventDate;
+                        t.lastEventOfDay = true;
+                    } else
+                        t.lastEventOfDay = false;
 
-                    return this.lastEventOfDay;
+                    return t.lastEventOfDay;
                 }
                 ,isFirstPage: function(){
-
-                    var start = this.parent.view.store.baseParams.start;
-                    var limit = this.parent.view.store.baseParams.limit;
+                    var baseParams = this.parent.view.store.baseParams
+                        ,start = baseParams.start
+                        ,limit = baseParams.limit;
 
                     return start - limit < 0;
                 }
                 ,isLastPage: function(){
-
-                    var total = this.parent.view.store.totalLength;
-                    var start = this.parent.view.store.baseParams.start;
-                    var limit = this.parent.view.store.baseParams.limit;
+                    var store = this.parent.view.store
+                        ,baseParams = store.baseParams
+                        ,start = baseParams.start
+                        ,limit = baseParams.limit
+                        ,total = store.totalLength;
 
                     return (start + limit) >= total;
                 }
@@ -256,9 +257,8 @@ Timeline = Ext.extend(Ext.Panel, {
          Timeline.superclass.constructor.call(this, config);
     }
     ,deleteTimelineEvent: function(e_id){
-
-        var store = this.view.store;
-        var parentId = this.id;
+        var store = this.view.store
+            ,parentId = this.id;
 
         if(e_id){
             Ext.Ajax.request({
@@ -281,9 +281,8 @@ Timeline = Ext.extend(Ext.Panel, {
         } 
     }
     ,undoDeleteTimelineEvent:function(e_id){
-
-        var store = this.view.store;
-        var parentId = this.id;
+        var store = this.view.store
+            ,parentId = this.id;
 
         if(e_id){
             Ext.Ajax.request({
@@ -305,12 +304,12 @@ Timeline = Ext.extend(Ext.Panel, {
         } 
     }
     ,paginateTimeline: function(pag_case){
-
-        var start = this.view.store.baseParams.start;
-        var limit = this.view.store.baseParams.limit;
-        var total = this.view.store.totalLength;
-
-        var offset = 0;
+        var store = this.view.store
+            ,baseParams = store.baseParams
+            ,start = baseParams.start
+            ,limit = baseParams.limit
+            ,total = store.totalLength
+            ,offset = 0;
 
         switch(pag_case){
             case 0:
@@ -332,8 +331,8 @@ Timeline = Ext.extend(Ext.Panel, {
         if(offset < 0)
             offset = 0;
 
-        this.view.store.setBaseParam('start', offset);
-        this.view.store.reload();
+        store.setBaseParam('start', offset);
+        store.reload();
     }
 });
 
