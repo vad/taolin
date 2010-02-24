@@ -34,11 +34,11 @@ var pagination =
     (!nsb ?
     '<tpl if="!(this.isFirstPage() && this.isLastPage())">'+
         '<div class="timeline-pagination">'+
-            '<div class="left-div" style="visibility:<tpl if="this.isFirstPage()">hidden</tpl>">'+
+            '<div class="left-div" <tpl if="this.isFirstPage()">style="visibility:hidden"</tpl>>'+
                 '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(0)"><span class="sprited double-prev"></span>Newest</span>'+
                 '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(1)"><span class="sprited prev"></span>Newer</span>'+
             '</div>'+
-            '<div class="right-div" style="visibility:<tpl if="this.isLastPage()">hidden</tpl>">'+
+            '<div class="right-div" <tpl if="this.isLastPage()">style="visibility:hidden"</tpl>>'+
                 '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(2)">Older<span class="sprited next"></span></span>'+
                 '<span class="pagination-item" onclick="{this.parent.id:getCmp}.paginateTimeline(3)">Oldest<span class="sprited double-next"></span></span>'+
             '</div>'+
