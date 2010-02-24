@@ -422,12 +422,14 @@ function createNewPortlet(conf, use_widget_position){
 
     /* add a setPortletTitle function to all the widgets */
     widget = portlet.items.first();
-    widget.setPortletTitle = function(title) {
-        Ext.getCmp(this.portlet_id).setTitle(title);
-    };
-    widget.setPref = function(pref, value, callback) {
-        Ext.getCmp(this.portlet_id).setPref(pref, value, callback);
-    };
+    Ext.apply(widget, {
+        setPortletTitle: function(title) {
+            Ext.getCmp(this.portlet_id).setTitle(title);
+        }
+        ,setPref: function(pref, value, callback) {
+            Ext.getCmp(this.portlet_id).setPref(pref, value, callback);
+        }
+    });
 
     widget.addEvents('fullscreen', 'downsize', 'collapse', 'expand');
 }
@@ -483,7 +485,7 @@ String.prototype.multiReplace = function ( hash ) {
 /* smilize */
 var hi = "<img class='size16x16' src='img/icons/fugue/";
 var fi = "'>";
-hSmile = {
+var hSmile = {
     ':-?\\)': hi+'smiley.png'+fi,
     ':-?P': hi+'smiley-razz.png'+fi,
     ':-?D': hi+'smiley-lol.png'+fi,
@@ -702,7 +704,7 @@ function resetJabberConnection(){
 function setChatStatus(chatStatus){
     
     var chat_status = (chatStatus) ? '<b>Chat status:</b> <span class="deco-text">' + chatStatus + '</span><br />' : ''; 
-    Ext.get('user-status').update(chat_status);
+    $('#user-status').html(chat_status);
 }
 
 function findChatStatus(req, login){
@@ -734,7 +736,7 @@ function findChatStatus(req, login){
  * END CHAT FUNCTIONS
  *
  **************************************************************************/
-photoWindowTemplate = new Ext.XTemplate(
+var photoWindowTemplate = new Ext.XTemplate(
     '<img id="photo-{id}" class="ante no-hover" style="min-height:70px;margin:auto auto;display:block;" src="{[config.img_path]}t480x480/{filename}" /><br />',
     /* COMMENTS */
     '<span class="timeline-comments" onclick="openCommentWindow(\'Photo\',{id}, {source:\'photoWindow\',id:{id}})">',
@@ -759,7 +761,7 @@ photoWindowTemplate = new Ext.XTemplate(
 
 
 function showPhotoWindow(photo){
-    photo['filename'] = Ext.util.Format.photoExtToJpg(photo['filename']);
+    photo.filename = Ext.util.Format.photoExtToJpg(photo.filename);
     
     var winTitle = Ext.util.Format.ellipsis(photo['name'], 50);
 
@@ -786,7 +788,7 @@ function showPicture(p_id, u_id){
     if(p_id){
         Ext.Ajax.request({
             url:'photos/getphotos',
-            method: 'POST',
+            method: 'GET',
             params: {
                 u_id: u_id,
                 p_id: p_id
