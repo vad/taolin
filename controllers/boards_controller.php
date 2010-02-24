@@ -187,9 +187,11 @@ class BoardsController extends AppController {
 
                 $this->Board->save($this->san->html($data));
 
-                $response['success'] = true; 
+                $response['success'] = true;
 
-                $this->Board->addtotimeline(array("text" => $value), null, 'boards-modifyads', $this->Session->read('id'), 'Board', $ads_id);
+                $response['message'] = $this->san->html($value);
+
+                $this->Board->addtotimeline(array("text" => $this->san->html($value)), null, 'boards-modifyads', $this->Session->read('id'), 'Board', $ads_id);
 
             } 
             else $response['success'] = false;
