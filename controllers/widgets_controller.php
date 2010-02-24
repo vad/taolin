@@ -97,14 +97,17 @@ class WidgetsController extends AppController {
         $this->layout = 'ajax';
 
         $response['success'] = false;
-        if(isset($this->params['form']['value']) && $this->params['form']['value'] != null){
 
-            if($this->params['form']['type'] != null)
-                $type = $this->params['form']['type'];
+        $data = $this->params['url'];
+
+        if(isset($data['value']) && $data['value'] != null){
+
+            if($data['type'] != null)
+                $type = $data['type'];
             else
                 $type = 'id';
 
-            $value = $this->params['form']['value'];
+            $value = $data['value'];
 
             $widget = $this->Widget->find('first', array(
                 'conditions' => array($type => $value),
