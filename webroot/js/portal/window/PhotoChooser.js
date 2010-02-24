@@ -104,7 +104,7 @@ PhotoChooser.prototype = {
                     ,sizeString: formatSize(data)
                     ,description: data.caption ? data.caption.replace(/\\n/g,"<br />") : '<i>This photo still needs to be descripted</i>'
                     ,formattedDescription: data.caption ? data.caption.replace(/\\n/g,"<br />").urlize().smilize() : '<i>This photo still needs to be descripted</i>'
-                    ,visibility: !data.is_hidden ? 'Public' : 'Private'
+                    ,visible: parseInt(data.is_hidden, 10) ? 'Private' : 'Public'
                     ,defaultPhoto: data.default_photo
                     ,dateCreatedString: Date.parseDate(data.created, "Y-m-d H:i:s").format("F j, Y")
                     ,dateModifiedString: data.modified ? Date.parseDate(data.modified, "Y-m-d H:i:s").format("F j, Y") : '<i>Never modified</i>'
@@ -446,7 +446,7 @@ PhotoChooser.prototype = {
                     '<b>Last Modified: </b>',
                     '<span>{dateModifiedString}</span><br /><br />',
                     '<b>Visibility: </b>',
-                    '<span>{visibility}</span>',//<input type="checkbox" name="is_hidden" default="{is_hidden}" /><br />',
+                    '<span>{visible}</span>',//<input type="checkbox" name="is_hidden" default="{is_hidden}" /><br />',
                     '<tpl if="(is_hidden == \'1\')">',
                         '<span class="a side" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 0, {defaultPhoto})" title="Setting this photo as public will let other users">set public</span><br /><br />',
                     '</tpl>',
