@@ -61,23 +61,6 @@ function reloadTimeline(){
     eventManager.fireEvent('newtimelineevent');
 }
 
-function openImageChooser(){
-    var win_size = getBodySize(9/10);
-    
-    var chooser = Ext.getCmp('photo-chooser');
-    if(!chooser){
-        chooser = new PhotoChooser({
-                    id:'photo-chooser',
-                    url:'photos/getphotos',
-                    iconCls: 'picture',
-                    width: win_size[0], 
-                    height:win_size[1]
-                });
-    }
-    chooser.show(Ext.get('edit-photo-button'));
-    showText(false, 'undodelphoto');
-}  
-
 function showText(showtext, element){
     var slideMe = Ext.get(element); 
     if(!slideMe)

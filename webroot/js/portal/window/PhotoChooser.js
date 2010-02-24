@@ -28,6 +28,25 @@
  * http://extjs.com/license
  */
 
+
+function openImageChooser(){
+    var win_size = getBodySize(9/10);
+    
+    var chooser = Ext.getCmp('photo-chooser');
+    if(!chooser){
+        chooser = new PhotoChooser({
+                    id:'photo-chooser',
+                    url:'photos/getphotos',
+                    iconCls: 'picture',
+                    width: win_size[0], 
+                    height:win_size[1]
+                });
+    }
+    chooser.show(Ext.get('edit-photo-button'));
+    showText(false, 'undodelphoto');
+}  
+
+
 PhotoChooser = function(config){
 	this.config = config;
 };
@@ -43,9 +62,11 @@ PhotoChooser.prototype = {
 			this.initTemplates();
 
 			this.store = new Ext.data.JsonStore({
-			    url: this.config.url,
 			    root: 'photos',
-                method: 'POST',
+                proxy : new Ext.data.HttpProxy({
+                    method: 'GET'
+			        ,url: this.config.url
+                }),
                 baseParams: {
                     u_id: window.user.id
                 },
@@ -76,16 +97,19 @@ PhotoChooser.prototype = {
 		        }
 		    };
 			
+            var fm = Ext.util.Format;
 			var formatData = function(data){
-		    	data.shortName = data.name ? data.name.ellipse(18) : data.filename.ellipse(18);
-                data.usedName = data.name ? data.name : data.filename;
-		    	data.sizeString = formatSize(data);
-                data.description = data.caption ? data.caption.replace(/\\n/g,"<br />") : '<i>This photo still needs to be descripted</i>';
-                data.formattedDescription = data.caption ? data.caption.replace(/\\n/g,"<br />").urlize().smilize() : '<i>This photo still needs to be descripted</i>';
-                data.visibility = (data.is_hidden==0) ? 'Public' : 'Private';
-                data.defaultPhoto = data.default_photo;
-                data.dateCreatedString = Date.parseDate(data.created, "Y-m-d H:i:s").format("F j, Y");
-                data.dateModifiedString = data.modified ? Date.parseDate(data.modified, "Y-m-d H:i:s").format("F j, Y") : '<i>Never modified</i>';
+                Ext.apply(data, {
+                    shortName: fm.ellipsis(data.name ? data.name : data.filename, 18)
+                    ,usedName: data.name ? data.name : data.filename
+                    ,sizeString: formatSize(data)
+                    ,description: data.caption ? data.caption.replace(/\\n/g,"<br />") : '<i>This photo still needs to be descripted</i>'
+                    ,formattedDescription: data.caption ? data.caption.replace(/\\n/g,"<br />").urlize().smilize() : '<i>This photo still needs to be descripted</i>'
+                    ,visibility: !data.is_hidden ? 'Public' : 'Private'
+                    ,defaultPhoto: data.default_photo
+                    ,dateCreatedString: Date.parseDate(data.created, "Y-m-d H:i:s").format("F j, Y")
+                    ,dateModifiedString: data.modified ? Date.parseDate(data.modified, "Y-m-d H:i:s").format("F j, Y") : '<i>Never modified</i>'
+                });
 		    	this.lookup[data.filename] = data;
 		    	return data;
 		    };
@@ -97,10 +121,10 @@ PhotoChooser.prototype = {
 				emptyText : '<div style="padding:10px;">No pictures match the specified filter</div>',
 				store: this.store,
 				listeners: {
-					'selectionchange': {fn:this.showDetails, scope:this, buffer:100},
-					'dblclick'       : {fn:this.doCallback, scope:this},
-					'loadexception'  : {fn:this.onLoadException, scope:this},
-					'beforeselect'   : {fn:function(view, node, sel){
+					selectionchange: {fn:this.showDetails, scope:this, buffer:100},
+					dblclick       : {fn:this.doCallback, scope:this},
+					loadexception  : {fn:this.onLoadException, scope:this},
+					beforeselect   : {fn:function(view, node, sel){
 				        return view.store.getRange().length > 0;
 				    }, scope: this}
 				},
@@ -168,7 +192,7 @@ PhotoChooser.prototype = {
             this.renameField = function(photo_id, fname, fvalue){
        
                 Ext.Msg.show({
-                    msg: '<br />Rename as:<br />',
+                    msg: '<br />Edit:<br />',
                     iconCls: 'settings',
                     title: 'Editing...',
                     value: fvalue,
@@ -186,7 +210,7 @@ PhotoChooser.prototype = {
                                     success: function(result, request){
                                         var u = Ext.get("undodelphoto");
                                         u.removeClass(["warning-msg","error-msg"]).addClass("confirm-msg");
-                                        u.update('Attribute '+fname+' successfully changed to "'+text.ellipse(30)+'" [<span class="a" onclick="showText(false, \'undodelphoto\')">close</span>]');
+                                        u.update('Attribute '+fname+' successfully changed to "'+fm.ellipsis(text, 30)+'" [<span class="a" onclick="showText(false, \'undodelphoto\')">close</span>]');
                                         showText(true, 'undodelphoto');
 
                                         if(request.params.name === 'name' || request.params.name === 'caption')
@@ -261,6 +285,7 @@ PhotoChooser.prototype = {
                     		listeners: {
                     			'render': {
                                     fn:function(){
+                                        //TODO: isn't this just a get('filter')?
                                         Ext.getCmp('filter').getEl().on('keyup', function(){
                                                 this.filter();
                                             },
@@ -375,13 +400,11 @@ PhotoChooser.prototype = {
 				}
 			};
 			Ext.apply(cfg, this.config);
+
 		    this.win = new Ext.Window(cfg);
-            this.win.store = this.store;
-            this.win.view = this.view;
-            this.win.setDefaultPhoto = this.setDefaultPhoto;
-            this.win.setPhotoVisibility = this.setPhotoVisibility;
-            this.win.renameField = this.renameField;
-            this.win.undoDeletePhoto = this.undoDeletePhoto;
+            Ext.copyTo(this.win, this, 
+                "store,view,setDefaultPhoto,setPhotoVisibility,renameField,undoDeletePhoto"
+            );
         }
 		this.reset();
 	    this.win.show(el, callback);
@@ -404,16 +427,18 @@ PhotoChooser.prototype = {
 	    			'<span style="padding:5px;"><b>{shortName}</b></span>',
                 '</div>',
 			'</tpl>'
+            ,{
+                compiled: true
+            }
         );
-		this.thumbTemplate.compile();
 		
 		this.detailsTemplate = new Ext.XTemplate(
 			'<div class="details">',
 				'<tpl for=".">',
-					'<center><div style="padding:5px;"><img class="ante no-hover" src="{[window.config.img_path]}t240x240/{filename:photoExtToJpg}"></center>',
+					'<center><div style="padding:5px;"><img class="ante no-hover" src="{[config.img_path]}t240x240/{filename:photoExtToJpg}"></center>',
                     '<div class="details-info">',
 					'<br /><b>Image Name: </b>',
-					'<span style="padding-right:40px">{usedName}</span><span style="float: right; position: absolute; right: 20px;"><span class="a" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'name\', \'{usedName}\')">edit</span></span><br /><br />',
+					'<span style="padding-right:40px">{usedName}</span><span class="a side" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'name\', \'{usedName}\')">edit</span><br /><br />',
 					'<b>Size: </b>',
 					'<span>{sizeString}</span><br /><br />',
                     '<b>Created on: </b>',
@@ -423,10 +448,10 @@ PhotoChooser.prototype = {
 					'<b>Visibility: </b>',
 					'<span>{visibility}</span>',//<input type="checkbox" name="is_hidden" default="{is_hidden}" /><br />',
                     '<tpl if="(is_hidden == \'1\')">',
-                        '<span style="float: right; position: absolute; right: 20px;" class="a" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 0, {defaultPhoto})" title="Setting this photo as public will let other users">set public</span><br /><br />',
+                        '<span class="a side" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 0, {defaultPhoto})" title="Setting this photo as public will let other users">set public</span><br /><br />',
                     '</tpl>',
                     '<tpl if="(is_hidden == \'0\')">',
-                        '<span style="float: right; position: absolute; right: 20px;" class="a" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 1, {defaultPhoto})" title="Setting this photo as private will hide it to other users, even if this is already set as your default photo!">set private</span><br /><br />',
+                        '<span class="a side" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 1, {defaultPhoto})" title="Setting this photo as private will hide it to other users, even if this is already set as your default photo!">set private</span><br /><br />',
                     '</tpl>',
 					'<tpl if="(defaultPhoto == \'1\')">',
                         '<span><b>This is your default photo</b></span><br /><br />',
@@ -434,11 +459,14 @@ PhotoChooser.prototype = {
                     '<tpl if="(defaultPhoto == \'0\')">',
                         '<span class="a" onclick="Ext.getCmp(\'photo-chooser\').setDefaultPhoto(\'{id}\', \'{filename}\')">Set this as your default photo</span><br /><br />',
                     '</tpl>',
-					'<b>Description: </b><span style="float: right; position: absolute; right: 20px;" class="a" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'caption\', \'{[values.caption ? (values.description).replace(/\'/g,"\\\'") : ""]}\')">edit</span><br />',
+					'<b>Description: </b><span class="a side" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'caption\', \'{[values.caption ? (values.description).replace(/\'/g,"\\\'") : ""]}\')">edit</span><br />',
 					'<span>{formattedDescription}</span>',
                     '</div>',
 				'</tpl>',
 			'</div>'
+            ,{
+                compiled:true
+            }
         );
 		this.detailsTemplate.compile();
 	}
@@ -487,7 +515,6 @@ PhotoChooser.prototype = {
 	}
 
     ,deletePhoto: function(p_id){
-
         if(p_id){
             Ext.Ajax.request({
                 url : 'photos/deletephoto/'+p_id ,
@@ -514,11 +541,4 @@ PhotoChooser.prototype = {
             });
         } 
     }
-};
-
-String.prototype.ellipse = function(maxLength){
-    if(this.length > maxLength){
-        return this.substr(0, maxLength-3) + '...';
-    }
-    return this;
 };

@@ -844,3 +844,9 @@ hr.large {
 .x-editable:hover {
     background:lightYellow;
 }
+
+#photo-chooser .details .side {
+    float: right;
+    position: absolute;
+    right: 20px;
+}
