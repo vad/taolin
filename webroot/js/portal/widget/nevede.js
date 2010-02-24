@@ -78,15 +78,15 @@ Nevede = function(conf, panel_conf){
             load: function(store, records, options){
                 var nevedewidget = $('#'+this.parent.getId())
                     ,imgs = nevedewidget.find('.nevede-img');
-                imgs.css({visibility: 'hidden'});
+                imgs.css('visibility', 'hidden');
 
                 //hoverIntent provided some problems with tooltip so we
                 //decided to switch back to hover even if it doesn't
                 //completely work with IE
                 nevedewidget.hover(function(){
-                            imgs.css({visibility: 'visible'});
+                            imgs.css('visibility', 'visible');
                         }, function(){
-                            imgs.css({visibility: 'hidden'});
+                            imgs.css('visibility', 'hidden');
                         });
             }
         }
