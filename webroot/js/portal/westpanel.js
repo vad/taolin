@@ -86,7 +86,7 @@ var usertext_tpl = new Ext.XTemplate(
             '<ul style="padding: 5px 0 0 20px">', 
             '<tpl for="groups">',
                 '<li style="list-style-type:disc;">',
-                    '<pan class ="a" onclick="groupDetails(\'{id}\', \'{name}\',{parent.sourceGroupWindow})">',
+                    '<span class ="a" onclick="groupDetails(\'{id}\', \'{name}\',{parent.sourceGroupWindow})">',
                         '<tpl if="description_en">{description_en} - </tpl>',
                         '<tpl if="description_it">{description_it} - </tpl>',
                         '{name}',
