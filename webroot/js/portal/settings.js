@@ -76,7 +76,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                                 fieldLabel: 'Date of Birth',
                                 name: 'date_of_birth',
                                 format: 'Y-m-d',
-                                readOnly: true,
+                                editable: false,
                                 anchor: '95%'
                             }), {
                                 fieldLabel: 'Email',
