@@ -201,7 +201,7 @@ Board = function(conf, panel_conf){
         });
     };
 
-    this.modifyAds = function (a_id, newvalue){
+    this.modifyAds = function (a_id, newvalue, editor, oldvalue){
         if(a_id){
             var board = this;
 
@@ -209,21 +209,33 @@ Board = function(conf, panel_conf){
                 url : 'boards/modifyads/',
                 params: {ads_id: a_id, value: newvalue},
                 method: 'POST',
-                success: function(){
+                success: function(result, request){
+
+                    var json_decode = Ext.util.JSON.decode(result.responseText);
+                    var value = json_decode['message'];
+        
+                    if((typeof value != 'undefined') && (value.length > 0))
+                        editor.activeRecord.set(editor.dataIndex, value);
+                    else
+                        editor.activeRecord.set(editor.dataIndex, 'Merda');
+
                     eventManager.fireEvent('newtimelineevent');
                     
                     if(board.maxTextLength < newvalue.length)
                         board.formatText(a_id, true);
                     else
                         board.formatText(a_id, false);
+
                 },
-                failure: function(){
+                failure: function(result, request){
                     Ext.Msg.show({
                         title: 'Warning!',
                         msg: '<center>Problem found in data transmission</center>',
                         width: 400,
                         icon: Ext.MessageBox.WARNING
                     });
+
+                    editor.activeRecord.set(editor.dataIndex, oldvalue);
                 }
             });
         } 
@@ -437,6 +449,7 @@ Board = function(conf, panel_conf){
                 cancelOnEsc: false,
                 ignoreNoChange: true,
                 hideEl : true,
+                onSave: function(ed, value){},
                 onMouseDown: function(e, target){
                     if(!e.ctrlKey && !e.shiftKey){
                         var item = this.view.findItemFromChild(target);
@@ -467,9 +480,10 @@ Board = function(conf, panel_conf){
                                             // if the value changed, save it! Maybe this is redundant, cause of ignoreNoChange = true in the plugin
                                             p = this.view.store.parent;
 
-                                            if(newvalue != oldvalue)
-                                                p.modifyAds(editor.activeRecord.data.id, newvalue);
-
+                                            if(newvalue != oldvalue){
+                                                this.activeRecord.set(this.dataIndex, '<span style="font-style:italic;">Saving your message...</span>');
+                                                p.modifyAds(editor.activeRecord.data.id, newvalue, this, oldvalue);
+                                            }
                                         }
                     ,specialkey : function(field, key) {
                                         /* If the key pressed is ESC (ESC key code = 27)
