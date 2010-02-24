@@ -559,10 +559,14 @@ hSmile = {
  * @addon
  */
 String.prototype.smilize = function () {
-    var ta = document.createElement("textarea");
-    ta.innerHTML = this.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    // this removes every htmlEncode! WARNING!
+    /*
+        var ta = document.createElement("textarea");
+        ta.innerHTML = this.replace(/</g,"&lt;").replace(/>/g,"&gt;");
+        return ta.value.multiReplace(hSmile);
+    */
 
-    return ta.value.multiReplace(hSmile);
+    return this.multiReplace(hSmile);
 };
 
 /**
