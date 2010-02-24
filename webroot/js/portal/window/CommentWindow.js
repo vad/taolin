@@ -145,6 +145,7 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
         }
         ,items: [{
             xtype: 'textarea'
+            ,id: 'comment_field'
             ,fieldLabel: 'Add your comment'
             ,grow: true
             ,growMin: 25 
@@ -218,6 +219,7 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
         ,resizable: true
         ,iconCls:'comment-icon'
         ,constrain: true
+        ,defaultButton: 'comment_field'
         ,items: [{
             html: '<div id="commented-event"></div>'
         },{
