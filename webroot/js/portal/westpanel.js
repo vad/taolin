@@ -49,7 +49,7 @@ var usertext_tpl = new Ext.XTemplate(
     '<div class="user-profile-class">',
     '<span id="user-status"></span><br />',
     /* check if the user is "chattable" */
-    '<tpl if="((reqid !== \'\') && (login) && (jabber.u_n !== login) && (active === \'1\'))">',
+    '<tpl if="((reqid !== \'\') && (login) && (jabber.u_n !== login) && (active === \'1\')) && (!isOwner(id))">',
         '<div class="user-item user-{login}" style="margin: 0 10px"><span class="a" onclick=\'jabberui.createNewChatWindow(new JSJaCJID("{login}@fbk.eu"))\'>Chat with {name} {surname}</span></div><br />',
     '</tpl>',
     /* if s/he is not a champion, suggest as a champion! */
