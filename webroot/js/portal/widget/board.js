@@ -579,6 +579,10 @@ Board = function(conf, panel_conf){
                                             .html('Hide insert message form')
                                             .css('color', 'red');
                                     b.form.expand();
+                                   var central_body = $('#portal_central .x-panel-body:first');
+                                   var ttop = $('#' + b.form.id).offset().top - central_body.offset().top; 
+                                   central_body.animate({scrollTop: '+='+ ttop +'px'});
+
                                 } else {
                                     menus
                                         .find('.show-hide')
