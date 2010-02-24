@@ -60,9 +60,9 @@ tools = [{
                 ,i
                 ,j;
 
-            for (i=0, col; col=portal_central.items.items[i++];) {
+            for (var i=0, col; col=portal_central.items.items[i++];) {
                 found = false;
-                for (j=0, p; p=col.items.items[j++];) {
+                for (var j=0, p; p=col.items.items[j++];) {
                     if (mp == p){
                         found = true;
                         col.columnWidth = .99;
