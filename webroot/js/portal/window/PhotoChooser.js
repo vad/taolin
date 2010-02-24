@@ -48,57 +48,56 @@ function openImageChooser(){
 
 
 PhotoChooser = function(config){
-	this.config = config;
+    this.config = config;
 };
 
 PhotoChooser.prototype = {
     // cache data by image name for easy lookup
     lookup : {}
     
-	,show : function(el, callback){
+    ,show : function(el, callback){
+        this.selectedNote = 0;
+        if(!this.win){
 
-		if(!this.win){
+            this.initTemplates();
 
-			this.initTemplates();
-
-			this.store = new Ext.data.JsonStore({
-			    root: 'photos',
+            this.store = new Ext.data.JsonStore({
+                autoLoad: true,
+                root: 'photos',
                 proxy : new Ext.data.HttpProxy({
                     method: 'GET'
-			        ,url: this.config.url
+                    ,url: this.config.url
                 }),
                 baseParams: {
                     u_id: window.user.id
                 },
-			    fields: [
-			        'id', 'name', 'filename', 'caption', 'is_hidden','default_photo',
-			        {name:'size', type: 'float'},
+                fields: [
+                    'id', 'name', 'filename', 'caption', 'is_hidden','default_photo',
+                    {name:'size', type: 'float'},
                     {name:'created'},
                     {name: 'modified'}
-			    ],
-			    listeners: {
-			    	'load': {
-                        fn: function(){ 
-                            this.view.select(0); 
+                ],
+                listeners: {
+                    load: {
+                        fn: function(){
+                            this.view.select(this.selectedNode);
                         }
                         ,scope:this
                         ,single:false
                     }
-			    }
-			});
+                }
+            });
 
-			this.store.load();
-
-			var formatSize = function(data){
-		        if(data.size < 1024) {
-		            return data.size + " bytes";
-		        } else {
-		            return (Math.round(((data.size*10) / 1024))/10) + " KB";
-		        }
-		    };
-			
+            var formatSize = function(data){
+                if(data.size < 1024) {
+                    return data.size + " bytes";
+                } else {
+                    return (Math.round(((data.size*10) / 1024))/10) + " KB";
+                }
+            };
+            
             var fm = Ext.util.Format;
-			var formatData = function(data){
+            var formatData = function(data){
                 Ext.apply(data, {
                     shortName: fm.ellipsis(data.name ? data.name : data.filename, 18)
                     ,usedName: data.name ? data.name : data.filename
@@ -110,26 +109,26 @@ PhotoChooser.prototype = {
                     ,dateCreatedString: Date.parseDate(data.created, "Y-m-d H:i:s").format("F j, Y")
                     ,dateModifiedString: data.modified ? Date.parseDate(data.modified, "Y-m-d H:i:s").format("F j, Y") : '<i>Never modified</i>'
                 });
-		    	this.lookup[data.filename] = data;
-		    	return data;
-		    };
-			
-		    this.view = new Ext.DataView({
-				tpl: this.thumbTemplate,
-				singleSelect: true,
-				itemSelector: 'div.thumb-wrap',
-				emptyText : '<div style="padding:10px;">No pictures match the specified filter</div>',
-				store: this.store,
-				listeners: {
-					selectionchange: {fn:this.showDetails, scope:this, buffer:100},
-					dblclick       : {fn:this.doCallback, scope:this},
-					loadexception  : {fn:this.onLoadException, scope:this},
-					beforeselect   : {fn:function(view, node, sel){
-				        return view.store.getRange().length > 0;
-				    }, scope: this}
-				},
-				prepareData: formatData.createDelegate(this)
-			});
+                this.lookup[data.filename] = data;
+                return data;
+            };
+            
+            this.view = new Ext.DataView({
+                tpl: this.thumbTemplate,
+                singleSelect: true,
+                itemSelector: 'div.thumb-wrap',
+                emptyText : '<div style="padding:10px;">No pictures match the specified filter</div>',
+                store: this.store,
+                listeners: {
+                    selectionchange: {fn:this.showDetails, scope:this, buffer:100},
+                    dblclick       : {fn:this.doCallback, scope:this},
+                    loadexception  : {fn:this.onLoadException, scope:this},
+                    beforeselect   : {fn:function(view, node, sel){
+                        return view.store.getRange().length > 0;
+                    }, scope: this}
+                },
+                prepareData: formatData.createDelegate(this)
+            });
 
             this.setDefaultPhoto = function(p_id, filename){
                 if(p_id){
@@ -137,15 +136,16 @@ PhotoChooser.prototype = {
                         url : 'photos/setdefaultphoto/'+p_id ,
                         method: 'GET',
                         success: function(result, request){
-
-                            var u = Ext.get("undodelphoto");
-                            u.removeClass(["warning-msg","error-msg"]).addClass("confirm-msg");
-                            u.update('Your default photo has been changed! [<span class="a" onclick="showText(false, \'undodelphoto\')">close</span>]');
+                            $("#undodelphoto")
+                                .removeClass(["warning-msg","error-msg"])
+                                .addClass("confirm-msg")
+                                .html('Your default photo has been changed! [<span class="a" onclick="showText(false, \'undodelphoto\')">close</span>]');
                             showText(true, 'undodelphoto');
 
                             eventManager.fireEvent('userphotochange');
-                            if(filename && Ext.get('user_photo')) 
-                                Ext.get('user_photo').dom.src = window.config.img_path + "t140x140/" + Ext.util.Format.photoExtToJpg(filename);
+                            if(filename) 
+                                $('#user_photo')
+                                    .attr('src', config.img_path + "t140x140/" + fm.photoExtToJpg(filename));
                         },
                         failure: function(){
                             Ext.Msg.show({
@@ -163,7 +163,7 @@ PhotoChooser.prototype = {
                     });
                 }
             };
-		    
+            
             this.undoDeletePhoto = function(p_id){
                if(p_id){
                     Ext.Ajax.request({
@@ -256,34 +256,34 @@ PhotoChooser.prototype = {
                 });
             };
 
-			var cfg = {
-		    	title: 'Photos manager',
-		    	layout: 'border', 
-				minWidth: 500,
-				minHeight: 300,
-				modal: true,
-				closeAction: 'hide',
-				border: true,
-				items:[{
-					region:'center',
-		            autoScroll: true,
-					items: [{
-						html: '<div id="undodelphoto" class="warning-msg"></div>',
+            var cfg = {
+                title: 'Photos manager',
+                layout: 'border', 
+                minWidth: 500,
+                minHeight: 300,
+                modal: true,
+                closeAction: 'hide',
+                border: true,
+                items:[{
+                    region:'center',
+                    autoScroll: true,
+                    items: [{
+                        html: '<div id="undodelphoto" class="warning-msg"></div>',
                         style: 'visibility:hidden',
                         border: false
-					},{
+                    },{
                         items: this.view,
                         border: false
                     }],
-	                tbar:[{
-        	        	    text: 'Filter:'
-                   	    },{
-                    		xtype: 'textfield',
-	                    	id: 'filter',
-            	        	selectOnFocus: true,
-                        	width: 100,
-                    		listeners: {
-                    			'render': {
+                    tbar:[{
+                            text: 'Filter:'
+                        },{
+                            xtype: 'textfield',
+                            id: 'filter',
+                            selectOnFocus: true,
+                            width: 100,
+                            listeners: {
+                                'render': {
                                     fn:function(){
                                         //TODO: isn't this just a get('filter')?
                                         Ext.getCmp('filter').getEl().on('keyup', function(){
@@ -297,46 +297,46 @@ PhotoChooser.prototype = {
                                     },
                                     scope:this
                                 }
-	                	    }
-             	        }, ' ', '-', {
-                	        text: 'Sort By:'
-    	                },{
-        	        	    id: 'sortSelect',
-                        	xtype: 'combo',
-	        		        typeAhead: true,
-			                triggerAction: 'all',
-				            width: 100,
-        			        editable: false,
-		        	        mode: 'local',
-				            displayField: 'desc',
-				            valueField: 'name',
-        			        lazyInit: false,
-		        	        value: 'name',
-				            store: new Ext.data.SimpleStore({
-					            fields: ['name', 'desc'],
-        				        data : [['name', 'Name'],['size', 'File Size'],['created','Creation date'],['modified', 'Last Modified']]
-		        		    }),
-				    	    listeners: {
-					        	select: {
+                            }
+                        }, ' ', '-', {
+                            text: 'Sort By:'
+                        },{
+                            id: 'sortSelect',
+                            xtype: 'combo',
+                            typeAhead: true,
+                            triggerAction: 'all',
+                            width: 100,
+                            editable: false,
+                            mode: 'local',
+                            displayField: 'desc',
+                            valueField: 'name',
+                            lazyInit: false,
+                            value: 'name',
+                            store: new Ext.data.SimpleStore({
+                                fields: ['name', 'desc'],
+                                data : [['name', 'Name'],['size', 'File Size'],['created','Creation date'],['modified', 'Last Modified']]
+                            }),
+                            listeners: {
+                                select: {
                                     fn: this.sortImages
                                     ,scope:this
                                 }
-        				    }
-		        	    }]    
-				    },{
-					    id: 'img-detail-panel',
-    					region: 'east',
+                            }
+                        }]    
+                    },{
+                        id: 'img-detail-panel',
+                        region: 'east',
                         header: true,
                         title: 'Photo details',
-	    				split: true,
-		    	        autoScroll: true,
-			    		width: 300
+                        split: true,
+                        autoScroll: true,
+                        width: 300
                 }],
-				buttons: [{
-					text: 'Set default photo',
-					handler: function(){ 
+                buttons: [{
+                    text: 'Set default photo',
+                    handler: function(){ 
                                 var selNode = this.view.getSelectedNodes();
-		                        if(selNode && selNode.length > 0){ 
+                                if(selNode && selNode.length > 0){ 
                                     var data = this.lookup[selNode['0'].id];
                                     if(data.is_hidden === '0'){
                                         if(data.defaultPhoto === '0') this.setDefaultPhoto(data.id, data.filename);
@@ -355,12 +355,12 @@ PhotoChooser.prototype = {
                                         icon: Ext.MessageBox.WARNING
                                     });
                 },
-					scope: this
-				},{
-					text: 'Delete this photo',
-					handler: function(){ 
+                    scope: this
+                },{
+                    text: 'Delete this photo',
+                    handler: function(){ 
                                 var selNode = this.view.getSelectedNodes();
-		                        if(selNode && selNode.length > 0){ 
+                                if(selNode && selNode.length > 0){ 
                                     var data = this.lookup[selNode['0'].id];
                                     var photo_manager = this;
                                     if(data.defaultPhoto === '0')
@@ -381,138 +381,137 @@ PhotoChooser.prototype = {
                                         icon: Ext.MessageBox.WARNING
                                     });
                     },
-					scope: this
-				},{
-					id: 'upload-btn',
-					text: 'Upload a photo',
-					handler: function(){ new PhotoUploader(); },
-					scope: this
-				},{
-					id: 'ok-btn',
-					text: 'Close',
-					handler: function(){ this.win.hide(); },
-					scope: this
-				}],
-				keys: {
-					key: 27, // Esc key
-					handler: function(){ this.win.hide(); },
-					scope: this
-				}
-			};
-			Ext.apply(cfg, this.config);
+                    scope: this
+                },{
+                    id: 'upload-btn',
+                    text: 'Upload a photo',
+                    handler: function(){ new PhotoUploader(); },
+                    scope: this
+                },{
+                    id: 'ok-btn',
+                    text: 'Close',
+                    handler: function(){ this.win.hide(); },
+                    scope: this
+                }],
+                keys: {
+                    key: 27, // Esc key
+                    handler: function(){ this.win.hide(); },
+                    scope: this
+                }
+            };
+            Ext.apply(cfg, this.config);
 
-		    this.win = new Ext.Window(cfg);
+            this.win = new Ext.Window(cfg);
             Ext.copyTo(this.win, this, 
                 "store,view,setDefaultPhoto,setPhotoVisibility,renameField,undoDeletePhoto"
             );
         }
-		this.reset();
-	    this.win.show(el, callback);
-		this.callback = callback;
-		this.animateTarget = el;
+        this.reset();
+        this.win.show(el, callback);
+        this.callback = callback;
+        this.animateTarget = el;
         eventManager.on("userphotochange", function(){ 
                 this.store.reload(); 
         }, this);
 
-	}
-	
-	,initTemplates : function(){
-		this.thumbTemplate = new Ext.XTemplate(
-			'<tpl for=".">',
-				'<div class="thumb-wrap" id="{filename}">',
+    }
+    
+    ,initTemplates : function(){
+        this.thumbTemplate = new Ext.XTemplate(
+            '<tpl for=".">',
+                '<div class="thumb-wrap" id="{filename}">',
                     /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
-				    '<div class="thumb"><span></span>',
+                    '<div class="thumb"><span></span>',
                         '<img class="ante" style="padding:5px;" src="{[window.config.img_path]}t140x140/{filename:photoExtToJpg}"></img>',
                     '</div>',
-	    			'<span style="padding:5px;"><b>{shortName}</b></span>',
+                    '<span style="padding:5px;"><b>{shortName}</b></span>',
                 '</div>',
-			'</tpl>'
+            '</tpl>'
             ,{
                 compiled: true
             }
         );
-		
-		this.detailsTemplate = new Ext.XTemplate(
-			'<div class="details">',
-				'<tpl for=".">',
-					'<center><div style="padding:5px;"><img class="ante no-hover" src="{[config.img_path]}t240x240/{filename:photoExtToJpg}"></center>',
+        
+        this.detailsTemplate = new Ext.XTemplate(
+            '<div class="details">',
+                '<tpl for=".">',
+                    '<center><div style="padding:5px;"><img class="ante no-hover" src="{[config.img_path]}t240x240/{filename:photoExtToJpg}"></center>',
                     '<div class="details-info">',
-					'<br /><b>Image Name: </b>',
-					'<span style="padding-right:40px">{usedName}</span><span class="a side" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'name\', \'{usedName}\')">edit</span><br /><br />',
-					'<b>Size: </b>',
-					'<span>{sizeString}</span><br /><br />',
+                    '<br /><b>Image Name: </b>',
+                    '<span style="padding-right:40px">{usedName}</span><span class="a side" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'name\', \'{usedName}\')">edit</span><br /><br />',
+                    '<b>Size: </b>',
+                    '<span>{sizeString}</span><br /><br />',
                     '<b>Created on: </b>',
-					'<span>{dateCreatedString}</span><br />',
-					'<b>Last Modified: </b>',
-					'<span>{dateModifiedString}</span><br /><br />',
-					'<b>Visibility: </b>',
-					'<span>{visibility}</span>',//<input type="checkbox" name="is_hidden" default="{is_hidden}" /><br />',
+                    '<span>{dateCreatedString}</span><br />',
+                    '<b>Last Modified: </b>',
+                    '<span>{dateModifiedString}</span><br /><br />',
+                    '<b>Visibility: </b>',
+                    '<span>{visibility}</span>',//<input type="checkbox" name="is_hidden" default="{is_hidden}" /><br />',
                     '<tpl if="(is_hidden == \'1\')">',
                         '<span class="a side" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 0, {defaultPhoto})" title="Setting this photo as public will let other users">set public</span><br /><br />',
                     '</tpl>',
                     '<tpl if="(is_hidden == \'0\')">',
                         '<span class="a side" onclick="Ext.getCmp(\'photo-chooser\').setPhotoVisibility({id}, 1, {defaultPhoto})" title="Setting this photo as private will hide it to other users, even if this is already set as your default photo!">set private</span><br /><br />',
                     '</tpl>',
-					'<tpl if="(defaultPhoto == \'1\')">',
+                    '<tpl if="(defaultPhoto == \'1\')">',
                         '<span><b>This is your default photo</b></span><br /><br />',
                     '</tpl>',
                     '<tpl if="(defaultPhoto == \'0\')">',
                         '<span class="a" onclick="Ext.getCmp(\'photo-chooser\').setDefaultPhoto(\'{id}\', \'{filename}\')">Set this as your default photo</span><br /><br />',
                     '</tpl>',
-					'<b>Description: </b><span class="a side" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'caption\', \'{[values.caption ? (values.description).replace(/\'/g,"\\\'") : ""]}\')">edit</span><br />',
-					'<span>{formattedDescription}</span>',
+                    '<b>Description: </b><span class="a side" onclick="Ext.getCmp(\'photo-chooser\').renameField({id}, \'caption\', \'{[values.caption ? (values.description).replace(/\'/g,"\\\'") : ""]}\')">edit</span><br />',
+                    '<span>{formattedDescription}</span>',
                     '</div>',
-				'</tpl>',
-			'</div>'
+                '</tpl>',
+            '</div>'
             ,{
                 compiled:true
             }
         );
-		this.detailsTemplate.compile();
-	}
-	
-	,showDetails : function(){
-	    var selNode = this.view.getSelectedNodes();
-	    var detailEl = Ext.getCmp('img-detail-panel').body;
-		if(selNode && selNode.length > 0){
-			selNode = selNode[0];
-			//Ext.getCmp('ok-btn').enable();
-		    var data = this.lookup[selNode.id];
+        this.detailsTemplate.compile();
+    }
+    
+    ,showDetails : function(){
+        var selNode = this.view.getSelectedNodes();
+        var detailEl = Ext.getCmp('img-detail-panel').body;
+        if(selNode && selNode.length > 0){
+            selNode = selNode[0];
+            this.selectedNode = selNode;
+
+            var data = this.lookup[selNode.id];
             detailEl.hide();
             this.detailsTemplate.overwrite(detailEl, data);
             detailEl.slideIn('l', {stopFx:true,duration:.2});
-            //Ext.get(data.filename).dom.style.background="#DDE4FF";
-		}else{
-		    //Ext.getCmp('ok-btn').disable();
-		    detailEl.update('');
-		}
-	}
-	
-	,filter : function(){
-		var filter = Ext.getCmp('filter');
-		this.view.store.filter('usedName', filter.getValue(), true);
-		this.view.select(0);
-	}
-	
-	,sortImages : function(){
-		var v = Ext.getCmp('sortSelect').getValue();
-    	this.view.store.sort(v, v == 'usedName' ? 'asc' : 'desc');
-    	this.view.select(0);
+        }else{
+            detailEl.update('');
+        }
+    }
+    
+    ,filter : function(){
+        var filter = Ext.getCmp('filter');
+        this.view.store.filter('usedName', filter.getValue(), true);
+        this.view.select(0);
+    }
+    
+    ,sortImages : function(){
+        var v = Ext.getCmp('sortSelect').getValue();
+        this.view.store.sort(v, v == 'usedName' ? 'asc' : 'desc');
+        this.view.select(0);
     }
 
     ,reset : function(){
-		if(this.win.rendered){
-			Ext.getCmp('filter').reset();
-			this.view.getEl().dom.scrollTop = 0;
+        if(this.win.rendered){
+            Ext.getCmp('filter').reset();
+            this.view.getEl().dom.scrollTop = 0;
             showText(false, 'undodelphoto');
-		}
-	    this.view.store.clearFilter();
-		this.view.select(0);
-	}
-	
-	,onLoadException : function(v,o){
-	    this.view.getEl().update('<div style="padding:10px;">Error loading images.</div>'); 
-	}
+        }
+        this.view.store.clearFilter();
+        this.view.select(0);
+    }
+    
+    ,onLoadException : function(v,o){
+        this.view.getEl().update('<div style="padding:10px;">Error loading images.</div>'); 
+    }
 
     ,deletePhoto: function(p_id){
         if(p_id){
