@@ -37,7 +37,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
     }
     ,monitorValid: true
     ,waitMsgTarget: true
-    ,method:'GET'
+    ,method:'POST'
     ,onRender:function(){
         Ext.ux.fbk.sonet.Settings.superclass.onRender.apply(this, arguments);
 
