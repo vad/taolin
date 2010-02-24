@@ -63,7 +63,7 @@ jabberui = function () {
                 Ext.Ajax.request({
                     url : 'widgets/getwidgetby/',
                     params: {'type': 'string_identifier', 'value': 'BuddyList'},
-                    method: 'POST',
+                    method: 'GET',
                     success: function(result, request){
                         var widget = Ext.util.JSON.decode(result.responseText)['widget'];
                         addwidget(widget.id, {source: "user profile", user_login: chatId._node});

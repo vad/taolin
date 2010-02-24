@@ -937,7 +937,7 @@ function addOrBounceWidget(identifier, type, logparams){
             Ext.Ajax.request({
                 url : 'widgets/getwidgetby/',
                 params: {'type': type, 'value': identifier},
-                method: 'POST',
+                method: 'GET',
                 success: function(result, request){
                     var widget = Ext.util.JSON.decode(result.responseText)['widget'];
                     previewWidget(widget.id, widget.name, widget.description, widget.screenshot, logparams);
