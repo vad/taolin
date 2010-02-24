@@ -62,7 +62,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             '{[this.resetPreviousPhotoVisibility()]}',
             '<tpl for=".">',
                 '<tpl if="this.showHeader(values.is_hidden)">',
-                    '<tpl if="this.previousPhotoVisibility === 0">',
+                    '<tpl if="this.previousPhotoVisibility == 0">',
                         '<div class="user-photos-header" style="padding-top: 15px;">',
                             'Public photos',
                         '</div>',
@@ -95,7 +95,6 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                     '<span style="padding-bottom:5px;color:gray;font-size:90%;">{created:naturalDate(false)}</span><br />',
                  '</div>',
             '</tpl>',
-            '</div>',
             {
                 compiled:true
                 /* Keeps track of the visibility of the previous photo
