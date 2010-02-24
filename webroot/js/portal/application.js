@@ -305,10 +305,10 @@ function application_init(){
     $('.dd-menu .header:has(ul)').hover(
         function(){
             $(this).find('.a:first .sprited').removeClass('arrow-down').addClass('arrow-up');
-            $(this).find('ul').css({visibility: 'visible'});
+            $(this).find('ul').css('visibility', 'visible');
         },function(){
             $(this).find('.a:first .sprited').removeClass('arrow-up').addClass('arrow-down');
-            $(this).find('ul').css({visibility: 'hidden'});
+            $(this).find('ul').css('visibility', 'hidden');
         }
     );
 }
