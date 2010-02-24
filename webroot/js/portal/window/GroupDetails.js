@@ -28,6 +28,45 @@
  * http://extjs.com/license
  */
 
+/* This function open the window containing the details of the group */
+
+function groupDetails(group_id, group_name, log_params){
+ 
+    var group_win_id = 'group_details_window',
+        pc = $('#portal_central'),
+        pco = pc.offset(),
+        pcw = pc.width(),
+        window_width = Math.round(pcw*(19/20)),
+        pch = pc.height(),
+        window_height = Math.round(pch*(19/20)),
+        x = pco.left + (pcw - window_width) / 2.,
+        y = pco.top + (pch - window_height) / 2.,
+        group_window = Ext.getCmp(group_win_id);
+
+    if(group_window){
+        if(group_window.title != group_name)
+            group_window.close();
+        else
+            return true;
+    }
+    
+    group_window = new GroupDetails({ 
+        id: group_win_id
+        ,url: 'groups/getgroupdetails/'+group_id
+        ,iconCls: 'groups'
+        ,title: group_name
+        ,width:window_width
+        ,height:window_height
+        ,x: x
+        ,y: y
+        ,modal: false
+        ,logparams:log_params
+    });
+
+    group_window.show();
+}
+
+
 GroupDetails = function(config){
 	this.config = config;
 };

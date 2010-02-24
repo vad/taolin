@@ -163,6 +163,7 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/window/PhotoChooser.js');
     echo $javascript->link('portal/window/PhotoUploader.js');    
     echo $javascript->link('portal/window/SendToWindow.js');
+    echo $javascript->link('portal/window/FirstLogin.js');
     
   
 } else {
