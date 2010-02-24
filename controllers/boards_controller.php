@@ -184,8 +184,8 @@ class BoardsController extends AppController {
 
                 $data['id'] = $ads_id;
                 $data['text'] = $value;
-    
-                $this->Board->save($data);
+
+                $this->Board->save($this->san->html($data));
 
                 $response['success'] = true; 
 
