@@ -25,7 +25,7 @@
     float: left;
     list-style: none;
     font: 12px Tahoma, Arial;
-    z-index:10003;
+    z-index: 10003;
 }
 
 .dd-menu li .menu-item {
@@ -49,7 +49,7 @@
     padding: 5px 0 0 0;
     position: fixed;
     visibility: hidden;
-    z-index:10005;
+    z-index: 10005;
     border-right: 1px solid #115393;
     border-bottom: 1px solid #115393;
 }
@@ -59,7 +59,7 @@
     display: inline;
     z-index:10006;
     background: #ddd;
-    padding 2px;
+    padding: 2px;
 }
 
 .dd-menu li ul li .menu-item {
@@ -71,5 +71,5 @@
 
 .dd-menu li ul li .menu-item:hover {
     background: #C2D695;
-    z-index:10008;
+    z-index: 10008;
 }
