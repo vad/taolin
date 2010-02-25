@@ -42,7 +42,7 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
             items: [{
                 border: false,
                 html:
-                    '<table><tr">' +
+                    '<table><tr>' +
                         '<td style="padding-right:10px;">' + 
                             '<div class="user-photo-container" onmouseout="if (mouseLeaves(this, event)) {$(\'#edit-photo-button\').fadeOut(\'fast\');}" onmouseover="if (Ext.getCmp(\'west-panel\').showTools){$(\'#edit-photo-button\').fadeIn(\'fast\')}">' +
                                 '<img id="user_photo" class="ante no-hover" style="padding:1px;margin:5px;"/>' +
@@ -77,7 +77,6 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                 activeTab: 0,
                 layoutOnTabChange:true,
                 plain:true,
-                frame:false,
                 defaults: {
                     autoScroll:true
                 },
@@ -94,12 +93,12 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                         ,bodyStyle: 'padding-right:15px; border: 0 none;'
                         ,id: 'user_info_timeline'
                         ,autoLoad: false
-                        ,frame: false
                         ,listeners:{
                             activate: function(timeline){
-                                if(westPanel.showedUser.id != timeline.view.store.baseParams.u_id) {
-                                    timeline.view.store.setBaseParam('u_id', westPanel.showedUser.id);
-                                    timeline.view.store.reload();
+                                var store = timeline.view.store;
+                                if(westPanel.showedUser.id != store.baseParams.u_id) {
+                                    store.setBaseParam('u_id', westPanel.showedUser.id);
+                                    store.reload();
                                 }
                             }
                         }
