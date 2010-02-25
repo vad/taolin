@@ -17,9 +17,6 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-
-<?php
 
 uses('sanitize');
 
@@ -80,12 +77,9 @@ class PubliksController extends AppController {
             Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
             $this->layout = 'ajax';
             
-            $login = $_POST['login'];
+            $login = $this->params['url']['login'] or die('Gimme the login, bro!');
 
-            if (!$login)
-                die('Gimme the login, bro!');
-
-            $login = $this->mrClean->paranoid($login);
+            $login = Sanitize::paranoid($login);
 
             $author_id = $this->Publik->getauthorbylogin($login);
             
@@ -101,7 +95,7 @@ class PubliksController extends AppController {
             $out['pubs'] = $pubs;
             $this->set('json', $out);
         } else
-            return null;
+            $this->set('json', '');
     }
 }
 ?>

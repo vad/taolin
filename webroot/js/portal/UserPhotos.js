@@ -51,7 +51,6 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
             ,parent: this
         });
        
-        Ext.StoreMgr.add('wp-photos-tab-store', this.store);
         Ext.ux.fbk.sonet.UserPhotos.superclass.initComponent.apply(this, arguments);
                  
         //save title to use it later (on load)

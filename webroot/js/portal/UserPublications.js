@@ -33,22 +33,23 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
     title: 'Papers'
     ,autoHeight: true
     ,initComponent: function(){
-        var config = {
-        };
-        Ext.apply(this, Ext.apply(this.initialConfig, config));
+        Ext.apply(this, this.initialConfig);
 
         this.store = new Ext.data.JsonStore({
-            url: 'publiks/listpubsbylogin',
+            proxy : new Ext.data.HttpProxy({
+                method: 'GET',
+                url: 'publiks/listpubsbylogin'
+            }),
             root: 'pubs',
             fields: ['ID', 'INS_DATE', 'MOD_DATE', 'Title', 'PTitle', 'Pub_Type', 'PUBTIME_YEAR', 'Relevance']
             ,listeners: {
                 beforeload: function(){
                     if (!this.parent.rendered) return;
-
-                    var user_id = westPanel.showedUser.id;
-                    var user_name = westPanel.showedUser.name;
-                    var user_surname = westPanel.showedUser.surname;
-                    var user_email = westPanel.showedUser.email ? westPanel.showedUser.email : westPanel.showedUser.login+'@fbk';
+                    var su = westPanel.showedUser
+                        ,user_id = su.id
+                        ,user_name = su.name
+                        ,user_surname = su.surname
+                        ,user_email = get(su, 'email', su.login+'@fbk');
                     
                     var emptytext = '<div style="padding:10px 5px;font-size:100%"><div class="warning-msg border_radius_5px">No publications for this user</div><br />You might <span class="a" onclick="new SendToWindow(\'I would like to suggest you to add your publications to FBK publik repository at http://www.itc.it/publik/\', \[\[\''+user_email+'\',\''+user_name+' '+user_surname+'\'\]\],  {source: \'user profile publik tab\',user_id:'+user_id+'})">suggest '+user_name+' to add publications</span> using FBK publik repository.<br /><br /><br />But did you remember to add your publications at the website <a href="http://www.itc.it/publik/" target="_blank" />http://www.itc.it/publik/</a> ?</div>';
 

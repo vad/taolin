@@ -245,33 +245,34 @@ westPanel = new Ext.Panel({
                 // Show user info (aka first tab of tabpanel)
 
                 Ext.getCmp('user_profile').items.items[1].setActiveTab(0);
-                var fm = Ext.util.Format,
-                    jsondata = Ext.util.JSON.decode(result.responseText),
-                    user_text = '';
-                westPanel.showedUser = jsondata.user;
+                var fm = Ext.util.Format
+                    ,jsondata = Ext.util.JSON.decode(result.responseText)
+                    ,user_text = ''
+                    ,u = jsondata.user;
+                westPanel.showedUser = u;
 
 
-                if(reqid==='' && user.id===jsondata.user.id ) { //this call always gives access to this user data
-                    user.login = jsondata.user.login;
+                if(reqid==='' && user.id===u.id ) { //this call always gives access to this user data
+                    user.login = u.login;
                     if(jsondata.user.email) 
-                        user.email = jsondata.user.email;
+                        user.email = u.email;
                 }
                 
-                westPanel.showPublik(jsondata.user.login);
-                westPanel.showPhotos(jsondata.user.id);
+                westPanel.showPublik(u.login);
+                westPanel.showPhotos(u.id);
 
                 //save in a retrievable place if this photo is user's photo
                 //and then show tools
                 westPanel.showTools = ((!reqid) || (reqid == user.id));
                 showText(westPanel.showTools, 'user-profile-edit-div'); // Shows tools and Edit box only if the showed profile belongs to the user
 
-                if (('photo' in jsondata.user) && (jsondata.user.photo))
-                    $("#user_photo").attr('src', jsondata.user.photo.src);
+                if (('photo' in u) && (u.photo))
+                    $("#user_photo").attr('src', u.photo.src);
                 
                 else
                     $("#user_photo").attr('src', 'img/nophoto_small.png');
                 
-                var mod_description = jsondata.user.mod_description;
+                var mod_description = u.mod_description;
                 // call the methods urlize and smilize only if the object is not null
                 if(mod_description) {
                     mod_description=mod_description.urlize().smilize();
@@ -279,7 +280,7 @@ westPanel = new Ext.Panel({
                     mod_description = fm.htmlDecode(mod_description.replace(/(\n)/g,'<br />'));
                 }
 
-                var suid = westPanel.showedUser.id,
+                var suid = u.id,
                     encode = Ext.util.JSON.encode,
                     userProfileSource = fm.htmlEncode(
                         encode({source: 'user profile', user_id: suid})
@@ -287,7 +288,7 @@ westPanel = new Ext.Panel({
 
 
                 var tmpl_data = $.extend(true, {},
-                    jsondata.user,
+                    u,
                     {
                         reqid: reqid
                         ,mod_description: mod_description
@@ -303,8 +304,8 @@ westPanel = new Ext.Panel({
                 userinfo_tpl.overwrite(Ext.get('user_info'), tmpl_data);
                 usertext_tpl.overwrite(Ext.get('user_text'), tmpl_data);
             
-                if(jsondata.user.login)
-                    findChatStatus(reqid, jsondata.user.login);
+                if(u.login)
+                    findChatStatus(reqid, u.login);
             }
        });
     }
