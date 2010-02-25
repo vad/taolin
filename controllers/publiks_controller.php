@@ -77,7 +77,7 @@ class PubliksController extends AppController {
             Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
             $this->layout = 'ajax';
             
-            $login = $this->params['url']['login'] or die('Gimme the login, bro!');
+            $login = $this->params['url']['login'] or die(json_encode(array('pubs'=>array())));
 
             $login = Sanitize::paranoid($login);
 
