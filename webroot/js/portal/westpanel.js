@@ -277,7 +277,7 @@ westPanel = new Ext.Panel({
                 if(mod_description) {
                     mod_description=mod_description.urlize().smilize();
                     //replaces \n with <br /> for visualization in html
-                    mod_description = fm.htmlDecode(mod_description.replace(/(\n)/g,'<br />'));
+                    mod_description = mod_description.replace(/(\n)/g,'<br />');
                 }
 
                 var suid = u.id,

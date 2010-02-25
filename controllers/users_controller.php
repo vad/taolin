@@ -56,6 +56,9 @@ class UsersController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
+        // 'To be sanitized' fields
+        $tbs = array('home_address', 'personal_page', 'email', 'mod_description', 'twitter', 'linkedin', 'facebook');
+
         if ($id==-1)
             $id = $this->Session->read('id');
         else {
@@ -83,10 +86,16 @@ class UsersController extends AppController {
             'recursive' => 0,
             'fields' => $fields
         ));
-        
+
         // move mod_* fields "created" with AS from [0] to [User]
         foreach($user[0] as $key => $mod_defined){
             $user['User'][$key] = $mod_defined;
+        }
+
+        // Sanitize "to be sanitized" (i.e. contained in $tbs) fields
+        foreach($user['User'] as $k => $v){
+            if($v && in_array($k, $tbs))
+                $user['User'][$k] = $this->san->html($v);
         }
 
         $conditions['Photo.default_photo'] = 1;
@@ -422,7 +431,7 @@ class UsersController extends AppController {
         }
 
         if(array_key_exists('linkedin', $form) && (strcasecmp($form['linkedin'], $user['linkedin']))){
-            $data['linkedin'] = $form['linkedin'];            
+            $data['linkedin'] = $form['linkedin'];
             $mod_fields['linkedin'] = $data['linkedin'];
         }
 
@@ -449,34 +458,40 @@ class UsersController extends AppController {
         
             $data['id'] = $id;
         
-            $this->User->save($data);
-            $response['text'] = 'Data saved';
+            if($this->User->save($data)){
+                $response['text'] = 'Data saved';
+                $response['success'] = true;
 
-            if(!empty($mod_fields)){
-                
-                // $m_fields is a string containing modified fields
-                $m_fields = '';
-    
-                foreach($mod_fields as $key => $field){
-                    $m_fields .= " $key,";
-                }      
+                if(!empty($mod_fields)){
+                    
+                    // $m_fields is a string containing modified fields
+                    $m_fields = '';
+        
+                    foreach($mod_fields as $key => $field){
+                        $m_fields .= " $key,";
+                    }      
 
-                // Drop last comma
-                $m_fields = substr($m_fields, 0, -1);
+                    // Drop last comma
+                    $m_fields = substr($m_fields, 0, -1);
 
-                // Last field introduced by 'and' not by a comma. Thus replace it!
-                if(count($mod_fields) > 1)
-                    $m_fields = substr_replace($m_fields, ' and', strrpos($m_fields, ','), 1);
-               
-                // Format it better!!!!
-                $m_fields = ' modifying '.$m_fields;
+                    // Last field introduced by 'and' not by a comma. Thus replace it!
+                    if(count($mod_fields) > 1)
+                        $m_fields = substr_replace($m_fields, ' and', strrpos($m_fields, ','), 1);
+                   
+                    // Format it better!!!!
+                    $m_fields = ' modifying '.$m_fields;
+                }
+
+                $this->User->addtotimeline(array('id' => $id, 'modfields' => $m_fields), null, 'users-setusersettings', $id);
+
             }
-
-            $this->User->addtotimeline(array('id' => $id, 'modfields' => $m_fields), null, 'users-setusersettings', $id);
+            else {
+                $response['text'] = 'Data can not be saved';
+                $response['success'] = false;
+            }
 
         }
 
-        $response['success'] = true;
         
         $this->set('json', $response);
     }
