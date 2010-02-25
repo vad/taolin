@@ -56,9 +56,7 @@ tools = [{
         handler:function(e, target, panel){
             var mp = Ext.getCmp(panel.el.id)
                 ,portal_central = Ext.getCmp('portal_central')
-                ,found
-                ,i
-                ,j;
+                ,found;
 
             for (var i=0, col; col=portal_central.items.items[i++];) {
                 found = false;
