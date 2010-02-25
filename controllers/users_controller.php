@@ -56,7 +56,8 @@ class UsersController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
-        $sanitize_me_not = array('carpooling', 'date_of_birth', 'created');
+        // 'To be sanitized' fields
+        $tbs = array('home_address', 'personal_page', 'email', 'mod_description');
 
         if ($id==-1)
             $id = $this->Session->read('id');
@@ -85,16 +86,16 @@ class UsersController extends AppController {
             'recursive' => 0,
             'fields' => $fields
         ));
-        
+
         // move mod_* fields "created" with AS from [0] to [User]
         foreach($user[0] as $key => $mod_defined){
             $user['User'][$key] = $mod_defined;
         }
 
+        // Sanitize "to be sanitized" (i.e. contained in $tbs) fields
         foreach($user['User'] as $k => $v){
-            if($v && !in_array($k, $sanitize_me_not)){
+            if($v && in_array($k, $tbs))
                 $user['User'][$k] = $this->san->html($v);
-            }
         }
 
         $conditions['Photo.default_photo'] = 1;
