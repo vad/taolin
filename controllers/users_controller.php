@@ -57,7 +57,7 @@ class UsersController extends AppController {
         $this->layout = 'ajax';
 
         // 'To be sanitized' fields
-        $tbs = array('home_address', 'personal_page', 'email', 'mod_description');
+        $tbs = array('home_address', 'personal_page', 'email', 'mod_description', 'twitter', 'linkedin', 'facebook');
 
         if ($id==-1)
             $id = $this->Session->read('id');
@@ -485,9 +485,10 @@ class UsersController extends AppController {
                 $this->User->addtotimeline(array('id' => $id, 'modfields' => $m_fields), null, 'users-setusersettings', $id);
 
             }
-                
-            $response['text'] = 'Data can not be saved';
-            $response['success'] = false;
+            else {
+                $response['text'] = 'Data can not be saved';
+                $response['success'] = false;
+            }
 
         }
 
