@@ -120,7 +120,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                                 xtype: 'checkbox',
                                 anchor: '95%'
                             }, {
-                                fieldLabel: 'About me <br /><span style="font-weight:normal;font-size:90%;">(Describe yourself, your interests and your work here at FBK)</span>',
+                                fieldLabel: 'About me <br /><span style="font-weight:normal;font-size:90%;">(Describe yourself, your interests and your work here at '+window.config.orgname+')</span>',
                                 name: 'description',
                                 xtype: 'textarea',
                                 grow: true,
