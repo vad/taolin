@@ -281,8 +281,7 @@ CREATE TABLE "users" (
   "deleted_date" timestamp(0) NULL default NULL,
   "content" text,
   "tsv" tsvector,
-  PRIMARY KEY  ("id"),
-  UNIQUE ("login")
+  PRIMARY KEY  ("id")
 );
 
 -- # Trigger functions
