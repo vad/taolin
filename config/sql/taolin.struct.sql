@@ -96,6 +96,22 @@ CREATE TABLE "calendars" (
   "name" varchar(100) default NULL
 );
 
+-- # Table structure for table "comments"
+
+DROP TABLE IF EXISTS "comments" CASCADE;
+CREATE TABLE comments (
+  "id" integer NOT NULL,
+  "class" character varying(128) NOT NULL,
+  "foreign_id" integer NOT NULL,
+  "name" character varying(255) NOT NULL,
+  "email" character varying(320) NOT NULL,
+  "body" text,
+  "status" character varying(255) NOT NULL,
+  "created" timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+  "modified" timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+  PRIMARY KEY  ("id")
+);
+
 -- # Table structure for table "events"
 
 DROP TABLE IF EXISTS "events" CASCADE;
@@ -216,6 +232,7 @@ CREATE TABLE "templates" (
   "name" varchar(50) NOT NULL,
   "icon" varchar(100) default NULL,
   "is_unique" SMALLINT NOT NULL default '0',
+  "short_temp" character varying(500) DEFAULT NULL::character varying
   PRIMARY KEY  ("id")
 );
 ALTER TABLE templates ADD CONSTRAINT templates_name_key UNIQUE (name);
