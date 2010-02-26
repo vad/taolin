@@ -61,12 +61,6 @@ if ($isdebugactive == 1) {
 <?php
 }
 ?>
-
-<!--[if lt IE 7.]>
-<script defer type="text/javascript" src="<?php echo $this->base ?>/js/pngfix.js"></script>
-<![endif]-->
-
-
 </head>
 <body>
 
