@@ -310,11 +310,11 @@ ON users FOR EACH ROW EXECUTE PROCEDURE users_tsv_trigger();
 
 -- # Final view structure for view "readable_timeline"
 
-CREATE OR REPLACE VIEW readable_timelines AS 
+CREATE OR REPLACE VIEW readable_timelines AS
  SELECT timelines.id, timelines.user_id, users.name, users.surname, users.deleted, timelines.login, users.gender, timelines.template_id, timelines.param, timelines.date, templates.temp, templates.icon, timelines.model_alias, timelines.foreign_id, timelines.comment_id, timelines.comment_template_id, ( SELECT count(*) AS count
            FROM comments
       JOIN timelines timecount ON comments.class::text = COALESCE(timecount.model_alias, 'Timeline'::character varying)::text AND comments.foreign_id = COALESCE(timecount.foreign_id, timecount.id)
-     WHERE timecount.id = timelines.id) AS "commentsCount"
+     WHERE timecount.id = timelines.id AND comments.status::text <> 'deleted'::text) AS "commentsCount"
    FROM ( SELECT timelines.id, timelines.user_id, timelines.login, timelines.template_id, timelines.param, timelines.date, timelines.created, timelines.modified, timelines.deleted, timelines.deleted_date, timelines.model_alias, timelines.foreign_id, timelines.comment_id, timelines.comment_template_id
            FROM timelines
           WHERE timelines.deleted = 0) timelines
@@ -329,8 +329,7 @@ CREATE OR REPLACE VIEW readable_timelines AS
    FROM timelines
    JOIN templates ON timelines.template_id = templates.id
   WHERE timelines.deleted = 0 AND templates.is_unique = 0))
-  ORDER BY timelines.date DESC;
-
+  ORDER BY timelines.date DESC; 
 
 -- ALTER TABLE readable_timelines OWNER TO sonetdbmgr;
 
