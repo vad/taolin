@@ -47,9 +47,8 @@ var roster = {
     this.roster.push(buddy);    
   },
   flushPresence: function() {
-    //TODO: change this. Once buddies are read, drop them from store 
-    for(var i=0, il=this.store.length; i<il; i++) {
-        var b = this.store[i];
+    var b;
+    while(b = this.store.pop()) {
         this.setPresence(b.jid, b.presence, b.status, b.type);
     }
     rosterStore.load();
