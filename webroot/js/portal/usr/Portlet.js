@@ -256,8 +256,8 @@ Ext.ux.Portlet = Ext.extend(Ext.Panel, {
     ,setPref:function(pref, value, callback){ // set a single settings
         var params = {
             id: this.getId()
-            ,pref: value
         };
+        params[pref] = value;
     
         Ext.Ajax.request({
             url : 'users_widgets/changeconf'

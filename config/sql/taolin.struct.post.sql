@@ -60,6 +60,13 @@ CREATE INDEX groups_users_user_id_idx ON groups_users (user_id);
 
 CREATE INDEX content_types__table_name__idx ON content_types (table_name);
 
+CREATE INDEX aros_foreign_key_idx ON aros USING btree (foreign_key);
+
+CREATE INDEX aros_lft_idx ON aros USING btree (lft);
+
+CREATE INDEX aros_rght_idx ON aros USING btree (rght);
+
+CREATE INDEX users_notdeleted_idx ON users USING btree (deleted) WHERE (deleted = 0);
 
 
 -- # TRIGGERS
@@ -78,6 +85,7 @@ FOR EACH ROW EXECUTE PROCEDURE groups_users_trigger_fun();
 SELECT SETVAL('boards_id_seq', (select MAX(id) from boards)+1);
 SELECT SETVAL('buildings_id_seq', (select MAX(id) from buildings)+1);
 SELECT SETVAL('calendars_id_seq', (select MAX(id) from calendars)+1);
+SELECT SETVAL('comments_id_seq', (select MAX(id) from comments)+1);
 SELECT SETVAL('events_id_seq', (select MAX(id) from events)+1);
 SELECT SETVAL('feedbacks_id_seq', (select MAX(id) from feedbacks)+1);
 SELECT SETVAL('groups_id_seq', (select MAX(id) from groups)+1);
