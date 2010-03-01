@@ -698,6 +698,8 @@ function range(/*[start,] stop[, step]*/) {
 function resetJabberConnection(){
     jabber.nTrials = 0;
     jabber.handle.disconnected();
+
+    Ext.getCmp(Ext.getCmp('buddylist').portlet_id).updateWidget();
 //    return false;
 }
 

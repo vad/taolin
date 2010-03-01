@@ -23,6 +23,7 @@
  * - jabber server and domain
  */
 Ext.onReady(function(){
+    document.getElementById('loading-msg').innerHTML = 'Loading Interface...';
     setPortalConfiguration(application_init);
 });
 

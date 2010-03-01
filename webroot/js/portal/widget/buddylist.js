@@ -56,6 +56,7 @@ var roster = {
 
   setPresence: function (jid, presence, status, type) {
     if ((type !== 'unavailable') && (!this.roster.length)){
+        //console.log('storing');
         var b = new Buddy(jid.toString(), '', '', '', presence, status, type);
         this.store.push(b);
         return;
@@ -197,7 +198,7 @@ BuddyList = function(conf, panel_conf) {
         listeners: {
             resize : {
                 fn: function(panel, panelWidth, panelHeight){ 
-                    panel.items.first().setWidth(panelWidth);
+                    this.gridPanel.setWidth(panelWidth);
                 }, 
                 scope: this
             }
@@ -229,7 +230,8 @@ BuddyList = function(conf, panel_conf) {
                 showGroupName: false,
                 rowSelectorDepth: 12,
                 groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Buddies" : "Buddy"]})',
-                emptyText: 'Nobody is visible in chat at the moment'
+                deferEmptyText: false,
+                emptyText: 'Loading...'
               }),
               cls: 'blist-grid',
               listeners: {
@@ -380,6 +382,14 @@ BuddyList = function(conf, panel_conf) {
                 })]
             })]
     });
+    
+    var gp = this.items.first();
+    this.gridPanel = gp;
+    gp.store.on('load', function() {
+        if (this.view) {
+            Ext.getCmp('buddylist').gridPanel.view.emptyText = 'Nobody online or there has been problems connecting to the server.<br/><br/>Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to try again. If you changed your password recently, please logout and login again with the new password.';
+        }
+    }, gp);
 };
 
 Ext.extend(BuddyList, Ext.Panel);
