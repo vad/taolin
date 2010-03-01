@@ -34,6 +34,10 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
         actioncomplete:function(t, action){ // BAD HACK! (this should be to prevent an ExtJS 3 bug)
             $('#settings .x-panel-btns').css('width', '');
         }
+        ,afterlayout:function(t, layout){
+            var ta = this.form.findField('description');
+            ta.autoSize.defer(500, ta);
+        }
     }
     ,monitorValid: true
     ,waitMsgTarget: true
@@ -116,10 +120,11 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                                 xtype: 'checkbox',
                                 anchor: '95%'
                             }, {
-                                fieldLabel: 'About me <br /><span style="font-weight:normal;font-size:90%;">(Describe yourself, your interests and your work here at FBK)</span>',
+                                fieldLabel: 'About me <br /><span style="font-weight:normal;font-size:90%;">(Describe yourself, your interests and your work here at '+window.config.orgname+')</span>',
                                 name: 'description',
                                 xtype: 'textarea',
                                 grow: true,
+                                deferHeight: true,
                                 anchor: '95%'
                             }, {
                                 fieldLabel: '<img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" class="size16x16" style="vertical-align: middle" /> Linkedin public-profile<br /><span style="font-weight:normal;font-size:90%;">Example: set it to <i>nickname</i> if your linkedin public profile url is <i>http://www.linkedin.com/in/nickname</i></span>'

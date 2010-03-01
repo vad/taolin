@@ -96,6 +96,22 @@ CREATE TABLE "calendars" (
   "name" varchar(100) default NULL
 );
 
+-- # Table structure for table "comments"
+
+DROP TABLE IF EXISTS "comments" CASCADE;
+CREATE TABLE comments (
+  "id" integer NOT NULL,
+  "class" character varying(128) NOT NULL,
+  "foreign_id" integer NOT NULL,
+  "name" character varying(255) NOT NULL,
+  "email" character varying(320) NOT NULL,
+  "body" text,
+  "status" character varying(255) NOT NULL,
+  "created" timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+  "modified" timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
+  PRIMARY KEY  ("id")
+);
+
 -- # Table structure for table "events"
 
 DROP TABLE IF EXISTS "events" CASCADE;
@@ -216,6 +232,7 @@ CREATE TABLE "templates" (
   "name" varchar(50) NOT NULL,
   "icon" varchar(100) default NULL,
   "is_unique" SMALLINT NOT NULL default '0',
+  "short_temp" character varying(500) DEFAULT NULL::character varying
   PRIMARY KEY  ("id")
 );
 ALTER TABLE templates ADD CONSTRAINT templates_name_key UNIQUE (name);
@@ -310,11 +327,11 @@ ON users FOR EACH ROW EXECUTE PROCEDURE users_tsv_trigger();
 
 -- # Final view structure for view "readable_timeline"
 
-CREATE OR REPLACE VIEW readable_timelines AS 
+CREATE OR REPLACE VIEW readable_timelines AS
  SELECT timelines.id, timelines.user_id, users.name, users.surname, users.deleted, timelines.login, users.gender, timelines.template_id, timelines.param, timelines.date, templates.temp, templates.icon, timelines.model_alias, timelines.foreign_id, timelines.comment_id, timelines.comment_template_id, ( SELECT count(*) AS count
            FROM comments
       JOIN timelines timecount ON comments.class::text = COALESCE(timecount.model_alias, 'Timeline'::character varying)::text AND comments.foreign_id = COALESCE(timecount.foreign_id, timecount.id)
-     WHERE timecount.id = timelines.id) AS "commentsCount"
+     WHERE timecount.id = timelines.id AND comments.status::text <> 'deleted'::text) AS "commentsCount"
    FROM ( SELECT timelines.id, timelines.user_id, timelines.login, timelines.template_id, timelines.param, timelines.date, timelines.created, timelines.modified, timelines.deleted, timelines.deleted_date, timelines.model_alias, timelines.foreign_id, timelines.comment_id, timelines.comment_template_id
            FROM timelines
           WHERE timelines.deleted = 0) timelines
@@ -329,8 +346,7 @@ CREATE OR REPLACE VIEW readable_timelines AS
    FROM timelines
    JOIN templates ON timelines.template_id = templates.id
   WHERE timelines.deleted = 0 AND templates.is_unique = 0))
-  ORDER BY timelines.date DESC;
-
+  ORDER BY timelines.date DESC; 
 
 -- ALTER TABLE readable_timelines OWNER TO sonetdbmgr;
 

@@ -42,6 +42,7 @@ class PortalsController extends AppController {
         $u_id = $this->Session->read('id');
 
         $response['config']['addtomail'] = $this->Conf->get('Organization.domain');
+        $response['config']['orgname'] = $this->Conf->get('Organization.name');
         $response['config']['appname'] = $this->Conf->get('Site.name');
         $response['config']['contactus'] = $this->Conf->get('Site.admin');
         $response['config']['defaultgroupname'] = $this->Conf->get('Organization.group_name');
@@ -123,6 +124,7 @@ class PortalsController extends AppController {
             'Site.url' => 'http://taolin.fbk.eu', //used in views/pages/make_homepage_help.ctp
             'Site.admin' => 'admin@example.com', //email address used in photos controller
             'Site.jsdebug' => '1', //used in views/portal/index.ctp
+            'Organization.name' => 'Example inc.',
             'Organization.domain' => 'example.com',
             'Organization.group_name' => 'Group',
             'Images.people_fs_path' => 'YOUR_PATH/user_images', //folder must be img/user_images, update only the absolute path
