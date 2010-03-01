@@ -57,7 +57,7 @@ if ($isdebugactive == 1) {
 <?php
 } else {
 ?>
-    <script type="text/javascript" src='<?php echo $this->base ?>/extjs/ext-all.js'> </script>
+    <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-all.js'> </script>
 <?php
 }
 ?>
