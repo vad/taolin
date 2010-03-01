@@ -1,21 +1,123 @@
 -- # Populating templates table
 
-SELECT pg_catalog.setval('templates_id_seq', 15, true);
+SELECT pg_catalog.setval('templates_id_seq', 19, true);
 
-INSERT INTO templates VALUES (1, '<a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> edited a message in the <a href="javascript:void(0)" onclick="addOrBounceWidget(''Board'',''string_identifier'',''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">board widget</a>', 'boards-modifyads', 'js/portal/shared/icons/fam/report_edit.png', 1);
-INSERT INTO templates VALUES (9, 'Today is a special day for <a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a>!<br/>Happy birthday <a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_</a>!!!', 'timelineevent-happybitrhday', 'img/icons/fugue/cake.png', 0);
-INSERT INTO templates VALUES (10, '<a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> joined today FBK. Welcome <a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_</a>!!!', 'timelineevent-newuser', 'img/icons/fugue/door-open.png', 0);
-INSERT INTO templates VALUES (15, '<a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> created a new event on <a href="javascript:void(0)" onclick="addOrBounceWidget(''ChildrenEvent'',''string_identifier'',''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">children event widget</a>. You can <a href="javascript:void(0)" onclick="addOrBounceWidget(''ChildrenEvent'',''string_identifier'',''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">create a new event for children</a> too!', 'childrenevents-add', 'js/portal/shared/icons/fam/report_add.png', 0);
-INSERT INTO templates VALUES (6, '<a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> wrote an useful <a href="javascript:void(0)" onclick="addOrBounceWidget(''Feedback'',''string_identifier'', ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">feedback</a>. You can <a href="javascript:void(0)" onclick="addOrBounceWidget(''Feedback'',''string_identifier'', ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')"> help us by writing a suggestion</a> too!', 'feedbacks-add', 'img/icons/fugue/light-bulb.png', 1);
-INSERT INTO templates VALUES (11, '<a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> changed _USERADJ_ chat status: <span style="font-weight:normal;color:#888888;">_STATUS_</span><br/>Change your <a href="javascript:void(0)" onclick="addOrBounceWidget(''BuddyList'',''string_identifier'', ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">chat status</a> too!', 'users_widgets-changeconf', 'img/icons/fugue/balloon-ellipsis.png', 1);
-INSERT INTO templates VALUES (2, '<a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> wrote a new message on <a href="javascript:void(0)" onclick="addOrBounceWidget(''Board'',''string_identifier'',''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">board widget</a>. You can <a href="javascript:void(0)" onclick="addOrBounceWidget(''Board'',''string_identifier'',''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">write a message on the board</a> too!', 'boards-add', 'js/portal/shared/icons/fam/report_add.png', 0);
-INSERT INTO templates VALUES (3, '<a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> changed _USERADJ_ <a href="javascript:void(0)" onclick="showPicture(''_URL_'',''_WIDTH_'',''_HEIGHT_'',''_FILENAME_'',''_CAPTION_'',''_NAME_'')">default photo</a>. You can <a href="javascript:void(0)" onclick="openImageChooser()">edit your photos</a> too!', 'photos-setdefaultphoto', 'img/icons/fugue/picture--pencil.png', 1);
-INSERT INTO templates VALUES (4, '<a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> upload <a href="javascript:void(0)" onclick="showPicture(''_URL_'',''_WIDTH_'',''_HEIGHT_'',''_FILENAME_'',''_CAPTION_'',''_NAME_'')">a new picture</a><br/>Edit your <a href="javascript:void(0)" onclick="openImageChooser()">photo</a>!', 'photos-uploadphoto', 'img/icons/fugue/image-sunset.png', 0);
-INSERT INTO templates VALUES (5, '<a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> edited _USERADJ_ <a href="javascript:void(0)" onclick="showUserInfo(_ID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">profile</a>_MODFIELDS_. You can <a href="javascript:void(0)" onclick="expandSettingsPanel()">edit your profile</a> too!', 'users-setusersettings', 'js/portal/shared/icons/fam/vcard.png', 0);
-INSERT INTO templates VALUES (7, '<a href="javascript:showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> added <i>_NAME_</i>. <a href="javascript:addOrBounceWidget(_W_ID_, ''widget_id'', ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">Add</a> this widget!', 'users_widgets-addwidget', 'js/portal/shared/icons/fam/application_view_tile.png', 0);
-INSERT INTO templates VALUES (12, '<b>Desktop.fbk.eu</b> is proud to introduce you a brand new champion: welcome on board <a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a>!', 'users-admin_activate', 'img/icons/fugue/trophy.png', 0);
-INSERT INTO templates VALUES (13, 'A brand new <a href="javascript:void(0)" onclick="addOrBounceWidget(''Events'', ''string_identifier'', ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')"> FBK event</a> has been created: "<i>_SUMMARY_</i>" ( _URL_ )<br />Check it out in <a href="javascript:void(0)" onclick="addOrBounceWidget(''Events'', ''string_identifier'', ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">events</a> widget', 'timelineevent-newevent', 'img/icons/fugue/calendar-day.png', 0);
-INSERT INTO templates VALUES (8, '<a href="javascript:void(0)" onclick="showUserInfo(_USERID_, null, ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}'')">_USERNAME_ _USERSURNAME_</a> changed  _USERADJ_ <a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow({buildingId: _BUILDING_, userId: _USERID_, logparams: ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}''})).show()">position</a> on the workplace map. Change <a href="javascript:void(0)" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;_TIMELINEID_&quot;}''})).show()">your position</a>!', 'workplaces-save', 'js/portal/shared/icons/fam/map.png', 1);
+INSERT INTO templates VALUES (10, '{{ user | userify timelineid }} joined today FBK. Welcome {% if !user.deleted %}<span class="a" onclick="showUserInfo({{ userid }}, null, {source: ''timeline'', timeline_id: {{ timelineid }}})">{{ user.name }}</span>{% else %}{{ user.name }}{% endif %}!!!', 'timelineevent-newuser', 'img/icons/fugue/door-open.png', 0, '{{ user | user_adjectify timelineid }} arrival at FBK{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+');
+INSERT INTO templates VALUES (1, '{{ user | userify timelineid }} edited a message in the <span class="a" onclick="addOrBounceWidget(''Board'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">board widget</span>', 'boards-modifyads', 'js/portal/shared/icons/fam/report_edit.png', 1, '
+');
+INSERT INTO templates VALUES (12, '<b>{{ sitename }}</b> is proud to introduce you a brand new champion: welcome on board {{ user | userify timelineid }}!', 'users-admin_activate', 'img/icons/fugue/trophy.png', 0, 'the election of {{ user | userify timelineid}} as a champion of {{ sitename }}{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+');
+INSERT INTO templates VALUES (2, '{{ user | userify timelineid }} wrote a new message on <span class="a" onclick="addOrBounceWidget(''Board'',''string_identifier'',{source: ''timeline'', timeline_id: {{ timelineid }}})">board widget</span>. You can <span class="a" onclick="addOrBounceWidget(''Board'',''string_identifier'',{source: ''timeline'', timeline_id: {{ timelineid }}})">write a message on the board</span> too!', 'boards-add', 'js/portal/shared/icons/fam/report_add.png', 0, '{{ user | user_adjectify timelineid }} message on the <span class="a" onclick="addOrBounceWidget(''Board'',''string_identifier'',{source: ''timeline'', timeline_id: {{ timelineid }}})">board</span> widget{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+');
+INSERT INTO templates VALUES (15, '{{ user | userify timelineid }} commented on 
+', 'comment', 'js/portal/shared/icons/fam/comment.png', 1, NULL);
+INSERT INTO templates VALUES (4, '{{ user | userify timelineid }} upload {% if p_id %}<span class="a" onclick="showPicture({{p_id}}, {{user.id}})">a new picture</span>{% else %}a new picture{% endif %}<br/>Why don''t you <span class="a" onclick="new PhotoUploader()">upload a new photo</span> too?', 'photos-uploadphoto', 'img/icons/fugue/image-sunset.png', 0, '{{ user | user_adjectify timelineid }} {% if p_id %}<span class="a" onclick="showPicture({{p_id}}, {{user.id}})">photo</span>{% else %}photo{% endif %}{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+');
+INSERT INTO templates VALUES (9, 'Today is a special day for {{ user | userify timelineid }}!<br />Happy birthday {% if !user.deleted %}<span class="a" onclick="showUserInfo({{ user.id }}, null, {source: ''timeline'', timeline_id: {{ timelineid }}})">{{ user.name }}{% else %}{{ user.name }}{% endif %}</span>!!!', 'timelineevent-happybirthday', 'img/icons/fugue/cake.png', 0, '{{ user | user_adjectify timelineid }} birthday{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+');
+INSERT INTO templates VALUES (7, '{{ user | userify timelineid }} added <i>{{ name }}</i>.
+{% if ! short_version %}<span class="a" onclick="addOrBounceWidget({{ w_id }}, ''widget_id'', {source: ''timeline'', timeline_id: {{ timelineid }}})">Add</span> this widget!{% endif %}
+', 'users_widgets-addwidget', 'js/portal/shared/icons/fam/application_view_tile.png', 0, '{{ user | user_adjectify timelineid }} <span class="a" onclick="addOrBounceWidget({{ w_id }}, ''widget_id'', {source: ''timeline'', timeline_id: {{ timelineid }}})">{{ name }} widget</span> adoption{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+');
+INSERT INTO templates VALUES (5, '{{ user | userify timelineid }} edited {{ user.adj }} <span class ="a" onclick="showUserInfo({{ user.id }}, null, {source: ''timeline'', timeline_id: {{ timelineid }}})">profile</span>.
+{% if not short_version %}
+You can <span class="a" onclick="expandSettingsPanel()">edit your profile</span> too!
+{% endif %}
+', 'users-setusersettings', 'js/portal/shared/icons/fam/vcard.png', 0, '{{ user | user_adjectify timelineid }} profile edit{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+');
+INSERT INTO templates VALUES (16, '<table>
+  <tr>
+    <td valign="top">
+      <div onclick="showUserInfo({{ user.id }}, null, {source: ''comment''})" style="text-align: center; width: 50px; cursor: pointer;">
+        <img src="photos/getphotofromuserlogin/{{ user.login }}/40/40" style="padding: 2px 0pt;"/>
+      </div>
+    </td>
+    <td>
+      <h2>{{ user.name }} {{ user.surname }} wrote a message on the board</h2>
+      <br />{{ text | truncate 80 | nl2br }}
+    </td>
+  </tr>
+</table>
+', 'boards-details', '', 0, '
+');
+INSERT INTO templates VALUES (18, '<div>
+  <table style="margin:auto auto;">
+    <tr>
+      <td>
+        <img src="{{ img_path }}t140x140/{{ filename }}" style="padding-right:10px"/>
+      </td>
+      <td>
+        <div><b>{{ name }}</b></div>
+      </td>
+    </tr>
+  </table>
+</div>
+', 'photo-details', '', 0, '
+');
+INSERT INTO templates VALUES (3, '{{ user | userify timelineid }} changed {{ user.adj }} {% if p_id %}<span class="a" onclick="showPicture({{p_id}}, {{user.id}})">default photo</span>{% else %}default photo{% endif %}.
+{% if not short_version %}
+You can <span class="a" onclick="openImageChooser()">edit your photos</span> too!
+{% endif %}
+', 'photos-setdefaultphoto', 'img/icons/fugue/picture--pencil.png', 1, '{{ user | user_adjectify timelineid }} {% if p_id %}<span class="a" onclick="showPicture({{p_id}}, {{user.id}})">photo</span>{% else %}photo{% endif %}{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+');
+INSERT INTO templates VALUES (17, '<div style="padding:5px">
+  <h2>{{ summary | truncate 150 | nl2br }}</h2>
+  <div style="padding-top:10px;">
+    <table style=>
+      <tr>
+        <td width="40px"><b>From:</b></td><td>{{ start_time | date ''D d M, Y - H:i'' }}</td>
+      </tr>
+      <tr>
+        <td width="40px"><b>To:</b></td><td>{{ end_time | date ''D d M, Y - H:i'' }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+', 'timelineevent-details', '', 0, '
+');
+INSERT INTO templates VALUES (8, '{{ user | userify timelineid }} changed  {{ user.adj }} <span class="a" onclick="(new Ext.ux.fbk.sonet.MapWindow({buildingId:{{ building }}, userId: {{ user.id }}, logparams: {source: ''timeline'', timeline_id: {{ timelineid }}}})).show()">position</span> on the workplace map.
+{% if not short_version %}
+Change <span class="a" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: {source: ''timeline'', timeline_id: {{ timelineid }}}})).show()">your position</span>!
+{% endif %}
+', 'workplaces-save', 'js/portal/shared/icons/fam/map.png', 1, '{{ user | user_adjectify timelineid }} change of workplace position on the map{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+');
+INSERT INTO templates VALUES (11, '{{ user | userify timelineid }} <span class="deco-text">{{ status }}</span>{% if not short_version %}<br/>Change your <span class="a" onclick="addOrBounceWidget(''BuddyList'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">chat status</span> too!
+{% endif %}', 'users_widgets-changeconf', 'img/icons/fugue/balloon-ellipsis.png', 1, '{{ user | user_adjectify timelineid }} chat status{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+');
+INSERT INTO templates VALUES (6, '{{ user | userify timelineid }} wrote an useful <span class="a" onclick="addOrBounceWidget(''Feedback'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">feedback</span>.
+{% if not short_version %}
+You can <span class="a" onclick="addOrBounceWidget(''Feedback'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})"> help us by writing a suggestion</span> too!
+{% endif %}
+', 'feedbacks-add', 'img/icons/fugue/light-bulb.png', 1, '{{ user | user_adjectify timelineid }} feedback{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}');
+INSERT INTO templates VALUES (13, 'A brand new <span class="a" onclick="addOrBounceWidget(''Events'', ''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})"> FBK event</span> has been created: "<i>{{ summary }}</i>" {% if uid %}({{ uid }}){% endif %}{% if start_time %} from {{ start_time | date ''d/m/y'' }}{% endif %}{% if end_time %} to {{ end_time | date ''d/m/y'' }}{% endif %}
+
+{% if not short_version %}
+<br />
+Check it out in the <a href="javascript:void(0)" onclick="addOrBounceWidget(''Events'', ''string_identifier'', ''{&quot;source&quot;: &quot;timeline&quot;, &quot;timeline_id&quot;: &quot;{{ timelineid }}&quot;}'')">events</a> widget
+{% endif %}
+', 'timelineevent-newevent', 'img/icons/fugue/calendar-day.png', 0, 'the event "<i>{{ summary }}</i>" in the <span class="a" onclick="addOrBounceWidget(''Events'', ''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">events</span> widget{% if comment %}: <br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}');
+INSERT INTO templates VALUES (14, '{{ user | userify timelineid }} wrote a new event on <span class="a" onclick="addOrBounceWidget(''ChildrenEvent'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})"> the childrenevent widget</span>.
+{% if not short_version %}
+You can <span class="a" onclick="addOrBounceWidget(''ChildrenEvent'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">create a new event for children</span> too!
+{% endif %}
+', 'childrenevents-add', 'js/portal/shared/icons/fam/report_add.png', 1, '{{ user | user_adjectify timelineid }} event for children written in the <span class="a"onclick="addOrBounceWidget(''Board'',''string_identifier'',{source: ''timeline'', timeline_id: {{ timelineid }}})">children event</span> widget{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}');
+INSERT INTO templates VALUES (19, '<div style="padding:5px">
+  <h2>{{ title | truncate 150 | nl2br }}</h2>
+  <div style="padding-top:10px;">
+    <table style=>
+      {% if location %}
+      <tr>
+        <td width="40px"><b>Where:</b></td><td>{{ location }}</td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td width="40px"><b>Date:</b></td><td>{{ date }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+', 'childrenevents-details', '', 0, '');
 
 
 -- # Populating widgets table
