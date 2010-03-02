@@ -29,5 +29,5 @@
        <br />
         <div>For any questions feel free to send us an e-mail to <b><?php echo $contactus ?></b></div>
     </div>
-</div
+</div>
 
