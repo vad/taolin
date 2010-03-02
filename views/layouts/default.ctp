@@ -39,20 +39,18 @@
 
 <script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery-1.4.2.min.js'> </script>
 <?
+$isdebugactive = $conf->get('Site.jsdebug');
 if ($isdebugactive == 1) {
 ?>
     <script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery.lint.js'> </script>
 <?
 }
 ?>
-<!-- <script type="text/javascript" src='<?php echo $this->base ?>/extjs/adapter/jquery/ext-jquery-adapter.js'> </script> -->
 <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-jquery-adapter.js'> </script>
 
 <?php
-$isdebugactive = $conf->get('Site.jsdebug');
 if ($isdebugactive == 1) {
 ?>
-    <!-- <script type="text/javascript" src='<?php echo $this->base ?>/extjs/ext-all-debug.js'> </script> -->
     <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-all-debug.js'> </script>
 <?php
 } else {
@@ -63,16 +61,10 @@ if ($isdebugactive == 1) {
 ?>
 </head>
 <body>
-
     <div id="container">
         <div id="content">
-    
-            <!-- Views are diplayed here -->
             <?php echo $content_for_layout ?>
-
-
         </div>
-        
     </div>
     </body>
 </html>
