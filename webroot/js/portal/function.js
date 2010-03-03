@@ -43,9 +43,9 @@ function expandUserPanel(){
     Ext.getCmp('user_profile').expand(false);
 }
 
-function expandSettingsPanel(){
+function expandUserEditProfilePanel(){
     Ext.getCmp('west-panel').expand();
-    Ext.getCmp('settings').expand(true);
+    Ext.getCmp('edit_profile').expand(true);
 }
 
 function showMainTimeline(){

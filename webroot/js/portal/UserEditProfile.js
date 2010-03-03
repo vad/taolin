@@ -19,7 +19,7 @@
 
 Ext.namespace( 'Ext.ux.fbk.sonet' );
 
-Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
+Ext.ux.fbk.sonet.UserEditProfile = Ext.extend(Ext.form.FormPanel, {
     cls: 'form_settings'
     ,border: false
     ,autoScroll: true
@@ -43,7 +43,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
     ,waitMsgTarget: true
     ,method:'POST'
     ,onRender:function(){
-        Ext.ux.fbk.sonet.Settings.superclass.onRender.apply(this, arguments);
+        Ext.ux.fbk.sonet.UserEditProfile.superclass.onRender.apply(this, arguments);
 
         this.form.load();
     }
@@ -178,10 +178,10 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
         
         Ext.apply(this, Ext.apply(this.initialConfig, config));
 
-        Ext.ux.fbk.sonet.Settings.superclass.initComponent.apply(this, arguments);
+        Ext.ux.fbk.sonet.UserEditProfile.superclass.initComponent.apply(this, arguments);
     }
     ,onSuccess:function(form, action){
-        Ext.example.msg('Settings', 'Your data has been saved');
+        Ext.example.msg('Edit Profile', 'Your data has been saved');
         form.load();
         showUserInfo();
     },

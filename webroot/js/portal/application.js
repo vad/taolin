@@ -121,7 +121,7 @@ function application_init(){
    
     // preparing text for Did you know messages
     var aDyk = ['Did you know that you can <span class="right-element" style="float:none;position:relative;padding:0;"><span class="a add_widgets" onclick="openAddWidgetsModalWindow()"><b>Add widgets</b></span></span>? <span class="right-element" style="float:none;position:relative;padding:0;"><span class="a add_widgets" onclick="openAddWidgetsModalWindow()"><b>Add widgets</b></a></span>.',
-        'Did you know that you can <span class="a" onclick="expandSettingsPanel()">Edit your profile</span>? <span class="a" onclick="expandSettingsPanel()">Edit your profile</span>.',
+        'Did you know that you can <span class="a" onclick="expandUserEditProfilePanel()">Edit your profile</span>? <span class="a" onclick="expandUserEditProfilePanel()">Edit your profile</span>.',
         'Did you know that you can expand fullscreen widgets clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-maximize" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can configure a widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-gear" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can minimize your widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-toggle" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
@@ -161,7 +161,7 @@ function application_init(){
                 '<li class="header"><span class="a menu-item">Personal profile</span>' +
                     '<ul>' +
                         '<li><span class="a menu-item" onclick="showUserInfo(null, null, {source: \'logout_div\'})"><span class="sprited user-icon">View your profile</span></span></li>' +
-                        '<li><span class="a menu-item" onclick="expandSettingsPanel()"><span class="sprited user-edit">Edit your profile</span></span></li>' +
+                        '<li><span class="a menu-item" onclick="expandUserEditProfilePanel()"><span class="sprited user-edit">Edit your profile</span></span></li>' +
                         '<li><span class="a menu-item" onclick="openImageChooser()"><span class="sprited image-edit">Edit your photos</span></span></li>' +
                         '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()"><span class="sprited map-edit">Edit your workplace position</span></span></li>' +
                      '</ul>' +

@@ -27,7 +27,7 @@ var userinfo_tpl = new Ext.XTemplate(
         '<b><span style="font-size:130%;font-family: Verdana;">{name} {surname}</span>',
         /* if own profile, prompt a shortcut to edit the profile */
         '<tpl if="((reqid === \'\') || (reqid == user.id))">',
-            '<span style="padding-left:10px;" class="a" onclick="expandSettingsPanel()">Edit</span>',
+            '<span style="padding-left:10px;" class="a" onclick="expandUserEditProfilePanel()">Edit</span>',
         '</tpl>',
         '</b><br/><br/>',
         '<tpl if="email">',
@@ -124,7 +124,7 @@ var usertext_tpl = new Ext.XTemplate(
         '<b>About {name}:</b><span> {mod_description}</span>',
     '</tpl>',
     '<tpl if="((!(mod_description) || (mod_description == \'\')) && isOwner(id))">',
-        '<b>About {name}: </b><span class="a" onclick="expandSettingsPanel()">Describe yourself, your activities and your interests</span>',
+        '<b>About {name}: </b><span class="a" onclick="expandUserEditProfilePanel()">Describe yourself, your activities and your interests</span>',
     '</tpl>',
     '</div>'
     ,{
@@ -181,7 +181,7 @@ westPanel = new Ext.Panel({
         autoScroll:true,
         iconCls:'settings',
         frame:true,
-        id:'settings',
+        id:'edit_profile',
         layout: 'fit',
         collapsible:true,
         hideCollapseTool:true,
@@ -194,7 +194,7 @@ westPanel = new Ext.Panel({
              */
             /*collapse: expandUserPanel,*/
             render: function(t){
-                t.add(new Ext.ux.fbk.sonet.Settings());
+                t.add(new Ext.ux.fbk.sonet.UserEditProfile());
             }
         }
     }]
