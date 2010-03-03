@@ -126,6 +126,7 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
             }
         )
         ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">No comment yet! Be the first to comment!</div>'
+        ,loadingText: 'Loading comments...' 
 	    ,itemSelector: 'div.comment'
         ,height: 300
     });
