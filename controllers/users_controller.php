@@ -158,7 +158,7 @@ class UsersController extends AppController {
      * and load it in a form
      * It send an array to a view via $this->set to the view
      */
-    function getusersettings() {
+    function getuserprofile() {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
         
@@ -373,7 +373,7 @@ class UsersController extends AppController {
     }
 
 
-    function setusersettings() {
+    function setuserprofile() {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
             

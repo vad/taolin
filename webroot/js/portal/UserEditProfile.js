@@ -32,7 +32,7 @@ Ext.ux.fbk.sonet.UserEditProfile = Ext.extend(Ext.form.FormPanel, {
     }
     ,listeners:{
         actioncomplete:function(t, action){ // BAD HACK! (this should be to prevent an ExtJS 3 bug)
-            $('#settings .x-panel-btns').css('width', '');
+            $('#edit_profile .x-panel-btns').css('width', '');
         }
         ,afterlayout:function(t, layout){
             var ta = this.form.findField('description');
@@ -50,7 +50,7 @@ Ext.ux.fbk.sonet.UserEditProfile = Ext.extend(Ext.form.FormPanel, {
     ,initComponent: function() {
         var config = {
             trackResetOnLoad: true,
-            url: 'users/getusersettings/',
+            url: 'users/getuserprofile/',
             text: "Loading...",
             timeout: 60,
             scope: this,
@@ -152,7 +152,7 @@ Ext.ux.fbk.sonet.UserEditProfile = Ext.extend(Ext.form.FormPanel, {
                         handler: function(){
                             if(this.form.isDirty()){
                                 this.form.submit({
-                                    url:'users/setusersettings',
+                                    url:'users/setuserprofile',
                                     success:this.onSuccess,
                                     failure:this.onFailure,
                                     waitMsg:'Saving data...'
