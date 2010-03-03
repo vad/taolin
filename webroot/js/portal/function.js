@@ -930,12 +930,25 @@ function getBodySize(ratio){
 }
 
 $.extend(Ext.util.Format, {
-    pronoun: function(gender) {
-        //gender = 2 => female
-        if(gender == '1') { //male
-            return 'his';
-        }
-        return 'her';
+    pronoun: function(gender, type) { 
+        var p;
+
+        /* type == 1 subjective pronoun
+           type == 2 objective pronoun
+           default possessive pronoun */
+
+        switch(type) {
+            case 1:
+                p = (gender == '1') ? 'he' : 'she';
+                break;
+            case 2:
+                p = (gender == '1') ? 'him' : 'her';
+                break;
+            default:
+                p = (gender == '1') ? 'his' : 'her';
+            }
+            
+            return p;
     }
     ,birth: function(d) {
         return Date.parseDate(d, "Y-m-d").format("F, d");

@@ -88,6 +88,8 @@ FeedReader = function(conf, panel_conf){
                         Ext.getDom(id+'_logo').style.padding = ((min_height - height)/2)+'px 0';
                     }
 
+                    console.log($('#'+id+'_logo'));
+
                     Ext.getDom(id+'_logo').src = store.reader.jsonData.image_url;
                     Ext.getDom(id+'_logo').width = width;
                     Ext.getDom(id+'_logo').height = height;
@@ -99,13 +101,13 @@ FeedReader = function(conf, panel_conf){
     this.expander = new Ext.grid.RowExpander({
         tpl: new Ext.Template(
             '<div><b>Summary:</b> {description}</div>',
-            '<div style="margin-top:20px"><span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{url}" target="_blank">more...</a></span>',
+            '<div class="description" style="margin-top:20px"><span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{url}" target="_blank">more...</a></span>',
             '<span style="float:right;padding-bottom:3px;padding-right:3px;"><span class="a" onclick="Ext.getCmp(\''+feedId+'\').grid.sendTo()">Email to</span> | </span></div>'
         )
         ,listeners: {
             expand: function(){
                 //don't open links in this tab!
-                $('#'+ this.parent.getId() +' p a').attr('target', '_blank');
+                $('#'+ this.parent.getId() +' .description a').attr('target', '_blank');
             }
         }
         ,parent: this
