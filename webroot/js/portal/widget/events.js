@@ -38,6 +38,8 @@ Events = function(conf, panel_conf){
         ,eventManager: eventManager
     }));
     
+    var eventId = this.getId();
+    
     var nItems = parseInt(get(conf, 'items', 5), 10);
 
     var store = new Ext.data.JsonStore({
@@ -74,10 +76,9 @@ Events = function(conf, panel_conf){
                 ,'<div><p>No description available</p></div>'
             ,'</tpl>'
             ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{uid}" target="_blank">more...</a></span>'
-            ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><span class="a" onclick="{eventId:getCmp}.sendTo()">Email to</span> | </span>'
+            ,'<span style="float:right;padding-bottom:3px;padding-right:3px;"><span class="a" onclick="Ext.getCmp(\''+eventId+'\').sendTo()">Email to</span> | </span>'
             ,{
-                eventId: this.getId()
-                ,compiled: true
+                compiled: false
             }
         )
         ,listeners: {
