@@ -36,6 +36,7 @@ HtmlIncluder = function(json){
         autoHeight: true,
         defaults: { autoScroll: true },
         bodyStyle: 'padding:4px',
+        preventBodyReset: true,
         autoLoad: json.url
     });
 };
