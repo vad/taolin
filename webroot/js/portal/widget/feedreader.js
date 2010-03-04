@@ -31,7 +31,7 @@
 FeedReader = function(conf, panel_conf){
     Ext.apply(this, panel_conf);
 
-    feedId = this.getId();
+    var feedId = this.getId();
 
     var nItems = 5;
     if (conf.items){
@@ -99,10 +99,13 @@ FeedReader = function(conf, panel_conf){
     });
    
     this.expander = new Ext.grid.RowExpander({
-        tpl: new Ext.Template(
+        tpl: new Ext.XTemplate(
             '<div><b>Summary:</b> {description}</div>',
             '<div class="description" style="margin-top:20px"><span style="float:right;padding-bottom:3px;padding-right:3px;"><a href="{url}" target="_blank">more...</a></span>',
             '<span style="float:right;padding-bottom:3px;padding-right:3px;"><span class="a" onclick="Ext.getCmp(\''+feedId+'\').grid.sendTo()">Email to</span> | </span></div>'
+            ,{
+                compiled: true
+            }
         )
         ,listeners: {
             expand: function(){
