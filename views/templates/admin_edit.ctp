@@ -74,7 +74,7 @@
     <div class="block">
       <h3>Help</h3>
       <div class="content">
-        <p>In this page you can modify existing templates. Other actions, as adding new templates, will be added, if you need more please submit an Issue on <a href="http://github/vad/taolin/issues">Github</a></p>
+        <p>In this page you can modify existing templates. If you need more functionalities please submit an Issue on <a href="http://github/vad/taolin/issues">Github</a></p>
       </div>
     </div>
   </div>
