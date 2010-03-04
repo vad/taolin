@@ -27,9 +27,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=8" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <?php
+    
     $favicon = $conf->get('Site.favicon');
     if ($favicon) {
-        echo "<link rel='shortcut icon' href='". $this->base .'/'. $conf->get('Site.favicon') ."' type='image/gif' />";
+        echo "<link rel='shortcut icon' href='". $this->base .'/'. $favicon ."' type='image/gif' />";
     }
 
 ?>

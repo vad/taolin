@@ -51,6 +51,7 @@ class PortalsController extends AppController {
         $response['config']['jabber_domain'] = $this->Conf->get('Jabber.domain');
         $response['config']['logo'] = $this->Conf->get('Site.logo_url');
         $response['config']['background'] = $this->Conf->get('Site.background');
+        $response['config']['version'] = $this->Conf->get('Site.version');
 
         App::import('Model', 'User');
         $users = new User();
@@ -136,6 +137,7 @@ class PortalsController extends AppController {
             'Jabber.server' => 'jabber.example.com',
             'Jabber.domain' => 'example.com',
             'Site.logo_url' => 'img/logo.png',
+            'Site.version' => '0.1',
             'Site.favicon' => 'local/img/favicon.ico' // local path to favicon (optional)
         );
         foreach ($config as $k => $v) {
