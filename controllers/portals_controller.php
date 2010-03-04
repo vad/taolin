@@ -61,7 +61,8 @@ class PortalsController extends AppController {
                 ,'fields' => array(
                     'id', 'login', 'name', 'surname', 
                     'COALESCE(mod_email, email) AS "User__email"',
-                    'privacy_policy_acceptance'
+                    'privacy_policy_acceptance',
+                    'number_of_columns'
                 )
                 ,'recursive' => -1
             )
