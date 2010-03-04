@@ -202,6 +202,28 @@ westPanel = new Ext.Panel({
                 t.add(new Ext.ux.fbk.sonet.UserEditProfile());
             }
         }
+    },{
+        title:'Edit your settings',
+        border:false,
+        autoScroll:true,
+        iconCls:'settings',
+        frame:true,
+        id:'settings',
+        layout: 'fit',
+        collapsible:true,
+        hideCollapseTool:true,
+        tools: toolsnotclose,
+        listeners: {
+            /* When this accordion panel collapse it expands automatically
+             * the other panel
+             *
+             * not in use
+             */
+            /*collapse: expandUserPanel,*/
+            render: function(t){
+                t.add(new Ext.ux.fbk.sonet.Settings());
+            }
+        }
     }]
 
     /**

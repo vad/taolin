@@ -146,8 +146,7 @@ Ext.ux.fbk.sonet.UserEditProfile = Ext.extend(Ext.form.FormPanel, {
                                 ,anchor: '95%'
                             }]
                     })
-                },{
-                    buttons: [{
+                    ,buttons: [{
                         text: 'Save',
                         handler: function(){
                             if(this.form.isDirty()){

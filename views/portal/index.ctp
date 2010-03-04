@@ -153,6 +153,7 @@ if ($isdebugactive == 1) {
     echo $javascript->link('portal/UserPhotos.js');
     echo $javascript->link('portal/UserProfile.js');
     echo $javascript->link('portal/UserEditProfile.js');
+    echo $javascript->link('portal/settings.js');
     echo $javascript->link('portal/westpanel.js');
 
     echo $javascript->link('portal/window/AddWidgetsWindow.js');

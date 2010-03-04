@@ -217,6 +217,43 @@ class UsersController extends AppController {
         $this->set('json', $json);
     }
 
+
+    /**
+     * This function returns an array containing user's settings
+     * and load it in a form
+     * It send an array to a view via $this->set to the view
+     */
+    function getusersettings() {
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+        
+        $id = $this->Session->read('id');
+
+        $condition = array('User.id' => $id);
+        $this->User->recursive = 0;
+        
+        $user  = $this->User->find('first', array(
+            'conditions' => $condition,
+            'fields' => array('number_of_columns')
+        ));
+        pr($user);
+        
+        foreach ($user['User'] as $key => $userid){
+            if ($key == 'number_of_columns')
+                $users[] = array('id' => $key, 'value' => $userid, 'data' => array(1,2,3,4));
+            else
+                $users[] = array('id' => $key, 'value' => $userid);
+        }
+        foreach ($user[0] as $key => $mod_defined){
+            $users[] = array('id' => $key, 'value' => $mod_defined);
+        }
+
+
+        $json['data'] = $users;
+        $json['success'] = true;
+        $this->set('json', $json);
+    }
+
     function searchusers() {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
@@ -495,6 +532,52 @@ class UsersController extends AppController {
         
         $this->set('json', $response);
     }
+    
+    
+    function setusersettings() {
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+            
+        if (empty($this->params))
+            die('Are you joking me?');
+        
+        $id = $this->Session->read('id');
+
+        $condition = array('id' => $id);
+        $fields = array(
+            'number_of_columns'
+        );
+        
+        $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
+        
+        $data = array();
+        $mod_fields = array();
+
+        $form = $this->params['form'];
+        $user = $user_com['User'];
+
+        if(array_key_exists('number_of_columns', $form)){
+            $data['number_of_columns'] = $form['number_of_columns'];
+        }
+
+
+        if(!empty($data)) {
+            $data['id'] = $id;
+        
+            if($this->User->save($data)){
+                $response['text'] = 'Data saved';
+                $response['success'] = true;
+            } else {
+                $response['text'] = 'Data can not be saved';
+                $response['success'] = false;
+            }
+
+        }
+
+        
+        $this->set('json', $response);
+    }
+
 
     function setprivacypolicyacceptance(){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
@@ -557,7 +640,7 @@ class UsersController extends AppController {
     }
 
 
-    function addtag($tag){
+/*    function addtag($tag){
         Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
         $u_id = $this->Session->read('id');
@@ -568,6 +651,7 @@ class UsersController extends AppController {
         
         $this->set('json', '');       
     }
+*/
 
     /*****************************************************
      *****************************************************

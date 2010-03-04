@@ -108,7 +108,7 @@ function application_init(){
         , this);
     */
     
-    config.num_columns = 2;
+    config.num_columns = user.number_of_columns;
     var columns = new Array(),
         width = 1/config.num_columns;
 
