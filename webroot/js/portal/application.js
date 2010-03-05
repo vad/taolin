@@ -54,7 +54,7 @@ themes = [
 //Ext.onReady(
 function application_init(){
 
-    if(typeof user.theme != 'undefined')
+    if(typeof user.theme == 'string')
         Ext.util.CSS.swapStyleSheet('theme', user.theme);
 
     Ext.QuickTips.init();
