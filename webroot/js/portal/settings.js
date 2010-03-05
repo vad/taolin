@@ -95,23 +95,21 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                     text: 'Save',
                     handler: function(){
                         if(this.form.isDirty()){
-                            Ext.Msg.show({
-                                title:'Save Changes?',
-                                msg: 'This operation will reload the page. Do you want to continue?',
-                                buttons: Ext.Msg.YESNO,
-                                fn: function(buttonId) {
-                                    if (buttonId == "yes") {
-                                        this.form.submit({
-                                            url:'users/setusersettings',
-                                            success:this.onSuccess,
-                                            failure:this.onFailure,
-                                            waitMsg:'Saving data...'
-                                        });
-                                    }
-                                },
-                                icon: Ext.MessageBox.QUESTION
-                                ,scope: this
-                            });
+                            if(this.form.findField('number_of_columns').isDirty()){
+                                Ext.Msg.show({
+                                    title:'Save Changes?',
+                                    msg: 'This operation will reload the page. Do you want to continue?',
+                                    buttons: Ext.Msg.YESNO,
+                                    fn: function(buttonId) {
+                                        if (buttonId == "yes") 
+                                            this.submit();
+                                    },
+                                    icon: Ext.MessageBox.QUESTION
+                                    ,scope: this
+                                });
+                            }
+                            else
+                                this.submit();
                         }
                     }
                     ,formBind:true
@@ -133,12 +131,16 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
         Ext.ux.fbk.sonet.Settings.superclass.initComponent.apply(this, arguments);
     }
     ,onSuccess:function(form, action){
-        /*Ext.example.msg('Edit Settings', 'Your data has been saved');
-        form.load();
-        */
 
-        //reload the portal
-        window.location.reload(false);
+        if(action.result.reloadpage)
+            window.location.reload(false);
+
+        if(action.result.changetheme){
+            var theme = form.findField('theme').getValue();
+            if(typeof theme != 'undefined')
+                Ext.util.CSS.swapStyleSheet('theme', theme);
+        }
+
     },
     onFailure:function(form, action){
         Ext.Msg.show({
@@ -147,6 +149,14 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
             width: 400,
             buttons: Ext.MessageBox.OK,
             icon: Ext.MessageBox.ERROR
+        });
+    }
+    ,submit:function(){
+        this.form.submit({
+            url:'users/setusersettings',
+            success:this.onSuccess,
+            failure:this.onFailure,
+            waitMsg:'Saving data...'
         });
     }
 });

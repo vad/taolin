@@ -531,18 +531,31 @@ class UsersController extends AppController {
             
         if (empty($this->params))
             die('Are you joking me?');
+
+        $response['reloadpage'] = false;
+        $response['changetheme'] = false;
         
         $u_id = $this->Session->read('id');
         
+        $condition = array('id' => $u_id);
+        $fields = array(
+            'number_of_columns', 'background_id', 'theme'    
+        );
+        
+        $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
+        
         $data = array();
+        $user = $user_com['User'];
         
         $form = $this->params['form'];
 
-        if(array_key_exists('number_of_columns', $form)){
+        if(array_key_exists('number_of_columns', $form) && strcasecmp($form['number_of_columns'], $user['number_of_columns'])){
+            $response['reloadpage'] = true;
             $data['number_of_columns'] = $form['number_of_columns'];
         }
 
-        if(array_key_exists('theme', $form)){
+        if(array_key_exists('theme', $form) && strcasecmp($form['theme'], $user['theme'])){
+            $response['changetheme'] = true;
             $data['theme'] = $form['theme'];
         }
 
