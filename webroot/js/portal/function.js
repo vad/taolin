@@ -68,10 +68,12 @@ function changeExtTheme(t){
 
     var pref = 'ext-themes/css/xtheme-';
     var default_theme = 'tp';
-    var theme = '';
+    var theme;
 
-    if(t != '')
+    if(t != '' && t != 'blue')
         theme = pref + t + '.css';
+    else
+        theme = '';
 
     if(t != default_theme)
         Ext.util.CSS.removeStyleSheet('theme-sprite');
