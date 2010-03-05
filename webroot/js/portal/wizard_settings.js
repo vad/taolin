@@ -28,6 +28,12 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
         autoWidth: true
         ,msgTarget: 'side'
     }
+    ,listeners:{
+        afterlayout:function(t, layout){
+            var ta = this.form.findField('description');
+            ta.autoSize.defer(500, ta);
+        }
+    }
     ,monitorValid: true
     ,labelAlign: 'top'
     ,waitMsgTarget: false
@@ -35,7 +41,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
         Ext.ux.fbk.sonet.WizardSettings.superclass.onRender.apply(this, arguments);
 
         this.form.load({
-            url: 'users/getusersettings/'
+            url: 'users/getuserprofile/'
             ,text: "Loading..."
             ,success: this.setUserParams
             ,timeout: 60
@@ -160,7 +166,7 @@ Ext.ux.fbk.sonet.WizardSettings = Ext.extend(Ext.form.FormPanel, {
         });
 
         var config = {
-            url:'users/setusersettings'
+            url:'users/setuserprofile'
             ,method: 'POST'
             ,items: [
                 this.view
