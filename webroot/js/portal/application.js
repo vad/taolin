@@ -37,25 +37,25 @@ nsb = (Ext.isIE6 || Ext.isIE7);
  */
 
 themes = [
-    ['ext-themes/css/xtheme-tp.css', 'Tp (default)'],
-    ['ext-themes/css/xtheme-aero.css', 'Aero'],
+    ['tp', 'Tp (default)'],
+    ['aero', 'Aero'],
     ['', 'Blue'], 
-    ['ext-themes/css/xtheme-gray.css', 'Gray'],
-    ['ext-themes/css/xtheme-galdaka.css', 'Galdaka'],
-    ['ext-themes/css/xtheme-indigo.css', 'Indigo'],
-    ['ext-themes/css/xtheme-midnight.css', 'Midnight'],
-    ['ext-themes/css/xtheme-purple.css', 'Purple'],
-    ['ext-themes/css/xtheme-silverCherry.css', 'Silver Cherry'],
-    ['ext-themes/css/xtheme-slate.css', 'Slate'],
-    ['ext-themes/css/xtheme-slickness.css', 'Slickness'],
-    ['ext-themes/css/xtheme-vista.css', 'Vista']
+    ['gray', 'Gray'],
+    ['galdaka', 'Galdaka'],
+    ['indigo', 'Indigo'],
+    ['midnight', 'Midnight'],
+    ['purple', 'Purple'],
+    ['silverCherry', 'Silver Cherry'],
+    ['slate', 'Slate'],
+    ['slickness', 'Slickness'],
+    ['vista', 'Vista']
 ];
 
 //Ext.onReady(
 function application_init(){
 
     if(typeof user.theme == 'string')
-        Ext.util.CSS.swapStyleSheet('theme', user.theme);
+        changeExtTheme(user.theme);
 
     Ext.QuickTips.init();
     
