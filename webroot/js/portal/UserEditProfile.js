@@ -170,7 +170,7 @@ Ext.ux.fbk.sonet.UserEditProfile = Ext.extend(Ext.form.FormPanel, {
                         }
                         ,scope: this
                     }]
-                    ,buttonAlign: 'left'
+                    ,buttonAlign: 'center'
                 }
             ]
         };
