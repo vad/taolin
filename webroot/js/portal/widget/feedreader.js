@@ -88,9 +88,9 @@ FeedReader = function(conf, panel_conf){
                         logo.css('padding', ((min_height - height)/2)+'px 0');
                     }
 
-                    $('#'+id+'_logo')
+                    logo
                         .attr('src', data.image_url)
-                        .style({
+                        .css({
                             width: width
                             ,height: height
                         });
