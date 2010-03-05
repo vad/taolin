@@ -234,7 +234,7 @@ class UsersController extends AppController {
         
         $user  = $this->User->find('first', array(
             'conditions' => $condition,
-            'fields' => array('number_of_columns')
+            'fields' => array('number_of_columns', 'theme')
         ));
         pr($user);
         
@@ -247,7 +247,6 @@ class UsersController extends AppController {
         foreach ($user[0] as $key => $mod_defined){
             $users[] = array('id' => $key, 'value' => $mod_defined);
         }
-
 
         $json['data'] = $users;
         $json['success'] = true;
@@ -519,7 +518,7 @@ class UsersController extends AppController {
                     $m_fields = ' modifying '.$m_fields;
                 }
 
-                $this->User->addtotimeline(array('id' => $id, 'modfields' => $m_fields), null, 'users-setusersettings', $id);
+                $this->User->addtotimeline(array('id' => $id, 'modfields' => $m_fields), null, 'users-setuserprofile', $id);
 
             }
             else {
@@ -541,28 +540,22 @@ class UsersController extends AppController {
         if (empty($this->params))
             die('Are you joking me?');
         
-        $id = $this->Session->read('id');
-
-        $condition = array('id' => $id);
-        $fields = array(
-            'number_of_columns'
-        );
-        
-        $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
+        $u_id = $this->Session->read('id');
         
         $data = array();
-        $mod_fields = array();
-
+        
         $form = $this->params['form'];
-        $user = $user_com['User'];
 
         if(array_key_exists('number_of_columns', $form)){
             $data['number_of_columns'] = $form['number_of_columns'];
         }
 
+        if(array_key_exists('theme', $form)){
+            $data['theme'] = $form['theme'];
+        }
 
         if(!empty($data)) {
-            $data['id'] = $id;
+            $data['id'] = $u_id;
         
             if($this->User->save($data)){
                 $response['text'] = 'Data saved';
@@ -571,9 +564,7 @@ class UsersController extends AppController {
                 $response['text'] = 'Data can not be saved';
                 $response['success'] = false;
             }
-
         }
-
         
         $this->set('json', $response);
     }

@@ -31,9 +31,31 @@ Ext.BLANK_IMAGE_URL = 'extjs/resources/images/default/s.gif';
 
 // nsb stands for NOT SUPPORTED BROWSER
 nsb = (Ext.isIE6 || Ext.isIE7);
+    
+/*
+ * Themes for Taolin gui
+ */
+
+themes = [
+    ['ext-themes/css/xtheme-tp.css', 'Tp (default)'],
+    ['ext-themes/css/xtheme-aero.css', 'Aero'],
+    ['', 'Blue'], 
+    ['ext-themes/css/xtheme-gray.css', 'Gray'],
+    ['ext-themes/css/xtheme-galdaka.css', 'Galdaka'],
+    ['ext-themes/css/xtheme-indigo.css', 'Indigo'],
+    ['ext-themes/css/xtheme-midnight.css', 'Midnight'],
+    ['ext-themes/css/xtheme-purple.css', 'Purple'],
+    ['ext-themes/css/xtheme-silverCherry.css', 'Silver Cherry'],
+    ['ext-themes/css/xtheme-slate.css', 'Slate'],
+    ['ext-themes/css/xtheme-slickness.css', 'Slickness'],
+    ['ext-themes/css/xtheme-vista.css', 'Vista']
+];
 
 //Ext.onReady(
 function application_init(){
+
+    if(typeof user.theme != 'undefined')
+        Ext.util.CSS.swapStyleSheet('theme', user.theme);
 
     Ext.QuickTips.init();
     
@@ -65,49 +87,6 @@ function application_init(){
         }
     });
 
-    /*
-     * Themes for Taolin gui
-     */
-    
-    /*var themeData = new Ext.data.SimpleStore({
-        fields: ['display', 'value'],
-        data: [
-            ['(Default) Slate', 'ext-themes/css/xtheme-slate.css'],
-            ['Slickness', 'ext-themes/css/xtheme-slickness.css'],
-            ['Gray', 'ext-themes/css/xtheme-gray.css'],
-            ['Blue', ''], 
-            ['Galdaka', 'ext-themes/css/xtheme-galdaka.css'],
-            ['Purple', 'ext-themes/css/xtheme-purple.css'],
-	        ['Indigo','ext-themes/css/xtheme-indigo.css'],
-	        ['Midnight','ext-themes/css/xtheme-midnight.css'],
-	        ['Silver Cherry','ext-themes/css/xtheme-silverCherry.css']
-        ]
-      });
-
-    comboTheme = new Ext.form.ComboBox({
-        store: themeData,
-        displayField:'display',
-        typeAhead: true, mode: 'local', 
-        triggerAction: 'all', 
-        selectOnFocus:true, 
-        resizable:false, 
-        listWidth: 130, 
-        width: 130, 
-        editable: false,
-        valueField: 'value', 
-        value: 'ext-themes/css/xtheme-slate.css',
-        lazyRender:true,
-        lazyInit:true,
-        title: 'Select the theme:'
-    }); 
-      
-    comboTheme.on('select', 
-        function(combo){
-            Ext.util.CSS.swapStyleSheet('theme', combo.getValue()); 
-        }
-        , this);
-    */
-    
     config.num_columns = user.number_of_columns;
     var columns = new Array(),
         width = 1/config.num_columns;
@@ -121,8 +100,9 @@ function application_init(){
    
     // preparing text for Did you know messages
     var aDyk = ['Did you know that you can <span class="right-element" style="float:none;position:relative;padding:0;"><span class="a add_widgets" onclick="openAddWidgetsModalWindow()"><b>Add widgets</b></span></span>? <span class="right-element" style="float:none;position:relative;padding:0;"><span class="a add_widgets" onclick="openAddWidgetsModalWindow()"><b>Add widgets</b></a></span>.',
-        'Did you know that you can <span class="a" onclick="expandUserEditProfilePanel()">Edit your profile</span>? <span class="a" onclick="expandUserEditProfilePanel()">Edit your profile</span>.',
-        'Did you know that you can <span class="a" onclick="expandSettingsPanel()">Edit your settings</span> for '+config.appname+'? <span class="a" onclick="expandSettingsPanel()">Edit your settings</span>.',
+        'Did you know that you can <span class="a" onclick="expandUserEditProfilePanel()">edit your profile</span>? <span class="a" onclick="expandUserEditProfilePanel()">Edit your profile</span>.',
+        'Did you know that you can <span class="a" onclick="expandSettingsPanel()">change your widgets\' theme</span>? <span class="a" onclick="expandSettingsPanel()">Edit your settings</span>.',
+        'Did you know that you can <span class="a" onclick="expandSettingsPanel()">change the number of columns containing your widgets</span>? <span class="a" onclick="expandSettingsPanel()">Edit your settings</span>.',
         'Did you know that you can expand fullscreen widgets clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-maximize" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can configure a widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-gear" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can minimize your widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-toggle" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
@@ -148,6 +128,7 @@ function application_init(){
             '<li class="header"><span class="a menu-item">Admin portal</span>' +
                 '<ul>' +
                     '<li><span class="menu-item"><a class="sprited help-icon" href="./admin" target="_blank">Admin main</a></span></li>' +
+                    '<li><span class="menu-item"><a class="sprited gears" href="./admin/portals/config" target="_blank">Background</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited gears" href="./admin/portals/config" target="_blank">Configuration</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited image-edit" href="./admin/templates" target="_blank">Templates</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited groups" href="./admin/users" target="_blank">Users</a></span></li>' +
@@ -164,7 +145,7 @@ function application_init(){
                     '<ul>' +
                         '<li><span class="a menu-item" onclick="showUserInfo(null, null, {source: \'logout_div\'})"><span class="sprited user-icon">View your profile</span></span></li>' +
                         '<li><span class="a menu-item" onclick="expandUserEditProfilePanel()"><span class="sprited user-edit">Edit your profile</span></span></li>' +
-                        '<li><span class="a menu-item" onclick="expandSettingsPanel()"><span class="sprited user-edit">Edit your settings</span></span></li>' +
+                        '<li><span class="a menu-item" onclick="expandSettingsPanel()"><span class="sprited settings">Edit your settings</span></span></li>' +
                         '<li><span class="a menu-item" onclick="openImageChooser()"><span class="sprited image-edit">Edit your photos</span></span></li>' +
                         '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()"><span class="sprited map-edit">Edit your workplace position</span></span></li>' +
                      '</ul>' +
@@ -223,7 +204,6 @@ function application_init(){
     
     var clear_html = 
         '<div id="logout_div" class="right-element">'
-            //+ '<span id="exttheme" style="float:left;padding-right:5px;"></span> | '
             + main_menu
         + '</div>'
         + '<div class="left-element">'
@@ -269,10 +249,6 @@ function application_init(){
      * showUserInfo(null, true) fill western-panel
      */
     getWidgetsPosition();
-
-    // render comboTheme
-    /*comboTheme.render(Ext.get('exttheme'));
-    */
 
     /* Check if there's a valid session */
     var task = {

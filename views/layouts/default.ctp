@@ -35,13 +35,13 @@
 
 ?>
 <link rel='StyleSheet' href='<?php echo $this->base ?>/webroot/extjs/resources/css/ext-all.css' />
-<link rel='StyleSheet' id="theme" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp-sprite.css' />
+<link rel='StyleSheet' id="theme-sprite" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp-sprite.css' />
 <link rel='StyleSheet' id="theme" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp.css' />
 
 <script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery-1.4.2.min.js'> </script>
 <?
 $isdebugactive = $conf->get('Site.jsdebug');
-if ($isdebugactive == 1) {
+if ($isdebugactive == 2) {
 ?>
     <script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery.lint.js'> </script>
 <?
@@ -50,7 +50,7 @@ if ($isdebugactive == 1) {
 <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-jquery-adapter.js'> </script>
 
 <?php
-if ($isdebugactive == 1) {
+if ($isdebugactive >= 1) {
 ?>
     <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-all-debug.js'> </script>
 <?php
