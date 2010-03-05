@@ -62,37 +62,41 @@ FeedReader = function(conf, panel_conf){
         ,parent: this
         ,listeners: {
             load: function(store, records, options) {
-                var widget = this.parent;
+                var widget = this.parent
+                    ,data = store.reader.jsonData
+                    ,id = widget.getId()
+                    ,logo = $('#'+id+'_logo');
 
-                if (store.reader.jsonData.title)
-                    widget.setPortletTitle(store.reader.jsonData.title);
+                if (data.title)
+                    widget.setPortletTitle(data.title);
                 
                 //expand rows if autoExpand is true
                 if (widget.autoExpand){
                     widget.expandAll();
                 }
 
-                if (store.reader.jsonData.image_url){
-                    var id = widget.getId();
-
-                    var width = store.reader.jsonData.image_width;
-                    var height = store.reader.jsonData.image_height;
-
-                    var min_height = 30;
-                    var max_height = 50;
+                if (data.image_url){
+                    var width = data.image_width
+                        ,height = data.image_height
+                        ,min_height = 30
+                        ,max_height = 50;
 
                     if (height > max_height){
                         width *= max_height/height;
                         height = max_height;
                     } else if (height < min_height) {
-                        Ext.getDom(id+'_logo').style.padding = ((min_height - height)/2)+'px 0';
+                        logo.css('padding', ((min_height - height)/2)+'px 0');
                     }
 
-                    console.log($('#'+id+'_logo'));
-
-                    Ext.getDom(id+'_logo').src = store.reader.jsonData.image_url;
-                    Ext.getDom(id+'_logo').width = width;
-                    Ext.getDom(id+'_logo').height = height;
+                    $('#'+id+'_logo')
+                        .attr('src', data.image_url)
+                        .style({
+                            width: width
+                            ,height: height
+                        });
+                }
+                else {
+                    logo.remove();
                 }
             }
         }
