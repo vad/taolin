@@ -138,7 +138,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
         if(action.result.changetheme){
             var theme = form.findField('theme').getValue();
             if(typeof theme != 'undefined')
-                Ext.util.CSS.swapStyleSheet('theme', theme);
+                changeExtTheme(theme);
         }
 
     },

@@ -64,6 +64,21 @@ function reloadTimeline(){
     eventManager.fireEvent('newtimelineevent');
 }
 
+function changeExtTheme(t){
+
+    var pref = 'ext-themes/css/xtheme-';
+    var default_theme = 'tp';
+    var theme = '';
+
+    if(t != '')
+        theme = pref + t + '.css';
+
+    if(t != default_theme)
+        Ext.util.CSS.removeStyleSheet('theme-sprite');
+        
+    Ext.util.CSS.swapStyleSheet('theme', theme);
+}
+
 function showText(showtext, element){
     var slideMe = Ext.get(element); 
     if(!slideMe)
