@@ -27,42 +27,20 @@
   $opts_tf = array_merge($opts, array('class' => 'text_field'));
 ?>
 
-<style type="text/css">
-  .CodeMirror-line-numbers {
-    width: 2.2em;
-    color: #aaa;
-    background-color: #eee;
-    text-align: right;
-    padding-right: .3em;
-    font-size: 10pt;
-    font-family: monospace;
-    padding-top: .4em;
-  }
-.CodeMirror-wrapping {
-    border: 1px solid #CFCFCF !important;
-}
-
-</style>
-
-
-<script type="text/javascript" charset="utf-8" src="<? echo $this->base ?>/admin-media/codemirror/js/codemirror.js"></script> 
-
 <div id="wrapper">
   <div id="main">
     <div class="block">
       <div class="content">
         <div class="inner">
-          <h2 class="title">Edit template</h2>
+          <h2 class="title">Edit background</h2>
           <br />
-          <? echo $form->create('Template', array('class' => 'form')); ?>
+          <? echo $form->create('Background', array('class' => 'form')); ?>
           <? echo $form->input('name', $opts_tf); ?>
-          <? echo $form->input('temp', $opts_ta); ?>
-          <? echo $form->input('short_temp', $opts_ta); ?>
-          <? echo $form->input('icon', $opts_tf); ?>
+          <? echo $form->input('path', $opts_tf); ?>
           <br />
           <? echo $form->submit('Save →', array('class' => 'button','div'=>false)); ?>
           or
-          <a href="<? echo $this->base."/admin/templates" ?>">Cancel</a>
+          <a href="<? echo $this->base."/admin/backgrounds" ?>">Cancel</a>
           <? //echo $form->end('Save'); ?>
           </form>
         </div>
@@ -74,25 +52,8 @@
     <div class="block">
       <h3>Help</h3>
       <div class="content">
-        <p>In this page you can modify existing templates. If you need more functionalities please submit an Issue on <a href="http://github/vad/taolin/issues">Github</a></p>
+        <p>In this page you can modify existing backgrounds. If you need more functionalities please submit an Issue on <a href="http://github/vad/taolin/issues">Github</a></p>
       </div>
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-  var cmConf = {
-    height: "100px",
-    parserfile: "parsexml.js",
-    stylesheet: "<? echo $this->base ?>/admin-media/codemirror/css/xmlcolors.css",
-    path: "<? echo $this->base ?>/admin-media/codemirror/js/",
-    continuousScanning: 500,
-    lineNumbers: false,
-  };
-
-  // create a code mirror editor and clone configuration object (otherwise codemirror duplicates the first editor in the second one)
-  var editorTemp = CodeMirror.fromTextArea('TemplateTemp', $.extend(true, {}, cmConf));
-  var editorShortTemp = CodeMirror.fromTextArea('TemplateShortTemp', $.extend(true, {}, cmConf));
-</script>
-
-

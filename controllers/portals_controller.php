@@ -17,8 +17,6 @@
   * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
   *
   */
-?>
-<?php
 
 class PortalsController extends AppController {
 
@@ -62,7 +60,7 @@ class PortalsController extends AppController {
                     'id', 'login', 'name', 'surname', 
                     'COALESCE(mod_email, email) AS "User__email"',
                     'privacy_policy_acceptance',
-                    'number_of_columns'
+                    'number_of_columns','theme'
                 )
                 ,'recursive' => -1
             )

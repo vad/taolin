@@ -25,32 +25,32 @@
   <div id="main">
     <div class="block">
       <div class="secondary-navigation">
-        <ul><li class="first active"><a href='#top'>Templates list</a></li></ul>
-        <ul><li><a href="<? echo $this->base.DS."admin/templates/add" ?>">New template</a></li></ul>
+        <ul><li class="first active"><a href='#top'>Backgrounds list</a></li></ul>
+        <ul><li><a href="<? echo $this->base.DS."admin/backgrounds/add" ?>">Add new</a></li></ul>
         <div class="clear" />
       </div>
       <div class="content">
         <div class="inner">
-          <h2 class="title">Templates list</h2>
+          <h2 class="title">Backgrounds list</h2>
           <table class="table">
             <tr>
               <th style="text-align:center" class="first">Id</th>
               <th>Name</th>
-              <th style="text-align:center">Template</th>
-              <th style="text-align:center">Icon</th>
+              <th style="text-align:center">Path</th>
+              <th style="text-align:center">Background</th>
               <th style="text-align:center" class="last">Action</th>
             </tr>
 
             <?
-            foreach ($templates as $template){
-              $template = $template['Template'];
+            foreach ($backgrounds as $background){
+              $background = $background['Background'];
               echo "<tr>";
 
-              echo "<td>".$template['id']."</td>";
-              echo "<td>".$template['name']."</td>";
-              echo "<td><code>".$template['temp']."</code></td>";
-              echo "<td width='20px' style='text-align: center;'><img src='".$this->base.DS.$template['icon']."' class='size16x16' /></td>";
-              echo "<td width='30px'style='text-align: center'><a href='".$this->base.DS."admin/templates/edit/".$template['id']."' >edit</a></td>";
+              echo "<td>".$background['id']."</td>";
+              echo "<td>".$background['name']."</td>";
+              echo "<td>".$background['path']."</td>";
+              echo "<td width='20px' style='text-align: center;'><img src='".$this->base.DS.$background['path']."' style='width:50px' /></td>";
+              echo "<td width='30px'style='text-align: center'><a href='".$this->base.DS."admin/backgrounds/edit/".$background['id']."' >edit</a></td>";
 
               echo '</tr>';
             }
@@ -80,7 +80,7 @@
   <div class="block">
     <h3>Help</h3>
     <div class="content">
-      <p>In this page you can add new template or modify existing ones. If you need more functionalities please submit an Issue on <a href="http://github/vad/taolin/issues">Github</a></p>
+      <p>In this page you can add new backgrounds or modify existing ones. If you need more functionalities please submit an Issue on <a href="http://github/vad/taolin/issues">Github</a></p>
     </div>
   </div>
 </div>

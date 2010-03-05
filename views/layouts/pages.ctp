@@ -24,8 +24,6 @@
 <title> 
 <?php echo $title_for_layout ?> 
 </title>
-<meta http-equiv="X-UA-Compatible" content="IE=8" />
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <?php
     
     $favicon = $conf->get('Site.favicon');
@@ -33,32 +31,6 @@
         echo "<link rel='shortcut icon' href='". $this->base .'/'. $favicon ."' type='image/gif' />";
     }
 
-?>
-<link rel='StyleSheet' href='<?php echo $this->base ?>/webroot/extjs/resources/css/ext-all.css' />
-<link rel='StyleSheet' id="theme-sprite" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp-sprite.css' />
-<link rel='StyleSheet' id="theme" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp.css' />
-
-<script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery-1.4.2.min.js'> </script>
-<?
-$isdebugactive = $conf->get('Site.jsdebug');
-if ($isdebugactive == 2) {
-?>
-    <script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery.lint.js'> </script>
-<?
-}
-?>
-<script type="text/javascript" src='<?php echo $this->base ?>/js/ext-jquery-adapter.js'> </script>
-
-<?php
-if ($isdebugactive >= 1) {
-?>
-    <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-all-debug.js'> </script>
-<?php
-} else {
-?>
-    <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-all.js'> </script>
-<?php
-}
 ?>
 </head>
 <body>

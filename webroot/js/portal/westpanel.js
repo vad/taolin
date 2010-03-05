@@ -184,7 +184,7 @@ westPanel = new Ext.Panel({
         title:'Edit your profile',
         border:false,
         autoScroll:true,
-        iconCls:'settings',
+        iconCls:'user-edit',
         frame:true,
         id:'edit_profile',
         layout: 'fit',

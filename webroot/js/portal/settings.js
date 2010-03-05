@@ -46,6 +46,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
     ,initComponent: function() {
         var config = {
             trackResetOnLoad: true,
+            autoHeight:true,
             url: 'users/getusersettings/',
             text: "Loading...",
             timeout: 60,
@@ -74,6 +75,19 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                         anchor: '95%',
                         editable: false,
                         allowDecimals: false
+                    }
+                    ,{
+                        xtype: 'combo',
+                        hiddenName: 'theme',
+                        fieldLabel: 'Select the theme',
+                        store: themes,
+                        mode: 'local', 
+                        anchor: '95%',
+                        triggerAction: 'all', 
+                        selectOnFocus:true, 
+                        resizable: false, 
+                        editable: false,
+                        forceSelection: true
                     }
                 ]
             }),
@@ -111,7 +125,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                             ,scope: this
                 }
             ]
-            ,buttonAlign: 'left'
+            ,buttonAlign: 'center'
         };
         
         Ext.apply(this, Ext.apply(this.initialConfig, config));

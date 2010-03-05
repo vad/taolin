@@ -21,6 +21,7 @@
 
   $base = $this->base;
   $items = array('Admin' => 'admin'
+    ,'Backgrounds' => 'admin/backgrounds'
     ,'Configuration' => 'admin/portals/config'
     ,'Timeline' => 'admin/templates'
     ,'Users' => 'admin/users'
