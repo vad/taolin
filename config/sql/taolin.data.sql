@@ -82,7 +82,7 @@ Change <span class="a" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: {sou
 {% endif %}
 ', 'workplaces-save', 'js/portal/shared/icons/fam/map.png', 1, '{{ user | user_adjectify timelineid }} change of workplace position on the map{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
 ');
-INSERT INTO templates VALUES (11, '{{ user | userify timelineid }} <span class="deco-text">{{ status }}</span>{% if not short_version %}<br/>Change your <span class="a" onclick="addOrBounceWidget(''BuddyList'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">chat status</span> too!
+INSERT INTO templates VALUES (11, '{{ user | userify timelineid }} <span class="deco-text">{{ status }}</span>{% if not short_version %} (via <span class="a" onclick="addOrBounceWidget(''BuddyList'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">chat status</span>)
 {% endif %}', 'users_widgets-changeconf', 'img/icons/fugue/balloon-ellipsis.png', 1, '{{ user | user_adjectify timelineid }} chat status{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
 ');
 INSERT INTO templates VALUES (6, '{{ user | userify timelineid }} wrote an useful <span class="a" onclick="addOrBounceWidget(''Feedback'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">feedback</span>.
@@ -162,3 +162,7 @@ INSERT INTO "widgets_skel" ("id", "widget_id", "col", "pos", "tab") VALUES (1,51
 INSERT INTO "widgets_skel" ("id", "widget_id", "col", "pos", "tab") VALUES (2,3,0,1,0);
 INSERT INTO "widgets_skel" ("id", "widget_id", "col", "pos", "tab") VALUES (3,7,1,0,0);
 INSERT INTO "widgets_skel" ("id", "widget_id", "col", "pos", "tab") VALUES (4,5,2,0,0);
+
+-- # Populating backgrounds table
+
+INSERT INTO backgrounds VALUES (1, 'Blue curl', 'img/blue_curl.jpeg');

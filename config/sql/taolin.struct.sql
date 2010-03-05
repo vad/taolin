@@ -39,7 +39,14 @@ CREATE TABLE "aros_acos" (
   "_update" varchar(2) NOT NULL default '0',
   "_delete" varchar(2) NOT NULL default '0',
   PRIMARY KEY  ("id"),
-   UNIQUE ("aro_id","aco_id")
+  UNIQUE ("aro_id","aco_id")
+);
+
+CREATE TABLE backgrounds (
+  "id" integer NOT NULL,
+  "name" character varying(50) NOT NULL,
+  "path" character varying(200) NOT NULL,
+  PRIMARY KEY  ("id")
 );
 
 -- # Table structure for table "boards"
@@ -297,6 +304,9 @@ CREATE TABLE "users" (
   "deleted" SMALLINT NOT NULL default '0',
   "deleted_date" timestamp(0) NULL default NULL,
   "content" text,
+  "number_of_columns" INTEGER NOT NULL default 2,
+  "background_id" INTEGER NOT NULL default 1,
+  "theme" character varying(200) DEFAULT NULL::character varying,
   "tsv" tsvector,
   PRIMARY KEY  ("id")
 );
