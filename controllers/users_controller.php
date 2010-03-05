@@ -236,18 +236,10 @@ class UsersController extends AppController {
             'conditions' => $condition,
             'fields' => array('number_of_columns')
         ));
-        pr($user);
         
         foreach ($user['User'] as $key => $userid){
-            if ($key == 'number_of_columns')
-                $users[] = array('id' => $key, 'value' => $userid, 'data' => array(1,2,3,4));
-            else
-                $users[] = array('id' => $key, 'value' => $userid);
+            $users[] = array('id' => $key, 'value' => $userid);
         }
-        foreach ($user[0] as $key => $mod_defined){
-            $users[] = array('id' => $key, 'value' => $mod_defined);
-        }
-
 
         $json['data'] = $users;
         $json['success'] = true;
@@ -528,7 +520,6 @@ class UsersController extends AppController {
             }
 
         }
-
         
         $this->set('json', $response);
     }

@@ -108,22 +108,6 @@ var jabber = {
     roster.setQuery(NS_ROSTER);
     this.send(roster);
   },
-  addRosterItem: function(buddy){
-    var iq = new JSJaCIQ();
-    iq.setFrom(this.myJid);
-    iq.setType('set');
-    iq.setID('roster_set');
-    var query = iq.setQuery(NS_ROSTER);
-    var group = iq.buildNode('group', {}, buddy.group);
-    var item = iq.buildNode('item', {
-      jid: buddy.jid,
-      name: buddy.name
-    });
-    item.appendChild(group);
-    query.appendChild(item);
-    this.con.send(iq);
-  },
-
   setPresence: function(show, status, type) {
     this.status = {presence:show, status:status, type:type};
                    
@@ -250,7 +234,8 @@ var jabber = {
     iqRoster: function(iq){
       var q = iq.getQuery()
         ,r = roster;
-     
+    
+      console.log(new Date(), 'new roster', q);
       //TODO: disable Buddylist refresh while inserting
       r.clear(); //i hope the new roster replaces the old one...
       $(q).find('item').each(function(){
