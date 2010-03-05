@@ -235,7 +235,7 @@ var jabber = {
       var q = iq.getQuery()
         ,r = roster;
     
-      console.log(new Date(), 'new roster', q);
+      //console.log(new Date(), 'new roster', q);
       //TODO: disable Buddylist refresh while inserting
       r.clear(); //i hope the new roster replaces the old one...
       $(q).find('item').each(function(){
