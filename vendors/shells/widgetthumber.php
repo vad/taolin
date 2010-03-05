@@ -73,8 +73,11 @@ class WidgetThumberShell extends Shell {
             else
                 $widget_path = "plugins/".substr($wp, 0, - mb_strlen(strstr($wp, '/')))."/vendors".strstr($wp, '/');
 
+            //$this->out($widget_path.$screenshot);
+
             if($this->Thumber->createthumb($screenshot, $widget_path, true, $widget_format, 9, false))
-               $total += 1;
+                $this->out("Thumb for ".$widget_path.$screenshot." created");
+                $total += 1;
         }
 
         //Print out total

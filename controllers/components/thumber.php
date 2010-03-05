@@ -109,10 +109,12 @@ class ThumberComponent extends Object{
 
                 $img_path = $img_dest_dir.$dest_file;
 
-                 if(!file_exists($img_path))
-                     $this->thumbimage($im, $img_info, $format, $fill, $img_path, $quality, $forcetojpg);
-                 else
-                     $this->log("Warning! File $dest_file already exists in $img_dest_dir");
+                if(!file_exists($img_path))
+                    $this->thumbimage($im, $img_info, $format, $fill, $img_path, $quality, $forcetojpg);
+                else {
+                    $this->log("Warning! File $dest_file already exists in $img_dest_dir");
+                    return false;
+                }
             }
         }
         else
