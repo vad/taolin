@@ -234,7 +234,7 @@ class UsersController extends AppController {
         
         $user  = $this->User->find('first', array(
             'conditions' => $condition,
-            'fields' => array('number_of_columns', 'theme')
+            'fields' => array('number_of_columns', 'theme', 'background_id')
         ));
         
         foreach ($user['User'] as $key => $userid){
@@ -532,9 +532,6 @@ class UsersController extends AppController {
         if (empty($this->params))
             die('Are you joking me?');
 
-        $response['reloadpage'] = false;
-        $response['changetheme'] = false;
-        
         $u_id = $this->Session->read('id');
         
         $condition = array('id' => $u_id);
@@ -559,6 +556,10 @@ class UsersController extends AppController {
             $data['theme'] = $form['theme'];
         }
 
+        if(array_key_exists('background_id', $form) && strcasecmp($form['background_id'], $user['background_id'])){
+            $response['changebg'] = true;
+            $data['background_id'] = $form['background_id'];
+        }
         if(!empty($data)) {
             $data['id'] = $u_id;
         

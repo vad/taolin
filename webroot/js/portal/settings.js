@@ -51,47 +51,54 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
             text: "Loading...",
             timeout: 60,
             scope: this,
-            items: new Ext.form.FieldSet({
-                layoutConfig: {
-                    // layout-specific configs go here
-                    labelSeparator: ''
-                },
-                collapsible:false,
-                autoHeight:true,
-                autoWidth:true,
-                border:false,
-                defaultType:'textfield',
-                style:'padding:5px 0 0 5px',
-                items: [
-                    {
-                        xtype: 'numberfield',
-                        fieldLabel: 'Number of columns',
-                        name: 'number_of_columns',
-                        //typeAhead: true,
-                        forceSelection: true,
-                        //selectOnFocus:true,
-                        maxValue: 4,
-                        minValue: 1,
-                        anchor: '95%',
-                        editable: false,
-                        allowDecimals: false
-                    }
-                    ,{
-                        xtype: 'combo',
-                        hiddenName: 'theme',
-                        fieldLabel: 'Select the theme',
-                        store: themes,
-                        mode: 'local', 
-                        anchor: '95%',
-                        triggerAction: 'all', 
-                        selectOnFocus:true, 
-                        resizable: false, 
-                        editable: false,
-                        forceSelection: true
-                    }
-                ]
-            }),
-            buttons: [{
+            buttonAlign: 'center',
+            items: 
+                new Ext.form.FieldSet({
+                    layoutConfig: {
+                        // layout-specific configs go here
+                        labelSeparator: ''
+                    },
+                    collapsible:false,
+                    autoHeight:true,
+                    autoWidth:true,
+                    border:false,
+                    defaultType:'textfield',
+                    style:'padding:5px 0 0 5px',
+                    items: [
+                        {
+                            xtype: 'numberfield',
+                            fieldLabel: 'Number of columns',
+                            name: 'number_of_columns',
+                            //typeAhead: true,
+                            forceSelection: true,
+                            //selectOnFocus:true,
+                            maxValue: 4,
+                            minValue: 1,
+                            anchor: '95%',
+                            editable: false,
+                            allowDecimals: false
+                        }
+                        ,{
+                            xtype: 'combo',
+                            hiddenName: 'theme',
+                            fieldLabel: 'Select the theme',
+                            store: themes,
+                            mode: 'local', 
+                            anchor: '95%',
+                            triggerAction: 'all', 
+                            selectOnFocus:true, 
+                            resizable: false, 
+                            editable: false,
+                            forceSelection: true
+                        }
+                        ,{
+                            xtype:'hidden',
+                            name:'background_id',
+                            value: user.background_id
+                        }
+                    ]
+                }),
+                buttons: [{
                     text: 'Save',
                     handler: function(){
                         if(this.form.isDirty()){
@@ -115,15 +122,13 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                     ,formBind:true
                     ,scope: this
                 },{
-                            text: 'Cancel',
-                            handler: function(){
-                                this.form.reset();
-                                expandUserPanel();
-                            }
-                            ,scope: this
-                }
-            ]
-            ,buttonAlign: 'center'
+                    text: 'Cancel',
+                    handler: function(){
+                       this.form.reset();
+                       expandUserPanel();
+                    }
+                    ,scope: this
+                }]
         };
         
         Ext.apply(this, Ext.apply(this.initialConfig, config));
@@ -132,14 +137,17 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
     }
     ,onSuccess:function(form, action){
 
-        if(action.result.reloadpage)
+        if('reloadpage' in action.result)
             window.location.reload(false);
 
-        if(action.result.changetheme){
+        if('changetheme' in action.result){
             var theme = form.findField('theme').getValue();
             if(typeof theme != 'undefined')
                 changeExtTheme(theme);
         }
+        
+        if('changebg' in action.result)
+            changeBg(bg);
 
     },
     onFailure:function(form, action){

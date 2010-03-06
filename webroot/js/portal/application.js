@@ -239,7 +239,7 @@ function application_init(){
             listeners:{
                 afterlayout: function(){
                     var bg = get(user, 'bg', config.background);
-                    $('.desktop .x-column-layout-ct').css('background','transparent url('+bg+') repeat scroll 50% 50%');
+                    changeBg(bg);
                 }
             }
         }, westPanel]

@@ -81,6 +81,10 @@ function changeExtTheme(t){
     Ext.util.CSS.swapStyleSheet('theme', theme);
 }
 
+function changeBg(bg){
+    $('.desktop .x-column-layout-ct').css('background','transparent url('+bg+') repeat scroll 50% 50%');
+}
+
 function showText(showtext, element){
     var slideMe = Ext.get(element); 
     if(!slideMe)
