@@ -20,6 +20,7 @@
 class Background extends AppModel
 {
     var $name = 'Background';
+    var $hasOne = 'User';
 }
 
 ?>

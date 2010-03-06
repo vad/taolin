@@ -54,19 +54,23 @@ class PortalsController extends AppController {
         App::import('Model', 'User');
         $users = new User();
 
-        $res = $users->find('first', array(
+        $res = $users->Background->find('first', array(
                 'conditions' => array('User.id' => $u_id)
                 ,'fields' => array(
-                    'id', 'login', 'name', 'surname', 
+                    'User.id', 'User.login', 'User.name', 'User.surname', 
                     'COALESCE(mod_email, email) AS "User__email"',
-                    'privacy_policy_acceptance',
-                    'number_of_columns','theme'
+                    'User.privacy_policy_acceptance',
+                    'User.number_of_columns','User.theme'
+                    ,'Background.path'
                 )
-                ,'recursive' => -1
+                ,'recursive' => 0
             )
         );
+
+        pr($res);
         
         $response['user'] = $res['User'];
+        $response['user']['bg'] = $res['Background']['path'];
         $response['user']['admin'] = $this->Acl->check(array('model' => 'User', 'foreign_key' => $u_id), 'admin');
 
         pr($response);

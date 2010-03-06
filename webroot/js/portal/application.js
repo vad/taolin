@@ -238,7 +238,8 @@ function application_init(){
             // Setting desktop background
             listeners:{
                 afterlayout: function(){
-                    $('.desktop .x-column-layout-ct').css('background','transparent url('+config.background+') repeat scroll 50% 50%');
+                    var bg = get(user, 'bg', config.background);
+                    $('.desktop .x-column-layout-ct').css('background','transparent url('+bg+') repeat scroll 50% 50%');
                 }
             }
         }, westPanel]
