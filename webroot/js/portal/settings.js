@@ -52,7 +52,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
             timeout: 60,
             scope: this,
             buttonAlign: 'center',
-            items: 
+            items:[ 
                 new Ext.form.FieldSet({
                     layoutConfig: {
                         // layout-specific configs go here
@@ -97,7 +97,48 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                             value: user.background_id
                         }
                     ]
-                }),
+                })
+                ,new Ext.DataView({
+                    store: new Ext.data.JsonStore({
+                        url: 'backgrounds/getbg' 
+                        ,root: ''
+                        ,fields: ['id','name','path']
+                        ,autoLoad: true
+                    })
+                    ,tpl: new Ext.XTemplate(
+                        '<div style="margin-bottom:10px;"><b>Change {[window.config.appname]} background</b></div>',
+                        '<div style="text-align:center;"><tpl for=".">',
+                            '<div class="bg-wrap">',
+                                /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
+                                '<div><span></span>',
+                                    '<img style="padding:5px;width:50px;height:50px;" src="{path}"></img>',
+                                '</div>',
+                                '<span style="padding:5px;">{name}</span>',
+                            '</div>',
+                        '</tpl></div>',
+                        '<div class="x-clear" style="margin-bottom:20px;"></div>'
+                        ,{
+                            compiled: true
+                        }
+                    )
+                    ,emptyText: 'No backgrounds!'
+                    ,loadingText: 'Loading backgrounds...'
+                    ,autoHeight: true
+                    ,singleSelect: true
+                    ,itemSelector:'div.bg-wrap'
+                    ,selectedClass: 'bg-wrap-selected'
+                    ,listeners: {
+                        selectionchange: {
+                            fn: function(dv,node){
+                                if(node && node.length >= 1) 
+                                    this.form.findField('background_id').setValue(dv.getSelectedRecords()[0].id);
+                                else
+                                    this.form.findField('background_id').setValue(null);
+                            }
+                            ,scope: this
+                        }
+                    }
+                })],
                 buttons: [{
                     text: 'Save',
                     handler: function(){
@@ -147,7 +188,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
         }
         
         if('changebg' in action.result)
-            changeBg(bg);
+            changeBg(action.result.changebg);
 
     },
     onFailure:function(form, action){

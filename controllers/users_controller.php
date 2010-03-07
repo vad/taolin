@@ -556,8 +556,9 @@ class UsersController extends AppController {
             $data['theme'] = $form['theme'];
         }
 
-        if(array_key_exists('background_id', $form) && strcasecmp($form['background_id'], $user['background_id'])){
-            $response['changebg'] = true;
+        if(array_key_exists('background_id', $form) && strcasecmp($form['background_id'], $user['background_id']) && !empty($form['background_id'])){
+            $this->User->Background->id = $form['background_id'];
+            $response['changebg'] = $this->User->Background->field('path');
             $data['background_id'] = $form['background_id'];
         }
         if(!empty($data)) {

@@ -357,6 +357,28 @@ div.buddyliststate {
 /* END Events */
 
 /* Photo Chooser and Add Widgets Window */
+
+div.bg-wrap {
+    position:relative;
+    float:left;
+    height:100px;
+    width:70px;
+    text-align:center;
+    /*background:rgb(208, 208, 208) none repeat scroll 0% 0%;    */
+}
+
+div.bg-wrap-selected img{
+    border: 2px solid #5EA0E3
+}
+
+div.bg-thumb {
+    text-align:center;
+    vertical-align:middle;
+    height:60px;
+    width:60px;
+    margin: 0 auto;
+}
+
 div.thumb-wrap {
     position:relative;
     float:left;
@@ -372,7 +394,6 @@ div.thumb {
     height:160px;
     width:160px;
     margin: 0 auto;
-
 }
 
 div.thumb *{

@@ -24,15 +24,34 @@ class BackgroundsController extends AppController {
     var $name = 'Backgrounds';
     var $paginate = array(
         'limit' => 10,
-        'order' => 'name'
+        'order' => 'Background.name'
     );
     
+    function beforefilter()
+    {
+        parent::beforefilter();
 
+        $this->checksession();
+        $this->san = new sanitize();
+    }
+
+    function getbg(){
+        
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
+        $this->layout = 'ajax';
+        
+        $this->Background->recursive = -1;
+        $bgs = $this->Background->find('all');
+        
+        $this->set('json', Set::extract($bgs, '{n}.Background'));
+    }
+    
     function admin_index(){
         Configure::write('debug', '0');
         $this->layout = 'admin';
 
-        $this->paginate['fields'] = array('id', 'name', 'path');
+        $this->Background->recursive = -1;
+        $this->paginate['fields'] = array('Background.id', 'Background.name', 'Background.path');
         $res = $this->paginate();
         $this->set('backgrounds', $res);
     }
@@ -40,7 +59,6 @@ class BackgroundsController extends AppController {
     function admin_add(){
         Configure::write('debug', '0');
         $this->layout = 'admin';
-        $this->recursive = -1;
         
         if (!empty($this->data)) {
             if ($this->Background->save($this->data)) {
@@ -54,7 +72,7 @@ class BackgroundsController extends AppController {
     function admin_edit($bid){
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax     
         $this->layout = 'admin';
-        $this->recursive = -1;
+        $this->Backgournd->recursive = -1;
         $this->Background->id = $bid;
 
         if (empty($this->data)) {
