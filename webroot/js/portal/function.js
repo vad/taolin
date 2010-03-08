@@ -82,6 +82,7 @@ function changeExtTheme(t){
 }
 
 function changeBg(bg){
+    config.background = bg;
     $('.desktop .x-column-layout-ct').css('background','transparent url('+bg+') repeat scroll 50% 50%');
 }
 

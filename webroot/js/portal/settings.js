@@ -104,6 +104,15 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                         ,root: ''
                         ,fields: ['id','name','path']
                         ,autoLoad: true
+                        ,listeners:{
+                            load:{ 
+                                fn: function(store, records, options){
+                                    var dv = this.items.items[1];
+                                    dv.select(store.find('path', window.config.background), false, true);
+                                }
+                                ,scope: this
+                            }
+                        }
                     })
                     ,tpl: new Ext.XTemplate(
                         '<div style="margin-bottom:10px;"><b>Change {[window.config.appname]} background</b></div>',
@@ -111,9 +120,9 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                             '<div class="bg-wrap">',
                                 /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
                                 '<div><span></span>',
-                                    '<img style="padding:5px;width:50px;height:50px;" src="{path}"></img>',
+                                    '<img class="ante" style="width:50px;height:50px;" src="{path}"></img>',
                                 '</div>',
-                                '<span style="padding:5px;">{name}</span>',
+                                '<span>{name}</span>',
                             '</div>',
                         '</tpl></div>',
                         '<div class="x-clear" style="margin-bottom:20px;"></div>'
