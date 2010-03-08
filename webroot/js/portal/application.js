@@ -101,8 +101,9 @@ function application_init(){
     // preparing text for Did you know messages
     var aDyk = ['Did you know that you can <span class="right-element" style="float:none;position:relative;padding:0;"><span class="a add_widgets" onclick="openAddWidgetsModalWindow()"><b>Add widgets</b></span></span>? <span class="right-element" style="float:none;position:relative;padding:0;"><span class="a add_widgets" onclick="openAddWidgetsModalWindow()"><b>Add widgets</b></a></span>.',
         'Did you know that you can <span class="a" onclick="expandUserEditProfilePanel()">edit your profile</span>? <span class="a" onclick="expandUserEditProfilePanel()">Edit your profile</span>.',
-        'Did you know that you can <span class="a" onclick="expandSettingsPanel()">change your widgets\' theme</span>? <span class="a" onclick="expandSettingsPanel()">Edit your settings</span>.',
+        'Did you know that you can <span class="a" onclick="expandSettingsPanel()">customize your widgets\' theme</span>? <span class="a" onclick="expandSettingsPanel()">Edit your settings</span>.',
         'Did you know that you can <span class="a" onclick="expandSettingsPanel()">change the number of columns containing your widgets</span>? <span class="a" onclick="expandSettingsPanel()">Edit your settings</span>.',
+        'Did you know that you can <span class="a" onclick="expandSettingsPanel()">personalize '+config.appname+' background?</span>? <span class="a" onclick="expandSettingsPanel()">Edit your settings</span>.',
         'Did you know that you can expand fullscreen widgets clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-maximize" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can configure a widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-gear" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
         'Did you know that you can minimize your widget clicking on <img width=20px height=1px src="'+Ext.BLANK_IMAGE_URL+'" class="x-tool x-tool-toggle" style="vertical-align:bottom;float:none;cursor:default;"/>? ',
