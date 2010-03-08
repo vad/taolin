@@ -46,7 +46,7 @@ class ThumberComponent extends Object{
      *
      */
 
-    function createthumb($filename, $path, $savetofile, $image_formats = null, $quality = 100, $forcetojpg = true){
+    function createthumb($filename, $path, $savetofile, $image_formats = null, $quality = 100, $forcetojpg = true, $crop = false){
         
         if (!$filename){
             $this->log('ERROR: filename required!');
@@ -67,16 +67,20 @@ class ThumberComponent extends Object{
 
         $img_info = getimagesize($img);
 
-        switch ($img_info[2]) {
-            case 1: $im = imagecreatefromgif($img); break;
-            case 2: $im = imagecreatefromjpeg($img);  break;
-            case 3: $im = imagecreatefrompng($img); break;
-            case 6: $im = $this->imagecreatefrombmp($img); break;
-            default:  $this->log('Unknown image type E_USER_WARNING - img: '.$img);  return false; break;
+        if(!$crop){
+            switch ($img_info[2]) {
+                case 1: $im = imagecreatefromgif($img); break;
+                case 2: $im = imagecreatefromjpeg($img);  break;
+                case 3: $im = imagecreatefrompng($img); break;
+                case 6: $im = $this->imagecreatefrombmp($img); break;
+                default:  $this->log('Unknown image type E_USER_WARNING - img: '.$img);  return false; break;
+            }
         }
+        else
+            $im = $this->PhotoUtil->crop($img); 
 
         if(!is_resource($im)){
-            $this->log('Unable to load image!');
+            $this->log('Thumber: Unable to load image!');
             return false;
         }
 

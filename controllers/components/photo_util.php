@@ -28,5 +28,92 @@ class PhotoUtilComponent extends Object{
         return substr($filename, strrpos($filename, '.'));
     }
 
+    /*
+     * Credits: Bit Repository 
+     * Source URL: http://www.bitrepository.com/web-programming/php/crop-rectangle-to-square.html
+     *
+     */
+    function crop($img, $savetofile = false, $location = 'center', $quality = 100) {
+        
+        if (!$img){
+            $this->log('ERROR: image required!');
+            return false;
+        }
+
+        $img_info = getimagesize($img);
+
+        $width = $img_info[0];
+        $height = $img_info[1];
+        $type = $img_info[2];
+        
+        switch ($type) {
+            case 1: $im = imagecreatefromgif($img); break;
+            case 2: $im = imagecreatefromjpeg($img);  break;
+            case 3: $im = imagecreatefrompng($img); break;
+            default:  $this->log('Unknown image type E_USER_WARNING - img: '.$img);  return false; break;
+        }
+
+        if(!is_resource($im)){
+            $this->log('Unable to load image!');
+            return false;
+        }
+ 
+        // Coordinates calculator
+
+        if($width >= $height){ // Horizontal Rectangle?
+            if($location == 'center'){
+                $x_pos = ($width - $height) / 2;
+                $x_pos = ceil($x_pos);
+                $y_pos = 0;
+            } 
+            else if($location == 'left'){
+                $x_pos = 0;
+                $y_pos = 0;
+            }
+            else if($location == 'right'){
+                $x_pos = ($width - $height);
+                $y_pos = 0;
+            }
+            $new_width = $height;
+            $new_height = $height;
+        }
+        else if($height > $width) { // Vertical Rectangle?
+            if($location == 'center'){
+                $x_pos = 0;
+                $y_pos = ($height - $width) / 2;
+                $y_pos = ceil($y_pos);
+            }
+            else if($location == 'left') {
+                $x_pos = 0;
+                $y_pos = 0;
+            }
+            else if($location == 'right') {
+                $x_pos = 0;
+                $y_pos = ($height - $width);
+            }
+            $new_width = $width;
+            $new_height = $width;
+        }
+
+        $newImg = imagecreatetruecolor($new_width, $new_height);
+
+        // Crop to Square using the given dimensions
+        imagecopy($newImg, $im, 0, 0, $x_pos, $y_pos, $width, $height);
+
+        if($savetofile){
+            switch ($type) {
+                case 1: imagegif($newImg, $img, $quality); break;
+                case 2: imagejpeg($newImg, $img, $quality); break;
+                case 3: imagepng($newImg, $img, $quality); break;
+                case 6: imagejpeg($newImg, $img, $quality); break;
+                default:
+                    $this->log('An error occurred.');
+                    return false;
+                    break;
+            }
+        }
+        else
+            return $newImg;
+    }
 }
 ?>
