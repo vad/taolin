@@ -661,10 +661,12 @@ class UsersController extends AppController {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'admin';
         
+        $this->paginate['conditions'] = array('deleted' => 0);
         $url = $this->params['url'];
+
         if (array_key_exists('q', $url) && $url['q']) { //check for a 'q' GET param
             $q = $url['q'];
-            $this->paginate['conditions'] = array("tsv @@ plainto_tsquery('english', '$q')");
+            array_push($this->paginate['conditions'], "tsv @@ plainto_tsquery('english', '$q')");
             $this->set('query', $this->san->html($q));
         }
 
