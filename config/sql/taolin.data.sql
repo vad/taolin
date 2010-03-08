@@ -165,4 +165,4 @@ INSERT INTO "widgets_skel" ("id", "widget_id", "col", "pos", "tab") VALUES (4,5,
 
 -- # Populating backgrounds table
 
-INSERT INTO backgrounds VALUES (1, 'Blue curl', 'img/blue_curl.jpeg');
+INSERT INTO backgrounds VALUES (1, 'Blue curl', 'img/background/blue_curl.jpeg');
