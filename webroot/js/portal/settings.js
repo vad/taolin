@@ -136,6 +136,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                     ,singleSelect: true
                     ,itemSelector:'div.bg-wrap'
                     ,selectedClass: 'bg-wrap-selected'
+                    ,trackOver: true
                     ,listeners: {
                         selectionchange: {
                             fn: function(dv,node){
@@ -146,7 +147,20 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                             }
                             ,scope: this
                         }
-                    }
+                        ,mouseenter: {
+                            fn: function(dv, index, node, e){
+                                var bg = dv.getRecord(node).get('path');
+                                $('.desktop .x-column-layout-ct').css('background','transparent url('+bg+') repeat scroll 50% 50%');
+                            }
+                            ,scope: this
+                        }
+                        ,mouseleave: {
+                            fn: function(dv, index, node, e){
+                                $('.desktop .x-column-layout-ct').css('background','transparent url('+window.config.background+') repeat scroll 50% 50%');
+                            }
+                            ,scope: this
+                        }
+                    }       
                 })],
                 buttons: [{
                     text: 'Save',
