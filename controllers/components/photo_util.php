@@ -60,7 +60,7 @@ class PhotoUtilComponent extends Object{
  
         // Coordinates calculator
 
-        if($width >= $height){ // Horizontal Rectangle?
+        if($width > $height){ // Horizontal Rectangle?
             if($location == 'center'){
                 $x_pos = ($width - $height) / 2;
                 $x_pos = ceil($x_pos);

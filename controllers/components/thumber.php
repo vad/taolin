@@ -76,8 +76,11 @@ class ThumberComponent extends Object{
                 default:  $this->log('Unknown image type E_USER_WARNING - img: '.$img);  return false; break;
             }
         }
-        else
-            $im = $this->PhotoUtil->crop($img); 
+        else {
+            $im = $this->PhotoUtil->crop($img, false, 'center', 100);
+            $img_info[0] = imagesx($im);
+            $img_info[1] = imagesy($im);
+        }
 
         if(!is_resource($im)){
             $this->log('Thumber: Unable to load image!');
