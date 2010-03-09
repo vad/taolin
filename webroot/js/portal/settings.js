@@ -120,7 +120,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                             '<div class="bg-wrap">',
                                 /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
                                 '<div><span></span>',
-                                    '<img class="ante" style="width:50px;height:50px;" src="{path:imageThumbPath(50, 50)}"></img>',
+                                    '<img class="ante" style="cursor:pointer" src="{path:imageThumbPath(50, 50)}"></img>',
                                 '</div>',
                                 '<span>{name}</span>',
                             '</div>',
