@@ -38,6 +38,7 @@ nsb = (Ext.isIE6 || Ext.isIE7);
 
 themes = [
     ['tp', 'Tp (default)'],
+    ['access', 'Access'],
     ['aero', 'Aero'],
     ['blue', 'Blue'], 
     ['blueen', 'Blueen'], 
