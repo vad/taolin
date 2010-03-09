@@ -782,6 +782,12 @@ img.inline {
     vertical-align:middle;
 }
 
+img.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .comment-icons-text {
     cursor: pointer;
 }
