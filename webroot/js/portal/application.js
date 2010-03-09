@@ -40,6 +40,7 @@ themes = [
     ['tp', 'Tp (default)'],
     ['aero', 'Aero'],
     ['blue', 'Blue'], 
+    ['blueen', 'Blueen'], 
     ['gray', 'Gray'],
     ['galdaka', 'Galdaka'],
     ['indigo', 'Indigo'],
@@ -48,6 +49,7 @@ themes = [
     ['silverCherry', 'Silver Cherry'],
     ['slate', 'Slate'],
     ['slickness', 'Slickness'],
+    ['human', 'Ubuntu'],
     ['vista', 'Vista']
 ];
 
