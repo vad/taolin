@@ -1112,3 +1112,45 @@ td.x-date-mp-month a:hover, td.x-date-mp-year a:hover {
 .x-combo-list .x-toolbar {
     border-top:1px solid #333;
 }
+
+/***************
+  FIXES
+  from http://www.akawebdesign.com/blog/2009-08-26/xtheme-symphony.css
+****************/
+.x-grid3-row-alt{ background-color:#cec; }
+
+.x-grid3-row-selected {
+    background-color: #fdddaa !important;
+    background-image: none;
+    border-color:#ffb500;
+}
+
+.x-tree-node .x-tree-node-over { background-color: #cec; }
+.x-tree-node .x-tree-selected { background-color: #fdddaa; }
+
+/*
+ * The text on the bottom toolbars was black, which blended with the black background.
+ */
+.x-toolbar { color: #eeeef0; }
+
+/*
+ * The portlet forms have a white background. The labels were also white.
+ */
+.x-form { background-color: #222; }
+
+/*
+ * White text on button mouseovers was hard to read as background was a light blue.
+ */
+.x-toolbar .x-btn-over button { color: #000; }
+
+/**
+ * On Ext.menu.Menu(), the mouse-over image and border don't look good.
+ */
+.x-menu-item-active {
+    background-image: none;
+    background-color: #3f3f3f;
+}
+.x-menu-item-active a.x-menu-item {
+    border-style: none;
+    border-width: 0;
+}
