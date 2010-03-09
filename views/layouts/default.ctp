@@ -34,7 +34,7 @@
     }
 
 ?>
-<link rel='StyleSheet' href='<?php echo $this->base ?>/webroot/extjs/resources/css/ext-all.css' />
+<link rel='StyleSheet' href='<?php echo $this->base ?>/extjs/resources/css/ext-all.css' />
 <link rel='StyleSheet' id="theme-sprite" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp-sprite.css' />
 <link rel='StyleSheet' id="theme" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp.css' />
 
@@ -47,16 +47,16 @@ if ($isdebugactive == 2) {
 <?
 }
 ?>
-<script type="text/javascript" src='<?php echo $this->base ?>/js/ext-jquery-adapter.js'> </script>
+<script type="text/javascript" src='<?php echo $this->base ?>/extjs/adapter/jquery/ext-jquery-adapter.js'> </script>
 
 <?php
 if ($isdebugactive >= 1) {
 ?>
-    <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-all-debug.js'> </script>
+    <script type="text/javascript" src='<?php echo $this->base ?>/extjs/ext-all-debug.js'> </script>
 <?php
 } else {
 ?>
-    <script type="text/javascript" src='<?php echo $this->base ?>/js/ext-all.js'> </script>
+    <script type="text/javascript" src='<?php echo $this->base ?>/webroot/extjs/ext-all.js'> </script>
 <?php
 }
 ?>
