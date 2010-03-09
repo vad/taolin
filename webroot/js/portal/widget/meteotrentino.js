@@ -95,7 +95,7 @@ MeteoTrentino = function(conf, panel_conf){
 
                 lk.append(
                     $('<span>')
-                    .text(label)
+                        .text(label)
                 );
 
                 $(this).show();
@@ -103,18 +103,18 @@ MeteoTrentino = function(conf, panel_conf){
 
                 lk.append(
                     $('<span>')
-                    .addClass('a')
-                    .click(function(){
-                        Ext.getCmp(w_id).visualize(id); 
-                    })
-                    .text(label)
+                        .addClass('a')
+                        .click(function(){
+                            Ext.getCmp(w_id).visualize(id); 
+                        })
+                        .text(label)
                 );
 
                 $(this).hide();
             }
         });
 
-        lk.children().css({'padding' : '10px', 'font-size' : '13px'});
+        lk.children().css({'padding' : '0 10px', 'font-size' : '13px', 'display': 'inline-block'});
     };
 
     MeteoTrentino.superclass.constructor.call(this, {
@@ -126,7 +126,7 @@ MeteoTrentino = function(conf, panel_conf){
         ,items: [{
             html: 
                 '<div id ="'+this.getId()+'-forecast">'
-                    +'<div style="margin: 15px 0; text-align:center;"><span id="'+this.getId()+'-forecast-links" class="confirm-msg"></span></div>'
+                    +'<div style="text-align:center;" class="confirm-msg"><span id="'+this.getId()+'-forecast-links"></span></div>'
                     +'<div id="'+this.getId()+'-forecast-overview" style="padding:5px 20px;"></div>' 
                     +'<div id="'+this.getId()+'-forecast-detailedview" style="padding:5px;"></div>'
                     +'<div style="float:right;padding:10px;font-weight:bold;"><span class="a" style="margin: 10px;" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.updateWidget()">Reload</span><span style="margin: 10px;" class="a" onclick="Ext.getCmp(\''+this.id+'\').ownerCt.showConf()">Change language</span></div>'
