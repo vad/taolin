@@ -15,33 +15,31 @@
             <div class="meteo_date_header">Previsioni per il giorno <xsl:value-of select="Oggi/Data"/></div>
             <xsl:variable name="cieloDesc"><xsl:value-of select="Oggi/CieloDesc"/></xsl:variable>
             <xsl:if test="not($cieloDesc='')"><div class="meteo_report"><b>Condizioni del cielo: </b><xsl:value-of select="Oggi/CieloDesc"/></div></xsl:if>
-            <table cols="2" width="90%" style="margin: auto auto;padding-top:20px;">
-                <tr>
-                    <td width="50%">
-                        <div class="meteo_image">
-                            <img src="{Oggi/imgtrentino}"/>
-                        </div>
-                    </td>
-                    <td width="50%" valign="top">
-                        <div class="meteo_desc">
-                            <ul>
-                                <li><b>Precipitazioni: </b> <xsl:value-of select="Oggi/PrecInten"/> - <xsl:value-of select="Oggi/PrecEstens"/></li>
-                                <li><b>Probabilità precipitazioni: </b> <xsl:value-of select="Oggi/PrecProb"/></li>
-                                <xsl:variable name="ventiDesc"><xsl:value-of select="Oggi/VentiDesc"/></xsl:variable>
-                                <xsl:if test="not($ventiDesc='')"><li><b>Vento: </b> <xsl:value-of select="Oggi/VentiDesc"/></li></xsl:if>
-                                <li><b>Temperature: </b> <xsl:value-of select="Oggi/TempDesc"/></li>
-                                <li>
-                                    <ul style="padding-left:30px !important">
-                                        <li style="list-style-type:square;"><b>Valle: </b> max <xsl:value-of select="Oggi/TempMaxValle"/>°C</li>
-                                        <li style="list-style-type:square;"><b>Montagna (2000m): </b> max <xsl:value-of select="Oggi/TempMaxQuota"/>°C</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <hr class="large" style="margin-bottom: 10px !important;" />
+            <div style="position:relative;display: block;">
+                <div style="float:left;text-align:center;">
+                    <div class="meteo_image">
+                        <img src="{Oggi/imgtrentino}"/>
+                    </div>
+                </div>
+                <div style="float:right;text-align:center;">
+                    <div class="meteo_desc">
+                        <ul>
+                            <li><b>Precipitazioni: </b> <xsl:value-of select="Oggi/PrecInten"/> - <xsl:value-of select="Oggi/PrecEstens"/></li>
+                            <li><b>Probabilità precipitazioni: </b> <xsl:value-of select="Oggi/PrecProb"/></li>
+                            <xsl:variable name="ventiDesc"><xsl:value-of select="Oggi/VentiDesc"/></xsl:variable>
+                            <xsl:if test="not($ventiDesc='')"><li><b>Vento: </b> <xsl:value-of select="Oggi/VentiDesc"/></li></xsl:if>
+                            <li><b>Temperature: </b> <xsl:value-of select="Oggi/TempDesc"/></li>
+                            <li>
+                                <ul style="padding-left:30px !important">
+                                    <li style="list-style-type:square;"><b>Valle: </b> max <xsl:value-of select="Oggi/TempMaxValle"/>°C</li>
+                                    <li style="list-style-type:square;"><b>Montagna (2000m): </b> max <xsl:value-of select="Oggi/TempMaxQuota"/>°C</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <hr class="large" style="margin-bottom: 10px !important;position: relative;display: inline-block;" />
         </div>
         <div id="tomorrow" class="meteo_forecast" label="Domani">
             <div class="meteo_date_header">Previsioni per il giorno <xsl:value-of select="Domani/Data"/></div>
