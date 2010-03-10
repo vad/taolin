@@ -41,7 +41,9 @@ class BackgroundsController extends AppController {
         $this->layout = 'ajax';
         
         $this->Background->recursive = -1;
-        $bgs = $this->Background->find('all');
+        $bgs = $this->Background->find('all', array(
+            'order' => 'Background.name'
+            ));
         
         $this->set('json', Set::extract($bgs, '{n}.Background'));
     }
