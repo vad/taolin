@@ -64,7 +64,7 @@
 
 
 <?php
-if ($isdebugactive >= 1) {
+if ($isdebugactive >= 0) {
 ?>
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/portal.css' />
 <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/menu.css' />

@@ -460,10 +460,13 @@ class TimelinesController extends AppController {
             '{n}.Comment'
         );
 
+        pr('Merda');
         $this->ReadableTimeline->recursive = -1;
 
         $event = $this->ReadableTimeline->findById($id);
         $details = $this->prepareevent($event['ReadableTimeline'], true);
+        
+        pr($details);
         pr($event);
 
         $this->set('json', array(
