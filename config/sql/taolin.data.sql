@@ -83,7 +83,7 @@ Change <span class="a" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: {sou
 ', 'workplaces-save', 'js/portal/shared/icons/fam/map.png', 1, '{{ user | user_adjectify timelineid }} change of workplace position on the map{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
 ');
 INSERT INTO templates VALUES (11, '{{ user | userify timelineid }} <span class="deco-text">{{ status }}</span>{% if not short_version %} (via <span class="a" onclick="addOrBounceWidget(''BuddyList'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">chat status</span>)
-{% endif %}', 'users_widgets-changeconf', 'img/icons/fugue/balloon-ellipsis.png', 1, '{{ user | user_adjectify timelineid }} chat status{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+{% endif %}', 'users_widgets-changeconf', 'img/icons/fugue/balloon-ellipsis.png', 0, '{{ user | user_adjectify timelineid }} chat status{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
 ');
 INSERT INTO templates VALUES (6, '{{ user | userify timelineid }} wrote an useful <span class="a" onclick="addOrBounceWidget(''Feedback'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">feedback</span>.
 {% if not short_version %}
