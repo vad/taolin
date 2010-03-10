@@ -50,7 +50,7 @@ if ($isdebugactive == 2) {
 <script type="text/javascript" src='<?php echo $this->base ?>/extjs/adapter/jquery/ext-jquery-adapter.js'> </script>
 
 <?php
-if ($isdebugactive >= 0) {
+if ($isdebugactive >= 1) {
 ?>
     <script type="text/javascript" src='<?php echo $this->base ?>/extjs/ext-all-debug.js'> </script>
 <?php
