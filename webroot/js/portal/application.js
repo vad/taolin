@@ -38,12 +38,12 @@ nsb = (Ext.isIE6 || Ext.isIE7);
 
 themes = [
     ['tp', 'Tp (default)'],
-    ['access', 'Access'],
-    ['aero', 'Aero'],
+    //['access', 'Access'],
+    //['aero', 'Aero'],
     ['blue', 'Blue'], 
     ['blueen', 'Blueen'], 
     ['gray', 'Gray'],
-    ['galdaka', 'Galdaka'],
+    //['galdaka', 'Galdaka'],
     ['indigo', 'Indigo'],
     ['midnight', 'Midnight'],
     ['purple', 'Purple'],
