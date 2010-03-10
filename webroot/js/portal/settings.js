@@ -69,7 +69,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                         ,listeners:{
                             load:{ 
                                 fn: function(store, records, options){
-                                    var dv = this.items.items[1];
+                                    var dv = this.items.first();
                                     dv.select(store.find('path', window.config.background), false, true);
                                 }
                                 ,scope: this
