@@ -53,7 +53,71 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
             scope: this,
             buttonAlign: 'center',
             items:[ 
-                new Ext.form.FieldSet({
+                new Ext.DataView({
+                    emptyText: 'No backgrounds!'
+                    ,loadingText: 'Loading backgrounds...'
+                    ,autoHeight: true
+                    ,singleSelect: true
+                    ,itemSelector:'div.bg-wrap'
+                    ,selectedClass: 'bg-wrap-selected'
+                    ,trackOver: true
+                    ,store: new Ext.data.JsonStore({
+                        url: 'backgrounds/getbg' 
+                        ,root: ''
+                        ,fields: ['id','name','path']
+                        ,autoLoad: true
+                        ,listeners:{
+                            load:{ 
+                                fn: function(store, records, options){
+                                    var dv = this.items.items[1];
+                                    dv.select(store.find('path', window.config.background), false, true);
+                                }
+                                ,scope: this
+                            }
+                        }
+                    })
+                    ,tpl: new Ext.XTemplate(
+                        '<div style="margin-top:10px;margin-bottom: 20px;"><b>Change {[window.config.appname]} background</b></div>',
+                        '<div style="text-align:center;"><tpl for=".">',
+                            '<div class="bg-wrap">',
+                                /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
+                                '<div><span></span>',
+                                    '<img class="ante" style="cursor:pointer" src="{path:imageThumbPath(50, 50)}"></img>',
+                                '</div>',
+                                '<span>{name}</span>',
+                            '</div>',
+                        '</tpl></div>',
+                        '<div class="x-clear"></div>'
+                        ,{
+                            compiled: true
+                        }
+                    )
+                    ,listeners: {
+                        selectionchange: {
+                            fn: function(dv,node){
+                                if(node && node.length >= 1) 
+                                    this.form.findField('background_id').setValue(dv.getSelectedRecords()[0].id);
+                                else
+                                    this.form.findField('background_id').setValue(null);
+                            }
+                            ,scope: this
+                        }
+                        ,mouseenter: {
+                            fn: function(dv, index, node, e){
+                                var bg = dv.getRecord(node).get('path');
+                                $('.desktop .x-column-layout-ct').css('background','transparent url('+bg+') repeat scroll 50% 50%');
+                            }
+                            ,scope: this
+                        }
+                        ,mouseleave: {
+                            fn: function(dv, index, node, e){
+                                $('.desktop .x-column-layout-ct').css('background','transparent url('+window.config.background+') repeat scroll 50% 50%');
+                            }
+                            ,scope: this
+                        }
+                    }       
+                })
+                ,new Ext.form.FieldSet({
                     layoutConfig: {
                         // layout-specific configs go here
                         labelSeparator: ''
@@ -98,70 +162,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                         }
                     ]
                 })
-                ,new Ext.DataView({
-                    store: new Ext.data.JsonStore({
-                        url: 'backgrounds/getbg' 
-                        ,root: ''
-                        ,fields: ['id','name','path']
-                        ,autoLoad: true
-                        ,listeners:{
-                            load:{ 
-                                fn: function(store, records, options){
-                                    var dv = this.items.items[1];
-                                    dv.select(store.find('path', window.config.background), false, true);
-                                }
-                                ,scope: this
-                            }
-                        }
-                    })
-                    ,tpl: new Ext.XTemplate(
-                        '<div style="margin-bottom:10px;"><b>Change {[window.config.appname]} background</b></div>',
-                        '<div style="text-align:center;"><tpl for=".">',
-                            '<div class="bg-wrap">',
-                                /* The <span> element without any content has to be placed there to vertically align images in the middle on IE */
-                                '<div><span></span>',
-                                    '<img class="ante" style="cursor:pointer" src="{path:imageThumbPath(50, 50)}"></img>',
-                                '</div>',
-                                '<span>{name}</span>',
-                            '</div>',
-                        '</tpl></div>',
-                        '<div class="x-clear" style="margin-bottom:20px;"></div>'
-                        ,{
-                            compiled: true
-                        }
-                    )
-                    ,emptyText: 'No backgrounds!'
-                    ,loadingText: 'Loading backgrounds...'
-                    ,autoHeight: true
-                    ,singleSelect: true
-                    ,itemSelector:'div.bg-wrap'
-                    ,selectedClass: 'bg-wrap-selected'
-                    ,trackOver: true
-                    ,listeners: {
-                        selectionchange: {
-                            fn: function(dv,node){
-                                if(node && node.length >= 1) 
-                                    this.form.findField('background_id').setValue(dv.getSelectedRecords()[0].id);
-                                else
-                                    this.form.findField('background_id').setValue(null);
-                            }
-                            ,scope: this
-                        }
-                        ,mouseenter: {
-                            fn: function(dv, index, node, e){
-                                var bg = dv.getRecord(node).get('path');
-                                $('.desktop .x-column-layout-ct').css('background','transparent url('+bg+') repeat scroll 50% 50%');
-                            }
-                            ,scope: this
-                        }
-                        ,mouseleave: {
-                            fn: function(dv, index, node, e){
-                                $('.desktop .x-column-layout-ct').css('background','transparent url('+window.config.background+') repeat scroll 50% 50%');
-                            }
-                            ,scope: this
-                        }
-                    }       
-                })],
+                ],
                 buttons: [{
                     text: 'Save',
                     handler: function(){
