@@ -25,6 +25,8 @@
   );
   $opts_ta = array_merge($opts, array('class' => 'text_area', 'type' => 'textarea'));
   $opts_tf = array_merge($opts, array('class' => 'text_field'));
+  $opts_tc = array_merge($opts, array('label' => array('class' => 'checkbox'), 'class' => 'checkbox', 'type' => 'checkbox'));
+  $opts_tcs = array_merge($opts, array('label' => array('class' => 'label', 'style' => 'display: inline-block'), 'class' => 'checkbox', 'type' => 'checkbox'));
 
 ?>
 
@@ -44,6 +46,7 @@
           <? echo $form->input('name', $opts_tf); ?>
           <? echo $form->input('temp', $opts_ta); ?>
           <? echo $form->input('icon', $opts_tf); ?>
+          <? echo $form->input('is_unique', $opts_tcs); ?>
           <br />
           <? echo $form->submit('Save →', array('class' => 'button','div'=>false)); ?>
           or

@@ -32,7 +32,7 @@ class TemplatesController extends AppController {
         Configure::write('debug', '0');
         $this->layout = 'admin';
 
-        $this->paginate['fields'] = array('id', 'name', 'temp', 'icon');
+        $this->paginate['fields'] = array('id', 'name', 'temp', 'icon', 'is_unique');
         $res = $this->paginate();
         $this->set('templates', $res);
     }
