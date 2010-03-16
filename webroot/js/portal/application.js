@@ -156,10 +156,10 @@ function application_init(){
                 '</li>' + 
                 '<li class="header"><span class="a menu-item">Tools</span>' +
                     '<ul>' +
-                        '<li><span class="menu-item a add_widgets" onclick="openAddWidgetsModalWindow()">Add widgets</span></li>' +
+                        '<li><span class="menu-item a add_widgets" onclick="openAddWidgetsModalWindow()"><span class="sprited add-icon">Add widgets</span></span></li>' +
                         '<li><span class="a menu-item" onclick="addOrBounceWidget(\'Ext.ux.fbk.sonet.MetaSearch\',\'string_identifier\',{source: \'logout_div\'})"><span class="sprited search">Search</span></span></li>' +
-                        '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Map of colleagues workplaces</span></li>' +
-                        '<li><span class="a menu-item" onclick="new PhotoUploader()">Photo uploader</a></li>' +
+                        '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()"><span class="sprited map">Map of colleagues workplaces</span></span></li>' +
+                        '<li><span class="a menu-item" onclick="new PhotoUploader()"><span class="sprited upload-picture">Upload a photo</span></a></li>' +
                         '<li><span class="a menu-item" onclick="new SendToWindow()"><span class="sprited email">Send an email</span></span></li>' +
                     '</ul>' +
                 '</li>' +
