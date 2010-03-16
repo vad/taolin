@@ -116,24 +116,21 @@
 .chart-icon {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1374px !important;
 }
-.pencil-icon {
+.double-prev {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1410px !important;
 }
-.double-prev {
+.prev {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1446px !important;
 }
-.prev {
+.next {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1482px !important;
 }
-.next {
+.double-next {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1518px !important;
 }
-.double-next {
+.arrow-down {
     background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1554px !important;
 }
-.arrow-down {
-    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1590px !important;
-}
 .arrow-up {
-    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1626px !important;
+    background:url(../../img/widget_sprite.png?v=VERSION) no-repeat scroll -10px -1590px !important;
 }
