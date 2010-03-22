@@ -131,7 +131,7 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                     items: [
                         {
                             xtype: 'numberfield',
-                            fieldLabel: 'Number of columns',
+                            fieldLabel: 'Number of columns <br /><span style="font-weight:normal;font-size:90%;">Please insert a value between 1 and 4</span>',
                             name: 'number_of_columns',
                             //typeAhead: true,
                             forceSelection: true,
