@@ -19,8 +19,9 @@
 */
 class Publik extends AppModel
 {
-    //This model will work only if there is a DB called publik in config.php
-    var $useDbConfig = 'publik';
+    //This model will work only if there is a DB called fbk in config.php
+    //TODO: change "fbk" into "publication_database" 
+    var $useDbConfig = 'fbk';
     var $name = 'Publik';
     var $useTable = False;
 

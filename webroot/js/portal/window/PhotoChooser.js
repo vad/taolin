@@ -56,7 +56,7 @@ PhotoChooser.prototype = {
     lookup : {}
     
     ,show : function(el, callback){
-        this.selectedNode = 0;
+        this.selectedNote = 0;
         if(!this.win){
 
             this.initTemplates();
@@ -117,7 +117,6 @@ PhotoChooser.prototype = {
                 tpl: this.thumbTemplate,
                 singleSelect: true,
                 itemSelector: 'div.thumb-wrap',
-                selectedClass: 'bg-wrap-selected',
                 emptyText : '<div style="padding:10px;">No pictures match the specified filter</div>',
                 store: this.store,
                 listeners: {
