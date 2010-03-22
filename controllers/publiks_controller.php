@@ -33,8 +33,8 @@ class PubliksController extends AppController {
 
 
     function search() {
-        $isFBK = $this->Conf->get('Organization.publications');
-        if ($isFBK == 1)    { 
+        $publiks = $this->Conf->get('Organization.publications');
+        if ($publiks == 1)    { 
             Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
             $this->layout = 'ajax';
             
@@ -67,13 +67,14 @@ class PubliksController extends AppController {
             $this->set('json', $out);
         
         }
-        else return null;
+        else
+            return null;
     }
 
     function listpubsbylogin() {
         
-        $isFBK = $this->Conf->get('Organization.publications');
-        if ($isFBK == 1)    {
+        $publiks = $this->Conf->get('Organization.publications');
+        if ($publiks == 1)    {
             Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
             $this->layout = 'ajax';
             
