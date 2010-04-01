@@ -229,10 +229,10 @@ westPanel = new Ext.Panel({
     /**
       * @param {String} login requested user's login
       */
-    ,showPublik: function(login){
+    ,showPublik: function(u_id, login){
         var tab = Ext.getCmp('wp-publik-tab');
 
-        tab.store.load({params: {login: login}});
+        tab.store.load({params: {u_id: u_id, login: login}});
     }
     
     /**
@@ -259,6 +259,9 @@ westPanel = new Ext.Panel({
         
         Ext.getCmp('user_profile').firstExpand = false;
         if(!hidePanel) expandUserPanel();
+
+        if(westPanel.showedUser)
+            if(reqid == westPanel.showedUser.id) return false;
         
         Ext.Ajax.request({
             url : 'users/getinfo/'+reqid,
@@ -285,7 +288,7 @@ westPanel = new Ext.Panel({
                         user.email = u.email;
                 }
                 
-                westPanel.showPublik(u.login);
+                westPanel.showPublik(u.id, u.login);
                 westPanel.showPhotos(u.id);
 
                 //save in a retrievable place if this photo is user's photo

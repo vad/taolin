@@ -869,3 +869,8 @@ hr.large {
     position: absolute;
     right: 20px;
 }
+
+.publik-wrapper span {
+    font-size: 95%;
+    font-style: italic;
+}

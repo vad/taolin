@@ -38,10 +38,10 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
         this.store = new Ext.data.JsonStore({
             proxy : new Ext.data.HttpProxy({
                 method: 'GET',
-                url: 'publiks/listpubsbylogin'
+                url: 'fbk/publiks/listpubsbylogin'
             }),
             root: 'pubs',
-            fields: ['ID', 'INS_DATE', 'MOD_DATE', 'Title', 'PTitle', 'Pub_Type', 'PUBTIME_YEAR', 'Relevance']
+            fields: ['ID_PRODOTTO', 'TITOLO', 'STRINGA_AUTORI', 'ANNO', 'MESE', 'NUM_AUTORI', 'COGNOME_AUTORE', 'NOME_AUTORE', 'NUM_PAGINE', 'PAG_INIZIO', 'PAG_FINE']
             ,listeners: {
                 beforeload: function(){
                     if (!this.parent.rendered) return;
@@ -74,9 +74,19 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
             '<div style="font-size:100%">',
             '<tpl for=".">',
                 // Lists found publications. Eac publik has a link to FBK paper repository
-                '<div style="padding:10px;" class="publik-wrapper">{PTitle}<h3><a href="http://www.itc.it/publik/viewPublication.aspx?pubId={ID}" target="_blank">{Title}</a></h3></div>',
+                '<div style="padding:10px;" class="publik-wrapper">',
+                    '<span>{STRINGA_AUTORI} - {[this.pdate(values.MESE, values.ANNO)]}</span>',
+                    '<h3><a href="http://www.itc.it/publik/viewPublication.aspx?pubId={ID_PRODOTTO}" target="_blank">{TITOLO}</a></h3>',
+                '</div>',
             '</tpl>',
             '</div>'
+            ,{
+                months: new Array("January","February","March","April","May","June","July","August","September","October","November","December")
+                ,pdate: function(m, y){
+                    var month = get(this.months, m, '');
+                    return month + ' ' + y;
+                }
+            }
         );
         tpl.compile();
 
@@ -91,7 +101,8 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
         
         this.store.load({
             params: {
-                login: westPanel.showedUser.login
+                u_id: westPanel.showedUser.id
+                //,login: westPanel.showedUser.login
             }
         });
 
@@ -100,4 +111,5 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
         );
     }
 });
+
 Ext.reg('userpublications', Ext.ux.fbk.sonet.UserPublications);
