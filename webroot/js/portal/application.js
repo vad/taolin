@@ -133,6 +133,7 @@ function application_init(){
                 '<ul>' +
                     '<li><span class="menu-item"><a class="sprited help-icon" href="./admin" target="_blank">Admin main</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited picture" href="./admin/backgrounds" target="_blank">Background</a></span></li>' +
+                    '<li><span class="menu-item"><a class="sprited picture" href="./admin/buildings" target="_blank">Building</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited gears" href="./admin/portals/config" target="_blank">Configuration</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited image-edit" href="./admin/templates" target="_blank">Templates</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited groups" href="./admin/users" target="_blank">Users</a></span></li>' +
