@@ -870,7 +870,15 @@ hr.large {
     right: 20px;
 }
 
-.publik-wrapper span {
-    font-size: 95%;
+.publik-wrapper {
+    line-height: 1.6;
+    padding: 7px 10px;
+}
+
+.publik-wrapper div {
+    display: inline !important;
+}
+
+.publik-wrapper .pub_titolo {
     font-style: italic;
 }

@@ -32,6 +32,7 @@ Ext.namespace( 'Ext.ux.fbk.sonet' );
 Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
     title: 'Papers'
     ,autoHeight: true
+    ,preventBodyReset: true
     ,initComponent: function(){
         Ext.apply(this, this.initialConfig);
 
@@ -41,7 +42,7 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
                 url: 'fbk/publiks/listpubsbylogin'
             }),
             root: 'pubs',
-            fields: ['ID_PRODOTTO', 'TITOLO', 'STRINGA_AUTORI', 'ANNO', 'MESE', 'NUM_AUTORI', 'COGNOME_AUTORE', 'NOME_AUTORE', 'NUM_PAGINE', 'PAG_INIZIO', 'PAG_FINE']
+            fields: ['ID_PRODOTTO', 'TITOLO', 'TITOLO_UFFICIALE', 'TITOLO_LIBRO', 'AUTORE_LIBRO', 'STRINGA_AUTORI', 'ANNO', 'MESE', 'NUM_AUTORI', 'COGNOME_AUTORE', 'NOME_AUTORE', 'NUM_PAGINE', 'PAG_INIZIO', 'PAG_FINE', 'TITOLO_CONVEGNO', 'PERIODO_CONVEGNO', 'VOLUME']
             ,listeners: {
                 beforeload: function(){
                     if (!this.parent.rendered) return;
@@ -72,13 +73,25 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
     ,onRender: function(){
         var tpl = new Ext.XTemplate( 
             '<div style="font-size:100%">',
-            '<tpl for=".">',
-                // Lists found publications. Eac publik has a link to FBK paper repository
-                '<div style="padding:10px;" class="publik-wrapper">',
-                    '<span>{STRINGA_AUTORI} - {[this.pdate(values.MESE, values.ANNO)]}</span>',
-                    '<h3><a href="http://www.itc.it/publik/viewPublication.aspx?pubId={ID_PRODOTTO}" target="_blank">{TITOLO}</a></h3>',
-                '</div>',
-            '</tpl>',
+                '<ol start="1">',
+                '<tpl for=".">',
+                    // Lists found publications. Eac publik has a link to FBK paper repository
+                    '<li>',
+                        '<div class="publik-wrapper">',
+                            '<div class="stringa_autori">{STRINGA_AUTORI}, </div>',
+                            '<div class="pub_titolo">{TITOLO}</div>',
+                            '<tpl if="TITOLO_UFFICIALE"><div class="pub_data">, in «{TITOLO_UFFICIALE}»</div></tpl>',
+                            '<tpl if="TITOLO_LIBRO && AUTORE_LIBRO"><div class="pub_data">, in {AUTORE_LIBRO}, {TITOLO_LIBRO}</div></tpl>',
+                            '<tpl if="VOLUME"><div class="pub_data">, vol. {VOLUME}</div></tpl>',
+                            '<tpl if="ANNO"><div class="pub_data">, {ANNO}</div></tpl>',
+                            '<tpl if="PAG_INIZIO && PAG_FINE"><div class="pub_pagine">, pp {PAG_INIZIO}-{PAG_FINE}</div></tpl>',
+                            '<tpl if="TITOLO_CONVEGNO"><div class="pub_data"> ({TITOLO_CONVEGNO}',
+                                '<tpl if="PERIODO_CONVEGNO"><div class="pub_data"> {PERIODO_CONVEGNO}</div></tpl>',
+                            ')</div></tpl>',
+                        '</div>',
+                    '</li>',
+                '</tpl>',
+                '</ol>',
             '</div>'
             ,{
                 months: new Array("January","February","March","April","May","June","July","August","September","October","November","December")
