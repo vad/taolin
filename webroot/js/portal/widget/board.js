@@ -67,6 +67,7 @@ Board = function(conf, panel_conf){
             cls: 'feedback_text',
             grow: true,
             name: 'text',
+            allowBlank: false,
             anchor: '0 50%'  // anchor width by percentage and height by raw adjustment
         },{
             xtype:'textfield',
@@ -103,7 +104,6 @@ Board = function(conf, panel_conf){
             anchor: '100%'
         })
         ],
-
         buttons: [{
             text: 'Submit',
             handler: function(){
@@ -133,7 +133,7 @@ Board = function(conf, panel_conf){
                         failure: function(form, action){
 
                             var data = Ext.util.JSON.decode(action.response.responseText);
-                            var error = get(data, 'error', 'Error - Can not save it'); 
+                            var error = get(data, 'error', 'Error - Message can not be saved'); 
 
                             $('#undodelads-'+w_id)
                                .removeClass('warning-msg confirm-msg')
@@ -146,8 +146,16 @@ Board = function(conf, panel_conf){
                 );
                  
             },
-            scope: this,
-            formBind: true
+            formBind: true,
+            scope: this
+        },{
+            text: 'Cancel',
+            handler: function(){
+                $('#'+this.getId())
+                    .find('.show-hide')
+                        .trigger('click');
+            }
+            ,scope: this
         }]
     });
 

@@ -327,16 +327,16 @@ class UsersController extends AppController {
     }
 
 
-    function listchampions($n=100) {
+    function listchampions($n=300) {
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
 
         $n = $this->san->paranoid($n);
 
-        if ($n > 100) $n = 100;
+        if ($n > 300) $n = 300;
 
         //TODO: hide myself
-        //$thisId = $this->Session->read('id');
+        //$u_id = $this->Session->read('id');
         
         $filter = array('active' => 1);
         $this->User->recursive = 0;
@@ -349,6 +349,7 @@ class UsersController extends AppController {
                     'User.login'
                 ),
                 'order' => 'User.login',
+                'recursive' => -1,
                 'limit' => $n
             )
         );

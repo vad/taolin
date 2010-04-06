@@ -15,7 +15,7 @@
             <div class="meteo_date_header">Previsioni per il giorno <xsl:value-of select="Oggi/Data"/></div>
             <xsl:variable name="cieloDesc"><xsl:value-of select="Oggi/CieloDesc"/></xsl:variable>
             <xsl:if test="not($cieloDesc='')"><div class="meteo_report"><b>Condizioni del cielo: </b><xsl:value-of select="Oggi/CieloDesc"/></div></xsl:if>
-            <div style="position:relative;display: block;">
+            <div style="position:relative;">
                 <div style="float:left;text-align:center;">
                     <div class="meteo_image">
                         <img src="{Oggi/imgtrentino}"/>

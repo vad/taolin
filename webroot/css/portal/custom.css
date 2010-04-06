@@ -254,16 +254,8 @@ div.buddyliststate {
     display:none;
 }
 
-#edit-photo-button img{
-    padding:2px;
-    position:absolute;
-    top:0;
-    right:0;
-}
-
 #edit-photo-button span{
-    margin-right:20px;
-    padding:2px;
+    margin-right:5px;
 }
 
 .user-photo-container{
@@ -876,4 +868,17 @@ hr.large {
     float: right;
     position: absolute;
     right: 20px;
+}
+
+.publik-wrapper {
+    line-height: 1.6;
+    padding: 7px 10px;
+}
+
+.publik-wrapper div {
+    display: inline !important;
+}
+
+.publik-wrapper .pub_titolo {
+    font-style: italic;
 }

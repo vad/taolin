@@ -37,5 +37,43 @@ class BuildingsController extends AppController {
         $this->set(compact('json'));
     }
 
+    function admin_index(){
+        Configure::write('debug', '0');
+        $this->layout = 'admin';
+
+        $this->Building->recursive = -1;
+        $this->paginate['fields'] = array('Building.id', 'Building.name', 'Building.imagepath');
+        $res = $this->paginate();
+        $this->set('buildings', $res);
+    }
+    
+    function admin_add(){
+        Configure::write('debug', '0');
+        $this->layout = 'admin';
+        
+        if (!empty($this->data)) {
+            if ($this->Building->save($this->data)) {
+                $this->Session->setFlash('Building created.', 'admin_flash_message_success');
+                $this->redirect(array('action' => 'index'));
+            }
+        }
+
+    }
+   
+    function admin_edit($bid){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax     
+        $this->layout = 'admin';
+        $this->Backgournd->recursive = -1;
+        $this->Building->id = $bid;
+
+        if (empty($this->data)) {
+            $this->data = $this->Building->read();
+        } else {
+            if ($this->Building->save($this->data)) {
+                $this->Session->setFlash('Building updated.', 'admin_flash_message_success');
+                $this->redirect(array('action' => 'index'));
+            }
+        }
+    }
 }
 ?>

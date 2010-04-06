@@ -74,6 +74,15 @@ class User extends AppModel
         
         return $sender;
     }
+
+    function getuniqueidentifierstring($u_id){
+        $query = "SELECT unique_identifier_string FROM identities WHERE user_id = $u_id";
+        
+        $res = $this->query($query);
+        $author_id = $res[0][0]['unique_identifier_string'];
+ 
+        return $author_id;
+    }
 }
 
 ?>

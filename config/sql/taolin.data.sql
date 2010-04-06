@@ -12,7 +12,7 @@ INSERT INTO templates VALUES (2, '{{ user | userify timelineid }} wrote a new me
 ');
 INSERT INTO templates VALUES (15, '{{ user | userify timelineid }} commented on 
 ', 'comment', 'js/portal/shared/icons/fam/comment.png', 1, NULL);
-INSERT INTO templates VALUES (4, '{{ user | userify timelineid }} upload {% if p_id %}<span class="a" onclick="showPicture({{p_id}}, {{user.id}})">a new picture</span>{% else %}a new picture{% endif %}<br/>Why don''t you <span class="a" onclick="new PhotoUploader()">upload a new photo</span> too?', 'photos-uploadphoto', 'img/icons/fugue/image-sunset.png', 0, '{{ user | user_adjectify timelineid }} {% if p_id %}<span class="a" onclick="showPicture({{p_id}}, {{user.id}})">photo</span>{% else %}photo{% endif %}{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+INSERT INTO templates VALUES (4, '{{ user | userify timelineid }} uploaded {% if p_id %}<span class="a" onclick="showPicture({{p_id}}, {{user.id}})">a new picture</span>{% else %}a new picture{% endif %}<br/>Why don''t you <span class="a" onclick="new PhotoUploader()">upload a new photo</span> too?', 'photos-uploadphoto', 'img/icons/fugue/image-sunset.png', 0, '{{ user | user_adjectify timelineid }} {% if p_id %}<span class="a" onclick="showPicture({{p_id}}, {{user.id}})">photo</span>{% else %}photo{% endif %}{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
 ');
 INSERT INTO templates VALUES (9, 'Today is a special day for {{ user | userify timelineid }}!<br />Happy birthday {% if !user.deleted %}<span class="a" onclick="showUserInfo({{ user.id }}, null, {source: ''timeline'', timeline_id: {{ timelineid }}})">{{ user.name }}{% else %}{{ user.name }}{% endif %}</span>!!!', 'timelineevent-happybirthday', 'img/icons/fugue/cake.png', 0, '{{ user | user_adjectify timelineid }} birthday{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
 ');
@@ -83,7 +83,7 @@ Change <span class="a" onclick="(new Ext.ux.fbk.sonet.MapWindow({logparams: {sou
 ', 'workplaces-save', 'js/portal/shared/icons/fam/map.png', 1, '{{ user | user_adjectify timelineid }} change of workplace position on the map{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
 ');
 INSERT INTO templates VALUES (11, '{{ user | userify timelineid }} <span class="deco-text">{{ status }}</span>{% if not short_version %} (via <span class="a" onclick="addOrBounceWidget(''BuddyList'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">chat status</span>)
-{% endif %}', 'users_widgets-changeconf', 'img/icons/fugue/balloon-ellipsis.png', 1, '{{ user | user_adjectify timelineid }} chat status{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
+{% endif %}', 'users_widgets-changeconf', 'img/icons/fugue/balloon-ellipsis.png', 0, '{{ user | user_adjectify timelineid }} chat status{% if comment %}:<br />"<span class="deco-text">{{ comment | truncate 40 | strip_tags | nl2br}}</span>"{% endif %}
 ');
 INSERT INTO templates VALUES (6, '{{ user | userify timelineid }} wrote an useful <span class="a" onclick="addOrBounceWidget(''Feedback'',''string_identifier'', {source: ''timeline'', timeline_id: {{ timelineid }}})">feedback</span>.
 {% if not short_version %}

@@ -101,8 +101,10 @@ class TimelinesController extends AppController {
      */
     function gettimeline(){
 
+        $params = $this->params['url'];
+
         //Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax
-        if (array_key_exists('debug', $this->params['url']))
+        if (array_key_exists('debug', $params))
             Configure::write('debug', '2');
         else
             Configure::write('debug', '0');
@@ -114,14 +116,12 @@ class TimelinesController extends AppController {
         $limit_default = 15;
         $start_default = 0;
 
-        $params = $this->params['url'];
-
         $u_id = $params['u_id'];
 
         $limit = get($params, 'limit', $limit_default);
         $start = get($params, 'start', $start_default);
 
-        $cache = !(array_key_exists('nocache', $params['url']));
+        $cache = !(array_key_exists('nocache', $params));
 
         if($u_id != null){
             $conditions = array('user_id' => $u_id, 'date <= \''.date('Y-m-d H:i:s').'\'');
@@ -219,10 +219,11 @@ class TimelinesController extends AppController {
                 $model->create();
 
                 $out = $this->Template->findById($event['comment_template_id']); 
-                $short_template = $out['Template']['short_temp'];
-
+                
                 $commented_event = array();
-                $commented_event['temp'] = $short_template;
+                $commented_event['id'] = $event['id'];
+
+                $commented_event['temp'] = $out['Template']['short_temp'];
                 $commented_event['param'] = $event['param'];
 
                 $res = $model->findById($event['foreign_id']);
@@ -330,7 +331,11 @@ class TimelinesController extends AppController {
                 $eventparam['user']['commenter_id'] = $event['commenter_id'];
         }
         
-        $eventparam['timelineid'] = $event['id'];
+        if(array_key_exists('timelineid', $event))
+            $eventparam['timelineid'] = $event['timelineid'];
+        else
+            $eventparam['timelineid'] = $event['id'];
+
         $eventparam['sitename'] = $this->Conf->get('Site.name');
         $eventparam['short_version'] = $short;
 

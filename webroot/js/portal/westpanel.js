@@ -115,7 +115,7 @@ var usertext_tpl = new Ext.XTemplate(
                 '<a href="http://www.linkedin.com/in/{linkedin}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.linkedin.com" class="size16x16 inline" style="padding-right: 10px;" title="linkedin"/></a>',
             '</tpl>',
             '<tpl if="twitter">',
-                '<a href="http://twitter.com/{twitter}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.twitter.com" class="size16x16 inline" style="padding-right: 10px;" title="twitter" /></a>',
+                '<a href="http://twitter.com/{twitter}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=twitter.com" class="size16x16 inline" style="padding-right: 10px;" title="twitter" /></a>',
             '</tpl>',
             '<tpl if="facebook">',
                 '<a href="{facebook}" target="_blank"><img src="http://www.google.com/s2/favicons?domain=www.facebook.com" class="size16x16 inline" style="padding-right: 10px;" title="facebook"/></a>',
@@ -229,10 +229,10 @@ westPanel = new Ext.Panel({
     /**
       * @param {String} login requested user's login
       */
-    ,showPublik: function(login){
+    ,showPublik: function(u_id, login){
         var tab = Ext.getCmp('wp-publik-tab');
 
-        tab.store.load({params: {login: login}});
+        tab.store.load({params: {u_id: u_id, login: login}});
     }
     
     /**
@@ -259,6 +259,9 @@ westPanel = new Ext.Panel({
         
         Ext.getCmp('user_profile').firstExpand = false;
         if(!hidePanel) expandUserPanel();
+
+        if(westPanel.showedUser)
+            if(reqid == westPanel.showedUser.id) return false;
         
         Ext.Ajax.request({
             url : 'users/getinfo/'+reqid,
@@ -285,7 +288,7 @@ westPanel = new Ext.Panel({
                         user.email = u.email;
                 }
                 
-                westPanel.showPublik(u.login);
+                westPanel.showPublik(u.id, u.login);
                 westPanel.showPhotos(u.id);
 
                 //save in a retrievable place if this photo is user's photo

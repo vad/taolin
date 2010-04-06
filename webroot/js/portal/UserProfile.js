@@ -48,7 +48,7 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                                 '<img id="user_photo" class="ante no-hover" style="padding:1px;margin:5px;"/>' +
                                 '<div id="edit-photo-button" onclick="openImageChooser();" style="background: #DDE4FF;-moz-border-radius:3px;">' +
                                     '<span class="u-hover">Change photo</span>' +
-                                    '<img class="sprited image-edit l18" />' +
+                                    '<span class="sprited image-edit l18"></span>' +
                                 '</div>' +
                             '</div>' +
                         '</td>' +

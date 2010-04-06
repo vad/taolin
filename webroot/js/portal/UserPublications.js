@@ -32,16 +32,17 @@ Ext.namespace( 'Ext.ux.fbk.sonet' );
 Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
     title: 'Papers'
     ,autoHeight: true
+    ,preventBodyReset: true
     ,initComponent: function(){
         Ext.apply(this, this.initialConfig);
 
         this.store = new Ext.data.JsonStore({
             proxy : new Ext.data.HttpProxy({
                 method: 'GET',
-                url: 'publiks/listpubsbylogin'
+                url: 'fbk/publiks/listpubsbylogin'
             }),
             root: 'pubs',
-            fields: ['ID', 'INS_DATE', 'MOD_DATE', 'Title', 'PTitle', 'Pub_Type', 'PUBTIME_YEAR', 'Relevance']
+            fields: ['ID_PRODOTTO', 'TITOLO', 'TITOLO_UFFICIALE', 'TITOLO_LIBRO', 'AUTORE_LIBRO', 'STRINGA_AUTORI', 'ANNO', 'MESE', 'NUM_AUTORI', 'COGNOME_AUTORE', 'NOME_AUTORE', 'NUM_PAGINE', 'PAG_INIZIO', 'PAG_FINE', 'TITOLO_CONVEGNO', 'PERIODO_CONVEGNO', 'VOLUME']
             ,listeners: {
                 beforeload: function(){
                     if (!this.parent.rendered) return;
@@ -51,7 +52,7 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
                         ,user_surname = su.surname
                         ,user_email = get(su, 'email', su.login+'@fbk');
                     
-                    var emptytext = '<div style="padding:10px 5px;font-size:100%"><div class="warning-msg border_radius_5px">No publications for this user</div><br />You might <span class="a" onclick="new SendToWindow(\'I would like to suggest you to add your publications to FBK publik repository at http://www.itc.it/publik/\', \[\[\''+user_email+'\',\''+user_name+' '+user_surname+'\'\]\],  {source: \'user profile publik tab\',user_id:'+user_id+'})">suggest '+user_name+' to add publications</span> using FBK publik repository.<br /><br /><br />But did you remember to add your publications at the website <a href="http://www.itc.it/publik/" target="_blank" />http://www.itc.it/publik/</a> ?</div>';
+                    var emptytext = '<div style="padding:10px 5px;font-size:100%"><div class="warning-msg border_radius_5px">No publications for this user</div><br />You might <span class="a" onclick="new SendToWindow(\'I would like to suggest you to add your publications to FBK publik repository at http://u-gov.fbk.eu\', \[\[\''+user_email+'\',\''+user_name+' '+user_surname+'\'\]\],  {source: \'user profile publik tab\',user_id:'+user_id+'})">suggest '+user_name+' to add publications</span> using FBK publik repository.<br /><br /><br />But did you remember to add your publications at the website <a href="http://u-gov.fbk.eu/" target="_blank" />http://u-gov.fbk.eu/</a> ?</div>';
 
                     this.parent.items.first().emptyText = emptytext;
                 }
@@ -72,11 +73,33 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
     ,onRender: function(){
         var tpl = new Ext.XTemplate( 
             '<div style="font-size:100%">',
-            '<tpl for=".">',
-                // Lists found publications. Eac publik has a link to FBK paper repository
-                '<div style="padding:10px;" class="publik-wrapper">{PTitle}<h3><a href="http://www.itc.it/publik/viewPublication.aspx?pubId={ID}" target="_blank">{Title}</a></h3></div>',
-            '</tpl>',
+                '<ol start="1">',
+                '<tpl for=".">',
+                    // Lists found publications. Eac publik has a link to FBK paper repository
+                    '<li>',
+                        '<div class="publik-wrapper">',
+                            '<div class="stringa_autori">{STRINGA_AUTORI}, </div>',
+                            '<div class="pub_titolo">{TITOLO}</div>',
+                            '<tpl if="TITOLO_UFFICIALE"><div class="pub_data">, in «{TITOLO_UFFICIALE}»</div></tpl>',
+                            '<tpl if="TITOLO_LIBRO && AUTORE_LIBRO"><div class="pub_data">, in {AUTORE_LIBRO}, {TITOLO_LIBRO}</div></tpl>',
+                            '<tpl if="VOLUME"><div class="pub_data">, vol. {VOLUME}</div></tpl>',
+                            '<tpl if="ANNO"><div class="pub_data">, {ANNO}</div></tpl>',
+                            '<tpl if="PAG_INIZIO && PAG_FINE"><div class="pub_pagine">, pp {PAG_INIZIO}-{PAG_FINE}</div></tpl>',
+                            '<tpl if="TITOLO_CONVEGNO"><div class="pub_data"> ({TITOLO_CONVEGNO}',
+                                '<tpl if="PERIODO_CONVEGNO"><div class="pub_data"> {PERIODO_CONVEGNO}</div></tpl>',
+                            ')</div></tpl>',
+                        '</div>',
+                    '</li>',
+                '</tpl>',
+                '</ol>',
             '</div>'
+            ,{
+                months: new Array("January","February","March","April","May","June","July","August","September","October","November","December")
+                ,pdate: function(m, y){
+                    var month = get(this.months, m, '');
+                    return month + ' ' + y;
+                }
+            }
         );
         tpl.compile();
 
@@ -91,7 +114,8 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
         
         this.store.load({
             params: {
-                login: westPanel.showedUser.login
+                u_id: westPanel.showedUser.id
+                //,login: westPanel.showedUser.login
             }
         });
 
@@ -100,4 +124,5 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
         );
     }
 });
+
 Ext.reg('userpublications', Ext.ux.fbk.sonet.UserPublications);

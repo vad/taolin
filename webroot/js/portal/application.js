@@ -38,11 +38,12 @@ nsb = (Ext.isIE6 || Ext.isIE7);
 
 themes = [
     ['tp', 'Tp (default)'],
-    ['aero', 'Aero'],
+    //['access', 'Access'],
+    //['aero', 'Aero'],
     ['blue', 'Blue'], 
     ['blueen', 'Blueen'], 
     ['gray', 'Gray'],
-    ['galdaka', 'Galdaka'],
+    //['galdaka', 'Galdaka'],
     ['indigo', 'Indigo'],
     ['midnight', 'Midnight'],
     ['purple', 'Purple'],
@@ -132,6 +133,7 @@ function application_init(){
                 '<ul>' +
                     '<li><span class="menu-item"><a class="sprited help-icon" href="./admin" target="_blank">Admin main</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited picture" href="./admin/backgrounds" target="_blank">Background</a></span></li>' +
+                    '<li><span class="menu-item"><a class="sprited map" href="./admin/buildings" target="_blank">Building</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited gears" href="./admin/portals/config" target="_blank">Configuration</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited image-edit" href="./admin/templates" target="_blank">Templates</a></span></li>' +
                     '<li><span class="menu-item"><a class="sprited groups" href="./admin/users" target="_blank">Users</a></span></li>' +
@@ -155,10 +157,10 @@ function application_init(){
                 '</li>' + 
                 '<li class="header"><span class="a menu-item">Tools</span>' +
                     '<ul>' +
-                        '<li><span class="menu-item a add_widgets" onclick="openAddWidgetsModalWindow()">Add widgets</span></li>' +
+                        '<li><span class="menu-item a add_widgets" onclick="openAddWidgetsModalWindow()"><span class="sprited add-icon">Add widgets</span></span></li>' +
                         '<li><span class="a menu-item" onclick="addOrBounceWidget(\'Ext.ux.fbk.sonet.MetaSearch\',\'string_identifier\',{source: \'logout_div\'})"><span class="sprited search">Search</span></span></li>' +
-                        '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()">Map of colleagues workplaces</span></li>' +
-                        '<li><span class="a menu-item" onclick="new PhotoUploader()">Photo uploader</a></li>' +
+                        '<li><span class="a menu-item" onclick="new Ext.ux.fbk.sonet.MapWindow().show()"><span class="sprited map">Map of colleagues workplaces</span></span></li>' +
+                        '<li><span class="a menu-item" onclick="new PhotoUploader()"><span class="sprited upload-picture">Upload a photo</span></a></li>' +
                         '<li><span class="a menu-item" onclick="new SendToWindow()"><span class="sprited email">Send an email</span></span></li>' +
                     '</ul>' +
                 '</li>' +

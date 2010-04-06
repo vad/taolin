@@ -25,6 +25,8 @@
   );
   $opts_ta = array_merge($opts, array('class' => 'text_area'));
   $opts_tf = array_merge($opts, array('class' => 'text_field'));
+  $opts_tc = array_merge($opts, array('label' => array('class' => 'checkbox'), 'class' => 'checkbox', 'type' => 'checkbox'));
+  $opts_tcs = array_merge($opts, array('label' => array('class' => 'label', 'style' => 'display: inline-block'), 'class' => 'checkbox', 'type' => 'checkbox'));
 ?>
 
 <div id="wrapper">
@@ -46,6 +48,7 @@
           <? echo $form->input('application_conf', $opts_ta); ?>
           <? echo $form->input('widget_conf', $opts_ta); ?>
           <? echo $form->input('screenshot', $opts_tf); ?>
+          <? echo $form->input('enabled', $opts_tcs); ?>
           <br />
           <? echo $form->submit('Save →', array('class' => 'button','div'=>false)); ?>
           or

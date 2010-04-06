@@ -54,21 +54,22 @@ class BoardsController extends AppController {
 
             // a quanto pare qui l'escape viene fatto automaticamente dalla $this->save()
             $data['text'] = $this->san->html($this->params['form']['text']);
-            if(isset($this->params['form']['email']) && !empty($this->params['form']['email'])) $data['email'] = $this->params['form']['email'];
+            if(isset($this->params['form']['email']) && !empty($this->params['form']['email'])) $data['email'] = $this->san->html($this->params['form']['email']);
             if(isset($this->params['form']['expire_date']) && !empty($this->params['form']['expire_date'])) $data['expire_date'] = $this->params['form']['expire_date'];
             $data['user_id'] = $uid;
 
-            $this->Board->save($this->san->html($data));
-            
-            $response['success'] = true;
-              
-            $ads_id = $this->Board->id;
-
-            $this->Board->addtotimeline(array("text" => $data['text']), null, 'boards-add', $uid, 'Board', $ads_id);
+            if($this->Board->save($data)){;
+                $response['success'] = true;
+                $ads_id = $this->Board->id;
+                $this->Board->addtotimeline(array("text" => $data['text']), null, 'boards-add', $uid, 'Board', $ads_id);
+            } else {
+                $response['success'] = false;
+                $response['error']['text'] = 'Your message can not be saved';
+            }
             
         } else {
             $response['success'] = false;
-            $response['errors']['text'] = 'Write a message, please';
+            $response['error']['text'] = 'Write a message, please';
         }
         $this->set('json', $response);
     }
