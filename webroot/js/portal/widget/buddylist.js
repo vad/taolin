@@ -167,6 +167,8 @@ rosterStore.on('loadexception', function(proxy, store, response, e) {
 BuddyList = function(conf, panel_conf) {
     Ext.apply(this, panel_conf);
 
+    this.conf = conf;
+
     BuddyList.superclass.constructor.call(this, {
         id:'buddylist',
         collapsible: true,
@@ -198,7 +200,8 @@ BuddyList = function(conf, panel_conf) {
         listeners: {
             resize : {
                 fn: function(panel, panelWidth, panelHeight){ 
-                    this.gridPanel.setWidth(panelWidth);
+                    var gp = this.gridPanel;
+                    gp.setWidth(panelWidth);
                 }, 
                 scope: this
             }
@@ -229,7 +232,7 @@ BuddyList = function(conf, panel_conf) {
                 scrollOffset:2,
                 showGroupName: false,
                 rowSelectorDepth: 12,
-                groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Buddies" : "Buddy"]})',
+                groupTextTpl: '{text} ({values.rs.length:plural("Buddy", "Buddies")})',
                 deferEmptyText: false,
                 emptyText: 'Loading...'
               }),
