@@ -109,10 +109,10 @@ var roster = {
     cssClass.style.background = sStyleBg;
 
     var online = this.online;
-    for (var i=0, il=online.length; i<il; i++) {
-        var buddy = online[i];
+    for (var i=online.length-1, buddy, fancyPresence; i>=0; --i) {
+        buddy = online[i];
         if (buddy.jid.toString() === jid.toString()) {
-            var fancyPresence = presence;
+            fancyPresence = presence;
             if (presence in fancyPresenceDict)
                 fancyPresence = fancyPresenceDict[presence];
 
@@ -153,7 +153,8 @@ rosterStore = new Ext.data.GroupingStore({
       {name: 'group'},
       {name: 'presence'},
       {name: 'status'},
-      {name: 'fancyStatus'}    
+      {name: 'fancyStatus'},
+      {name: 'fancyPresence'}    
   ]),
   sortInfo: {field: 'jid', direction: "ASC"},
   groupField: 'group'
@@ -175,7 +176,7 @@ BuddyList = function(conf, panel_conf) {
         buddyTpl: new Ext.XTemplate(
             '<table style="width:100%"><tr>'
                 ,'<td style="vertical-align:middle;">'
-                    ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
+                    ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid} {fancyPresence}'
                         ,'<tpl if="presence">'
                             ,'<span class="buddylistmessage" style="margin-left:10px;">{fancyPresence}</span>'
                         ,'</tpl>'

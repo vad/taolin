@@ -108,12 +108,12 @@ var jabber = {
     roster.setQuery(NS_ROSTER);
     this.send(roster);
   },
+  
   setPresence: function(show, status, type) {
     this.status = {presence:show, status:status, type:type};
                    
     var presence = new JSJaCPresence();
-    presence.setShow(show);
-    presence.setStatus(status);
+    presence.setPresence(show, status);
     presence.setType(type);
     this.send(presence);
 
@@ -126,6 +126,7 @@ var jabber = {
   isConnected: function(){
     return this.con.connected();
   },
+
   handle: {
     iq: function(iq){
       var j = jabber;
@@ -171,10 +172,13 @@ var jabber = {
       jabberui.addMsg(aJSJaCPacket.getFromJID().removeResource(), aJSJaCPacket.getBody(), timestamp);
     },
     
-    presence: function(aJSJaCPacket){
-      var from = new JSJaCJID(aJSJaCPacket.getFrom());
+    presence: function(aJSJaCPresence){
+      //console.log('presence');
+      //console.log(aJSJaCPresence);
+      //console.profile();
+      var from = aJSJaCPresence.getFromJID();
 
-      if ((from.getNode() === jabber.u_n) && (from.getResource() !== jabber.resource) && (aJSJaCPacket.getType() === 'unavailable')) {
+      if ((aJSJaCPresence.getType() === 'unavailable') && (from.getNode() === jabber.u_n) && (from.getResource() !== jabber.resource)) {
         // if a disconnection message comes from another resource of this user, discard this message.
         // This check prevents that the users seems to be offline 30s after page refresh
         return false;
@@ -182,19 +186,21 @@ var jabber = {
 
       from.setResource(new String());
       
-      var presence = aJSJaCPacket.getShow()
+      var presence = aJSJaCPresence.getShow()
         ,type = ''
         ,status = '',
         tmp;
 
-      if (tmp = aJSJaCPacket.getType()) {
+      if (tmp = aJSJaCPresence.getType()) {
         type = tmp;
       }
-      if (tmp = aJSJaCPacket.getStatus()) {
+      if (tmp = aJSJaCPresence.getStatus()) {
         status = tmp;
       }      
 
       roster.setPresence(from, presence, status, type);
+      //console.log('end');
+      //console.profileEnd();
     },
 
     connected: function(){
@@ -234,8 +240,7 @@ var jabber = {
     iqRoster: function(iq){
       var q = iq.getQuery()
         ,r = roster;
-    
-      //console.log(new Date(), 'new roster', q);
+     
       //TODO: disable Buddylist refresh while inserting
       r.clear(); //i hope the new roster replaces the old one...
       $(q).find('item').each(function(){
