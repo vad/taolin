@@ -2,6 +2,7 @@
 
 // keeps Strophe quiet
 Strophe.log = function(){};
+var fm = Ext.util.Format;
 
 var jabber = {
   u_n: '',
@@ -100,20 +101,24 @@ var jabber = {
     this.con.sendIQ(iq, this.handle.iqRoster);
   },
   
-  setPresence: function(show, status, type) {
+  setPresence: function(show, status, type, force) {
     this.status = {presence:show, status:status, type:type};
 
-    //TODO: fix this
-                   
-    /*var presence = new JSJaCPresence();
-    presence.setPresence(show, status);
-    presence.setType(type);
-    this.send(presence);
+    if (!force && !roster.roster.length) //don't send presence if not online
+      return true;
+
+    var pres = $pres({type:type})
+      .c('status')
+        .t(status).up()
+      .c('show')
+        .t(show);
+
+    this.send(pres.tree()); 
 
     //save status in the west panel
     if(westPanel.showedUser && westPanel.showedUser.id === user.id){
-      setChatStatus(status.htmlEnc().smilize().urlize());
-    }*/
+      setChatStatus(fm.htmlEnc(status).smilize().urlize());
+    }
   },
 
   isConnected: function(){
@@ -210,9 +215,7 @@ var jabber = {
 
     connected: function(){
       var j = jabber;
-      j.getRoster.defer(500,j);
-      
-      j.setPresence(j.status.presence, j.status.status, j.status.type);
+      j.getRoster();
     },
     
     disconnected: function(){
@@ -233,20 +236,11 @@ var jabber = {
     },
     
     iqRoster: function(iq){
-      console.log('new roster');
-      var r = roster; 
+      var r = roster
+        ,j = jabber;
 
       r.clear(); //i hope the new roster replaces the old one...
-      /*$(iq).find('item').each(function () {
-        var jid = $(this).attr('jid');
-        var name = $(this).attr('name') || jid;
-
-        // transform jid into an id
-        //var jid_id = Gab.jid_to_id(jid);
-        var jid_id = jid;
-
-        Gab.insert_contact(contact);
-      });*/
+      
       //TODO: disable Buddylist refresh while inserting
       $(iq).find('item').each(function(){
         var t = $(this)
@@ -256,8 +250,10 @@ var jabber = {
       });
 
       // set up presence handler and send initial presence
-      jabber.con.addHandler(jabber.handle.presence, null, "presence");
-      jabber.con.send($pres());
+      j.con.addHandler(j.handle.presence, null, "presence");
+      j.setPresence(j.status.presence,
+        j.status.status, j.status.type, null, true
+      );
     }
   }
 };

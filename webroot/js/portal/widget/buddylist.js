@@ -51,7 +51,6 @@ var roster = {
     if ((type !== 'unavailable') && (!this.roster.length)){
         //console.log('storing');
         var b = new Buddy(jid, '', '', '', presence, status, type);
-        alert("WARNING: store needed");
         return;
     }
 
@@ -83,24 +82,23 @@ var roster = {
         }
       }
     }
+    var sBulletPresence = (type === 'unavailable') ? 'unavailable' : presence
+        ,sStyleBg = 'url(js/portal/shared/icons/fam/'+ hBullets[sBulletPresence] +') left no-repeat';
 
     //TODO: THIS IS REALLY SLOW! TAKES ~0.05s ON A CORE2DUO AND FF3.6
     var sCssClass = 'user-' + (jid.split('@'))[0];
     // IE wants DIV, FF div... and the others? It's better to try to get both instead of using Ext.isIE
     var rule = 'body .'+ sCssClass; 
-    var cssClass = Ext.util.CSS.getRule(rule, false);
 
-    if (!cssClass) { // if no cssClass has been found, create it
+    if (!Ext.util.CSS.updateRule(rule, 'background', sStyleBg)) { // if no cssClass has been found, create it
         var s = rule +" {\n}";
         Ext.util.CSS.createStyleSheet(s, rule);
+        Ext.util.CSS.refreshCache();
 
         // now we need to get the class, so we can change its style
-        cssClass = Ext.util.CSS.getRule(rule, true);
+        Ext.util.CSS.updateRule(rule, 'background', sStyleBg);
     }
     
-    var sBulletPresence = (type === 'unavailable') ? 'unavailable' : presence
-        ,sStyleBg = 'url(js/portal/shared/icons/fam/'+ hBullets[sBulletPresence] +') left no-repeat';
-    cssClass.style.background = sStyleBg;
 
     var online = this.online;
     for (var i=online.length-1, buddy, fancyPresence; i>=0; --i) {
