@@ -267,9 +267,6 @@ var jabber = {
       // set up presence handler and send initial presence
       jabber.con.addHandler(jabber.handle.presence, null, "presence");
       jabber.con.send($pres());
-
-      //TODO: now that the presence handle is added here, this can be removed
-      r.flushPresence();
     }
   }
 };

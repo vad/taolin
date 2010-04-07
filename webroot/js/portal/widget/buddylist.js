@@ -33,8 +33,6 @@ var fancyPresenceDict = {
 var roster = {
   // Online buddies
   online: [],
-  // temporary store (save here presence&status until roster's load)
-  store: [],
   // Full roster
   roster: [],
   update: function (buddy) {
@@ -46,13 +44,6 @@ var roster = {
     }
     this.roster.push(buddy);    
   },
-  flushPresence: function() {
-    var b;
-    while(b = this.store.pop()) {
-        this.setPresence(b.jid, b.presence, b.status, b.type);
-    }
-    rosterStore.load();
-  },
 
   setPresence: function (jid, presence, status, type) {
     var fm = Ext.util.Format;
@@ -60,7 +51,7 @@ var roster = {
     if ((type !== 'unavailable') && (!this.roster.length)){
         //console.log('storing');
         var b = new Buddy(jid.toString(), '', '', '', presence, status, type);
-        this.store.push(b);
+        alert("WARNING: store needed");
         return;
     }
 
