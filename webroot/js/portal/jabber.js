@@ -17,7 +17,7 @@ var jabber = {
     this.status = {presence:presence, status:status, type:type};
     try {
       this.con = new Strophe.Connection('/http-bind/');
-      setupCon(this.con);
+      //this.setupCon(this.con);
     } 
     catch (e) {} // reading cookie failed - never mind
   },
@@ -85,7 +85,7 @@ var jabber = {
   },
   /**
    * Sends a message
-   * @param {JSJaCJID} user
+   * @param {String} user
    * @param {String} msg
    */
   sendMsg: function(user, txt){
@@ -102,8 +102,10 @@ var jabber = {
   
   setPresence: function(show, status, type) {
     this.status = {presence:show, status:status, type:type};
+
+    //TODO: fix this
                    
-    var presence = new JSJaCPresence();
+    /*var presence = new JSJaCPresence();
     presence.setPresence(show, status);
     presence.setType(type);
     this.send(presence);
@@ -111,7 +113,7 @@ var jabber = {
     //save status in the west panel
     if(westPanel.showedUser && westPanel.showedUser.id === user.id){
       setChatStatus(status.htmlEnc().smilize().urlize());
-    }
+    }*/
   },
 
   isConnected: function(){

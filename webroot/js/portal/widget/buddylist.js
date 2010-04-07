@@ -66,18 +66,18 @@ var roster = {
 
     // this is a dirty way to put ME inside the buddylist
     // the problem is that ME is not sent in the roster, but only as presence/status
-    if (jid.toString() == jabber.con.jid){
+    if (jid == jabber.myJid){
         try {
             for (var i=0, x; x = this.roster[i++];) {
-                if (x.jid.toString() == jid.toString())
+                if (x.jid == jid)
                     throw "JidAlreadyPresentException";
             }
             for (var i=0, x; x = this.online[i++];) {
-                if (x.jid.toString() == jid.toString())
+                if (x.jid == jid)
                     throw "JidAlreadyPresentException";
             }
             // if we're here, Me is not present in roster.roster or roster.online
-            var b = new Buddy(jid.toString(), '', '', 'Me', presence, status, type);
+            var b = new Buddy(jid, '', '', 'Me', presence, status, type);
             this.roster.push(b);
         } catch (e) {}
     }
@@ -85,7 +85,7 @@ var roster = {
     // If the buddy comes online, move them to 'online'
     if (type != 'unavailable') {
       for (var i=0, x; x = this.roster[i++];) {
-        if (x.jid.toString() == jid.toString()) {
+        if (x.jid == jid) {
           this.online.push(x);
           this.roster.remove(x);
           break;
@@ -113,7 +113,7 @@ var roster = {
     var online = this.online;
     for (var i=online.length-1, buddy, fancyPresence; i>=0; --i) {
         buddy = online[i];
-        if (buddy.jid.toString() === jid.toString()) {
+        if (buddy.jid === jid) {
             fancyPresence = presence;
             if (presence in fancyPresenceDict)
                 fancyPresence = fancyPresenceDict[presence];
