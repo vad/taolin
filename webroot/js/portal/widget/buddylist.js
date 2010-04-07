@@ -35,16 +35,6 @@ var roster = {
   online: [],
   // Full roster
   roster: [],
-  update: function (buddy) {
-    for (var i=0, x; x = this.roster[i++];) {
-      if (x.compareTo(buddy)) {
-        x.update(buddy);
-        return;
-      }
-    }
-    this.roster.push(buddy);    
-  },
-
   setPresence: function (jid, presence, status, type) {
     var fm = Ext.util.Format;
     //console.log('setPresence');
@@ -181,9 +171,11 @@ BuddyList = function(conf, panel_conf) {
                         ,'</div>'
                     ,'</tpl>'
                 ,'</td>'
+                ,'<tpl if="showPhoto">'
                 ,'<td style="width:40px;text-align:center;">'
                     ,'<img src="photos/getphotofromuserlogin/{[values.jid.split(\'@\')[0]]}/40/40" />'
                 ,'</td>'
+                ,'</tpl>'
             ,'</tr></table>'
             ,{
                 compiled: true
@@ -212,7 +204,8 @@ BuddyList = function(conf, panel_conf) {
                 buddyList: this,
                 myIndex: 0,
                 renderer: function (value, p, record) {
-                    return this.buddyList.buddyTpl.applyTemplate(record.data);
+                    var data = $.extend(record.data, {showPhoto: this.buddyList.conf.showPhoto});
+                    return this.buddyList.buddyTpl.applyTemplate(data);
                 }},
                 {dataIndex: 'group', hidden: true},
                 {dataIndex: 'presence', hidden: true},
