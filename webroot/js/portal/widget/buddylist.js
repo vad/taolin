@@ -170,7 +170,7 @@ BuddyList = function(conf, panel_conf) {
         buddyTpl: new Ext.XTemplate(
             '<table style="width:100%"><tr>'
                 ,'<td style="vertical-align:middle;">'
-                    ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid} {fancyPresence}'
+                    ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
                         ,'<tpl if="presence">'
                             ,'<span class="buddylistmessage" style="margin-left:10px;">{fancyPresence}</span>'
                         ,'</tpl>'
