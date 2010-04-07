@@ -27,7 +27,7 @@ ChatWindow = Ext.extend(Ext.Window, {
     
     width: 250,
     height: 250,
-    iconCls: "chatwindowicon",
+    iconCls: "comment-icon",
     //constrain: true,
     border:false,
     collapsible:true,
@@ -37,7 +37,6 @@ ChatWindow = Ext.extend(Ext.Window, {
     constrain:true,
     closeAction: 'hide',
     layout:'anchor',
-    cls:'comment-icon',
  
     /* Runtime Variables */
    
