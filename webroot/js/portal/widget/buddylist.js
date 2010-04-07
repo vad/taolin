@@ -84,10 +84,11 @@ var roster = {
       }
     }
 
+    //TODO: THIS IS REALLY SLOW! TAKES ~0.05s ON A CORE2DUO AND FF3.6
     var sCssClass = 'user-' + (jid.split('@'))[0];
     // IE wants DIV, FF div... and the others? It's better to try to get both instead of using Ext.isIE
     var rule = 'body .'+ sCssClass; 
-    var cssClass = Ext.util.CSS.getRule(rule, true);
+    var cssClass = Ext.util.CSS.getRule(rule, false);
 
     if (!cssClass) { // if no cssClass has been found, create it
         var s = rule +" {\n}";
