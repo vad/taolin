@@ -93,7 +93,6 @@ var roster = {
       }
     }
 
-    /*
     var sCssClass = 'user-' + (jid.toString().split('@'))[0];
     // IE wants DIV, FF div... and the others? It's better to try to get both instead of using Ext.isIE
     var rule = 'body .'+ sCssClass; 
@@ -110,7 +109,6 @@ var roster = {
     var sBulletPresence = (type === 'unavailable') ? 'unavailable' : presence
         ,sStyleBg = 'url(js/portal/shared/icons/fam/'+ hBullets[sBulletPresence] +') left no-repeat';
     cssClass.style.background = sStyleBg;
-    */
 
     var online = this.online;
     for (var i=online.length-1, buddy, fancyPresence; i>=0; --i) {
