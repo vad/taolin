@@ -28,7 +28,7 @@
   * The snapshots are created with a script managed with a crontab (from monday to friday, from 11:55 to 14:03) and a php script</p>
   * <pre><code>
     this is the json code passed
-    {"webcam":{"sec4firstshot":63104,"duration":7680,"interval":30,"servicemessage":"Service available from 12 to 14 on working days"}}
+    {"webcam":{"sec4firstshot":63104,"duration":7680,"interval":30,"servicemessage":"Service available from 12 to 14 on working days","faq","..."}}
     
     Where:
         sec4firstshot -> the waiting seconds for the first call
@@ -49,7 +49,7 @@ WebcamCanteen = Ext.extend(Ext.Panel, {
     ,initComponent: function(){
         var config = {
             items: [{
-                html: '<div id="webcam_' + this.getId() + '" style="background:#f3f3f3"><img src="'+Ext.BLANK_IMAGE_URL+'" style="margin:auto;display:none"><p style="background:white"></p></div>',
+html: '<div id="webcam_' + this.getId() + '" style="background:#f3f3f3"><img src="'+Ext.BLANK_IMAGE_URL+'" style="margin:auto;display:none"><p style="background:white"></p><span class="a" onclick="$(\'#webcam_' + this.getId() + '_faq\').toggle();" style="padding-left: 5px; font-size: 12px">faq</span><div id="webcam_' + this.getId() + '_faq"' + '/><hr class="large"/><p style="font-size: 12px; padding: 2px;"><b>Why the image is blurred</b><br/>The image is blurred in order to ensure everybody's privacy is respected<br/><br/><b>There is an archive of the images?</b><br/>No, the images are overwritten at each snapshot and they are never stored for more than 24 hours (as required by Italian law).<br/><br/><b>Why the image is sometimes black?</b><br/>Sometimes the webcam does not have enough memory for handling new images. If you spot a "black image", please tell SoNet with a feedback and we will solve the problem.<hr class="large"></p></div></div>',
                 display: 'none',
                 autoHeight: true,
                 border: true 
@@ -71,6 +71,7 @@ WebcamCanteen = Ext.extend(Ext.Panel, {
 
                 $('#webcam_'+ webcamid +'> p')
                     .text(this.servicemessage);
+                $('#webcam_' + webcamid + '_faq').hide();
 
                 var task = {
                     run: function(){
