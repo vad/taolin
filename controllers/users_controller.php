@@ -43,9 +43,10 @@ class UsersController extends AppController {
         
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
-        
-        $login = $this->san->paranoid($jidnode);
-        $this->User->recursive = 0;
+       
+        $aLogin = explode('@', $jidnode, -1);
+        $login = $this->san->paranoid($aLogin[0]);
+        $this->User->recursive = -1;
         $fields = array('User.id');
         $user = $this->User->findByLogin($login, $fields);
         

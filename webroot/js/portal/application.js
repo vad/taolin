@@ -319,9 +319,7 @@ function application_init(){
         );
 }
 
-/*
-   soundManager.onload = function(){
-    //beep = soundManager.createSound('beep', 'sound/38868__M_RED__clock_tic.mp3');
+soundManager.onload = function(){
+    beep = soundManager.createSound('beep', 'sound/38868__M_RED__clock_tic.mp3');
     //trombone = soundManager.createSound('trombone', 'sound/sad_trombone.mp3');
 };
-*/

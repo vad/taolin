@@ -55,6 +55,8 @@ var roster = {
   },
 
   setPresence: function (jid, presence, status, type) {
+    var fm = Ext.util.Format;
+    //console.log('setPresence');
     if ((type !== 'unavailable') && (!this.roster.length)){
         //console.log('storing');
         var b = new Buddy(jid.toString(), '', '', '', presence, status, type);
@@ -119,8 +121,8 @@ var roster = {
             Ext.apply(buddy, {
                 presence: presence
                 ,fancyPresence: fancyPresence
-                ,status: status.htmlEnc()
-                ,fancyStatus: status.htmlEnc().smilize().urlize()
+                ,status: fm.htmlEncode(status)
+                ,fancyStatus: fm.htmlEncode(status).smilize().urlize()
                 ,type: type
             });
         
@@ -190,7 +192,7 @@ BuddyList = function(conf, panel_conf) {
                     ,'</tpl>'
                 ,'</td>'
                 ,'<td style="width:40px;text-align:center;">'
-                    ,'<img src="photos/getphotofromuserlogin/{[values.jid._node]}/40/40" />'
+                    ,'<img src="photos/getphotofromuserlogin/{[values.jid.split(\'@\')[0]]}/40/40" />'
                 ,'</td>'
             ,'</tr></table>'
             ,{
@@ -241,9 +243,10 @@ BuddyList = function(conf, panel_conf) {
               listeners: {
                 rowclick: function() {
                     var buddy = this.getSelectionModel().getSelected().data;
-                    if(jabber.u_n != buddy.jid._node)
+                    console.log(buddy);
+                    if(jabber.myJid != buddy.jid)
                         jabberui.createNewChatWindow(buddy.jid);
-                    getIdFromJidNode(buddy.jid._node);
+                    getIdFromJidNode(buddy.jid);
                 },
                 resize : {
                     fn: function(panel, panelWidth, panelHeight){ 
