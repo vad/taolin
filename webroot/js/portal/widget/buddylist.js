@@ -243,7 +243,6 @@ BuddyList = function(conf, panel_conf) {
               listeners: {
                 rowclick: function() {
                     var buddy = this.getSelectionModel().getSelected().data;
-                    console.log(buddy);
                     if(jabber.myJid != buddy.jid)
                         jabberui.createNewChatWindow(buddy.jid);
                     getIdFromJidNode(buddy.jid);

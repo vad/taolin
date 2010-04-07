@@ -18,7 +18,6 @@ var jabber = {
     try {
       this.con = new Strophe.Connection('/http-bind/');
       setupCon(this.con);
-      //if (this.con.resume()) {}
     } 
     catch (e) {} // reading cookie failed - never mind
   },
@@ -37,15 +36,6 @@ var jabber = {
   setupCon: function(con){
 
     con.addHandler(this.handle.message, null, 'message', 'chat', null, null);
-    /*
-    con.registerHandler('presence', this.handle.presence);
-    con.registerHandler('onconnect', this.handle.connected);
-    con.registerHandler('ondisconnect', this.handle.disconnected);
-    con.registerIQGet('query', NS_TIME, this.handle.iqTime);
-    con.registerIQSet('query', NS_ROSTER, this.handle.iqRosterSet);
-    con.registerHandler('iq', 'query', NS_ROSTER, this.handle.iqRoster);
-    con.registerHandler('iq', this.handle.iq);
-    */
   },
   
   doLogin: function(username, password){
@@ -130,8 +120,6 @@ var jabber = {
 
   handle: {
     message: function(message){
-      console.log('message');
-      console.log(message);
       var jMessage = $(message)
         ,tmp
         ,body;
@@ -253,7 +241,6 @@ var jabber = {
     },
 */
     iqRoster: function(iq){
-      console.log('iqRoster');
       var r = roster; 
 
       r.clear(); //i hope the new roster replaces the old one...
