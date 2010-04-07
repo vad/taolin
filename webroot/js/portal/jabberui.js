@@ -55,8 +55,9 @@ jabberui = function () {
             Ext.TaskMgr.start(task);
         },
         createNewChatWindow: function(chatId){
-            var chatName = chatId._node+'@'+chatId._domain;
-            var chatWindow = Ext.getCmp(chatName);
+            var chatName = chatId
+                ,chatWindow = Ext.getCmp(chatName)
+                ,chatUser = chatId.split('@')[0];
 
             // If buddy list is not present, add it to the dashboard before opening a new chat
             if(!searchWidget('BuddyList','string_identifier'))
@@ -66,14 +67,14 @@ jabberui = function () {
                     method: 'GET',
                     success: function(result, request){
                         var widget = Ext.util.JSON.decode(result.responseText)['widget'];
-                        addwidget(widget.id, {source: "user profile", user_login: chatId._node});
+                        addwidget(widget.id, {source: "user profile", user_login: chatId});
                     }
                 });
 
             if (!chatWindow) {
                 var newChat = new ChatWindow({
                     id: chatName,
-                    title: '<div class="chat-title user-'+chatId._node+'">'+chatName+'</div>',
+                    title: '<div class="chat-title user-'+chatUser+'">'+chatName+'</div>',
                     hidden: false,
                     user: 'me'
                 });

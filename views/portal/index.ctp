@@ -142,7 +142,7 @@ if ($isdebugactive >= 1) {
     echo $javascript->link('/fbk/js/gestint.js');
     echo $javascript->link('/fbk/js/childrenevent.js');
 
-    echo $javascript->link('portal/jsjac.js');
+    echo $javascript->link('strophejs/strophe.js');
     echo $javascript->link('portal/jabber.js');
     echo $javascript->link('portal/jabberui.js');
     

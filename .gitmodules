@@ -13,3 +13,6 @@
 [submodule "plugins/commentable"]
 	path = plugins/commentable
 	url = git://github.com/vad/cakephp-commentable-behavior.git
+[submodule "webroot/js/strophejs"]
+	path = webroot/js/strophejs
+	url = git://github.com/smparkes/strophejs.git
