@@ -224,7 +224,7 @@ var jabber = {
         return;
       }
       
-            Ext.getCmp('buddylist').gridPanel.view.emptyText = 'Nobody online or there has been problems connecting to the server.<br/><br/>Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to try again. If you changed your password recently, please logout and login again with the new password.';
+      Ext.getCmp('buddylist').gridPanel.view.emptyText = 'Nobody online or there has been problems connecting to the server.<br/><br/>Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to try again. If you changed your password recently, please logout and login again with the new password.';
       
       if (j.nTrials++ < j.maxTrials){
         var status = j.status;
@@ -232,17 +232,8 @@ var jabber = {
       }
     },
     
-/*    iqTime: function(iq){
-      var now = new Date();
-      this.send(iq.reply(
-        [iq.buildNode('display', now.toLocaleString()),
-         iq.buildNode('utc', now.jabberDate()),
-         iq.buildNode('tz',
-           now.toLocaleString().substring(now.toLocaleString().lastIndexOf(' ') + 1))]));
-      return true;
-    },
-*/
     iqRoster: function(iq){
+      console.log('new roster');
       var r = roster; 
 
       r.clear(); //i hope the new roster replaces the old one...
@@ -273,6 +264,8 @@ var jabber = {
 
 $(document).bind('jabConnected', function(){
   jabber.handle.connected();
+}).bind('jabDisconnected', function(){
+  jabber.handle.disconnected();
 });
 
 /**
@@ -307,7 +300,7 @@ var Buddy = function(jid, subscription, name, group, presence, status, type){
    * @param {Buddy} buddy
    */
   this.compareTo = function (buddy) {
-    return this.jid.toString() === buddy.jid.toString();
+    return this.jid === buddy.jid;
   };
 
 

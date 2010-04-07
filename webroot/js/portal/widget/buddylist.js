@@ -50,7 +50,7 @@ var roster = {
     //console.log('setPresence');
     if ((type !== 'unavailable') && (!this.roster.length)){
         //console.log('storing');
-        var b = new Buddy(jid.toString(), '', '', '', presence, status, type);
+        var b = new Buddy(jid, '', '', '', presence, status, type);
         alert("WARNING: store needed");
         return;
     }
@@ -84,7 +84,7 @@ var roster = {
       }
     }
 
-    var sCssClass = 'user-' + (jid.toString().split('@'))[0];
+    var sCssClass = 'user-' + (jid.split('@'))[0];
     // IE wants DIV, FF div... and the others? It's better to try to get both instead of using Ext.isIE
     var rule = 'body .'+ sCssClass; 
     var cssClass = Ext.util.CSS.getRule(rule, true);
