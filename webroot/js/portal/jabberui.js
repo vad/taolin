@@ -63,7 +63,7 @@ jabberui = function () {
             if(!searchWidget('BuddyList','string_identifier'))
                 Ext.Ajax.request({
                     url : 'widgets/getwidgetby/',
-                    params: {'type': 'string_identifier', 'value': 'BuddyList'},
+                    params: {type: 'string_identifier', value: 'BuddyList'},
                     method: 'GET',
                     success: function(result, request){
                         var widget = Ext.util.JSON.decode(result.responseText)['widget'];
@@ -102,16 +102,16 @@ jabberui = function () {
             }
         },
         refreshChats: function(){
-            var l = this.openChats.length;
-
-            var height = $(window).height();
-            var width = $(window).width();
+            var l = this.openChats.length
+                ,jw = $(window)
+                ,height = jw.height()
+                ,width = jw.width();
 
             width -= 20; // prevent scrollbar overflow
 
-            for (var i = 0; i < l; i++) {
-                var chat = Ext.getCmp(this.openChats[i]);
-                var chatHeight = chat.height;
+            for (var i=0, chat, chatHeight; i < l; i++) {
+                chat = Ext.getCmp(this.openChats[i]);
+                chatHeight = chat.height;
                 if (chat.rendered){
                     chatHeight = chat.getFrameHeight() + chat.getInnerHeight(); 
                 }
@@ -128,8 +128,8 @@ jabberui = function () {
         },
         focusNext: function(key, event){
             var index = this.openChats.indexOf(jabberui.focused);
-            // disactivate the current ChatWindow
-            Ext.getCmp(jabberui.openChats[index]).setActive();
+            // deactivate the current ChatWindow
+            Ext.getCmp(jabberui.focused).setActive();
             
             // get the index of the next ChatWindow
             if (!index) {
@@ -145,26 +145,18 @@ jabberui = function () {
         },
         updateWindowTitle: function(){
             var l = this.openChats.length;
-            var changed = false;
 
-            if (this.lastChatWindowTitle >= l){
-                this.lastChatWindowTitle = 0;
-            } else {
-                this.lastChatWindowTitle++;
-            }
+            this.lastChatWindowTitle = ++this.lastChatWindowTitle % l;
 
-            for (; this.lastChatWindowTitle < l; this.lastChatWindowTitle++) {
-                var chatName = this.openChats[this.lastChatWindowTitle];
+            for (var chatName; this.lastChatWindowTitle < l; this.lastChatWindowTitle++) {
+                chatName = this.openChats[this.lastChatWindowTitle];
                 if (Ext.getCmp(chatName).visualBeep) {
-                    changed = true;
                     document.title = chatName;
-                    break;
+                    return;
                 }
             }
 
-            if (!changed) {
-                document.title = this.defaultWindowTitle;
-            }
+            document.title = this.defaultWindowTitle;
         }
     };
 }();

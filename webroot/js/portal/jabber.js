@@ -13,14 +13,7 @@ var jabber = {
   maxTrials: 1,
   keepOffline:false,
   init: function(presence, status, type){
-    //oDbg = new JSJaCConsoleLogger(2);
-    // Try to resume a session
     this.status = {presence:presence, status:status, type:type};
-    try {
-      this.con = new Strophe.Connection('/http-bind/');
-      //this.setupCon(this.con);
-    } 
-    catch (e) {} // reading cookie failed - never mind
   },
   
   quit: function(){
