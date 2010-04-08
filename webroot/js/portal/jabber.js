@@ -73,6 +73,7 @@ var jabber = {
   send:function(packet) {
     try {
       this.con.send(packet);
+    
     } catch(e) {
       Ext.MessageBox.alert('Error sending packet', e.message);
     }
@@ -84,6 +85,7 @@ var jabber = {
    */
   sendMsg: function(user, txt){
     var msg = $msg({to: user, type: 'chat'})
+      .c('active', {xmlns:'http://jabber.org/protocol/chatstates'}).up()
       .c('body').t(txt);
     this.con.send(msg)
     return true;
@@ -100,7 +102,10 @@ var jabber = {
     if (!force && !roster.roster.length) //don't send presence if not online
       return true;
 
-    var pres = $pres({type:type})
+    var attr = {};
+    if (type) attr = {type:type};
+
+    var pres = $pres(attr)
       .c('status')
         .t(status).up()
       .c('show')
@@ -121,44 +126,58 @@ var jabber = {
   handle: {
     message: function(message){
       var jMessage = $(message)
-        ,tmp
-        ,body;
+        ,tmp, body
+        ,jui = jabberui;
 
 
       // set current timestamp
       var x
         ,timestamp
         ;//,node = aJSJaCPacket.getNode();
-      
-      tmp = jMessage.find('body');
-      if (tmp.length)
-        body = $(tmp[0]).text();
-      else
-        return true; //if there's not a message, exit
-
-      /*
-      $(node).find('x').each(function(){
-        x = $(this);
-        if (x.attr('xmlns') == 'jabber:x:delay'){
-          return false;
-        }
-      });*/
-      var x = null;
       var from = Strophe.getBareJidFromJid(
         jMessage.attr('from')
       );
-    
-      if (x) {
-        var stamp = x.attr('stamp');
-        timestamp = new Date(Date.UTC(stamp.substring(0,4),stamp.substring(4,6)-1,
-          stamp.substring(6,8), stamp.substring(9,11), stamp.substring(12,14),
-          stamp.substring(15,17)
-        ));
-      } else
-        timestamp = new Date();
+      
+      tmp = jMessage.find('composing');
+      if (tmp.length) {
+        jui.composing(from, true);
+        return true;
+      }
+      
+      //if not composing, then it's not composing ;)
+      jui.composing(from, false);
 
-      // add message to the chat window
-      jabberui.addMsg(from, body, timestamp);
+      tmp = jMessage.find('body');
+      if (tmp.length) {
+        body = $(tmp[0]).text();
+        /*
+        $(node).find('x').each(function(){
+          x = $(this);
+          if (x.attr('xmlns') == 'jabber:x:delay'){
+            return false;
+          }
+        });*/
+        var x = null;
+      
+        if (x) {
+          var stamp = x.attr('stamp');
+          timestamp = new Date(Date.UTC(stamp.substring(0,4),stamp.substring(4,6)-1,
+            stamp.substring(6,8), stamp.substring(9,11), stamp.substring(12,14),
+            stamp.substring(15,17)
+          ));
+        } else
+          timestamp = new Date();
+
+        // add message to the chat window
+        jui.addMsg(from, body, timestamp);
+        return true;
+      } 
+      
+      tmp = jMessage.find('paused');
+      if (tmp.length) {
+        return true;
+      }
+
       return true;
     },
     

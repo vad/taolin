@@ -136,9 +136,15 @@ ChatWindow = Ext.extend(Ext.Window, {
             id:'chatview' + this.getId()
             ,store:chatStore
             ,tpl: new Ext.XTemplate(
-            '<tpl for=".">',
-            '<div class="msg"><b>{username}</b> ({time}): {msg}</div>',
-            '</tpl>')
+                '<tpl for=".">',
+                '<div class="msg"><b>{username}</b> ({time}): {msg}</div>',
+                '</tpl>',
+                '<i style="color:#777">{[this.info]}</i>'
+                ,{
+                    compiled:true
+                    ,info:''
+                }
+            )
             ,itemSelector:'div.msg'
         });
         

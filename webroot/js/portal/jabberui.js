@@ -85,6 +85,18 @@ jabberui = function () {
             }
             return null;
         },
+
+        composing: function(chatId, status){
+            var chatWindow = Ext.getCmp(chatId)
+                ,msg = '';
+            if (chatWindow) {
+                if (status) msg = chatId+' is typing...';
+                var view = Ext.getCmp('chatview'+chatId);
+                view.tpl.info = msg;
+                view.store.reload();
+            }
+        },
+
         addMsg: function(chatId, msg, timestamp){
             var chatWindow = Ext.getCmp(chatId);
             if (chatWindow) {
