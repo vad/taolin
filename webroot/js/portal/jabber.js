@@ -17,6 +17,7 @@ var jabber = {
   },
   
   quit: function(){
+    roster.clear();
     if (this.con && this.con.connected) {
         this.keepOffline = true;
         this.con.disconnect();
@@ -27,16 +28,16 @@ var jabber = {
    * Registers handlers for XMPP stanzas
    * @param {JSJaCHttpBindingConnection} con
    */
-  setupCon: function(con){
+  setupCon: function(){
 
-    con.addHandler(this.handle.message, null, 'message', 'chat', null, null);
+    this.con.addHandler(this.handle.message, null, 'message', 'chat', null, null);
   },
   
   doLogin: function(username, password){
     try {
       this.con = new Strophe.Connection('/http-bind/');
       
-      this.setupCon(this.con);
+      this.setupCon();
       
       // setup args for connect method
       /*oArgs = {
@@ -194,9 +195,6 @@ var jabber = {
         from = jP.attr('from'),
         jid = Strophe.getBareJidFromJid(from),
         resource = Strophe.getResourceFromJid(from);
-      //console.log('presence');
-      //console.log(from, presence);
-      //console.profile();
 
       //TODO: fix this (jabber.resource is empty)
       if ((ptype === 'unavailable') && (jid === jabber.myJid)/* && (resource !== jabber.resource)*/) {
@@ -214,21 +212,12 @@ var jabber = {
       if (tmp.length) {
         presence = $(tmp[0]).text();
       }
-      tmp = jP.find('type');
-      if (tmp.length) {
-        type = $(tmp[0]).text();
-      }
       tmp = jP.find('status');
-      //console.log(tmp);
       if (tmp.length) {
         status = $(tmp[0]).text();
       }
 
-      //console.count('presence');
-      roster.setPresence(jid, presence, status, type);
-      //console.log(jid, presence, status, type);
-      //console.log('end');
-      //console.profileEnd();
+      roster.setPresence(jid, presence, status, ptype);
       return true;
     },
 
@@ -239,7 +228,6 @@ var jabber = {
     
     disconnected: function(){
       var j = jabber;
-      roster.clear();
 
       if (j.keepOffline){
         Ext.getCmp('buddylist').gridPanel.view.emptyText = 'You are offline. Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to connect.';
