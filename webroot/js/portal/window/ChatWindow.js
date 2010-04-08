@@ -54,12 +54,20 @@ ChatWindow = Ext.extend(Ext.Window, {
             msgArea.setValue('');
             //Send Message to Jabber Connection
             jabber.sendMsg(this.getId(), chatMessage);
+            this.composing = false;
         }
         msgArea.focus();
         event.stopEvent();
     },
     initComponent: function() {
         Ext.apply(this, {
+            composing: false,
+            setComposing: function(status) {
+                if ((!status) || (!this.composing)) {
+                    this.composing = status;
+                    jabber.sendComposing(this.getId(), status);
+                }
+            },
             items: [{
                 id:'msgarea'+this.getId(),
                 layout:'fit',
@@ -73,7 +81,30 @@ ChatWindow = Ext.extend(Ext.Window, {
                 maxLengthText:'The maximum length text for this field is 4000',
                 style:'overflow: auto;',
                 anchor:'100%',
+                enableKeyEvents:true,
                 listeners: {
+                    keyup: {
+                        fn: function(t, e) {
+                            var kc = e.keyCode;
+                            
+                            //TODO: write this better
+                            // these keys don't trigger any change: if the key pressed was one of them, stop here
+                            if ((kc == e.ALT) || (kc == e.CTRL) || (kc == e.SHIFT) || (kc == 15) || (kc == e.UP) || (kc == e.DOWN) || (kc == e.LEFT) || (kc == e.RIGHT) || (kc == e.CAPS_LOCK) || (kc == e.HOME) || (kc == e.END) || (kc === 0) || (kc == e.ENTER))
+                                return;
+                            
+                            this.setComposing(true);
+                            t.dTask.delay(3000);
+                        }
+                        ,scope:this
+                    },
+                    beforerender: {
+                        fn: function(t) {
+                            t.dTask = new Ext.util.DelayedTask(
+                                this.setComposing, this, [false]
+                            );
+                        }
+                        ,scope:this
+                    },
                     focus: function(t) {
                         Ext.getCmp(t.getId().substring(7)).setActive(true);
                     },
@@ -101,36 +132,37 @@ ChatWindow = Ext.extend(Ext.Window, {
          * Set up chat, chatStore, and dataview 
          * objects for use in the window
          */
-        var chatId = 'chat' + this.getId();
-        var chatStoreId = 'chatStore' + this.getId();
-        var chat =  {
+        var id = this.getId()
+            ,chatId = 'chat' + id
+            ,chatStoreId = 'chatStore' + id
+            ,chat =  {
             id:chatId,
             msgs:[],
-            update: function(msg, scope) {
-                this.msgs.push(msg);
-                scope.chatStore.load();
-            },
-            clear: function(scope) {
-                this.msgs = new Array();
-                scope.chatStore.load();
-            }
-        };
-        var chatStore = new Ext.data.Store({
-            id:chatStoreId,
-            proxy: new Ext.data.MemoryProxy(chat),
-            reader: new Ext.data.JsonReader({
-                root:'msgs'},
-            [
-               {name: 'username'},
-               {name: 'time'},
-               {name: 'msg'}
-            ]),
-            listeners: {
-                loadexception: function (o, responce, e, exception) {
-                    Ext.MessageBox.alert('Error', exception);
+                update: function(msg, scope) {
+                    this.msgs.push(msg);
+                    scope.chatStore.load();
+                },
+                clear: function(scope) {
+                    this.msgs = new Array();
+                    scope.chatStore.load();
                 }
             }
-        });
+            ,chatStore = new Ext.data.Store({
+                id:chatStoreId,
+                proxy: new Ext.data.MemoryProxy(chat),
+                reader: new Ext.data.JsonReader({
+                    root:'msgs'},
+                [
+                   {name: 'username'},
+                   {name: 'time'},
+                   {name: 'msg'}
+                ]),
+                listeners: {
+                    loadexception: function (o, responce, e, exception) {
+                        Ext.MessageBox.alert('Error', exception);
+                    }
+                }
+            });
         
         var dataview = new Ext.DataView({
             id:'chatview' + this.getId()

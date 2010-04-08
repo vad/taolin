@@ -90,6 +90,13 @@ var jabber = {
     this.con.send(msg)
     return true;
   },
+
+  sendComposing: function(user, status) {
+    var msg = $msg({to: user, type: 'chat'})
+      .c(status ? 'composing' : 'active', {xmlns:'http://jabber.org/protocol/chatstates'});
+    this.con.send(msg)
+    return true;
+  },
   
   getRoster: function(){
     var iq = $iq({type: 'get'}).c('query', {xmlns: 'jabber:iq:roster'});
