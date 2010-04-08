@@ -204,7 +204,6 @@ var jabber = {
       }
 
       var presence = ''
-        ,type = ''
         ,status = '',
         tmp;
 
