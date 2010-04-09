@@ -37,6 +37,8 @@ ChatWindow = Ext.extend(Ext.Window, {
     constrain:true,
     closeAction: 'hide',
     layout:'anchor',
+    bodyStyle:'background:#fff;',
+    cls:'chat-window',
  
     /* Runtime Variables */
    
@@ -47,7 +49,7 @@ ChatWindow = Ext.extend(Ext.Window, {
     },
 
     sendHandler: function(key,event) {
-        var msgArea = this.items.last();
+        var msgArea = this.items.items[1];
         var chatMessage = msgArea.getValue();
         if (chatMessage !== '' && chatMessage !== '\n') {
             this.addMsg(this.user, chatMessage);
@@ -71,7 +73,6 @@ ChatWindow = Ext.extend(Ext.Window, {
             items: [{
                 id:'msgarea'+this.getId(),
                 layout:'fit',
-                height:50,
                 split:true,
                 hideBorders:false,
                 border:false,
@@ -79,8 +80,7 @@ ChatWindow = Ext.extend(Ext.Window, {
                 hideLabel:true,
                 maxLength:4000,
                 maxLengthText:'The maximum length text for this field is 4000',
-                style:'overflow: auto;',
-                anchor:'100%',
+                anchor:'100% 20%',
                 enableKeyEvents:true,
                 listeners: {
                     keyup: {
@@ -112,6 +112,11 @@ ChatWindow = Ext.extend(Ext.Window, {
                         Ext.getCmp(t.getId().substring(7)).setActive();
                     }
                 }
+            },{
+                html:'<span class="a">Show chat history</span>'
+                ,anchor: '100% 10%'
+                ,border: false
+                ,style:'padding: 5px 0 0 5px;'
             }],
             keys: [{
                 key:13,
@@ -183,8 +188,9 @@ ChatWindow = Ext.extend(Ext.Window, {
         var panel = new Ext.Panel({
             id:'chatpanel' + this.getId()
             ,items: dataview
-            ,anchor:'100% -50'
+            ,anchor:'100% 70%'
             ,autoScroll: true
+            ,border: false
         });
 
         this.chat = chat;

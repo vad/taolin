@@ -183,6 +183,10 @@ td {
     background:url(../../js/portal/shared/icons/fam/bullet_black.png) left no-repeat;
 }
 
+.msg {
+    padding: 0 5px;
+}
+
 #msg-div {
     left:35%;
     position:absolute;
@@ -638,9 +642,15 @@ color:black;
     border: 1px solid #FFCC00;
 }
 
-.chat-window .x-form-textarea.x-form-focus {
-    background: #FFFFFF url(../../ext/resources/images/default/form/text-bg.gif) repeat-x;
+.chat-window .x-form-textarea {
+    overflow: auto;
+    margin: 0 7px;
+    border: 2px solid #ddd;
 }
+.chat-window .x-form-textarea .x-form-focus {
+    background: #FFFFFF url(../../ext/resources/images/default/form/text-bg.gif) repeat-x !important;
+}
+
 /* START user profile class */
 .user-profile-class {
     text-align:left;
