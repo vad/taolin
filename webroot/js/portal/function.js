@@ -741,18 +741,19 @@ function findChatStatus(req, login){
     var chat_status = ''
         ,j = jabber
         ,r = roster
-        ,online = r.online;
+        ,online = r.online
+        ,fm = Ext.util.Format;
 
     if (r) {
         if(req){
             for(var i=0;i < online.length; i++){
-                if((r && online[i].jid._node === login) && (online[i].status != '')) {
+                if((r && online[i].jid === login) && (online[i].status != '')) {
                     setChatStatus(online[i].fancyStatus);
                 }
             }
         } else { // my status
             if((j.status) && (j.status != null) && (j.status != '')){
-                setChatStatus(j.status.status.htmlEnc().smilize().urlize());
+                setChatStatus(fm.htmlEncode(j.status.status).smilize().urlize());
             }
         }
     } else {

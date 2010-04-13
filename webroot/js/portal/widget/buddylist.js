@@ -70,20 +70,21 @@ var roster = {
       }
     }
     var sBulletPresence = (type === 'unavailable') ? 'unavailable' : presence
-        ,sStyleBg = 'url(js/portal/shared/icons/fam/'+ hBullets[sBulletPresence] +') left no-repeat';
+        ,sStyleBg = 'url(js/portal/shared/icons/fam/'+ hBullets[sBulletPresence] +') left no-repeat'
+        ,css = Ext.util.CSS;
 
     //TODO: THIS IS REALLY SLOW! TAKES ~0.05s ON A CORE2DUO AND FF3.6
     var sCssClass = 'user-' + (jid.split('@'))[0];
     // IE wants DIV, FF div... and the others? It's better to try to get both instead of using Ext.isIE
     var rule = 'body .'+ sCssClass; 
 
-    if (!Ext.util.CSS.updateRule(rule, 'background', sStyleBg)) { // if no cssClass has been found, create it
+    if (!css.updateRule(rule, 'background', sStyleBg)) { // if no cssClass has been found, create it
         var s = rule +" {\n}";
-        Ext.util.CSS.createStyleSheet(s, rule);
-        Ext.util.CSS.refreshCache();
+        css.createStyleSheet(s, rule);
+        css.refreshCache();
 
         // now we need to get the class, so we can change its style
-        Ext.util.CSS.updateRule(rule, 'background', sStyleBg);
+        css.updateRule(rule, 'background', sStyleBg);
     }
     
 
