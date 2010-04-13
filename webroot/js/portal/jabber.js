@@ -127,6 +127,11 @@ var jabber = {
     }
   },
 
+  resumeRoster: function() {
+    rosterStore.resumeEvents();
+    rosterStore.reload();
+  },
+
   isConnected: function(){
     return false;
   },
@@ -216,6 +221,8 @@ var jabber = {
         status = $(tmp[0]).text();
       }
 
+      jabber.dTask.delay(500);
+
       roster.setPresence(jid, presence, status, ptype);
       return true;
     },
@@ -256,6 +263,8 @@ var jabber = {
       });
 
       // set up presence handler and send initial presence
+      rosterStore.suspendEvents();
+      j.dTask = new Ext.util.DelayedTask(j.resumeRoster);
       j.con.addHandler(j.handle.presence, null, "presence");
       j.setPresence(j.status.presence,
         j.status.status, j.status.type, null, true

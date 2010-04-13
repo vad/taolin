@@ -322,6 +322,7 @@ BuddyList = function(conf, panel_conf) {
           hideHeaders: true,
           parent: this,
           autoExpandColumn: 'jid',
+          autoExpandMax: 10000,
           columns: [{
             id: 'jid',
             dataIndex: 'jid',
