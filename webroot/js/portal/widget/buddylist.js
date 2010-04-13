@@ -1,3 +1,4 @@
+// ex: set ts=2 softtabstop=2 shiftwidth=2: 
 /**
 * This file is part of taolin project (http://taolin.fbk.eu)
 * Copyright (C) 2008, 2009 FBK Foundation, (http://www.fbk.eu)
@@ -27,7 +28,7 @@
 */
 
 var fancyPresenceDict = {
-    dnd: 'do not disturb'
+  dnd: 'do not disturb'
 };
 
 var roster = {
@@ -36,30 +37,30 @@ var roster = {
   // Full roster
   roster: [],
   setPresence: function (jid, presence, status, type) {
-    var fm = Ext.util.Format;
-    //console.log('setPresence');
-    if ((type !== 'unavailable') && (!this.roster.length)){
-        //console.log('storing');
-        var b = new Buddy(jid, '', '', '', presence, status, type);
-        return;
+    var fm = Ext.util.Format
+      ,online = this.online;
+
+    if (!this.roster.length){
+      return;
     }
 
     // this is a dirty way to put ME inside the buddylist
     // the problem is that ME is not sent in the roster, but only as presence/status
     if (jid == jabber.myJid){
-        try {
-            for (var i=0, x; x = this.roster[i++];) {
-                if (x.jid == jid)
-                    throw "JidAlreadyPresentException";
-            }
-            for (var i=0, x; x = this.online[i++];) {
-                if (x.jid == jid)
-                    throw "JidAlreadyPresentException";
-            }
-            // if we're here, Me is not present in roster.roster or roster.online
-            var b = new Buddy(jid, '', '', 'Me', presence, status, type);
-            this.roster.push(b);
-        } catch (e) {}
+      try {
+        var x, b, i;
+        for (i=0; x = this.roster[i++];) {
+          if (x.jid == jid)
+            throw "JidAlreadyPresentException";
+        }
+        for (i=0; x = this.online[i++];) {
+          if (x.jid == jid)
+            throw "JidAlreadyPresentException";
+        }
+        // if we're here, Me is not present in roster.roster or roster.online
+        b = new Buddy(jid, '', '', 'Me', presence, status, type);
+        this.roster.push(b);
+      } catch (e) {}
     }
 
     // If the buddy comes online, move them to 'online'
@@ -73,45 +74,43 @@ var roster = {
       }
     }
     var sBulletPresence = (type === 'unavailable') ? 'unavailable' : presence
-        ,sStyleBg = 'url(js/portal/shared/icons/fam/'+ hBullets[sBulletPresence] +') left no-repeat';
+      ,sStyleBg = 'url(js/portal/shared/icons/fam/'+ hBullets[sBulletPresence] +') left no-repeat'
+      ,css = Ext.util.CSS;
 
     //TODO: THIS IS REALLY SLOW! TAKES ~0.05s ON A CORE2DUO AND FF3.6
-    var sCssClass = 'user-' + (jid.split('@'))[0];
-    // IE wants DIV, FF div... and the others? It's better to try to get both instead of using Ext.isIE
-    var rule = 'body .'+ sCssClass; 
+    var sCssClass = 'user-' + (jid.split('@'))[0]
+      ,rule = 'body .'+ sCssClass; 
 
-    if (!Ext.util.CSS.updateRule(rule, 'background', sStyleBg)) { // if no cssClass has been found, create it
-        var s = rule +" {\n}";
-        Ext.util.CSS.createStyleSheet(s, rule);
-        Ext.util.CSS.refreshCache();
+    if (!css.updateRule(rule, 'background', sStyleBg)) { // if no cssClass has been found, create it
+      var s = rule +" {\n}";
+      css.createStyleSheet(s, rule);
+      css.refreshCache();
 
-        // now we need to get the class, so we can change its style
-        Ext.util.CSS.updateRule(rule, 'background', sStyleBg);
+      // now we need to get the class, so we can change its style
+      css.updateRule(rule, 'background', sStyleBg);
     }
-    
 
-    var online = this.online;
-    for (var i=online.length-1, buddy, fancyPresence; i>=0; --i) {
-        buddy = online[i];
-        if (buddy.jid === jid) {
-            fancyPresence = presence;
-            if (presence in fancyPresenceDict)
-                fancyPresence = fancyPresenceDict[presence];
+    for (var i=online.length, buddy, fancyPresence; buddy = online[--i];) {
+      //buddy = online[i];
+      if (buddy.jid === jid) {
+        fancyPresence = presence;
+        if (presence in fancyPresenceDict)
+          fancyPresence = fancyPresenceDict[presence];
 
-            Ext.apply(buddy, {
-                presence: presence
-                ,fancyPresence: fancyPresence
-                ,status: fm.htmlEncode(status)
-                ,fancyStatus: fm.htmlEncode(status).smilize().urlize()
-                ,type: type
-            });
-        
-            // If the buddy goes offline, remove from online list
-            if (type === 'unavailable') {
-                online.remove(buddy);
-                this.roster.push(buddy);
-            }
-            break;
+        Ext.apply(buddy, {
+          presence: presence
+          ,fancyPresence: fancyPresence
+          ,status: fm.htmlEncode(status)
+          ,fancyStatus: fm.htmlEncode(status).smilize().urlize()
+          ,type: type
+        });
+      
+        // If the buddy goes offline, remove from online list
+        if (type === 'unavailable') {
+          online.remove(buddy);
+          this.roster.push(buddy);
+        }
+        break;
       }
     }
     rosterStore.load();
