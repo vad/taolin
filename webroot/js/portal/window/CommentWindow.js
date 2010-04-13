@@ -40,6 +40,7 @@ CommentWindow = function(model_alias, foreign_id, logparams) {
 
     t.store = new Ext.data.JsonStore({
         url: t.model + '/getcomments/' + t.f_id
+        ,autoDestroy: true
         ,root: 'comments'
         ,baseParams: {src:Ext.util.JSON.encode(logparams)}
         ,fields: ['id','user_id','body', {name: 'created', type: 'date', dateFormat: 'Y-m-d H:i:s'}, 'user_name', 'user_surname']

@@ -40,6 +40,7 @@ FeedReader = function(conf, panel_conf){
     this.autoExpand = conf.autoExpand;
 
     var store = new Ext.data.Store({
+        autoDestroy: true,
         proxy: new Ext.data.HttpProxy({
             url: 'wrappers/getrss'
         }),

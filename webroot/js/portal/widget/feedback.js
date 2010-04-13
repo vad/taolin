@@ -104,6 +104,7 @@ Feedback = function(conf, panel_conf){
         loadingText: 'Loading feedbacks, please wait...',
         emptyText: 'Nothing here, looks like you\'ve never sent a feedback before!',
 	    store: new Ext.data.JsonStore({
+            autoDestroy: true,
             url: 'feedbacks/getuserfeedbacks',
             root: 'feedbacks',
             fields: ['text', 'created']

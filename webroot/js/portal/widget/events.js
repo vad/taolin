@@ -43,6 +43,7 @@ Events = function(conf, panel_conf){
     var nItems = parseInt(get(conf, 'items', 5), 10);
 
     var store = new Ext.data.JsonStore({
+        autoDestroy: true,
         proxy : new Ext.data.HttpProxy({
             method: 'GET',
             url: 'calendars/get'

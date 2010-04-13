@@ -62,6 +62,7 @@ SearchPublik = Ext.extend(Ext.Panel, {
             this.logparams = {source:"search publik widget", widget_id: this.portlet_id};
 
        this.store = new Ext.data.JsonStore({
+            autoDestroy: true,
             url: 'publiks/search/',
             method: 'POST',
             root: 'pubs',
@@ -94,7 +95,7 @@ SearchPublik = Ext.extend(Ext.Panel, {
                         '<div style="padding:10px;" class="publik-wrapper">{PTitle}<h3><a href="http://www.itc.it/publik/viewPublication.aspx?pubId={ID}" target="_blank">{Title}</a></h3></div>',
                     '</tpl>'
             ),
-            emptyText: '<div style="padding:10px 5px 10px 5px;">Search within <a href="http://www.itc.it/publik/" target="_blank">FBK publications repository</a></div>', 
+            emptyText: '<div style="padding:10px 5px 10px 5px;">Search within <a href="http://u-gov.fbk.eu/" target="_blank">FBK publications repository</a></div>', 
             deferEmptyText: false,
             store: this.store,
             itemSelector: 'div.user-wrapper',

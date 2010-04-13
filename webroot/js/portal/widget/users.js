@@ -34,6 +34,7 @@
 UsersPortlet = function(conf){
 
     var store = new Ext.data.JsonStore({
+        autoDestroy: true,
         url: conf.url+'/5/'+conf.showPhoto,
         root: '',
         fields: ['id', 'name', 'surname', 'login']

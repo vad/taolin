@@ -62,6 +62,7 @@ PhotoChooser.prototype = {
             this.initTemplates();
 
             this.store = new Ext.data.JsonStore({
+                autoDestroy: true,
                 autoLoad: true,
                 root: 'photos',
                 proxy : new Ext.data.HttpProxy({

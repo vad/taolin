@@ -517,6 +517,7 @@ Board = function(conf, panel_conf){
         ],
 	    store: new Ext.data.JsonStore({
             autoLoad: true,
+            autoDestroy: true,
             proxy : new Ext.data.HttpProxy({
                 method: 'GET',
                 url: 'boards/getads'

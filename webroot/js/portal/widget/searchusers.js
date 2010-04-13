@@ -75,6 +75,7 @@ SearchUsers = Ext.extend(Ext.Panel, {
             this.logparams = {source:"search user widget", widget_id: this.portlet_id};
 
        this.store = new Ext.data.JsonStore({
+            autoDestroy: true,
             url: 'users/searchusers/',
             method: 'POST',
             root: 'users',

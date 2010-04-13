@@ -82,6 +82,7 @@ GroupDetails.prototype = {
 			this.initTemplates();
 
             this.storeGroup = new Ext.data.JsonStore({
+                autoDestroy: true,
 			    root: 'group',
 			    fields: [
 			        'id', 'name', 'url', 'description_en', 'description_it'
@@ -89,6 +90,7 @@ GroupDetails.prototype = {
 			});
 
 			this.storeUsers = new Ext.data.JsonStore({
+                autoDestroy: true,
 			    root: 'users',
 			    fields: [
 			        'id', 'name', 'surname', 'login', 'filename', 'is_hidden','groups'

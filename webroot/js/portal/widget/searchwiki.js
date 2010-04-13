@@ -78,6 +78,7 @@ SearchWiki = Ext.extend(Ext.Panel, {
             this.pagesUrl += '/index.php/';
 
         this.store = new Ext.data.Store({
+            autoDestroy: true,
             proxy: new Ext.data.ScriptTagProxy({
                 url: this.apiUrl
             }),
