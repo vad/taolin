@@ -37,10 +37,7 @@ var roster = {
   roster: [],
   setPresence: function (jid, presence, status, type) {
     var fm = Ext.util.Format;
-    //console.log('setPresence');
-    if ((type !== 'unavailable') && (!this.roster.length)){
-        //console.log('storing');
-        var b = new Buddy(jid, '', '', '', presence, status, type);
+    if (!this.roster.length){
         return;
     }
 
