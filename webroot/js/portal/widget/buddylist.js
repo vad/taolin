@@ -147,237 +147,236 @@ rosterStore.on('loadexception', function(proxy, store, response, e) {
 */
 
 BuddyList = function(conf, panel_conf) {
-    Ext.apply(this, panel_conf);
+  Ext.apply(this, panel_conf);
 
-    this.conf = conf;
+  this.conf = conf;
 
-    BuddyList.superclass.constructor.call(this, {
-        id:'buddylist',
-        collapsible: true,
-        autoHeight: true,
-        header: false,
-        buddyTpl: new Ext.XTemplate(
-            '<table style="width:100%"><tr>'
-                ,'<td style="vertical-align:middle;">'
-                    ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
-                        ,'<tpl if="presence">'
-                            ,'<span class="buddylistmessage" style="margin-left:10px;">{fancyPresence}</span>'
-                        ,'</tpl>'
-                    ,'</div>'
-                    ,'<tpl if="status">'
-                        ,'<div class="buddylistmessage" qtip="{status}" style="padding-right:2px;">'
-                            ,'{fancyStatus}'
-                        ,'</div>'
-                    ,'</tpl>'
-                ,'</td>'
-                ,'<tpl if="showPhoto">'
-                ,'<td style="width:40px;text-align:center;">'
-                    ,'<img src="photos/getphotofromuserlogin/{[values.jid.split(\'@\')[0]]}/40/40" />'
-                ,'</td>'
-                ,'</tpl>'
-            ,'</tr></table>'
-            ,{
-                compiled: true
-                ,disableFormats: true
+  BuddyList.superclass.constructor.call(this, {
+      id:'buddylist',
+      collapsible: true,
+      autoHeight: true,
+      header: false,
+      buddyTpl: new Ext.XTemplate(
+          '<table style="width:100%"><tr>'
+              ,'<td style="vertical-align:middle;">'
+                  ,'<div class="buddylistjid buddyliststate{presence}" qtip="{status}">{jid}'
+                      ,'<tpl if="presence">'
+                          ,'<span class="buddylistmessage" style="margin-left:10px;">{fancyPresence}</span>'
+                      ,'</tpl>'
+                  ,'</div>'
+                  ,'<tpl if="status">'
+                      ,'<div class="buddylistmessage" qtip="{status}" style="padding-right:2px;">'
+                          ,'{fancyStatus}'
+                      ,'</div>'
+                  ,'</tpl>'
+              ,'</td>'
+              ,'<tpl if="showPhoto">'
+              ,'<td style="width:40px;text-align:center;">'
+                  ,'<img src="photos/getphotofromuserlogin/{[values.jid.split(\'@\')[0]]}/40/40" />'
+              ,'</td>'
+              ,'</tpl>'
+          ,'</tr></table>'
+          ,{
+              compiled: true
+              ,disableFormats: true
+          }
+      ),
+      tbar: [new Ext.ux.IconCombo({
+          id: 'presence',
+          //name: 'presence',                  
+          width: 100,
+          listWidth: 130,
+          store: new Ext.data.SimpleStore({
+            fields: ['presence', 'readablePresence', 'iconClass'],
+            data: [
+              ['', 'Available', 'buddyliststate']
+              ,['away', 'Away', 'buddyliststateaway']
+              ,['dnd', 'Do not disturb', 'buddyliststatednd']
+              ,['invisible', 'Invisible', 'buddyliststateinvisible']
+              //,['chat', 'Chatty']
+              //,['unavailable', 'Offline']
+            ]
+          }),
+          panel: this,
+          value:get(conf, 'presence', ''),
+          displayField: 'readablePresence',
+          valueField: 'presence',
+          iconClsField: 'iconClass',
+          mode: 'local',
+          forceSelection: true,
+          triggerAction: 'all',
+          editable: false,
+          listeners: {
+            render: function (combo) {
+                combo.initFlags();
+                //combo.setValue(combo.store.collect('presence', true)[0]);
+            },
+            select: function (combo) {
+              var status = Ext.getCmp('status').getValue()
+                ,presence = combo.getValue()
+                ,type;
+              
+              //store in DB
+              this.panel.setPref('presence', presence);
+              
+              //this XEP isn't very linear...
+              if (presence == 'invisible') {
+                presence = '';
+                type = 'invisible';
+              }
+
+              jabber.setPresence(combo.getValue(), status, type);
             }
-        ),
-        listeners: {
-            resize : {
-                fn: function(panel, panelWidth, panelHeight){ 
-                    var gp = this.gridPanel;
-                    gp.setWidth(panelWidth);
-                }, 
-                scope: this
-            }
-        },
-        items: [
-            new Ext.grid.GridPanel({
-              store: rosterStore,
-              autoHeight: true,
-              draggable: false,
-              hideHeaders: true,
-              parent: this,
-              columns: [{
-                id: 'jid',
-                dataIndex: 'jid',
-                buddyList: this,
-                myIndex: 0,
-                renderer: function (value, p, record) {
-                    var data = $.extend(record.data, {showPhoto: this.buddyList.conf.showPhoto});
-                    return this.buddyList.buddyTpl.applyTemplate(data);
-                }},
-                {dataIndex: 'group', hidden: true},
-                {dataIndex: 'presence', hidden: true},
-                {dataIndex: 'subscription', hidden: true},
-                {dataIndex: 'status', hidden: true},
-                {dataIndex: 'fancyStatus', hidden: true}
-              ],
-              view: new Ext.grid.GroupingView({
-                forceFit: true,
-                scrollOffset:2,
-                showGroupName: false,
-                rowSelectorDepth: 12,
-                groupTextTpl: '{text} ({values.rs.length:plural("Buddy", "Buddies")})',
-                deferEmptyText: false,
-                emptyText: 'Loading...'
-              }),
-              cls: 'blist-grid',
-              listeners: {
-                rowclick: function() {
-                    var buddy = this.getSelectionModel().getSelected().data;
-                    if(jabber.myJid != buddy.jid)
-                        jabberui.createNewChatWindow(buddy.jid);
-                    getIdFromJidNode(buddy.jid);
-                },
-                resize : {
-                    fn: function(panel, panelWidth, panelHeight){ 
-                        var presence = Ext.getCmp('presence')
-                            ,status = Ext.getCmp('status')
-                            ,width = panelWidth - (presence.width + 20); // Status's width
-                        if(width) // Check wether "width" is not NaN but a real number
-                            status.setWidth(width);
-                    }, 
-                    scope: this
+          }
+        }), '&nbsp;',
+        new Ext.form.ComboBox({
+          id: 'status'
+          ,emptyText: 'Set status message'
+          ,store: new Ext.data.SimpleStore({
+            fields: ['status']
+            ,data: [[conf.status]] // TODO: Change this in an array
+          })
+          ,displayField: 'status'
+          ,value: conf.status
+          ,panel: this
+          ,mode: 'local'
+          ,width: 145
+          ,queryDelay: 500
+          ,hideLabel: true
+          ,triggerAction: 'all'
+          ,cls:'buddylist-status-field'
+          ,focusClass:'buddylist-status-focus'
+          ,recordType:Ext.data.Record.create(['status'])
+          ,loseFocus: function () {
+             Ext.getCmp('presence').focus();
+             this.fireEvent("blur", this);
+          }
+          //,enableKeyEvents:true
+          // this should go into listeners.keyup, but there are problems in Ext 2.2
+          ,onKeyUp: function (e) { 
+              this.collapse();
+              if (e.getKey() == Ext.EventObject.ENTER) {
+                var status = Ext.getCmp('status')
+                    ,sPresence = Ext.getCmp('presence').getValue()
+                    ,sStatus = status.getEl().dom.value;
+                
+                rec = new status.recordType({status: sStatus});
+                Ext.getCmp('status').store.add(rec);
+                
+                //store in DB
+                this.panel.setPref('status', sStatus, reloadTimeline);
+
+                //change jabber status
+                jabber.setPresence(sPresence, sStatus);
+                this.loseFocus();
+              }
+              e.stopEvent();
+          }
+          ,listeners: {
+            blur: function (t) {
+                if(!Ext.isOpera && t.focusClass){ // don't touch in Opera
+                    t.el.removeClass(t.focusClass);
                 }
-              },
-              tbar: [new Ext.ux.IconCombo({
-                  id: 'presence',
-                  //name: 'presence',                  
-                  width: 100,
-                  listWidth: 130,
-                  store: new Ext.data.SimpleStore({
-                    fields: ['presence', 'readablePresence', 'iconClass'],
-                    data: [
-                      ['', 'Available', 'buddyliststate']
-                      ,['away', 'Away', 'buddyliststateaway']
-                      ,['dnd', 'Do not disturb', 'buddyliststatednd']
-                      ,['invisible', 'Invisible', 'buddyliststateinvisible']
-                      //,['chat', 'Chatty']
-                      //,['unavailable', 'Offline']
-                    ]
-                  }),
-                  panel: this,
-                  value:get(conf, 'presence', ''),
-                  displayField: 'readablePresence',
-                  valueField: 'presence',
-                  iconClsField: 'iconClass',
-                  mode: 'local',
-                  forceSelection: true,
-                  triggerAction: 'all',
-                  editable: false,
-                  listeners: {
-                    render: function (combo) {
-                        combo.initFlags();
-                        //combo.setValue(combo.store.collect('presence', true)[0]);
-                    },
-                    select: function (combo) {
-                      var status = Ext.getCmp('status').getValue()
-                        ,presence = combo.getValue()
-                        ,type;
-                      
-                      //store in DB
-                      this.panel.setPref('presence', presence);
-                      
-                      //this XEP isn't very linear...
-                      if (presence == 'invisible') {
-                        presence = '';
-                        type = 'invisible';
-                      }
+            }
+            ,select: function (combo, record, index) { //change status from drop down menu
+                var presence = Ext.getCmp('presence').getValue()
+                  ,status = record.get('status');
+                
+                //store in DB
+                combo.panel.setPref('status', status, reloadTimeline);
+                                       
+                //change jabber status
+                jabber.setPresence(presence, status);
+            }
+            ,render: function(t){
 
-                      jabber.setPresence(combo.getValue(), status, type);
-                    }
-                  }
-                }), '&nbsp;',
-                new Ext.form.ComboBox({
-                  id: 'status'
-                  ,emptyText: 'Set status message'
-                  ,store: new Ext.data.SimpleStore({
-                    fields: ['status']
-                    ,data: [[conf.status]] // TODO: Change this in an array
-                  })
-                  ,displayField: 'status'
-                  ,value: conf.status
-                  ,panel: this
-                  ,mode: 'local'
-                  ,width: 145
-                  ,queryDelay: 500
-                  ,hideLabel: true
-                  ,triggerAction: 'all'
-                  ,cls:'buddylist-status-field'
-                  ,focusClass:'buddylist-status-focus'
-                  ,recordType:Ext.data.Record.create(['status'])
-                  ,loseFocus: function () {
-                     Ext.getCmp('presence').focus();
-                     this.fireEvent("blur", this);
-                  }
-                  //,enableKeyEvents:true
-                  // this should go into listeners.keyup, but there are problems in Ext 2.2
-                  ,onKeyUp: function (e) { 
-                      this.collapse();
-                      if (e.getKey() == Ext.EventObject.ENTER) {
-                        var status = Ext.getCmp('status')
-                            ,sPresence = Ext.getCmp('presence').getValue()
-                            ,sStatus = status.getEl().dom.value;
-                        
-                        rec = new status.recordType({status: sStatus});
-                        Ext.getCmp('status').store.add(rec);
-                        
-                        //store in DB
-                        this.panel.setPref('status', sStatus, reloadTimeline);
+                var presence, status, type
+                  ,cPresence = Ext.getCmp('presence').value;
+                
+                if (cPresence == 'invisible'){
+                  presence = '';
+                  type = 'invisible';
+                } else {
+                  presence = cPresence;
+                }
+                
+                status = t.value ? t.value : '';
 
-                        //change jabber status
-                        jabber.setPresence(sPresence, sStatus);
-                        this.loseFocus();
-                      }
-                      e.stopEvent();
-                  }
-                  ,listeners: {
-                    blur: function (t) {
-                        if(!Ext.isOpera && t.focusClass){ // don't touch in Opera
-                            t.el.removeClass(t.focusClass);
-                        }
-                    }
-                    ,select: function (combo, record, index) { //change status from drop down menu
-                        var presence = Ext.getCmp('presence').getValue()
-                            ,status = record.get('status');
-                        
-                        //store in DB
-                        combo.panel.setPref('status', status, reloadTimeline);
-                                               
-                        //change jabber status
-                        jabber.setPresence(presence, status);
-                    }
-                    ,render: function(t){
-
-                        var presence, status, type
-                            ,cPresence = Ext.getCmp('presence');
-                        
-                        if (cPresence.value == 'invisible'){
-                            presence = '';
-                            type = 'invisible';
-                        } else {
-                            presence = cPresence.value;
-                        }
-                        
-                        status = t.value ? t.value : '';
-
-                        jabberui.init(presence, status, type);
-                    }
-                    ,beforedestroy: function(t){
-                        jabber.quit();
-                    }
-                  }
-                })]
-            })]
-    });
-    
-    var gp = this.items.first();
-    this.gridPanel = gp;
-    gp.store.on('load', function() {
-        if (this.view) {
-            Ext.getCmp('buddylist').gridPanel.view.emptyText = 'Nobody online or there has been problems connecting to the server.<br/><br/>Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to try again. If you changed your password recently, please logout and login again with the new password.';
-        }
-    }, gp);
+                jabberui.init(presence, status, type);
+            }
+            ,beforedestroy: function(t){
+                jabber.quit();
+            }
+          }
+      })],
+      listeners: {
+        resize : function(panel, panelWidth, panelHeight){ 
+          panel.gridPanel.setWidth(panelWidth);
+        } 
+      },
+      items: [
+        new Ext.grid.GridPanel({
+          store: rosterStore,
+          autoHeight: true,
+          draggable: false,
+          hideHeaders: true,
+          parent: this,
+          autoExpandColumn: 'jid',
+          columns: [{
+            id: 'jid',
+            dataIndex: 'jid',
+            buddyList: this,
+            myIndex: 0,
+            renderer: function (value, p, record) {
+              var bl = this.buddyList
+                ,data = record.data;
+                
+              data.showPhoto = bl.conf.showPhoto;
+              return bl.buddyTpl.applyTemplate(data);
+            }},
+            {dataIndex: 'group', hidden: true},
+            {dataIndex: 'presence', hidden: true},
+            {dataIndex: 'subscription', hidden: true},
+            {dataIndex: 'status', hidden: true},
+            {dataIndex: 'fancyStatus', hidden: true}
+          ],
+          view: new Ext.grid.GroupingView({
+            scrollOffset:2,
+            showGroupName: false,
+            rowSelectorDepth: 12,
+            groupTextTpl: '{text} ({values.rs.length:plural("Buddy", "Buddies")})',
+            deferEmptyText: false,
+            emptyText: 'Loading...'
+          }),
+          cls: 'blist-grid',
+          listeners: {
+            rowclick: function() {
+              var buddy = this.getSelectionModel().getSelected().data;
+              if(jabber.myJid != buddy.jid)
+                jabberui.createNewChatWindow(buddy.jid);
+              getIdFromJidNode(buddy.jid);
+            },
+            resize : {
+              fn: function(panel, panelWidth, panelHeight){ 
+                var presence = Ext.getCmp('presence')
+                  ,status = Ext.getCmp('status')
+                  ,width = panelWidth - (presence.width + 20); // Status's width
+                if(width) // Check whether "width" is not NaN but a real number
+                  status.setWidth(width);
+              }, 
+              scope: this
+            }
+          }
+        })]
+  });
+  
+  var gp = this.items.first();
+  this.gridPanel = gp;
+  gp.store.on('load', function() {
+    if (this.view) {
+      Ext.getCmp('buddylist').gridPanel.view.emptyText = 'Nobody online or there has been problems connecting to the server.<br/><br/>Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to try again. If you changed your password recently, please logout and login again with the new password.';
+    }
+  }, gp);/**/
 };
 
 Ext.extend(BuddyList, Ext.Panel);
