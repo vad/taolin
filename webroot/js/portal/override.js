@@ -17,6 +17,8 @@
 *
 */
 
+// FROM:
+//  http://www.extjs.com/forum/showthread.php?31093-GridPanel-maxHeight
 Ext.grid.GridView.override({
     layout : function(){
         if(!this.mainBody){
