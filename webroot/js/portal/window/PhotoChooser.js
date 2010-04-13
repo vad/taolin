@@ -283,21 +283,15 @@ PhotoChooser.prototype = {
                             xtype: 'textfield',
                             id: 'filter',
                             selectOnFocus: true,
+                            enableKeyEvents: true,
                             width: 100,
                             listeners: {
-                                'render': {
-                                    fn:function(){
-                                        //TODO: isn't this just a get('filter')?
-                                        Ext.getCmp('filter').getEl().on('keyup', function(){
-                                                this.filter();
-                                            },
-                                            this,
-                                            {
-                                                buffer:500
-                                            }
-                                        );
+                                'keyup': {
+                                    fn:function(p, e){
+                                        this.filter();
                                     },
                                     scope:this
+                                    ,buffer: 500
                                 }
                             }
                         }, ' ', '-', {
