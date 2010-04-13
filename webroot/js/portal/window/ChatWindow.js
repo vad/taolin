@@ -80,7 +80,7 @@ ChatWindow = Ext.extend(Ext.Window, {
                 hideLabel:true,
                 maxLength:4000,
                 maxLengthText:'The maximum length text for this field is 4000',
-                anchor:'100% 20%',
+                anchor:'100% 25%',
                 enableKeyEvents:true,
                 listeners: {
                     keyup: {
@@ -188,7 +188,7 @@ ChatWindow = Ext.extend(Ext.Window, {
         var panel = new Ext.Panel({
             id:'chatpanel' + this.getId()
             ,items: dataview
-            ,anchor:'100% 70%'
+            ,anchor:'100% 65%'
             ,autoScroll: true
             ,border: false
         });
