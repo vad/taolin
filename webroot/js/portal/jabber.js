@@ -104,6 +104,32 @@ var jabber = {
     this.con.sendIQ(iq, this.handle.iqRoster);
   },
 
+  getChatHistory: function(jid, start) {
+    /*
+    <iq type='get' id='xyz1'>
+      <retrieve xmlns='http://www.xmpp.org/extensions/xep-0136.html#ns'
+            with='setti@fbk.eu/Home' start='2010-04-07T09:05:34.000000Z'>
+        <set xmlns='http://jabber.org/protocol/rsm'>
+          <max>30</max>
+        </set>
+      </retrieve>
+    </iq>
+    */
+    console.log(jid, start);
+    var iq = $iq({type: 'get'})
+      .c('retrieve', {
+        xmlns:'http://www.xmpp.org/extensions/xep-0136.html#ns'
+        ,'with': jid
+        ,start: start
+      });/*
+      .c('set', {
+        xmlns: 'http://jabber.org/protocol/rsm'
+      })
+      .c('max').t('30').up();*/
+    
+    this.con.sendIQ(iq, this.handle.iqChatHistory);
+  },
+  
   listHistory: function(jid, after, before) {
     /*
     <iq type='get' id='xyz1'>
@@ -305,9 +331,45 @@ var jabber = {
       );
     }
 
-    ,iqListHistory: function(iq){
+    ,iqChatHistory: function(iq){
+      iq = $(iq);
+      
       var output = []
-        ,iq = $(iq)
+        ,first, last, count, index, user
+        ,tmp;
+      console.log(iq);
+      window.iq = iq;
+     
+
+      iq.find('chat to, chat from').each(function(idx, el){
+        var i=$(el);
+        output.push([el.tagName, parseInt(i.attr('secs'), 10), i.find('body').text()]);
+      });
+    
+      console.log(output);
+      if (tmp = iq.find('set')){
+        var f = tmp.find('first');
+        first = f.text();
+        last  = tmp.find('last').text();
+        count = tmp.find('count').text();
+        index = parseInt(f.attr('index'), 10);
+      }
+      user  = iq.find('chat').attr('with');
+
+      jabberui.showChatHistory({
+        user:  user,
+        chats: output,
+        first: first,
+        last:  last,
+        count: count,
+        index: index,
+        items: 30
+      });
+    }
+
+    ,iqListHistory: function(iq){
+      iq = $(iq);
+      var output = []
         ,id = iq.attr('id')
         ,j = jabber
         ,user = j.listHistoryRequest[id]

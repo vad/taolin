@@ -169,6 +169,7 @@ if ($isdebugactive >= 1) {
     echo $javascript->link('portal/window/SendToWindow.js');
     echo $javascript->link('portal/window/FirstLogin.js');
     echo $javascript->link('portal/window/ListHistory.js');
+    echo $javascript->link('portal/window/ChatHistory.js');
     
   
 } else {

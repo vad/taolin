@@ -18,18 +18,18 @@
 */
 
 
-function openListHistory(cfg, logparams){
+function openChatHistory(cfg, logparams){
 
-    var win = Ext.getCmp('list_history');
+    var win = Ext.getCmp('chat_history');
 
     if(win) // if exists
         win.close();
 
-    new ListHistoryWindow(cfg, logparams); // Open a new comment window
+    new ChatHistoryWindow(cfg, logparams); // Open a new comment window
 }
 
 
-ListHistoryWindow = function(cfg, logparams) {
+ChatHistoryWindow = function(cfg, logparams) {
 
     /*
     if (!logparams)
@@ -37,9 +37,10 @@ ListHistoryWindow = function(cfg, logparams) {
     */
     var fm = Ext.util.Format
         ,t = this;
+    cfg.prettyUser = Strophe.getBareJidFromJid(cfg.user);
 
     t.store = new Ext.data.SimpleStore({
-      fields: ['with', 'start']
+      fields: ['with', 'secs', 'text']
       ,data: cfg.chats
     });
     
@@ -49,9 +50,9 @@ ListHistoryWindow = function(cfg, logparams) {
             '<tpl for=".">',
                 '<div class="border_radius_5px">',
                     '<table>',
-                        '<tr class="chat_history_list_line">',
+                        '<tr class="chat_history_chat_line">',
                             '<td style="padding-left:10px;">',
-                              '<span class="a timeago" onclick="jabber.getChatHistory(\'{with}\', \'{start}\')" title="{[values.start.replace(\'.000000\',\'\')]}">{start}</span>',
+                            '<h3>{[values.with == \'to\' ? this.to : this.me]}</h3> {secs} {text}',
                             '</td>',
                         '</tr>',
                     '</table>',
@@ -59,11 +60,13 @@ ListHistoryWindow = function(cfg, logparams) {
             '</tpl>'
             ,{
                 compiled: true
+                ,me: jabber.myJid
+                ,to: cfg.prettyUser
             }
         )
-        ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">No chats with her/him</div>'
+        ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">Error</div>'
         ,loadingText: 'Loading...' 
-        ,itemSelector: '.chat_history_list_line'
+        ,itemSelector: '.chat_history_chat_line'
         ,height: 300
     });
 
@@ -78,16 +81,16 @@ ListHistoryWindow = function(cfg, logparams) {
     }
 
 
-    ListHistoryWindow.superclass.constructor.call(t, {
-        title: 'Chats with '+cfg.user
-        ,id: 'list_history'
+    ChatHistoryWindow.superclass.constructor.call(t, {
+        title: 'Chats with '+cfg.prettyUser
+        ,id: 'chat_history'
         ,autoHeight: true
         ,width: 500
         ,resizable: true
         //,iconCls:'comment-icon'
         ,constrain: true
         ,items: [{
-            html: '<div>Chats with '+cfg.user+'</div>'
+            html: '<div>Chats with '+cfg.prettyUser+'</div>'
         },{
             items: t.view
             ,border: false
@@ -96,13 +99,13 @@ ListHistoryWindow = function(cfg, logparams) {
         ,buttons: [{
             text:    'Previous'
             ,handler:function(){
-                jabber.listHistory(cfg.user, null, cfg.first);
+                jabber.chatHistory(cfg.user, null, cfg.first);
             }
             ,disabled: !enablePrevious
         },{
             text:    'Next'
             ,handler:function(){
-                jabber.listHistory(cfg.user, cfg.last);
+                jabber.chatHistory(cfg.user, cfg.last);
             }
             ,disabled: !enableNext
         },{
@@ -114,7 +117,7 @@ ListHistoryWindow = function(cfg, logparams) {
         }]
         ,listeners: {
           afterrender: function(){
-            $('#list_history .timeago').timeago();
+            $('#chat_history .timeago').timeago();
           }
         }
     });
@@ -122,4 +125,4 @@ ListHistoryWindow = function(cfg, logparams) {
     t.show();
 }
 
-Ext.extend(ListHistoryWindow, Ext.Window);
+Ext.extend(ChatHistoryWindow, Ext.Window);
