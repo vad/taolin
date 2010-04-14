@@ -30,7 +30,7 @@ function openAddWidgetsModalWindow() {
         id:id
         ,width:win_size[0]
         ,height:win_size[1]
-    }).show();
+    })).show();
 }
 
 
