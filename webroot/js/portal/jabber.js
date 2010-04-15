@@ -316,8 +316,8 @@ var jabber = {
       
       $(iq).find('item').each(function(){
         var t = $(this)
-          ,b = new Buddy(t.attr('jid'), t.attr('subscription'),
-            t.attr('name'), t.find('group').text());
+          ,b = new Buddy(t.attr('jid'), t.attr('name'),
+            t.find('group').text());
         r.roster.push(b);
       });
 
@@ -418,10 +418,9 @@ $(document).bind('jabConnected', function(){
  * @param {String} status
  * @param {String} type
  */
-var Buddy = function(jid, subscription, name, group, presence, status, type){
+var Buddy = function(jid, name, group, presence, status, type){
   Ext.apply(this, {
     jid: jid
-    ,subscription: subscription
     ,name: name
     ,group: group
     ,presence: presence
