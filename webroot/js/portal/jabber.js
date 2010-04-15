@@ -20,6 +20,7 @@ var jabber = {
     roster.clear();
     if (this.con && this.con.connected) {
         this.keepOffline = true;
+        this.setPresence(null, null, 'unavailable'); // workaround for a strophe v1.0.1 bug
         this.con.disconnect();
     }
   },
@@ -39,21 +40,10 @@ var jabber = {
       
       this.setupCon();
       
-      // setup args for connect method
-      /*oArgs = {
-        domain: config.jabber_domain
-        ,server: config.jabber_server
-        ,username: username
-        ,pass: password
-        ,register: false
-        ,resource: Math.ceil(Math.random()*Math.pow(10,10))
-      };*/
-      //oArgs.authtype = 'nonsasl';
       Ext.apply(this, {
         u_n: username
         ,p_w: password
         ,myJid: username + '@' +config.jabber_domain
-        //,resource: oArgs.resource
       });
       
       this.con.connect(this.myJid, password, function (status) {
@@ -173,11 +163,11 @@ var jabber = {
     var attr = {};
     if (type) attr = {type:type};
 
-    var pres = $pres(attr)
-      .c('status')
-        .t(status).up()
-      .c('show')
-        .t(show);
+    var pres = $pres(attr);
+    if (status !== null)
+      pres = pres.c('status').t(status).up();
+    if (show !== null)
+      pres.c('show').t(show);
 
     this.send(pres.tree()); 
 
@@ -262,7 +252,7 @@ var jabber = {
         resource = Strophe.getResourceFromJid(from);
 
       //TODO: fix this (jabber.resource is empty)
-      if ((ptype === 'unavailable') && (jid === jabber.myJid)/* && (resource !== jabber.resource)*/) {
+      if ((ptype === 'unavailable') && (jid === jabber.myJid) && (resource !== jabber.resource)) {
         // if a disconnection message comes from another resource of this user, discard this message.
         // This check prevents that the users seems to be offline 30s after page refresh
         return true;
@@ -289,6 +279,8 @@ var jabber = {
 
     connected: function(){
       var j = jabber;
+      j.resource = Strophe.getResourceFromJid(j.con.jid);
+
       j.getRoster();
     },
     
