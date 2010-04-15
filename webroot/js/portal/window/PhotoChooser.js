@@ -118,7 +118,7 @@ PhotoChooser.prototype = {
                 tpl: this.thumbTemplate,
                 singleSelect: true,
                 itemSelector: 'div.thumb-wrap',
-                emptyText : '<div style="padding:10px;">No pictures match the specified filter</div>',
+                emptyText : '<div style="padding:10px 5px" class="warning-msg border_radius_5px">No pictures match the specified filter</div>',
                 selectedClass: 'bg-wrap-selected',
                 store: this.store,
                 listeners: {
