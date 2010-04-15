@@ -30,7 +30,7 @@ var userinfo_tpl = new Ext.XTemplate(
             '<span style="padding-left:10px;" class="a" onclick="expandUserEditProfilePanel()">Edit</span>',
         '</tpl>',
         '</b><br/>',
-        '<span id="user-status"></span><br /><br/>',
+        '<span id="user-status"></span><br />',
         '<tpl if="email">',
             '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], {sourceSendMail})"><span class="sprited email a">{email}</span></span>',
         '</tpl>',
