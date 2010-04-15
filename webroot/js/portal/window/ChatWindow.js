@@ -113,7 +113,7 @@ ChatWindow = Ext.extend(Ext.Window, {
                     }
                 }
             },{
-                html:'<span class="a">Show chat history</span>'
+                html:'<span class="a" onclick="jabber.listHistory(\''+this.getId()+'\');">Show chat history</span>'
                 ,anchor: '100% 10%'
                 ,border: false
                 ,style:'padding: 5px 0 0 5px;'
