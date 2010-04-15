@@ -115,7 +115,6 @@ var jabber = {
       </retrieve>
     </iq>
     */
-    console.log(jid, start);
     var iq = $iq({type: 'get'})
       .c('retrieve', {
         xmlns:'http://www.xmpp.org/extensions/xep-0136.html#ns'
@@ -337,7 +336,6 @@ var jabber = {
       var output = []
         ,first, last, count, index, user
         ,tmp;
-      console.log(iq);
       window.iq = iq;
      
 
@@ -346,7 +344,6 @@ var jabber = {
         output.push([el.tagName, parseInt(i.attr('secs'), 10), i.find('body').text()]);
       });
     
-      console.log(output);
       if (tmp = iq.find('set')){
         var f = tmp.find('first');
         first = f.text();
