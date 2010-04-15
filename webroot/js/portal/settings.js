@@ -30,17 +30,11 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
         autoWidth: true
         ,msgTarget: 'side'
     }
-    ,listeners:{
-        actioncomplete:function(t, action){ // BAD HACK! (this should be to prevent an ExtJS 3 bug)
-            $('#settings .x-panel-btns').css('width', '');
-        }
-    }
     ,monitorValid: true
     ,waitMsgTarget: true
     ,method:'POST'
     ,onRender:function(){
         Ext.ux.fbk.sonet.Settings.superclass.onRender.apply(this, arguments);
-
         this.form.load();
     }
     ,initComponent: function() {

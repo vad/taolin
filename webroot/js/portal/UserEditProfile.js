@@ -31,10 +31,7 @@ Ext.ux.fbk.sonet.UserEditProfile = Ext.extend(Ext.form.FormPanel, {
         ,msgTarget: 'side'
     }
     ,listeners:{
-        actioncomplete:function(t, action){ // BAD HACK! (this should be to prevent an ExtJS 3 bug)
-            $('#edit_profile .x-panel-btns').css('width', '');
-        }
-        ,afterlayout:function(t, layout){
+        afterlayout:function(t, layout){
             var ta = this.form.findField('description');
             ta.autoSize.defer(500, ta);
         }
@@ -107,6 +104,7 @@ Ext.ux.fbk.sonet.UserEditProfile = Ext.extend(Ext.form.FormPanel, {
                                 fieldLabel: 'Personal Page',
                                 name: 'personal_page',
                                 vtype:'url',
+                                allowBlank: true,
                                 maxLength: 80,
                                 anchor: '95%'
                             }, {
