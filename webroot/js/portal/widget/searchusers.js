@@ -38,7 +38,7 @@ var resultTpl = new Ext.XTemplate(
     '<tpl for=".">',
         '<div class="user-wrapper">',
         '<tpl if="((login) && (jabber.u_n !== login) && (active === \'1\'))">',
-            '<h3><span style="float:right;" class="a" onclick=\'jabberui.createNewChatWindow(new JSJaCJID("{login}@fbk.eu"))\'>Chat with {name}</span></h3>',
+            '<h3><span style="float:right;" class="a" onclick=\'jabberui.createNewChatWindow("{login}@fbk.eu")\'>Chat with {name}</span></h3>',
         '</tpl>',
         '<div class="user-{login} user-item">',
             '{name} {surname} ',
