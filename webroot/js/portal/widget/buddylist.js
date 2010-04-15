@@ -1,7 +1,7 @@
 // ex: set ts=2 softtabstop=2 shiftwidth=2: 
 /**
 * This file is part of taolin project (http://taolin.fbk.eu)
-* Copyright (C) 2008, 2009 FBK Foundation, (http://www.fbk.eu)
+* Copyright (C) 2008-2010 FBK Foundation, (http://www.fbk.eu)
 * Authors: SoNet Group (see AUTHORS.txt)
 *
 * Taolin is free software: you can redistribute it and/or modify
@@ -17,7 +17,6 @@
 * along with Taolin. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-
 /**
   * Ext.ux.fbk.sonet.BuddyList Extension Class
   *
@@ -311,17 +310,21 @@ BuddyList = function(conf, panel_conf) {
       })],
       listeners: {
         resize : function(panel, panelWidth, panelHeight){ 
-          panel.gridPanel.setWidth(panelWidth);
+          if (panelWidth){
+            panel.gridPanel.setWidth(panelWidth);
+          }
         } 
       },
       items: [
         new Ext.grid.GridPanel({
           store: rosterStore,
           autoHeight: true,
+          maxHeight: this.conf.maxHeight,
           draggable: false,
           hideHeaders: true,
           parent: this,
           autoExpandColumn: 'jid',
+          autoExpandMax: 10000,
           columns: [{
             id: 'jid',
             dataIndex: 'jid',
@@ -341,7 +344,6 @@ BuddyList = function(conf, panel_conf) {
             {dataIndex: 'fancyStatus', hidden: true}
           ],
           view: new Ext.grid.GroupingView({
-            scrollOffset:2,
             showGroupName: false,
             rowSelectorDepth: 12,
             groupTextTpl: '{text} ({values.rs.length:plural("Buddy", "Buddies")})',
@@ -372,6 +374,7 @@ BuddyList = function(conf, panel_conf) {
   
   var gp = this.items.first();
   this.gridPanel = gp;
+
   gp.store.on('load', function() {
     if (this.view) {
       Ext.getCmp('buddylist').gridPanel.view.emptyText = 'Nobody online or there has been problems connecting to the server.<br/><br/>Click <span class="a" onclick="resetJabberConnection()"><b>here</b></span> to try again. If you changed your password recently, please logout and login again with the new password.';

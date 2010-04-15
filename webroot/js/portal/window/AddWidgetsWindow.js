@@ -18,19 +18,19 @@
 */
 
 function openAddWidgetsModalWindow() {
-    var id = 'addwidgetwindow';
-    if (Ext.getCmp(id)){
-        window.addwidgetwindow.show();
+    var id = 'addwidgetwindow'
+        ,win;
+    if (win = Ext.getCmp(id)){
+        win.show();
         return;
     }
     
     var win_size = getBodySize(3/5);
-    window.addwidgetwindow = new AddWidgetsWindow({
+    (new AddWidgetsWindow({
         id:id
         ,width:win_size[0]
         ,height:win_size[1]
-    });
-    window.addwidgetwindow.show();
+    })).show();
 }
 
 

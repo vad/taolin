@@ -103,6 +103,67 @@ var jabber = {
     var iq = $iq({type: 'get'}).c('query', {xmlns: 'jabber:iq:roster'});
     this.con.sendIQ(iq, this.handle.iqRoster);
   },
+
+  getChatHistory: function(jid, start) {
+    /*
+    <iq type='get' id='xyz1'>
+      <retrieve xmlns='http://www.xmpp.org/extensions/xep-0136.html#ns'
+            with='setti@fbk.eu/Home' start='2010-04-07T09:05:34.000000Z'>
+        <set xmlns='http://jabber.org/protocol/rsm'>
+          <max>30</max>
+        </set>
+      </retrieve>
+    </iq>
+    */
+    console.log(jid, start);
+    var iq = $iq({type: 'get'})
+      .c('retrieve', {
+        xmlns:'http://www.xmpp.org/extensions/xep-0136.html#ns'
+        ,'with': jid
+        ,start: start
+      });/*
+      .c('set', {
+        xmlns: 'http://jabber.org/protocol/rsm'
+      })
+      .c('max').t('30').up();*/
+    
+    this.con.sendIQ(iq, this.handle.iqChatHistory);
+  },
+  
+  listHistory: function(jid, after, before) {
+    /*
+    <iq type='get' id='xyz1'>
+      <list xmlns='http://www.xmpp.org/extensions/xep-0136.html#ns'
+            with='user@example.com'>
+        <set xmlns='http://jabber.org/protocol/rsm'>
+          <max>30</max>
+        </set>
+      </list>
+    </iq>
+    */
+    var iq = $iq({type: 'get'})
+      .c('list', {
+        xmlns:'http://www.xmpp.org/extensions/xep-0136.html#ns'
+        ,'with': jid
+      })
+      .c('set', {
+        xmlns: 'http://jabber.org/protocol/rsm'
+      })
+      .c('max').t('30').up();
+
+    if (after)
+      iq = iq.c('after').t(after);
+    else if (before)
+      iq = iq.c('before').t(before);
+    else
+      iq = iq.c('before');
+
+    if (!this.listHistoryRequest)
+      this.listHistoryRequest = {};
+
+    this.con.sendIQ(iq, this.handle.iqListHistory);
+    this.listHistoryRequest[$(iq.tree()).attr('id')] = jid;
+  },
   
   setPresence: function(show, status, type, force) {
     this.status = {presence:show, status:status, type:type};
@@ -125,6 +186,11 @@ var jabber = {
     if(westPanel.showedUser && westPanel.showedUser.id === user.id){
       setChatStatus(fm.htmlEncode(status).smilize().urlize());
     }
+  },
+
+  resumeRoster: function() {
+    rosterStore.resumeEvents();
+    rosterStore.reload();
   },
 
   isConnected: function(){
@@ -216,6 +282,8 @@ var jabber = {
         status = $(tmp[0]).text();
       }
 
+      jabber.dTask.delay(500);
+
       roster.setPresence(jid, presence, status, ptype);
       return true;
     },
@@ -247,7 +315,6 @@ var jabber = {
 
       r.clear(); //i hope the new roster replaces the old one...
       
-      //TODO: disable Buddylist refresh while inserting
       $(iq).find('item').each(function(){
         var t = $(this)
           ,b = new Buddy(t.attr('jid'), t.attr('subscription'),
@@ -256,10 +323,84 @@ var jabber = {
       });
 
       // set up presence handler and send initial presence
+      rosterStore.suspendEvents();
+      j.dTask = new Ext.util.DelayedTask(j.resumeRoster);
       j.con.addHandler(j.handle.presence, null, "presence");
       j.setPresence(j.status.presence,
         j.status.status, j.status.type, null, true
       );
+    }
+
+    ,iqChatHistory: function(iq){
+      iq = $(iq);
+      
+      var output = []
+        ,first, last, count, index, user
+        ,tmp;
+      console.log(iq);
+      window.iq = iq;
+     
+
+      iq.find('chat to, chat from').each(function(idx, el){
+        var i=$(el);
+        output.push([el.tagName, parseInt(i.attr('secs'), 10), i.find('body').text()]);
+      });
+    
+      console.log(output);
+      if (tmp = iq.find('set')){
+        var f = tmp.find('first');
+        first = f.text();
+        last  = tmp.find('last').text();
+        count = tmp.find('count').text();
+        index = parseInt(f.attr('index'), 10);
+      }
+      user  = iq.find('chat').attr('with');
+
+      jabberui.showChatHistory({
+        user:  user,
+        chats: output,
+        first: first,
+        last:  last,
+        count: count,
+        index: index,
+        items: 30
+      });
+    }
+
+    ,iqListHistory: function(iq){
+      iq = $(iq);
+      var output = []
+        ,id = iq.attr('id')
+        ,j = jabber
+        ,user = j.listHistoryRequest[id]
+        ,first, last, count, index
+        ,tmp;
+
+      delete j.listHistoryRequest[id];
+
+      iq.find('list chat').each(function(idx, i){
+        var i=$(i);
+        output.push([i.attr('with'), i.attr('start')]);
+      });
+
+      if (tmp = iq.find('set')){
+        var f = tmp.find('first');
+        first = f.text();
+        last  = tmp.find('last').text();
+        count = tmp.find('count').text();
+        index = parseInt(f.attr('index'), 10);
+      }
+      output.reverse();
+
+      jabberui.showListHistory({
+        user:user,
+        chats: output,
+        first: first,
+        last: last,
+        count: count,
+        index: index,
+        items: 30
+      });
     }
   }
 };

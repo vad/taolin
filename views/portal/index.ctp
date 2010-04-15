@@ -86,8 +86,11 @@ if ($isdebugactive >= 1) {
     ## flush the buffers
     flush();
 
+    echo $javascript->link('portal/override.js');
+    
     echo $javascript->link('jquery/jquery.imagetool.js');
     echo $javascript->link('jquery/jquery-ui-1.7.2.custom.min.js');
+    echo $javascript->link('jquery/jquery.timeago.js');
     
     echo $javascript->link('portal/usr/soundmanager2.js');
     echo $javascript->link('portal/usr/FileUploadField.js');
@@ -165,6 +168,8 @@ if ($isdebugactive >= 1) {
     echo $javascript->link('portal/window/PhotoUploader.js');    
     echo $javascript->link('portal/window/SendToWindow.js');
     echo $javascript->link('portal/window/FirstLogin.js');
+    echo $javascript->link('portal/window/ListHistory.js');
+    echo $javascript->link('portal/window/ChatHistory.js');
     
   
 } else {

@@ -86,6 +86,13 @@ jabberui = function () {
             return null;
         },
 
+        showListHistory: function(cfg){
+            openListHistory(cfg);
+        },
+        
+        showChatHistory: function(cfg){
+            openChatHistory(cfg);
+        },
         composing: function(chatId, status){
             var chatWindow = Ext.getCmp(chatId)
                 ,msg = '';
