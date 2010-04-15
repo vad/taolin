@@ -732,12 +732,11 @@ function resetJabberConnection(){
 
 function setChatStatus(chatStatus){
     
-    var chat_status = (chatStatus) ? '<b>Chat status:</b> <span class="deco-text">' + chatStatus + '</span><br />' : ''; 
+    var chat_status = (chatStatus) ? '<span class="deco-text">' + chatStatus + '</span><br />' : ''; 
     $('#user-status').html(chat_status);
 }
 
 function findChatStatus(req, login){
-
     var chat_status = ''
         ,j = jabber
         ,r = roster
@@ -746,6 +745,7 @@ function findChatStatus(req, login){
 
     if (r) {
         if(req){
+            login += '@'+config.jabber_domain;
             for(var i=0;i < online.length; i++){
                 if((r && online[i].jid === login) && (online[i].status != '')) {
                     setChatStatus(online[i].fancyStatus);
