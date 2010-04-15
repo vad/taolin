@@ -81,34 +81,34 @@ Ext.ux.fbk.sonet.UserProfile = Ext.extend(Ext.Panel, {
                     autoScroll:true
                 },
                 items: [{
-                        title: 'Information',
-                        html: '<div id="user_text"></div>',
-                        autoHeight: true
-                    },{
-                        title: 'Timeline'
-                        ,header: false
-                        ,xtype: 'timeline'
-                        ,autoHeight: true
-                        ,iconCls: null
-                        ,bodyStyle: 'padding-right:15px; border: 0 none;'
-                        ,id: 'user_info_timeline'
-                        ,autoLoad: false
-                        ,listeners:{
-                            activate: function(timeline){
-                                var store = timeline.view.store;
-                                if(westPanel.showedUser.id != store.baseParams.u_id) {
-                                    store.setBaseParam('u_id', westPanel.showedUser.id);
-                                    store.reload();
-                                }
+                    title: 'Information',
+                    html: '<div id="user_text"></div>',
+                    autoHeight: true
+                },{
+                    title: 'Timeline'
+                    ,header: false
+                    ,xtype: 'timeline'
+                    ,autoHeight: true
+                    ,iconCls: null
+                    ,bodyStyle: 'padding-right:15px; border: 0 none;'
+                    ,id: 'user_info_timeline'
+                    ,autoLoad: false
+                    ,listeners:{
+                        activate: function(timeline){
+                            var store = timeline.view.store;
+                            if(westPanel.showedUser.id != store.baseParams.u_id) {
+                                store.setBaseParam('u_id', westPanel.showedUser.id);
+                                store.reload();
                             }
                         }
-                    },{
-                        xtype:'userpublications'
-                        ,id:'wp-publik-tab'
-                    },{
-                        xtype:'userphotos'
-                        ,id:'wp-photos-tab'
-                    }]
+                    }
+                },{
+                    xtype:'userpublications'
+                    ,id:'wp-publik-tab'
+                },{
+                    xtype:'userphotos'
+                    ,id:'wp-photos-tab'
+                }]
             }]
 
         };

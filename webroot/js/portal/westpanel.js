@@ -223,6 +223,9 @@ westPanel = new Ext.Panel({
             render: function(t){
                 t.add(new Ext.ux.fbk.sonet.Settings());
             }
+            ,expand: function(t){
+                t.items.first().items.first().store.load(); // Load backgrounds' store
+            }
         }
     }]
 

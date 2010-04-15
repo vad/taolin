@@ -59,7 +59,6 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                         url: 'backgrounds/getbg' 
                         ,root: ''
                         ,fields: ['id','name','path']
-                        ,autoLoad: true
                         ,listeners:{
                             load:{ 
                                 fn: function(store, records, options){
@@ -194,6 +193,20 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
 
         Ext.ux.fbk.sonet.Settings.superclass.initComponent.apply(this, arguments);
     }
+    ,constructor:function(config) {
+        // parent constructor call pre-processing - configure listeners here
+        config = config || {};
+        config.listeners = config.listeners || {};
+        Ext.applyIf(config.listeners, {
+            // add listeners config here
+        });
+     
+        // call parent constructor
+        Ext.ux.fbk.sonet.Settings.superclass.constructor.call(this, config);
+     
+        // parent constructor call post-processing
+     
+    } // eo function constructor
     ,onSuccess:function(form, action){
 
         if('reloadpage' in action.result)
