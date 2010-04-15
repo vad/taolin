@@ -52,7 +52,7 @@ ChatHistoryWindow = function(cfg, logparams) {
                     '<table>',
                         '<tr class="chat_history_chat_line">',
                             '<td style="padding-left:10px;">',
-                            '<h3>{[values.with == \'to\' ? this.to : this.me]}</h3> {secs} {text}',
+                            '<h3>{[values.with == \'from\' ? this.from : this.me]}</h3> {secs} {text}',
                             '</td>',
                         '</tr>',
                     '</table>',
@@ -61,7 +61,7 @@ ChatHistoryWindow = function(cfg, logparams) {
             ,{
                 compiled: true
                 ,me: jabber.myJid
-                ,to: cfg.prettyUser
+                ,from: cfg.prettyUser
             }
         )
         ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">Error</div>'
