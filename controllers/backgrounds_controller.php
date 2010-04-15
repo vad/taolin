@@ -23,7 +23,7 @@
 class BackgroundsController extends AppController {
     var $name = 'Backgrounds';
     var $paginate = array(
-        'limit' => 10,
+        'limit' => 8,
         'order' => 'Background.name'
     );
     
