@@ -45,6 +45,7 @@ ChatHistoryWindow = function(cfg, logparams) {
         ,helpString = 'Past chats are stored by the chat server and are visible only to you. This feature has been requested by many champions and in fact this feature (chat history) is present in all web chat services (e.g. Google Mail chat). If you have any question about this feature, please contact us at ' + config.contactus;
 
     cfg.prettyUser = Strophe.getBareJidFromJid(cfg.user);
+    cfg.prettyDate = Date.parseDate(cfg.start.replace('.000000Z', ''), 'Y-d-m\T\H:i:s').format('m/d/y');
 
     t.store = new Ext.data.SimpleStore({
       fields: ['with', 'secs', 'text']
@@ -105,10 +106,10 @@ ChatHistoryWindow = function(cfg, logparams) {
         ,constrain: true
         ,items: [{
             html: '<div style="padding:5px;float:right;">' +
-                    '<span onclick="$(\'#chat_history-help\').toggle(400)" class="a sprited help-icon">What is this?</span>' +
-                '</div>' + 
-                '<div id="chat_history-help" class="warning-msg border_radius_5px" style="display:none;margin:25px 10px;text-align:left;">' + helpString + '</div>' + 
-                '<div>Chats with '+cfg.prettyUser+'</div>'
+                        '<span onclick="$(\'#chat_history-help\').toggle(400)" class="a sprited help-icon">What is this?</span>' +
+                  '</div>' + 
+                  '<div id="chat_history-help" class="warning-msg border_radius_5px chat-history-help">' + helpString + '</div>' + 
+                  '<div class="chat-history-title">Chat with '+cfg.prettyUser+' on '+cfg.prettyDate+'</div>'
             ,border: false
         },{
             items: t.view

@@ -96,8 +96,8 @@ ListHistoryWindow = function(cfg, logparams) {
             html: '<div style="padding:5px;float:right;">' +
                     '<span onclick="$(\'#list_history-help\').toggle(400)" class="a sprited help-icon">What is this?</span>' +
                 '</div>' + 
-                '<div id="list_history-help" class="warning-msg border_radius_5px" style="display:none;margin:25px 10px;text-align:left;">' + helpString + '</div>' + 
-                '<div>Chats with '+cfg.prettyUser+'</div>'
+                '<div id="list_history-help" class="warning-msg border_radius_5px chat-history-help" style="display:none;">' + helpString + '</div>' + 
+                '<div class="chat-history-title">Chats with '+cfg.prettyUser+'</div>'
             ,border: false
         },{
             items: t.view
