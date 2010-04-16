@@ -45,8 +45,9 @@ ChatHistoryWindow = function(cfg, logparams) {
         ,helpString = 'Past chats are stored by the chat server and are visible only to you. This feature has been requested by many champions and in fact this feature (chat history) is present in all web chat services (e.g. Google Mail chat). If you have any question about this feature, please contact us at ' + config.contactus;
 
     cfg.prettyUser = Strophe.getBareJidFromJid(cfg.user);
-    cfg.prettyDate = Date.parseDate(cfg.start.replace('.000000Z', ''), 'Y-d-m\T\H:i:s').format('m/d/y');
 
+    cfg.prettyDate = Date.parseDate(cfg.start.replace('.000000Z', ''), 'Y-d-m\T\H:i:s').format('m/d/y');
+    
     t.store = new Ext.data.SimpleStore({
       fields: ['with', 'secs', 'text']
       ,data: cfg.chats
@@ -73,9 +74,10 @@ ChatHistoryWindow = function(cfg, logparams) {
                 ,from: cfg.prettyUser
                 ,start: cfg.start
                 ,cleartime: function(secs){
-                    var ct = Date.parseDate(this.start.replace('.000000Z',''), 'Y-m-d\T\H:i:s');
-                    ct.setSeconds(ct.getSeconds() + secs);
-                    return ct.format('H:i');
+                    var cd = Date.parseDate(this.start.replace('.000000Z',''), 'Y-m-d\T\H:i:s');
+                    cd.setSeconds(cd.getSeconds() + secs);
+                    cd.setMinutes(cd.getMinutes() - cd.getTimezoneOffset()); // Adjusting timezone
+                    return cd.format('H:i');
                 }
             }
         )

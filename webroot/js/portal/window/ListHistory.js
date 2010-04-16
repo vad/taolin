@@ -63,8 +63,10 @@ ListHistoryWindow = function(cfg, logparams) {
             ,{
                 compiled: true
                 ,cleardate: function(d){
-                    var cd = d.replace('.000000Z','');
-                    return Date.parseDate(cd, 'Y-m-d\T\H:i:s').format('F, d Y H:i');
+                    var cd = Date.parseDate(d.replace('.000000Z',''), 'Y-m-d\T\H:i:s');
+                    cd.setMinutes(cd.getMinutes() - cd.getTimezoneOffset()); // Adjusting timezone
+
+                    return cd.format('F, d Y H:i');
                 }
             }
         )
