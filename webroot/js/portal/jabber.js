@@ -344,9 +344,11 @@ var jabber = {
         index = parseInt(f.attr('index'), 10);
       }
       user  = iq.find('chat').attr('with');
+      start  = iq.find('chat').attr('start');
 
       jabberui.showChatHistory({
         user:  user,
+        start: start,
         chats: output,
         first: first,
         last:  last,

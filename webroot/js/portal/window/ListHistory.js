@@ -51,7 +51,7 @@ ListHistoryWindow = function(cfg, logparams) {
                     '<table>',
                         '<tr class="chat_history_list_line">',
                             '<td style="padding-left:10px;">',
-                              '<span class="a timeago" onclick="jabber.getChatHistory(\'{with}\', \'{start}\')" title="{[values.start.replace(\'.000000\',\'\')]}">{start}</span>',
+                              '<span class="a" onclick="jabber.getChatHistory(\'{with}\', \'{start}\')">{[this.cleardate(values.start)]} (<span class="timeago" title="{[values.start.replace(\'.000000\',\'\')]}">{start}</span>)</span>',
                             '</td>',
                         '</tr>',
                     '</table>',
@@ -59,6 +59,10 @@ ListHistoryWindow = function(cfg, logparams) {
             '</tpl>'
             ,{
                 compiled: true
+                ,cleardate: function(d){
+                    var cd = d.replace('.000000Z','');
+                    return Date.parseDate(cd, 'Y-m-d\T\H:i:s').format('F, d Y H:i');
+                }
             }
         )
         ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">No chats with her/him</div>'
@@ -80,6 +84,7 @@ ListHistoryWindow = function(cfg, logparams) {
 
     ListHistoryWindow.superclass.constructor.call(t, {
         title: 'Chats with '+cfg.user
+        ,iconCls: 'chat'
         ,id: 'list_history'
         ,autoHeight: true
         ,width: 500
@@ -88,6 +93,7 @@ ListHistoryWindow = function(cfg, logparams) {
         ,constrain: true
         ,items: [{
             html: '<div>Chats with '+cfg.user+'</div>'
+            ,border: false
         },{
             items: t.view
             ,border: false

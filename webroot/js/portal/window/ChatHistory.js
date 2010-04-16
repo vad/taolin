@@ -35,6 +35,7 @@ ChatHistoryWindow = function(cfg, logparams) {
     if (!logparams)
         alert('No logparams!');
     */
+
     var fm = Ext.util.Format
         ,t = this;
     cfg.prettyUser = Strophe.getBareJidFromJid(cfg.user);
@@ -51,8 +52,9 @@ ChatHistoryWindow = function(cfg, logparams) {
                 '<div class="border_radius_5px">',
                     '<table>',
                         '<tr class="chat_history_chat_line">',
-                            '<td style="padding-left:10px;">',
-                            '<h3>{[values.with == \'from\' ? this.from : this.me]}</h3> {secs} {text}',
+                            '<td>',
+                                '<span class="deco-text" style="padding:0 5px;">{[this.cleartime(values.secs)]}</span>',
+                                '<b>{[values.with == \'from\' ? this.from : this.me]}</b> {[values.text.urlize().smilize()]}',
                             '</td>',
                         '</tr>',
                     '</table>',
@@ -62,10 +64,16 @@ ChatHistoryWindow = function(cfg, logparams) {
                 compiled: true
                 ,me: jabber.myJid
                 ,from: cfg.prettyUser
+                ,start: cfg.start
+                ,cleartime: function(secs){
+                    var ct = Date.parseDate(this.start.replace('.000000Z',''), 'Y-m-d\T\H:i:s');
+                    ct.setSeconds(ct.getSeconds() + secs);
+                    return ct.format('H:i');
+                }
             }
         )
         ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">Error</div>'
-        ,loadingText: 'Loading...' 
+        ,loadingText: 'Loading chat history...' 
         ,itemSelector: '.chat_history_chat_line'
         ,height: 300
     });
@@ -87,10 +95,11 @@ ChatHistoryWindow = function(cfg, logparams) {
         ,autoHeight: true
         ,width: 500
         ,resizable: true
-        //,iconCls:'comment-icon'
+        ,iconCls:'comment-icon'
         ,constrain: true
         ,items: [{
             html: '<div>Chats with '+cfg.prettyUser+'</div>'
+            ,border: false
         },{
             items: t.view
             ,border: false
