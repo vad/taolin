@@ -275,7 +275,7 @@ class UsersWidgetsController extends AppController {
         $response['success'] = true;
 
         // If the user is changing his/her chat status, save it into the timeline
-        if(isset($formdata['status']) && ($formdata['status'] != null) && ($formdata['status'] != "")){
+        if(isset($formdata['status']) && ($formdata['status'] != null) && (trim($formdata['status'], " \t\n.") != "")){
             $escaped_status = $this->mrClean->html($formdata['status']);
             $this->UsersWidget->addtotimeline(array('status' => $escaped_status), null, 'users_widgets-changeconf', $user_id);
         }
