@@ -38,6 +38,8 @@ ListHistoryWindow = function(cfg, logparams) {
     var fm = Ext.util.Format
         ,t = this
         ,helpString = 'Past chats are stored by the chat server and are visible only to you. This feature has been requested by many champions and in fact this feature (chat history) is present in all web chat services (e.g. Google Mail chat). If you have any question about this feature, please contact us at ' + config.contactus;
+    
+    cfg.prettyUser = Strophe.getBareJidFromJid(cfg.user);
 
     t.store = new Ext.data.SimpleStore({
       fields: ['with', 'start']
