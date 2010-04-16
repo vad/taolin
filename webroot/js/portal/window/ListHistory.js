@@ -36,7 +36,8 @@ ListHistoryWindow = function(cfg, logparams) {
         alert('No logparams!');
     */
     var fm = Ext.util.Format
-        ,t = this;
+        ,t = this
+        ,helpString = 'Past chats are stored by the chat server and are visible only to you. This feature has been requested by many champions and in fact this feature (chat history) is present in all web chat services (e.g. Google Mail chat). If you have any question about this feature, please contact us at ' + config.contactus;
 
     t.store = new Ext.data.SimpleStore({
       fields: ['with', 'start']
@@ -92,7 +93,11 @@ ListHistoryWindow = function(cfg, logparams) {
         //,iconCls:'comment-icon'
         ,constrain: true
         ,items: [{
-            html: '<div>Chats with '+cfg.user+'</div>'
+            html: '<div style="padding:5px;float:right;">' +
+                    '<span onclick="$(\'#list_history-help\').toggle(400)" class="a sprited help-icon">What is this?</span>' +
+                '</div>' + 
+                '<div id="list_history-help" class="warning-msg border_radius_5px" style="display:none;margin:25px 10px;text-align:left;">' + helpString + '</div>' + 
+                '<div>Chats with '+cfg.prettyUser+'</div>'
             ,border: false
         },{
             items: t.view
