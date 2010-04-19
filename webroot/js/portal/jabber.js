@@ -212,16 +212,14 @@ var jabber = {
 
       tmp = jMessage.find('body');
       if (tmp.length) {
+        var x;
         body = $(tmp[0]).text();
-        //TODO : test offline messages
-        /*
-        $(node).find('x').each(function(){
+        jMessage.find('x').each(function(){
           x = $(this);
           if (x.attr('xmlns') == 'jabber:x:delay'){
             return false;
           }
-        });*/
-        var x = null;
+        });
       
         if (x) {
           var stamp = x.attr('stamp');
