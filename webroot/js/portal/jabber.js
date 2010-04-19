@@ -213,6 +213,7 @@ var jabber = {
       tmp = jMessage.find('body');
       if (tmp.length) {
         body = $(tmp[0]).text();
+        //TODO : test offline messages
         /*
         $(node).find('x').each(function(){
           x = $(this);
