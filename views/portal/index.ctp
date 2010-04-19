@@ -92,8 +92,8 @@ if ($isdebugactive >= 1) {
     echo $javascript->link('jquery/jquery-ui-1.7.2.custom.min.js');
     echo $javascript->link('jquery/jquery.timeago.js');
     echo $javascript->link('jquery/jquery.oembed.js');
+    echo $javascript->link('jquery/jplayer/js/jquery.jplayer.min.js');
     
-    echo $javascript->link('portal/usr/soundmanager2.js');
     echo $javascript->link('portal/usr/FileUploadField.js');
     
     echo $javascript->link('portal/tools.js');
@@ -193,3 +193,5 @@ if ($isdebugactive >= 1) {
 <script type="text/javascript">
     document.getElementById('loading-msg').innerHTML = 'Initializing...';
 </script>
+
+<div id="jplayer"></div>

@@ -1100,3 +1100,6 @@ function get(o, key, val) {
     return (key in o ? o[key] : val);
 };
 
+function play(s) {
+    return $('#jplayer').jPlayer('setFile', 'sound/'+s+'.mp3', 'sound/'+s+'.ogg').jPlayer('play');
+}

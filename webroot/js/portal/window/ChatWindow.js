@@ -207,21 +207,21 @@ ChatWindow = Ext.extend(Ext.Window, {
         
         // play sounds
         var tm = msg.trim();
-        if ((soundManager.enabled) && (tm.split(' ', 1)[0] == '/play')){
-            var i = tm.indexOf(' ');
-            var sound = tm.substring(i).trim();
+        if (/*(soundManager.enabled) &&*/ (tm.split(' ', 1)[0] == '/play')){
+            var i = tm.indexOf(' ')
+                ,sound = tm.substring(i).trim();
             
             if (sound == 'trombone') {
-                soundManager.play('trombone', 'sound/sad_trombone.mp3');
+                play('sad_trombone');
             }
             else if (sound == 'moo') {
-                soundManager.play('moo', 'sound/cow.mp3');
+                play('cow');
             }
             else if (sound == 'cheer') {
-                soundManager.play('cheer', 'sound/cheer.mp3');
+                play('cheer');
             }
             else if (sound == 'fart') {
-                soundManager.play('fart', 'sound/fartus_tubartus.mp3');
+                play('fartus_tubartus');
             }
         }
 
