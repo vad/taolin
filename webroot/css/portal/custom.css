@@ -644,7 +644,7 @@ color:black;
 
 .chat-window .x-form-textarea {
     overflow: auto;
-    margin: 0 5px;
+    margin: 5px 5px 0;
     border: 2px solid #ddd;
 }
 .chat-window .x-form-textarea .x-form-focus {

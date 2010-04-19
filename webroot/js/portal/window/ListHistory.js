@@ -54,7 +54,7 @@ ListHistoryWindow = function(cfg, logparams) {
                     '<table>',
                         '<tr class="chat_history_list_line">',
                             '<td style="padding-left:10px;">',
-                              '<span class="a" onclick="jabber.getChatHistory(\'{with}\', \'{start}\')">{[this.cleardate(values.start)]} (<span class="timeago" title="{[values.start.replace(\'.000000\',\'\')]}">{start}</span>)</span>',
+                              '<span class="a" onclick="jabber.getChatHistory(\'{with}\', \'{start}\')">{[this.cleardate(values.start)]}</span> (<span class="timeago" title="{[values.start.replace(\'.000000\',\'\')]}">{start}</span>)</span>',
                             '</td>',
                         '</tr>',
                     '</table>',

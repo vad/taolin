@@ -86,6 +86,14 @@ ChatHistoryWindow = function(cfg, logparams) {
         ,loadingText: 'Loading...' 
         ,itemSelector: '.chat_history_chat_line'
         ,height: 300
+        ,listeners: {
+            afterrender: function(t){
+                $('#'+t.id).find('a').oembed(null, {
+                    embedMethod: "append",
+                    maxWidth: 400
+                });
+            }
+        }
     });
 
     var enablePrevious=true,
