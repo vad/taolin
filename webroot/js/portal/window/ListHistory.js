@@ -70,8 +70,9 @@ ListHistoryWindow = function(cfg, logparams) {
                 }
             }
         )
-        ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">No chats with her/him</div>'
-        ,loadingText: 'Loading...' 
+        ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">No chat history with the selected user</div>'
+        ,loadingText: 'Loading chat history...'
+        ,deferEmptyText: false
         ,itemSelector: '.chat_history_list_line'
         ,height: 300
     });

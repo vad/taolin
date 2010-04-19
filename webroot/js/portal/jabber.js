@@ -336,6 +336,18 @@ var jabber = {
         var i=$(el);
         output.push([el.tagName, parseInt(i.attr('secs'), 10), i.find('body').text()]);
       });
+
+      var i = 0
+        ,clean_output = [];
+
+      // Cleaning duplicate messages
+      while(el = output[i++]) {
+        if(el[0] == 'from'){
+          var next = output[i];
+          if(next && (el[1] == next[1]) && (el[2] == next[2])) continue;
+        }
+        clean_output.push(el);
+      }
     
       if (tmp = iq.find('set')){
         var f = tmp.find('first');
@@ -350,7 +362,7 @@ var jabber = {
       jabberui.showChatHistory({
         user:  user,
         start: start,
-        chats: output,
+        chats: clean_output,
         first: first,
         last:  last,
         count: count,
