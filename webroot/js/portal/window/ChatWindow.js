@@ -134,67 +134,46 @@ ChatWindow = Ext.extend(Ext.Window, {
     },
     render: function() {
         /*
-         * Set up chat, chatStore, and dataview 
-         * objects for use in the window
+         * Set up chat object for use in the window
          */
         var id = this.getId()
             ,chatId = 'chat' + id
-            ,chatStoreId = 'chatStore' + id
             ,chat =  {
-            id:chatId,
-            msgs:[],
                 update: function(msg, scope) {
-                    this.msgs.push(msg);
-                    scope.chatStore.load();
+                    $(Ext.getDom('chatArea'+id)).find('.messages').append(
+                        String.format(
+                            '<div class="msg"><b>{0}</b> ({1}): {2}</div>',
+                                msg.username, msg.time, msg.msg
+                    )).find('.msg:last a').oembed(null, {
+                        embedMethod:'append'
+                        ,maxWidth: 200
+                    }, function(container, oembed) { //callback (scroll down)
+                         $.fn.oembed.insertCode(container, 'append', oembed);
+                         Ext.getCmp(id).scrollBottom();
+
+                    });
                 },
                 clear: function(scope) {
-                    this.msgs = new Array();
-                    scope.chatStore.load();
+                    //TODO: test this function
+                    $(Ext.getDom('chatArea'+id))
+                        .find('.messages').html('').end()
+                        .find('.info').html('');
                 }
-            }
-            ,chatStore = new Ext.data.Store({
-                id:chatStoreId,
-                proxy: new Ext.data.MemoryProxy(chat),
-                reader: new Ext.data.JsonReader({
-                    root:'msgs'},
-                [
-                   {name: 'username'},
-                   {name: 'time'},
-                   {name: 'msg'}
-                ]),
-                listeners: {
-                    loadexception: function (o, responce, e, exception) {
-                        Ext.MessageBox.alert('Error', exception);
-                    }
-                }
-            });
+            };
         
-        var dataview = new Ext.DataView({
-            id:'chatview' + this.getId()
-            ,store:chatStore
-            ,tpl: new Ext.XTemplate(
-                '<tpl for=".">',
-                '<div class="msg"><b>{username}</b> ({time}): {msg}</div>',
-                '</tpl>',
-                '<i style="color:#777">{[this.info]}</i>'
-                ,{
-                    compiled:true
-                    ,info:''
-                }
-            )
-            ,itemSelector:'div.msg'
+        this.chatArea = new Ext.Component({
+            id: 'chatArea'+id
+            ,html:'<div class="messages"></div><div class="info" style="color:#777"></div>'
         });
-        
         var panel = new Ext.Panel({
             id:'chatpanel' + this.getId()
-            ,items: dataview
+            ,items: this.chatArea
             ,anchor:'100% 65%'
             ,autoScroll: true
             ,border: false
         });
 
         this.chat = chat;
-        this.chatStore = chatStore;
         this.items.insert(0, panel.id, panel);
         
         ChatWindow.superclass.render.apply(this, arguments);
@@ -224,8 +203,7 @@ ChatWindow = Ext.extend(Ext.Window, {
             msg: msg
         };
         chat.update(lMsg, this);
-        var panel = Ext.getCmp('chatpanel'+this.getId());
-        panel.body.scroll('down', 5000, true);
+        this.scrollBottom();
         
         // play sounds
         var tm = msg.trim();
@@ -254,6 +232,10 @@ ChatWindow = Ext.extend(Ext.Window, {
         if ((!this.isActive) || (typeof document.hasFocus == 'undefined') || (!document.hasFocus())) {
             this.visualBeep = true;
         }
+    },
+    scrollBottom: function(){
+        var panel = Ext.getCmp('chatpanel'+this.getId());
+        panel.body.scroll('down', 5000, true); 
     },
     listeners: {
         beforehide: function(t) {

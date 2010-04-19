@@ -98,9 +98,7 @@ jabberui = function () {
                 ,msg = '';
             if (chatWindow) {
                 if (status) msg = chatId+' is typing...';
-                var view = Ext.getCmp('chatview'+chatId);
-                view.tpl.info = msg;
-                view.store.reload();
+                $(Ext.getDom('chatArea'+chatId)).find('.info').text(msg);
             }
         },
 

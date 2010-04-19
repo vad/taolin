@@ -91,6 +91,7 @@ if ($isdebugactive >= 1) {
     echo $javascript->link('jquery/jquery.imagetool.js');
     echo $javascript->link('jquery/jquery-ui-1.7.2.custom.min.js');
     echo $javascript->link('jquery/jquery.timeago.js');
+    echo $javascript->link('jquery/jquery.oembed.js');
     
     echo $javascript->link('portal/usr/soundmanager2.js');
     echo $javascript->link('portal/usr/FileUploadField.js');
