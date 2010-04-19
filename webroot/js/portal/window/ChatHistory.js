@@ -82,7 +82,8 @@ ChatHistoryWindow = function(cfg, logparams) {
             }
         )
         ,emptyText: '<div style="padding:10px 5px" class="warning-msg border_radius_5px">Error</div>'
-        ,loadingText: 'Loading chat history...' 
+        ,deferEmptyText: false
+        ,loadingText: 'Loading...' 
         ,itemSelector: '.chat_history_chat_line'
         ,height: 300
     });
