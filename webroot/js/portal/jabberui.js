@@ -99,6 +99,7 @@ jabberui = function () {
             if (chatWindow) {
                 if (status) msg = chatId+' is typing...';
                 $(Ext.getDom('chatArea'+chatId)).find('.info').text(msg);
+                Ext.getCmp(chatId).scrollBottom();
             }
         },
 
