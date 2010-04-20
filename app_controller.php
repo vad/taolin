@@ -81,9 +81,9 @@ class AppController extends Controller
         }
     }
 
-    function _sendMail($sender, $to, $subject = null, $text, $cc = null, $bcc = null, $template = null, $sendas = null){
+    function _sendMail($from, $to, $subject = null, $text, $cc = null, $bcc = null, $template = null, $sendas = null){
         
-        $this->Email->from = $sender;
+        $this->Email->from = $from;
         $this->Email->to = $to;
 
         if($subject)

@@ -25,7 +25,6 @@ uses('sanitize');
 class UsersController extends AppController {
     var $name = 'Users';
     var $helpers = array('Html','Form','Javascript');
-    var $components = array('Email');
     var $paginate = array(
         'limit' => 50,
         'order' => 'User.surname'
