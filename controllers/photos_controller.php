@@ -23,7 +23,7 @@ uses('sanitize');
 class PhotosController extends AppController {
 	var $name = 'Photos';
 	var $helpers = array('Html','Form','Javascript');
-    var $components = array('Email','PhotoUtil','Thumber', 'Comment');
+    var $components = array('PhotoUtil','Thumber', 'Comment');
 
     function beforeFilter()
     {
@@ -270,11 +270,13 @@ class PhotosController extends AppController {
             $size = round($file_params['size']/1024);
             $type = $file_params['type'];
 
-            $this->Email->from = $sender;
-            $this->Email->to =  $this->Conf->get('Site.admin');
+            $from = $sender;
+            $to =  $this->Conf->get('Site.admin');
             $appname = $this->Conf->get('Site.name');
-            $this->Email->subject = $appname.' notification: error in photo upload';
-            $this->Email->send("$username ($sender) couldn't upload a photo (name=$name - size in Kb=$size - type=$type - desc=$desc). This is the text of the message received with the notification of the error: $message\n\n#########################################\n\nSomeone of us wants to get in touch with $username ($sender) either via chat, email or telephone in order to understand what the problem was and how to solve it together!!!");
+            $subject = $appname.' notification: error in photo upload';
+            $text = "$username ($sender) couldn't upload a photo (name=$name - size in Kb=$size - type=$type - desc=$desc). This is the text of the message received with the notification of the error: $message\n\n#########################################\n\nSomeone of us wants to get in touch with $username ($sender) either via chat, email or telephone in order to understand what the problem was and how to solve it together!!!";
+
+            $this->_sendMail($from, $to, $subject, $text);
         }
         
         $this->set('json', $response);
@@ -417,7 +419,25 @@ class PhotosController extends AppController {
         $tpl_params['id'] = $this->params['form']['foreign_id'];
         $tpl_params['comment'] = $this->params['form']['comment'];
 
-        $this->Comment->addComment($this->Photo, $this->params, $user_id, $tpl_params, 'photos-setdefaultphoto');
+        $notification_data = $this->Comment->addComment($this->Photo, $this->params, $user_id, $tpl_params, 'photos-setdefaultphoto');
+
+        if(!empty($notification_data)){
+
+            $this->set(array(
+                    'commenter' => $notification_data[0]['commenter']
+                    ,'item' => 'photo'
+                    ,'comment' => $tpl_params['comment']
+                )
+            );
+
+            foreach($notification_data as $nd){
+                if($nd['owner'])
+                    $this->_sendMail($nd['from'], $nd['to'], $nd['subject'], $tpl_params['comment'], null, null, 'owner_comment_notification', null);
+                else
+                    $this->_sendMail($nd['from'], $nd['to'], $nd['subject'], $tpl_params['comment'], null, null, 'comment_notification', null);
+            }
+
+        }
 
         $this->set('json', array(
             'success' => TRUE
