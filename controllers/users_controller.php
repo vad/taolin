@@ -178,7 +178,7 @@ class UsersController extends AppController {
             'mod_description AS description',
             'mod_home_address AS home_address',
             'mod_carpooling AS carpooling',
-            'groups_description',
+            'groups_description','notification',
             'facebook', 'linkedin', 'twitter'
         ));
         
@@ -418,7 +418,7 @@ class UsersController extends AppController {
             'mod_date_of_birth','mod_email','mod_personal_page',
             'mod_description','mod_working_place','mod_phone',
             'mod_phone2', 'mod_home_address', 'mod_carpooling',
-            'facebook', 'linkedin', 'twitter'
+            'facebook', 'linkedin', 'twitter', 'notification'
         );
         
         $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
@@ -476,8 +476,12 @@ class UsersController extends AppController {
             $mod_fields['facebook'] = $data['facebook'];
         }
 
+        $notification = array_key_exists('notification', $form);
+        if( $notification != $user['notification'] )
+            $data['notification'] =  $notification;
+
         $carpooler = array_key_exists('carpooling', $form);
-        if( $carpooler != $user['mod_carpooling']){
+        if( $carpooler != $user['mod_carpooling'] ){
             $data['mod_carpooling'] =  $carpooler;
             if($carpooler)
                 $mod_fields['carpooling'] = 'available';
