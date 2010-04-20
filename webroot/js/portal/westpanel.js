@@ -58,7 +58,7 @@ var usertext_tpl = new Ext.XTemplate(
             '<div class="confirm-msg" style="text-align:left">{name} is not a champion. You can <span class="a" onclick="suggestAsChampion(\'{name}\', \'{surname}\', \'{login}\', \'{email}\', {sourceSuggestAs})">suggest {name} as a new {[config.appname]} champion!</span></div><br />',
         '</tpl>',
         '<tpl if="!login">',
-            '<div class="warning-msg" style="text-align:left">{name} can not be a champion until system administrator provide {gender:pronoun(2)} a valid login</div><br />',
+            '<div class="warning-msg" style="text-align:left">{name} can not be a champion until system administrators provide {gender:pronoun(2)} a valid login</div><br />',
         '</tpl>',
     '</tpl>',
     '<tpl if="((personal_page) && (personal_page != \'null\'))">',
