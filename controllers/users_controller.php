@@ -619,6 +619,7 @@ class UsersController extends AppController {
         $this->layout = 'ajax';
         $this->User->recursive = 0;
         $response['success'] = false;
+        $subject = $cc = $bcc = null;
 
         if (empty($_POST['to']))
             die('Hey Luke Skywalker, use the force. (to field required)');
@@ -629,20 +630,22 @@ class UsersController extends AppController {
         $text = $_POST['text'];
         
         $u_id = $this->Session->read('id');
-
+        
         $sender = $this->User->getemail($u_id, $this->Conf->get('Organization.domain'));
 
-        $this->Email->from = $sender;
-        $this->Email->to = $_POST['to'];
-        if(!empty($_POST['cc'])) $this->Email->cc[] = $_POST['cc'];
-        if(!empty($_POST['bcc'])) $this->Email->bcc[] = $_POST['bcc'];
-        $appname = $this->Conf->get('Site.name');
-        $this->Email->subject = 'Notification from '.$appname;
-        $response['success'] = $this->Email->send($text);
+        $to = $_POST['to'];
+
+        if(!empty($_POST['subject'])) 
+            $subject = $_POST['subject'];
+        if(!empty($_POST['cc'])) 
+            $cc = $_POST['cc'];
+        if(!empty($_POST['bcc'])) 
+            $bcc = $_POST['bcc'];
+        
+        $response['success'] = $this->_sendMail($sender, $to, $subject, $text, $cc, $bcc); 
 
         $this->set('json', $response);
     }
-
 
 /*    function addtag($tag){
         Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax
