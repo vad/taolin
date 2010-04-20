@@ -92,7 +92,7 @@ if ($isdebugactive >= 1) {
     echo $javascript->link('jquery/jquery-ui-1.7.2.custom.min.js');
     echo $javascript->link('jquery/jquery.timeago.js');
     echo $javascript->link('jquery/jquery.oembed.js');
-    echo $javascript->link('jquery/jplayer/js/jquery.jplayer.min.js');
+    echo $javascript->link('jquery/jplayer/jquery.jplayer.min.js');
     
     echo $javascript->link('portal/usr/FileUploadField.js');
     

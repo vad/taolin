@@ -115,7 +115,7 @@ jabberui = function () {
             }
 
             if (!document.hasFocus()) {
-                beep.play();
+                play('38868__M_RED__clock_tic');
             }
         },
         refreshChats: function(){
