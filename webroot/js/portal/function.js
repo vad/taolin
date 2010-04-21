@@ -403,7 +403,7 @@ function createNewPortlet(conf, use_widget_position){
         column = conf.col,
         pos = conf.pos,
         w_id = conf.id,
-        widget_conf = conf.widget_conf
+        widget_conf = conf.widget_conf,
         portlet = conf.application_conf,
         user_params = conf.user_params,
         string_identifier = conf.string_identifier,
