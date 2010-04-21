@@ -89,6 +89,7 @@ if ($isdebugactive >= 1) {
     echo $javascript->link('portal/override.js');
     
     echo $javascript->link('jquery/jquery.imagetool.js');
+    echo $javascript->link('jquery/jquery.highlight-3.yui.js');
     echo $javascript->link('jquery/jquery-ui-1.7.2.custom.min.js');
     echo $javascript->link('jquery/jquery.timeago.js');
     echo $javascript->link('jquery/jquery.oembed.js');

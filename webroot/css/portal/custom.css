@@ -48,6 +48,10 @@ a:hover {
     cursor: pointer;
 }
 
+.highlight {
+    background-color: yellow;
+}
+
 .desktop .x-column-layout-ct {
     overflow-x:hidden !important;
 }
