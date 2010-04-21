@@ -32,7 +32,7 @@ var userinfo_tpl = new Ext.XTemplate(
         '</b><br/>',
         '<span id="user-status"></span><br />',
         '<tpl if="email">',
-            '<b>E-mail:</b><span onclick="new SendToWindow(\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], {sourceSendMail})"><span class="sprited email a">{email}</span></span>',
+            '<b>E-mail:</b><span onclick="new SendToWindow(\'\',\'\', \[\[\'{email}\', \'{name} {surname}\'\]\], {sourceSendMail})"><span class="sprited email a">{email}</span></span>',
         '</tpl>',
         '<tpl if="((phone) && (phone != \'0\'))">',
             '<br /><b>Phone:</b><span> {phone}</span>',

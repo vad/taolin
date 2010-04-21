@@ -310,9 +310,9 @@ Board = function(conf, panel_conf){
         var prefix = "Hi " + name + "! I\'m writing in response to the announcement you published on the "+config.appname+" board:\n\n";
 
         if(recipient) 
-            new SendToWindow(prefix+text,[[recipient,name + " " + surname]], this.logSource);
+            new SendToWindow(null, prefix+text,[[recipient,name + " " + surname]], this.logSource);
         else 
-            new SendToWindow(prefix+text, null, this.logSource);
+            new SendToWindow(null, prefix+text, null, this.logSource);
     };
 
     this.setup = function(){

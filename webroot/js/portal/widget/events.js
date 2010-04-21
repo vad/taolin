@@ -148,19 +148,21 @@ Events = function(conf, panel_conf){
         },
         
         sendTo: function() {
-            var description = this.getSelectionModel().getSelected().data.description;
-            var clean_desc =  Ext.util.Format.htmlDecode(
-                Ext.util.Format.stripTags(
-                    description.replace(/\<\/p\>/g,"\n\n")
+            var description = this.getSelectionModel().getSelected().data.description
+                ,summary = this.getSelectionModel().getSelected().data.summary
+                ,subject = 'Event: "'+summary+'"'
+                ,clean_desc =  Ext.util.Format.htmlDecode(
+                    Ext.util.Format.stripTags(
+                        description.replace(/\<\/p\>/g,"\n\n")
+                    )
                 )
-            );
-            var prefix = "Hi all!\nI think that you may be interested in:\n\n";
-            var logparams = {
-                source: "events widget"
-                ,widget_id: this.portlet_id
-            };
+                ,prefix = "Hi all!\nI think that you may be interested in:\n\n"
+                ,logparams = {
+                    source: "events widget"
+                    ,widget_id: this.portlet_id
+                };
 
-            new SendToWindow(prefix+clean_desc, null, logparams);
+            new SendToWindow(subject, prefix+clean_desc, null, logparams);
         }
         
 
