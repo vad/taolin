@@ -120,7 +120,7 @@ SendToWindow = function(subject, text, recipients, logparams) {
             },{
                 xtype:'textfield'
                 ,value:subject
-                ,width:500
+                ,width:520
                 ,style:'margin-left: 10px; margin-bottom:15px; vertical-align: baseline;'
             },{
                 xtype:'textarea'
