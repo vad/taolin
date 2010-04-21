@@ -26,7 +26,7 @@ function openChatHistory(cfg, logparams){
         win.close();
 
     new ChatHistoryWindow(cfg, logparams); // Open a new comment window
-}
+};
 
 
 ChatHistoryWindow = function(cfg, logparams) {
@@ -35,13 +35,12 @@ ChatHistoryWindow = function(cfg, logparams) {
     if (!logparams)
         alert('No logparams!');
     */
-
+    
     //TODO: CHANGE IT!
     if (!logparams)
         logparams = null;
 
-    var fm = Ext.util.Format
-        ,t = this
+    var t = this
         ,helpString = 'Past chats are stored by the chat server and are visible only to you. This feature has been requested by many champions and in fact this feature (chat history) is present in all web chat services (e.g. Google Mail chat). If you have any question about this feature, please contact us at ' + config.contactus;
 
     cfg.prettyUser = Strophe.getBareJidFromJid(cfg.user);
@@ -60,16 +59,16 @@ ChatHistoryWindow = function(cfg, logparams) {
                 '<div class="border_radius_5px">',
                     '<table>',
                         '<tr class="chat_history_chat_line">',
-                            '<td><div style="padding:0 5px;">',
+                            '<td><div style="padding:0 5px">',
                                 '<span class="deco-text">{[this.cleartime(values.secs)]}</span>',
-                                '<span style="padding:0 5px;font-weight:bold;">{[values.with == \'from\' ? this.from : this.me]}</span>{[values.text.urlize().smilize()]}',
+                                '<span style="padding:0 5px;font-weight:bold;">{[values[\'with\'] == \'from\' ? this.from : this.me]}</span>{[values.text.urlize().smilize()]}',
                             '</div></td>',
                         '</tr>',
                     '</table>',
                 '</div>',
             '</tpl>'
             ,{
-                compiled: true
+                compiled:true
                 ,me: jabber.myJid
                 ,from: cfg.prettyUser
                 ,start: cfg.start
@@ -105,7 +104,6 @@ ChatHistoryWindow = function(cfg, logparams) {
     if (cfg.index+cfg.items >= cfg.count) {
       enableNext = false;
     }
-
 
     ChatHistoryWindow.superclass.constructor.call(t, {
         title: 'Chats with '+cfg.prettyUser
@@ -154,6 +152,6 @@ ChatHistoryWindow = function(cfg, logparams) {
     });
 
     t.show();
-}
+};
 
 Ext.extend(ChatHistoryWindow, Ext.Window);
