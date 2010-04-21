@@ -125,7 +125,7 @@ Ext.ux.fbk.sonet.UserEditProfile = Ext.extend(Ext.form.FormPanel, {
                                 deferHeight: true,
                                 anchor: '95%'
                             }, {
-                                fieldLabel: 'Send notifications?',
+                                fieldLabel: 'Receive notifications from '+window.config.appname+' via email?',
                                 name: 'notification',
                                 xtype: 'checkbox',
                                 anchor: '95%'
