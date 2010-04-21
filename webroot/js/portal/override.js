@@ -69,3 +69,56 @@ Ext.grid.GridView.override({
     }
 }); 
 
+
+/* Override needed to solve a bug in ExtJs 3.2.0
+ * Should be fixed in Extjs 3.2.1
+ * see: http://www.extjs.com/forum/showthread.php?95964-OPEN-814-3.2-allowblank-not-allowing-empty-field-%28if-other-validation-required%29/page2
+ */
+Ext.override(Ext.form.TextField, {
+    getErrors: function(value) {
+        var errors = Ext.form.TextField.superclass.getErrors.apply(this, arguments);
+
+        value = value || this.processValue(this.getRawValue());
+
+        if (Ext.isFunction(this.validator)) {
+            var msg = this.validator(value);
+            if (msg !== true) {
+                errors.push(msg);
+            }
+        }
+
+        if (value.length < 1 || value === this.emptyText) {
+            if (this.allowBlank) {
+                //if value is blank and allowBlank is true, there cannot be any additional errors
+                return errors;
+            } else {
+                errors.push(this.blankText);
+            }
+        }
+    
+        if (!this.allowBlank && (value.length < 1 || value === this.emptyText)) { // if it's blank
+            errors.push(this.blankText);
+        }
+
+        if (value.length < this.minLength) {
+            errors.push(String.format(this.minLengthText, this.minLength));
+        }
+
+        if (value.length > this.maxLength) {
+            errors.push(String.format(this.maxLengthText, this.maxLength));
+        }
+
+        if (this.vtype) {
+            var vt = Ext.form.VTypes;
+            if(!vt[this.vtype](value, this)){
+                errors.push(this.vtypeText || vt[this.vtype +'Text']);
+            }
+        }
+
+        if (this.regex && !this.regex.test(value)) {
+            errors.push(this.regexText);
+        }
+
+        return errors;
+    }
+});
