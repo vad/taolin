@@ -70,7 +70,7 @@ SearchPublik = Ext.extend(Ext.Panel, {
             fields:[
                 {name: 'ID_ANAG_PROPRIETARIO'},
                 {name: 'STRINGA_AUTORI'},
-                {name: 'TITOLO'},
+                {name: 'TITOLO'}
             ],
             baseParams: {
                 limit:5,
