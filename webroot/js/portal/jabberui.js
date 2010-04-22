@@ -26,16 +26,17 @@ jabberui = function () {
             jabber.init(presence, status, type);
             if (!jabber.isConnected()) {
                 Ext.Ajax.request({ //ajax request configuration  
-                    url: 'accounts/getcredits',
+                    url: 'accounts/getjabcon',
                     method: 'GET',
                     failure: function(response, options){
                         //something went wrong.
                         Ext.MessageBox.alert('Warning', 'Failed to contact server...');
                     },
                     success: function(response, options){
-                        var credentials = Ext.util.JSON.decode(response.responseText);
-                        
-                        jabber.doLogin(credentials.user, credentials.password);
+                        var conn = Ext.util.JSON.decode(response.responseText);
+                        jabber.sid = conn.sid;
+                        jabber.rid = conn.rid;
+                        jabber.doLogin('setti');
                     }
                 });
             }

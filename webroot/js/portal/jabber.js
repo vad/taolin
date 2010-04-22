@@ -1,7 +1,7 @@
 // ex: set ts=2 softtabstop=2 shiftwidth=2: 
 
 // keeps Strophe quiet
-Strophe.log = function(){};
+//Strophe.log = function(){};
 var fm = Ext.util.Format;
 
 var jabber = {
@@ -34,7 +34,8 @@ var jabber = {
     this.con.addHandler(this.handle.message, null, 'message', 'chat', null, null);
   },
   
-  doLogin: function(username, password){
+  doLogin: function(username){
+    console.log('doLogin');
     try {
       this.con = new Strophe.Connection('/http-bind/');
       
@@ -42,17 +43,17 @@ var jabber = {
       
       Ext.apply(this, {
         u_n: username
-        ,p_w: password
         ,myJid: username + '@' +config.jabber_domain
       });
       
-      this.con.connect(this.myJid, password, function (status) {
-        if (status === Strophe.Status.CONNECTED) {
+      this.con.attach(this.myJid, this.sid, parseInt(this.rid,10), function (status) {
+        if (status === Strophe.Status.ATTACHED) {
+          console.log('jabConnected');
             $(document).trigger('jabConnected');
         } else if (status === Strophe.Status.DISCONNECTED) {
             $(document).trigger('jabDisconnected');
         }
-      });
+      }, null, null, 5);
     } 
     catch (e) {
       console.log(e.toString());

@@ -27,7 +27,6 @@ class AccountsController extends AppController {
     var $uses = array('User','UsersWidget');
     var $AuthComponent;
 
-
     function beforeFilter()
     {
         //This is used only for logging the invoked javascript method
@@ -188,8 +187,38 @@ class AccountsController extends AppController {
         $credits['user'] = $this->Session->read('login');
         $credits['password'] = $this->Session->read('password');
         $this->set('json', $credits);
-    	
     }
-    
+
+
+    function getjabcon() {
+    	Configure::write('debug', '2');
+        $this->layout = 'ajax';
+
+        $user = $this->Session->read('login');
+        $password = $this->Session->read('password');
+
+        App::import('Vendor','bosh', array('file' => 'xmpphp/XMPPHP/BOSH.php'));
+
+        $conn = new XMPPHP_BOSH('fbk.eu', 8080, "$user@fbk.eu", $password, 'xmpphp', 'desktop.fbk.eu'/*, $printlog=true, $loglevel=XMPPHP_Log::LEVEL_VERBOSE*/);
+        $conn->autoSubscribe();
+
+        try {
+            $conn->connect('http://desktop.fbk.eu:8080/http-bind', 60, false);
+            $this->log('connected');
+			$res = $conn->processUntil('session_start');
+            $this->log('started');
+            pr($res);
+            $conn->presence($status="@fbk - xmpphp");
+            $this->log('presence');
+            $rid = $conn->getrid();
+            $sid = $conn->getsid();
+            $this->set('json', array(
+                'rid' => $rid,
+                'sid' => (string) $sid
+            ));
+        } catch(XMPPHP_Exception $e) {
+            die($e->getMessage());
+        }
+    }
 }
 ?>
