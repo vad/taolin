@@ -116,9 +116,10 @@ Note = function(conf, panel_conf){
         },{
             xtype:'label'
             ,text:'Automatically save'
-            ,style:'color:gray;'
+            ,style:'color:gray;margin-left:5px;'
         },{
             html:'<span class="a" onclick="Ext.getCmp(\''+this.getId()+'\').form.sendTo()" style="float:right;margin-right:5px;">Email to</span>'
+            ,autoWidth: true
         }],
         saveText:function() {
             var text = this.items.items[0].getValue();
@@ -127,10 +128,11 @@ Note = function(conf, panel_conf){
         }
         ,sendTo:function() {
 
-            var text = this.items.items[0].getValue();
-            var prefix = "Hi all!\nI think that you may be interested in:\n\n";
-            var logparams = {source: "note widget", widget_id: this.parent.portlet_id};
-            new SendToWindow(prefix+text, null, logparams);
+            var text = this.items.items[0].getValue()
+                //,prefix = "Hi all!\nI think that you may be interested in:\n\n"
+                ,logparams = {source: "note widget", widget_id: this.parent.portlet_id}
+
+            new SendToWindow(null, text, null, logparams);
         }
     });
 

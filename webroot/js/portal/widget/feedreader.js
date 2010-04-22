@@ -184,13 +184,15 @@ FeedReader = function(conf, panel_conf){
             }
         },
         sendTo: function() {
-            var text =  Ext.util.Format.stripTags(this.getSelectionModel().getSelected().data.description.replace(/\\n/g,"<br />"));
-            var prefix = "Hi all!\nI think that you may be interested in:\n\n";
-            var logparams = {
-                source: "feedreader widget",
-                widget_id: this.parent.portlet_id
-            };
-            new SendToWindow(prefix+text, null, logparams);
+            var text =  Ext.util.Format.stripTags(this.getSelectionModel().getSelected().data.description.replace(/\\n/g,"<br />"))
+                ,subject =  Ext.util.Format.stripTags(this.getSelectionModel().getSelected().data.title)
+                ,prefix = "Hi all!\nI think that you may be interested in:\n\n"
+                ,logparams = {
+                    source: "feedreader widget",
+                    widget_id: this.parent.portlet_id
+                };
+
+            new SendToWindow(subject, prefix+text, null, logparams);
         }
     });
 

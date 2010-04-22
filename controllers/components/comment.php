@@ -21,9 +21,11 @@
 class CommentComponent extends Object {
     var $user = null;
     var $cacheName = TIMELINE_CACHE_FILENAME;
+    var $components = array('Conf');
 
     function addComment(&$Model, $params, $user_id, $tpl_params = array(), $comment_type_name = null, $model_alias = null){
         $mrClean = new Sanitize();
+        $notification_data = a();
         
         $foreign_id = $params['form']['foreign_id'];
         $text = $mrClean->html($params['form']['comment']);
@@ -34,18 +36,69 @@ class CommentComponent extends Object {
             'email' => 'abc@example.com'
         ));
 
-        pr($Model);
-
         $out = $Model->createComment($foreign_id, $comment);
         $comment_id = $Model->Comment->id;
 
         if(!$model_alias)
             $model_alias = $Model->alias;
+        
+        // Retrieve ids belonging to users that have be notified (eg each users that commented this object before)
+        $comments = Set::extract(
+            $this->getComments($Model, $foreign_id, TRUE),
+            '{n}.Comment.name'
+        );
+
+        // Remove duplicated values
+        $tbn = array_unique($comments);
+      
+        // Retrieve owner of the commented object
+        $owner = $Model->read('user_id', $foreign_id);
+        $owner_id =$owner[$model_alias]['user_id'];
+
+        // owner should be notified as well
+        if(!in_array($owner_id, $tbn))
+            array_push($tbn, $owner_id);
+
+        $users = array_diff($tbn, array($user_id));
+
+        if( !empty($users) ){
+            
+            $this->setupUserModel();
+            $commenter = $this->user->read(array('name', 'surname'), $user_id);
+            $owner = $this->user->read(array('name', 'surname'), $owner_id);
+            $sender = $this->user->getemail($user_id, $this->Conf->get('Organization.domain'));
+            $subject = $this->Conf->get('Site.name')." comment notification";
+
+            foreach($users as $c_id){
+
+                // check whether the user is can be notified or not
+                $nfb = $this->user->read('notification', $c_id);
+                if($nfb['User']['notification']){
+
+                    if($c_id == $owner_id)
+                        $is_owner = true;
+                    else 
+                        $is_owner = false;
+
+                    array_push($notification_data, array(
+                            'from' => $sender,
+                            'to' => $this->user->getemail($c_id, $this->Conf->get('Organization.domain')),
+                            'subject' => $subject,
+                            'own' => $is_owner,
+                            'owner' => $owner['User'],
+                            'commenter' => $commenter['User']
+                        )
+                    );
+                }
+            }
+        }
 
         $Model->addtotimeline($tpl_params, null, 'comment', $user_id, $model_alias, $foreign_id, $comment_id, $comment_type_name);
         
         # clear cache
         clearCache($this->cacheName, '', '');
+
+        return $notification_data;
     }
 
     function delComment(&$Model, $c_id, $u_id){
@@ -69,6 +122,7 @@ class CommentComponent extends Object {
             App::import('Model', 'User');
 
             $this->user = & new User();
+            $this->user->recursive = -1;
         }
     }
 
@@ -79,6 +133,7 @@ class CommentComponent extends Object {
     // $dirty=TRUE means that this functions must not do postprocessing
     function getComments(&$Model, $foreign_id, $dirty=FALSE){
         $filter = array($Model->alias.'.id' => $foreign_id);
+        pr($filter);
         $target = $Model->find('first', array(
             'conditions' => $filter,
             'recursive' => -1

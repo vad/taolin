@@ -48,6 +48,10 @@ a:hover {
     cursor: pointer;
 }
 
+.highlight {
+    background-color: yellow;
+}
+
 .desktop .x-column-layout-ct {
     overflow-x:hidden !important;
 }
@@ -502,10 +506,17 @@ textarea.note-text-area {
 .sendto-window fieldset{
     background:white;
 }
+.sendto-window label{
+    font-weight: bold;
+    margin-left: 10px;
+}
 .sendto-window div.x-panel-noborder{
     background:transparent;
 }
 .sendto-window div.x-panel-body-noborder{
+    background:transparent;
+}
+.sendto-window div.x-panel-body-noheader{
     background:transparent;
 }
 

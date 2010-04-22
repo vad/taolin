@@ -211,7 +211,25 @@ class BoardsController extends AppController {
         
         $tpl_params['comment'] = $this->params['form']['comment'];
 
-        $this->Comment->addComment($this->Board, $this->params, $user_id, $tpl_params, 'boards-add');
+        $notification_data = $this->Comment->addComment($this->Board, $this->params, $user_id, $tpl_params, 'boards-add');
+
+        if(!empty($notification_data)){
+
+            $this->set(array(
+                    'commenter' => $notification_data[0]['commenter']
+                    ,'item' => 'message on the board'
+                    ,'comment' => $tpl_params['comment']
+                )
+            );
+
+            foreach($notification_data as $nd){
+                if($nd['owner'])
+                    $this->_sendMail($nd['from'], $nd['to'], $nd['subject'], $tpl_params['comment'], null, null, 'owner_comment_notification', null);
+                else
+                    $this->_sendMail($nd['from'], $nd['to'], $nd['subject'], $tpl_params['comment'], null, null, 'comment_notification', null);
+            }
+
+        }
 
         $this->set('json', array(
             'success' => TRUE

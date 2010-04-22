@@ -25,7 +25,6 @@ uses('sanitize');
 class UsersController extends AppController {
     var $name = 'Users';
     var $helpers = array('Html','Form','Javascript');
-    var $components = array('Email');
     var $paginate = array(
         'limit' => 50,
         'order' => 'User.surname'
@@ -178,7 +177,7 @@ class UsersController extends AppController {
             'mod_description AS description',
             'mod_home_address AS home_address',
             'mod_carpooling AS carpooling',
-            'groups_description',
+            'groups_description','notification',
             'facebook', 'linkedin', 'twitter'
         ));
         
@@ -418,7 +417,7 @@ class UsersController extends AppController {
             'mod_date_of_birth','mod_email','mod_personal_page',
             'mod_description','mod_working_place','mod_phone',
             'mod_phone2', 'mod_home_address', 'mod_carpooling',
-            'facebook', 'linkedin', 'twitter'
+            'facebook', 'linkedin', 'twitter', 'notification'
         );
         
         $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
@@ -476,8 +475,12 @@ class UsersController extends AppController {
             $mod_fields['facebook'] = $data['facebook'];
         }
 
+        $notification = array_key_exists('notification', $form);
+        if( $notification != $user['notification'] )
+            $data['notification'] =  $notification;
+
         $carpooler = array_key_exists('carpooling', $form);
-        if( $carpooler != $user['mod_carpooling']){
+        if( $carpooler != $user['mod_carpooling'] ){
             $data['mod_carpooling'] =  $carpooler;
             if($carpooler)
                 $mod_fields['carpooling'] = 'available';
@@ -615,6 +618,7 @@ class UsersController extends AppController {
         $this->layout = 'ajax';
         $this->User->recursive = 0;
         $response['success'] = false;
+        $subject = $cc = $bcc = null;
 
         if (empty($_POST['to']))
             die('Hey Luke Skywalker, use the force. (to field required)');
@@ -625,20 +629,22 @@ class UsersController extends AppController {
         $text = $_POST['text'];
         
         $u_id = $this->Session->read('id');
-
+        
         $sender = $this->User->getemail($u_id, $this->Conf->get('Organization.domain'));
 
-        $this->Email->from = $sender;
-        $this->Email->to = $_POST['to'];
-        if(!empty($_POST['cc'])) $this->Email->cc[] = $_POST['cc'];
-        if(!empty($_POST['bcc'])) $this->Email->bcc[] = $_POST['bcc'];
-        $appname = $this->Conf->get('Site.name');
-        $this->Email->subject = 'Notification from '.$appname;
-        $response['success'] = $this->Email->send($text);
+        $to = $_POST['to'];
+
+        if(!empty($_POST['subject'])) 
+            $subject = $_POST['subject'];
+        if(!empty($_POST['cc'])) 
+            $cc = $_POST['cc'];
+        if(!empty($_POST['bcc'])) 
+            $bcc = $_POST['bcc'];
+        
+        $response['success'] = $this->_sendMail($sender, $to, $subject, $text, $cc, $bcc); 
 
         $this->set('json', $response);
     }
-
 
 /*    function addtag($tag){
         Configure::write('debug', '2');     //turn debugging off; debugging breaks ajax

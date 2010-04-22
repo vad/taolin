@@ -403,7 +403,7 @@ function createNewPortlet(conf, use_widget_position){
         column = conf.col,
         pos = conf.pos,
         w_id = conf.id,
-        widget_conf = conf.widget_conf
+        widget_conf = conf.widget_conf,
         portlet = conf.application_conf,
         user_params = conf.user_params,
         string_identifier = conf.string_identifier,
@@ -472,7 +472,7 @@ function suggestAsChampion(name, surname, login, email, logparams){
         multiline: true,  
         fn: function(btn, text){
             if(btn === 'ok') {
-                SendMail(config.contactus, user.login + ' suggested us ' + name + ' ' + surname + ' (login: ' + login + ', mail: ' + email + ') as a champion for taolin!\n\nMessage leaved by the user: ' + text, null, null, logparams);
+                SendMail(config.contactus, 'Champion suggestion for '+config.appname, user.login + ' suggested us ' + name + ' ' + surname + ' (login: ' + login + ', mail: ' + email + ') as a champion for taolin!\n\nMessage leaved by the user: ' + text, null, null, logparams);
                 Ext.example.msg('Suggestion done!','You suggested ' + name + ' as a champion for taolin');
             }
         }
@@ -659,11 +659,11 @@ function contains (container, containee) {
  *  - the recipient will NOT be able to see this list
  */
 
-function SendMail(recipients, text, ccrecipients, bccrecipients, logparams){
+function SendMail(recipients, subject, text, ccrecipients, bccrecipients, logparams){
     Ext.Ajax.request({
         url : 'users/sendmail'
         ,method:'POST'
-        ,params: {to:recipients, text:text, cc:ccrecipients, bcc:bccrecipients, src:Ext.util.JSON.encode(logparams)}
+        ,params: {to:recipients, subject: subject, text:text, cc:ccrecipients, bcc:bccrecipients, src:Ext.util.JSON.encode(logparams)}
         ,success: function(){
             Ext.example.msg('Your mail has been sent!', Ext.util.Format.ellipsis(text, 150));
         }

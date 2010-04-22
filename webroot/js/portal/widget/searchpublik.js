@@ -63,19 +63,14 @@ SearchPublik = Ext.extend(Ext.Panel, {
 
        this.store = new Ext.data.JsonStore({
             autoDestroy: true,
-            url: 'publiks/search/',
+            url: 'fbk/publiks/search/',
             method: 'POST',
             root: 'pubs',
             totalProperty: 'totalCount',
             fields:[
-                {name: 'ID'},
-                {name: 'INS_DATE'},
-                {name: 'MOD_DATE'},
-                {name: 'Title'},
-                {name: 'PTitle'},
-                {name: 'Pub_Type'},
-                {name: 'PUBTIME_YEAR'},
-                {name: 'Relevance'}
+                {name: 'ID_ANAG_PROPRIETARIO'},
+                {name: 'STRINGA_AUTORI'},
+                {name: 'TITOLO'}
             ],
             baseParams: {
                 limit:5,
@@ -85,6 +80,16 @@ SearchPublik = Ext.extend(Ext.Panel, {
                 beforeload: function(){
                     this.parent.view.emptyText = '<div style="padding:10px 5px;"><b>No publications found!</b><br/><br/>Search by author, journal or keywords.</div>';
                 }
+                ,load: {
+                    fn: function(store, records, options){
+                        if(records.length){ // only if some records are returned
+                            $('#'+this.view.id)
+                                .find('.publik-wrapper')
+                                .highlight(options.params.query);
+                        }
+                    }
+                    ,scope: this
+                }
             },
             parent: this
         });
@@ -92,7 +97,7 @@ SearchPublik = Ext.extend(Ext.Panel, {
         this.view = new Ext.DataView({
             tpl: new Ext.XTemplate(
                      '<tpl for=".">',
-                        '<div style="padding:10px;" class="publik-wrapper">{PTitle}<h3><a href="http://www.itc.it/publik/viewPublication.aspx?pubId={ID}" target="_blank">{Title}</a></h3></div>',
+                        '<div style="padding:10px;" class="publik-wrapper">{STRINGA_AUTORI} <h3><a href="http://u-gov.fbk.eu/publications/author/{ID_ANAG_PROPRIETARIO}/all" target="_blank">{TITOLO}</a></h3></div>',
                     '</tpl>'
             ),
             emptyText: '<div style="padding:10px 5px 10px 5px;">Search within <a href="http://u-gov.fbk.eu/" target="_blank">FBK publications repository</a></div>', 

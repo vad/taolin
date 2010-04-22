@@ -20,7 +20,7 @@
 
 class AppController extends Controller
 {
-    var $components = array('Conf', 'Acl');
+    var $components = array('Acl', 'Conf', 'Email');
 
     function checkSession()
     {
@@ -78,6 +78,27 @@ class AppController extends Controller
 
         if (file_exists($override_filename)){
             $this->viewPath = '../override/views/pages';
+        }
+    }
+
+    function _sendMail($from, $to, $subject = null, $text, $cc = null, $bcc = null, $template = null, $sendas = null){
+        
+        $this->Email->from = $from;
+        $this->Email->to = $to;
+
+        if($subject)
+            $this->Email->subject = $subject;
+        else
+            $this->Email->subject = 'Email notification from '.$this->Conf->get('Site.name');
+
+        if($sendas)
+            $this->Email->sendAs = $sendas;
+
+        if($template){
+            $this->Email->template = $template;
+            return $this->Email->send();
+        } else {
+            return $this->Email->send($text);
         }
     }
 }

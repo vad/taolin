@@ -426,7 +426,25 @@ class TimelinesController extends AppController {
 
         $comment_type_name = $event['Template']['name'];
 
-        $this->Comment->addComment($this->Timeline, $this->params, $user_id, $tpl_params, $comment_type_name);
+        $notification_data = $this->Comment->addComment($this->Timeline, $this->params, $user_id, $tpl_params, $comment_type_name);
+
+        if(!empty($notification_data)){
+
+            $this->set(array(
+                    'commenter' => $notification_data[0]['commenter']
+                    ,'item' => 'action in '.$this->Conf->get('Site.name')
+                    ,'comment' => $tpl_params['comment']
+                )
+            );
+
+            foreach($notification_data as $nd){
+                if($nd['owner'])
+                    $this->_sendMail($nd['from'], $nd['to'], $nd['subject'], $tpl_params['comment'], null, null, 'owner_comment_notification', null);
+                else
+                    $this->_sendMail($nd['from'], $nd['to'], $nd['subject'], $tpl_params['comment'], null, null, 'comment_notification', null);
+            }
+
+        }
 
         $this->set('json', array(
             'success' => TRUE

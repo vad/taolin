@@ -18,7 +18,7 @@
 */
 
 
-SendToWindow = function(text, recipients, logparams) {
+SendToWindow = function(subject, text, recipients, logparams) {
 
     this.recipients = recipients;
     this.store = new Ext.data.JsonStore({
@@ -65,17 +65,16 @@ SendToWindow = function(text, recipients, logparams) {
         autoShow:true,
         items: [
             {
-                xtype: 'label',
-                html: "<p>Select one or even more <b>recipients</b> for this message. If you wish, the message can be edited in the textarea below before being submitted</p>",
-                cls: 'widgets-window-intro'
+                html: '<div>Select one or even more <b>recipients</b> for this message. If you wish, the message can be edited in the textarea below before being submitted</div>'
+                ,style: 'padding:15px 10px;'
+                ,border: false
             },{
                 xtype: 'label',
-                html: "<b>Filter by name or surname:</b>",
-                cls: 'widgets-window-intro',
-                style: 'padding: 0 5px;'
+                text: 'Filter by name or surname:'
             },{
                 xtype: 'textfield',
-                width: 100,
+                width: 150,
+                style: 'margin-left:10px;margin-bottom:15px;vertical-align:baseline;',
                 listeners: {
                     'render': {
                         fn:function(){
@@ -102,6 +101,7 @@ SendToWindow = function(text, recipients, logparams) {
                 //switchToFrom:true,
                 toLegend:"Selected",
                 fromLegend:"Available",
+                style: 'margin-bottom: 15px',
                 listeners: {
                     change:function(c){
                         c.toMultiselect.clearInvalid();
@@ -115,10 +115,18 @@ SendToWindow = function(text, recipients, logparams) {
                     }
                 }]*/
             },{
+                xtype: 'label',
+                text: 'Subject: '
+            },{
+                xtype:'textfield'
+                ,value:subject
+                ,width:520
+                ,style:'margin-left: 10px; margin-bottom:15px; vertical-align: baseline;'
+            },{
                 xtype:'textarea'
                 ,value:text
                 ,width:600
-                ,height:200
+                ,height:180
             },{
                 buttons: [{
                         text:'Send'
@@ -135,7 +143,8 @@ SendToWindow = function(text, recipients, logparams) {
                             }
                             
                             var recipients = this.items.items[3].getValue();
-                            var text = this.items.items[4].getValue();
+                            var subject = this.items.items[5].getValue();
+                            var text = this.items.items[6].getValue();
 
                             /* In order to add cc or bcc recipients, add more parameters while
                              * invoking this function. For example
@@ -143,7 +152,7 @@ SendToWindow = function(text, recipients, logparams) {
                              * (recipients, text, null, bcc-recipients, logparams) 
                              */
 
-                            SendMail(recipients, text, null, null, logparams);
+                            SendMail(recipients, subject, text, null, null, logparams);
                             
                             this.close();
                         }
