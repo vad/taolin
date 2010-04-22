@@ -21,7 +21,7 @@
 class CommentComponent extends Object {
     var $user = null;
     var $cacheName = TIMELINE_CACHE_FILENAME;
-    var $components = array('Conf');
+    var $components = array('Acl', 'Conf');
 
     function addComment(&$Model, $params, $user_id, $tpl_params = array(), $comment_type_name = null, $model_alias = null){
         $mrClean = new Sanitize();
@@ -72,8 +72,12 @@ class CommentComponent extends Object {
             foreach($users as $c_id){
 
                 // check whether the user is can be notified or not
+                $active = $this->Acl->check(
+                    array('model' => 'User', 'foreign_key' => $c_id),
+                    'site'
+                );
                 $nfb = $this->user->read('notification', $c_id);
-                if($nfb['User']['notification']){
+                if($active && $nfb['User']['notification']){
 
                     if($c_id == $owner_id)
                         $is_owner = true;
