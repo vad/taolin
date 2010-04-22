@@ -52,7 +52,7 @@ CREATE TABLE "users_history" (
   "number_of_columns" INTEGER NOT NULL default 2,
   "background_id" INTEGER NOT NULL default 1,
   "theme" character varying(200) DEFAULT NULL::character varying,
-  "notification" boolean NOT NULL default false, -- whether a user allows Taolin to notify her/him or not
+  "notification" boolean NOT NULL default true, -- whether a user allows Taolin to notify her/him or not
   PRIMARY KEY  ("id")
 );
 
