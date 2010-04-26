@@ -40,7 +40,8 @@ ChatHistoryWindow = function(cfg, logparams) {
     if (!logparams)
         logparams = null;
 
-    var t = this
+    var fm = Ext.util.Format
+        ,t = this
         ,helpString = 'Past chats are stored by the chat server and are visible only to you. This feature has been requested by many champions and in fact this feature (chat history) is present in all web chat services (e.g. Google Mail chat). If you have any question about this feature, please contact us at ' + config.contactus;
 
     cfg.prettyUser = Strophe.getBareJidFromJid(cfg.user);
@@ -61,7 +62,7 @@ ChatHistoryWindow = function(cfg, logparams) {
                         '<tr class="chat_history_chat_line">',
                             '<td><div style="padding:0 5px">',
                                 '<span class="deco-text">{[this.cleartime(values.secs)]}</span>',
-                                '<span style="padding:0 5px;font-weight:bold;">{[values[\'with\'] == \'from\' ? this.from : this.me]}</span>{[values.text.urlize().smilize()]}',
+                                '<span style="padding:0 5px;font-weight:bold;">{[values[\'with\'] == \'from\' ? this.from : this.me]}</span>{[fm.htmlEncode(values.text).urlize().smilize()]}',
                             '</div></td>',
                         '</tr>',
                     '</table>',
