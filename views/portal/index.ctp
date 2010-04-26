@@ -55,7 +55,7 @@
 <div id="loading-mask" style=""></div>
 <div id="loading">
     <div class="loading-indicator"><img src="img/extanim32.gif" width="32" height="32" style="margin-right:8px;float:left;vertical-align:top;"/>
-        <?php echo $screen_title." ".$conf->get('Site.version'); ?> 
+        <?php echo "$title_for_layout ".$conf->get('Site.version'); ?> 
         <br />
         <span id="loading-msg">Loading styles and images...</span>
     </div>
