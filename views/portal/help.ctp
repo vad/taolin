@@ -19,5 +19,5 @@
  */
 ?>
 <div>
-<?php echo $this->renderElement('faq_loggedin_page'); ?>
+<?php echo $this->element('faq_loggedin_page'); ?>
 </div>

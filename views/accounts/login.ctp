@@ -133,6 +133,6 @@ If you are not a Champion, please read the rest of the page.
 </div>
 
 <div class="faq">
-<?php echo $this->renderElement('faq_account_page'); ?>
+<?php echo $this->element('faq_account_page'); ?>
 </div>
 
