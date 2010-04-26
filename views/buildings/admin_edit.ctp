@@ -35,7 +35,7 @@
           <h2 class="title">Edit building</h2>
           <br />
           <? echo $form->create('Building', array('class' => 'form')); ?>
-          <? echo $form->input('name', $opts_tf); ?>
+          <? echo $form->input('name', $opts_ta); ?>
           <? echo $form->input('description', $opts_ta); ?>
           <? echo $form->input('imagepath', $opts_tf); ?>
           <? echo $form->input('top', $opts_tf); ?>
