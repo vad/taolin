@@ -20,7 +20,7 @@
 
 class AppController extends Controller
 {
-    var $components = array('Acl', 'Conf', 'Email');
+    var $components = array('Acl', 'Conf', 'Email', 'Session');
 
     function checkSession()
     {

@@ -26,6 +26,9 @@ class ConfComponent extends Object
     var $started = false;
     
     function startup(&$controller) {
+        if($controller) {
+            $controller->set('conf', $this); // make this component available from the views
+        }
         
         // To be able to use the component in beforeFilter, but startup() should be called manually
         // This test will prevent it from running twice.
@@ -51,7 +54,7 @@ class ConfComponent extends Object
                 }
             }
             
-            $ccs = $this->ccModel->findAll();
+            $ccs = $this->ccModel->find('all');
             
             if(!empty($ccs)) {
                 
@@ -84,8 +87,6 @@ class ConfComponent extends Object
                 }
             }
 
-            if($controller)
-                $controller->set('conf', $this); // make this component available from the views
         }
     }
     

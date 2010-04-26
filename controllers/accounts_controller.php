@@ -25,6 +25,7 @@ class AccountsController extends AppController {
     var $name = 'Accounts';
     var $helpers = array('Html','Form','Javascript');
     var $uses = array('User','UsersWidget');
+    var $components = array('Conf');
     var $AuthComponent;
 
 
@@ -56,18 +57,19 @@ class AccountsController extends AppController {
         $this->view = 'Json';
 
         //initialize auth component
-        $this->Conf->startup(&$this); //start Conf component
+        $this->Conf->startup($this); //start Conf component
         $auth_comp = $this->Conf->get('Auth.method').'auth';
         App::import('Component', $auth_comp);
         $cn = $auth_comp . 'Component';
 
         $this->AuthComponent = new $cn();
         
-        $this->AuthComponent->startup(&$this); //start AuthComponent component
+        $this->AuthComponent->startup($this); //start AuthComponent component
 
     }
 
     function login(){
+        Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         if ($this->Session->check('id')) {
             // if session is ok, redirect the user to the portal page
             $this->redirect('/');
