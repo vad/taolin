@@ -209,7 +209,7 @@
  * Set to `true` to apply timestamps, when debug = 0, or set to 'force' to always enable
  * timestamping.
  */
-	//Configure::write('Asset.timestamp', true);
+	Configure::write('Asset.timestamp', true);
 /**
  * Compress CSS output by removing comments, whitespace, repeating tags, etc.
  * This requires a/var/cache directory to be writable by the web server for caching.

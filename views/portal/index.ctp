@@ -65,18 +65,18 @@
 
 <?php
 if ($isdebugactive >= 1) {
-?>
-<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/portal.css' />
-<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/menu.css' />
-<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/widget-sprite.css' />
-<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/custom.css' />
-<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/file-upload.css' />
-<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/colorpicker.css' />
-<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/Ext.ux.IconCombo.css' />
-<link rel='StyleSheet' href='<?php echo $this->base ?>/js/portal/usr/Multiselect/Multiselect.css' />
+    echo $html->css('/css/portal/portal.css');
+    echo $html->css('/css/portal/menu.css');
+    echo $html->css('/css/portal/widget-sprite.css');
+    echo $html->css('/css/portal/custom.css');
+    echo $html->css('/css/portal/file-upload.css');
+    echo $html->css('/css/portal/colorpicker.css');
+    echo $html->css('/css/portal/Ext.ux.IconCombo.css');
+    echo $html->css('/js/portal/usr/Multiselect/Multiselect.css');
 
-<!-- WIZARD WINDOW -->
-<link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/Ext.ux.Wizard.css' />
+    // WIZARD WINDOW
+    echo $html->css('/css/portal/Ext.ux.Wizard.css');
+?>
 
 <script type="text/javascript">
     document.getElementById('loading-msg').innerHTML = 'Loading Core API...';

@@ -29,36 +29,28 @@
 <?php
     
     $favicon = $conf->get('Site.favicon');
+    $base = $this->base;
     if ($favicon) {
-        echo "<link rel='shortcut icon' href='". $this->base .'/'. $favicon ."' type='image/gif' />";
+        echo "<link rel='shortcut icon' href='$base/$favicon' type='image/gif' />";
     }
 
-?>
-<link rel='StyleSheet' href='<?php echo $this->base ?>/extjs/resources/css/ext-all.css' />
-<link rel='StyleSheet' id="theme-sprite" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp-sprite.css' />
-<link rel='StyleSheet' id="theme" href='<?php echo $this->base ?>/ext-themes/css/xtheme-tp.css' />
+    echo $html->css('/extjs/resources/css/ext-all.css');
+    echo $html->css('/ext-themes/css/xtheme-tp-sprite.css', null, array('id' => "theme-sprite"));
+    echo $html->css('/ext-themes/css/xtheme-tp.css', null, array('id' => "theme"));
 
-<script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery-1.4.2.min.js'> </script>
-<?
-$isdebugactive = $conf->get('Site.jsdebug');
-if ($isdebugactive == 2) {
-?>
-    <script type="text/javascript" src='<?php echo $this->base ?>/js/jquery/jquery.lint.js'> </script>
-<?
-}
-?>
-<script type="text/javascript" src='<?php echo $this->base ?>/extjs/adapter/jquery/ext-jquery-adapter.js'> </script>
+    echo $javascript->link('/js/jquery/jquery-1.4.2.min.js');
 
-<?php
-if ($isdebugactive >= 1) {
-?>
-    <script type="text/javascript" src='<?php echo $this->base ?>/extjs/ext-all-debug.js'> </script>
-<?php
-} else {
-?>
-    <script type="text/javascript" src='<?php echo $this->base ?>/webroot/extjs/ext-all.js'> </script>
-<?php
-}
+    $isdebugactive = $conf->get('Site.jsdebug');
+    if ($isdebugactive == 2) {
+        echo $javascript->link('/js/jquery/jquery.lint.js');
+    }
+    echo $javascript->link('/extjs/adapter/jquery/ext-jquery-adapter.js');
+
+    if ($isdebugactive >= 1) {
+        echo $javascript->link('/extjs/ext-all-debug.js');
+    } else {
+        echo $javascript->link('/extjs/ext-all.js');
+    }
 ?>
 </head>
 <body>
