@@ -36,7 +36,5 @@
  * developement.
  */
 	Router::connect('/login/*', array('controller' => 'accounts', 'action' => 'login'));
-	//Router::connect('/backend/', array('plugin' => 'backend', 'controller' => 'pages', 'action' => 'display', 'prova'));
-	//Router::connect('/backend/', array('plugin' => 'backend', 'controller' => 'portals', 'action' => 'index'));
-	Router::connect('/admin/', array('controller' => 'portals', 'action' => 'admin'));
+	Router::connect('/admin', array('controller' => 'portals', 'action' => 'admin'));
 ?>

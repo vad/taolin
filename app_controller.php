@@ -59,7 +59,7 @@ class AppController extends Controller
         $this->view = 'Json';
 
         //workaround to pass variables to the pages_controller
-        $this->Conf->startup(&$this);
+        $this->Conf->startup($this);
         Configure::write('App.name', $this->Conf->get('Site.name'));
         Configure::write('App.contactus', $this->Conf->get('Site.admin'));
     }
