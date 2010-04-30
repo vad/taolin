@@ -27,7 +27,11 @@ class User extends AppModel
     var $hasAndBelongsToMany = array('Group');
 
     var $validate = array(
-        'login'  => VALID_NOT_EMPTY
+        'login'  => VALID_NOT_EMPTY,
+        'email' => 'email',
+        'mod_email' => 'email',
+        'personal_page' => 'url',
+        'mod_personal_page' => 'url',
     );
 
     function search_matching($s, $start, $limit){

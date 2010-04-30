@@ -172,11 +172,10 @@ if ($isdebugactive >= 1) {
     echo $javascript->link('portal/window/FirstLogin.js');
     echo $javascript->link('portal/window/ListHistory.js');
     echo $javascript->link('portal/window/ChatHistory.js');
-    
   
 } else {
+    echo $html->css('/css/portal/application-all.css');
     ?>
-    <link rel='StyleSheet' href='<?php echo $this->base ?>/css/portal/application-all.css' />
     
     <script type="text/javascript">
         document.getElementById('loading-msg').innerHTML = 'Loading Core API...';
