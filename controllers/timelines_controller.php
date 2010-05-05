@@ -311,6 +311,8 @@ class TimelinesController extends AppController {
             // Decode parameters from json into an array
             $eventparam = json_decode($parameters, TRUE);
         }
+        else
+            $eventparam = array();
         
         if($event['user_id'] != null){
             if($event['gender']==1) $adjective = 'his'; 
