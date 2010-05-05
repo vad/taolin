@@ -175,8 +175,7 @@ class UsersController extends AppController {
             'mod_description AS description',
             'mod_home_address AS home_address',
             'mod_carpooling AS carpooling',
-            'groups_description','notification',
-            'facebook', 'linkedin', 'twitter'
+            'groups_description','facebook', 'linkedin', 'twitter'
         ));
         
         foreach ($user['User'] as $key => $userid){
@@ -232,7 +231,7 @@ class UsersController extends AppController {
         
         $user  = $this->User->find('first', array(
             'conditions' => $condition,
-            'fields' => array('number_of_columns', 'theme', 'background_id')
+            'fields' => array('number_of_columns', 'theme', 'background_id', 'notification' )
         ));
         
         foreach ($user['User'] as $key => $userid){
@@ -415,7 +414,7 @@ class UsersController extends AppController {
             'mod_date_of_birth','mod_email','mod_personal_page',
             'mod_description','mod_working_place','mod_phone',
             'mod_phone2', 'mod_home_address', 'mod_carpooling',
-            'facebook', 'linkedin', 'twitter', 'notification'
+            'facebook', 'linkedin', 'twitter'
         );
         
         $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
@@ -472,10 +471,6 @@ class UsersController extends AppController {
             $data['facebook'] = $form['facebook'];            
             $mod_fields['facebook'] = $data['facebook'];
         }
-
-        $notification = array_key_exists('notification', $form);
-        if( $notification != $user['notification'] )
-            $data['notification'] =  $notification;
 
         $carpooler = array_key_exists('carpooling', $form);
         if( $carpooler != $user['mod_carpooling'] ){
@@ -539,7 +534,7 @@ class UsersController extends AppController {
         
         $condition = array('id' => $u_id);
         $fields = array(
-            'number_of_columns', 'background_id', 'theme'    
+            'number_of_columns', 'background_id', 'theme', 'notification'    
         );
         
         $user_com = $this->User->find('first', array('conditions' => $condition, 'fields' => $fields, 'recursive' => -1));
@@ -564,6 +559,13 @@ class UsersController extends AppController {
             $response['changebg'] = $this->User->Background->field('path');
             $data['background_id'] = $form['background_id'];
         }
+        
+        $notification = array_key_exists('notification', $form);
+        if( $notification != $user['notification'] ){
+            $response['notification'] = true;
+            $data['notification'] =  $notification;
+        }
+
         if(!empty($data)) {
             $data['id'] = $u_id;
         

@@ -123,6 +123,12 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
                     style:'padding:5px 0 0 5px',
                     items: [
                         {
+                            fieldLabel: 'Receive notifications from '+window.config.appname+' via email?',
+                            name: 'notification',
+                            xtype: 'checkbox',
+                            anchor: '95%'
+                        }
+                        ,{
                             xtype: 'numberfield',
                             fieldLabel: 'Number of columns <br /><span style="font-weight:normal;font-size:90%;">Please insert a value between 1 and 4</span>',
                             name: 'number_of_columns',
@@ -220,6 +226,9 @@ Ext.ux.fbk.sonet.Settings = Ext.extend(Ext.form.FormPanel, {
         
         if('changebg' in action.result)
             changeBg(action.result.changebg);
+
+        if('notification' in action.result)
+           form.load();
 
     },
     onFailure:function(form, action){
