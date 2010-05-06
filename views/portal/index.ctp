@@ -61,8 +61,6 @@
     </div>
 </div>
 
-
-
 <?php
 if ($isdebugactive >= 1) {
     echo $html->css('/css/portal/portal.css');
@@ -76,122 +74,118 @@ if ($isdebugactive >= 1) {
 
     // WIZARD WINDOW
     echo $html->css('/css/portal/Ext.ux.Wizard.css');
-?>
 
-<script type="text/javascript">
-    document.getElementById('loading-msg').innerHTML = 'Loading Core API...';
-</script>
+    echo $html->scriptBlock("document.getElementById('loading-msg').innerHTML = 'Loading Core API...'", array(
+        'safe' => false
+    ));
 
-<?php
     ## flush the buffers
     flush();
 
-    echo $javascript->link('portal/override.js');
-    
-    echo $javascript->link('jquery/jquery.imagetool.js');
-    echo $javascript->link('jquery/jquery.highlight-3.yui.js');
-    echo $javascript->link('jquery/jquery-ui-1.7.2.custom.min.js');
-    echo $javascript->link('jquery/jquery.timeago.js');
-    echo $javascript->link('jquery/jquery.oembed.js');
-    echo $javascript->link('jquery/jplayer/jquery.jplayer.min.js');
-    
-    echo $javascript->link('portal/usr/FileUploadField.js');
-    
-    echo $javascript->link('portal/tools.js');
-    
-    echo $javascript->link('portal/function.js');
-    echo $javascript->link('portal/application.js');
+    echo $html->script(array(
+        'portal/override.js',
+        'jquery/jquery.imagetool.js',
+        'jquery/jquery.highlight-3.yui.js',
+        'jquery/jquery-ui-1.7.2.custom.min.js',
+        'jquery/jquery.timeago.js',
+        'jquery/jquery.oembed.js',
+        'jquery/jplayer/jquery.jplayer.min.js',
 
-    echo $javascript->link('portal/usr/RowExpander.js');
-    echo $javascript->link('portal/usr/Portal.js');
-    echo $javascript->link('portal/usr/PortalColumn.js');
-    echo $javascript->link('portal/usr/colorpicker.js');
-    echo $javascript->link('portal/usr/colorpickerfield.js');
-    echo $javascript->link('portal/usr/Portlet.js');
-    echo $javascript->link('portal/usr/SearchField.js');
-    echo $javascript->link('portal/usr/Ext.ux.IconCombo.js');
-    echo $javascript->link('portal/usr/Ext.DataView.LabelEditor.js');
-    echo $javascript->link('portal/usr/Multiselect/DDView.js');
-    echo $javascript->link('portal/usr/Multiselect/Multiselect.js');
-    
-    echo $javascript->link('portal/usr/Ext.ux.fbk.sonet.EventManager.js');
-    /* WIZARD WINDOW */
-    
-    echo $javascript->link('portal/usr/Ext.ux.WizardHeader.js');
-    echo $javascript->link('portal/usr/Ext.ux.BasicWizard.js');
-    echo $javascript->link('portal/usr/Ext.ux.SlickCardLayout.js');
-    //echo $javascript->link('portal/usr/ToolbarLayout.js');
-    
-    /* END WIZARD WINDOW */
-    echo $javascript->link('portal/wizard_settings.js');
+        'portal/usr/FileUploadField.js',
 
-    echo $javascript->link('portal/widget/htmlincluder.js');
-    echo $javascript->link('portal/widget/users.js');
-    echo $javascript->link('portal/widget/events.js');
-    echo $javascript->link('portal/widget/searchusers.js');
-    echo $javascript->link('portal/widget/searchwiki.js');
-    echo $javascript->link('portal/widget/searchpublik.js');
-    echo $javascript->link('portal/widget/feedback.js');
-    echo $javascript->link('portal/widget/feedreader.js');
-    echo $javascript->link('portal/widget/groups.js');
-    echo $javascript->link('portal/widget/iframer.js');
-    echo $javascript->link('portal/widget/note.js');
-    echo $javascript->link('portal/widget/google.js');
-    echo $javascript->link('portal/widget/math.js');
-    echo $javascript->link('portal/widget/nevede.js');
-    echo $javascript->link('portal/widget/board.js');
-    echo $javascript->link('portal/widget/metasearch.js');
-    echo $javascript->link('portal/widget/webcamcanteen.js');
-    echo $javascript->link('portal/widget/meteotrentino.js');
+        'portal/tools.js',
 
-    echo $javascript->link('/fbk/js/gestint.js');
-    echo $javascript->link('/fbk/js/childrenevent.js');
+        'portal/function.js',
+        'portal/application.js',
 
-    echo $javascript->link('strophejs/strophe.js');
-    echo $javascript->link('portal/jabber.js');
-    echo $javascript->link('portal/jabberui.js');
-    
-    echo $javascript->link('portal/widget/buddylist.js');
-    
-    echo $javascript->link('portal/Timeline.js');
-    echo $javascript->link('portal/UserPublications.js');
-    echo $javascript->link('portal/UserPhotos.js');
-    echo $javascript->link('portal/UserProfile.js');
-    echo $javascript->link('portal/UserEditProfile.js');
-    echo $javascript->link('portal/settings.js');
-    echo $javascript->link('portal/westpanel.js');
+        'portal/usr/RowExpander.js',
+        'portal/usr/Portal.js',
+        'portal/usr/PortalColumn.js',
+        'portal/usr/colorpicker.js',
+        'portal/usr/colorpickerfield.js',
+        'portal/usr/Portlet.js',
+        'portal/usr/SearchField.js',
+        'portal/usr/Ext.ux.IconCombo.js',
+        'portal/usr/Ext.DataView.LabelEditor.js',
+        'portal/usr/Multiselect/DDView.js',
+        'portal/usr/Multiselect/Multiselect.js',
 
-    echo $javascript->link('portal/window/AddWidgetsWindow.js');
-    echo $javascript->link('portal/window/ChatWindow.js');
-    echo $javascript->link('portal/window/CommentWindow.js');
-    echo $javascript->link('portal/window/GroupDetails.js');
-    echo $javascript->link('portal/window/MapWindow.js');
-    echo $javascript->link('portal/window/PhotoChooser.js');
-    echo $javascript->link('portal/window/PhotoUploader.js');    
-    echo $javascript->link('portal/window/SendToWindow.js');
-    echo $javascript->link('portal/window/FirstLogin.js');
-    echo $javascript->link('portal/window/ListHistory.js');
-    echo $javascript->link('portal/window/ChatHistory.js');
+        'portal/usr/Ext.ux.fbk.sonet.EventManager.js',
+        /* WIZARD WINDOW */
+
+        'portal/usr/Ext.ux.WizardHeader.js',
+        'portal/usr/Ext.ux.BasicWizard.js',
+        'portal/usr/Ext.ux.SlickCardLayout.js',
+
+        /* END WIZARD WINDOW */
+        'portal/wizard_settings.js',
+
+        'portal/widget/htmlincluder.js',
+        'portal/widget/users.js',
+        'portal/widget/events.js',
+        'portal/widget/searchusers.js',
+        'portal/widget/searchwiki.js',
+        'portal/widget/searchpublik.js',
+        'portal/widget/feedback.js',
+        'portal/widget/feedreader.js',
+        'portal/widget/groups.js',
+        'portal/widget/iframer.js',
+        'portal/widget/note.js',
+        'portal/widget/google.js',
+        'portal/widget/math.js',
+        'portal/widget/nevede.js',
+        'portal/widget/board.js',
+        'portal/widget/metasearch.js',
+        'portal/widget/webcamcanteen.js',
+        'portal/widget/meteotrentino.js',
+
+        '/fbk/js/gestint.js',
+        '/fbk/js/childrenevent.js',
+
+        'strophejs/strophe.js',
+        'portal/jabber.js',
+        'portal/jabberui.js',
+
+        'portal/widget/buddylist.js',
+
+        'portal/Timeline.js',
+        'portal/UserPublications.js',
+        'portal/UserPhotos.js',
+        'portal/UserProfile.js',
+        'portal/UserEditProfile.js',
+        'portal/settings.js',
+        'portal/westpanel.js',
+
+        'portal/window/AddWidgetsWindow.js',
+        'portal/window/ChatWindow.js',
+        'portal/window/CommentWindow.js',
+        'portal/window/GroupDetails.js',
+        'portal/window/MapWindow.js',
+        'portal/window/PhotoChooser.js',
+        'portal/window/PhotoUploader.js',
+        'portal/window/SendToWindow.js',
+        'portal/window/FirstLogin.js',
+        'portal/window/ListHistory.js',
+        'portal/window/ChatHistory.js'
+    ));
   
 } else {
     echo $html->css('/css/portal/application-all.css');
-    ?>
-    
-    <script type="text/javascript">
-        document.getElementById('loading-msg').innerHTML = 'Loading Core API...';
-    </script>
-    
-    <?php
+
+    echo $html->scriptBlock("document.getElementById('loading-msg').innerHTML = 'Loading Core API...'", array(
+        'safe' => false
+    ));
+
     ## flush the buffers
     flush();
-    echo $javascript->link('application-all.js');
+    echo $html->script('application-all.js');
 }
 
-    ?>
+echo $html->script('http://www.google.com/jsapi?key=ABQIAAAAtll_c0IGkNAlp32iILQBxRTd0VjkC_00ZWjQD0rjYXEbT9OQ-RTUuv3bkIlJukEgAnOkNwab-7NEew');
 
-<script type="text/javascript" src='http://www.google.com/jsapi?key=ABQIAAAAtll_c0IGkNAlp32iILQBxRTd0VjkC_00ZWjQD0rjYXEbT9OQ-RTUuv3bkIlJukEgAnOkNwab-7NEew' />
-<script type="text/javascript">
-    document.getElementById('loading-msg').innerHTML = 'Initializing...';
-</script>
+echo $html->scriptBlock("document.getElementById('loading-msg').innerHTML = 'Initializing...'", array(
+    'safe' => false
+));
+?>
 
 <div id="jplayer"></div>
