@@ -40,6 +40,9 @@
  * ));
  *
  */
+  App::build(array(
+      'views' => array(ROOT.DS.APP_DIR.DS.'override'.DS.'views'.DS),
+  ));
 
 /**
  * As of 1.3, additional rules for the inflector are added below
