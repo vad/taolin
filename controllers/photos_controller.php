@@ -42,7 +42,9 @@ class PhotosController extends AppController {
         $params = $this->params['url'];
 
         $user_id = $params['u_id'];
-        $p_id = $params['p_id'];
+
+        if(array_key_exists('p_id',  $params))
+            $p_id = $params['p_id'];
 
         if (!$user_id)
             die('Request not valid!!!!');
@@ -59,7 +61,7 @@ class PhotosController extends AppController {
         if($u_id != $user_id) 
             $conditions['Photo.is_hidden'] = 0;
 
-        if($p_id)
+        if(isset($p_id))
             $conditions['Photo.id'] = $p_id;
 
         $query = array(
