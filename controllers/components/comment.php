@@ -66,8 +66,8 @@ class CommentComponent extends Object {
             $this->setupUserModel();
             $commenter = $this->user->read(array('name', 'surname'), $user_id);
             $owner = $this->user->read(array('name', 'surname'), $owner_id);
-            $sender = $this->user->getemail($user_id, $this->Conf->get('Organization.domain'));
             $subject = $this->Conf->get('Site.name')." comment notification";
+            $domain = $this->Conf->get('Organization.domain');
 
             foreach($users as $c_id){
 
@@ -83,9 +83,10 @@ class CommentComponent extends Object {
                         $is_owner = true;
                     else 
                         $is_owner = false;
-
+                    
+                   
                     array_push($notification_data, array(
-                            'from' => $sender,
+                            'from' => 'noreply@'.$domain,
                             'to' => $this->user->getemail($c_id, $this->Conf->get('Organization.domain')),
                             'subject' => $subject,
                             'own' => $is_owner,
@@ -162,7 +163,7 @@ class CommentComponent extends Object {
 
         foreach ($comments as &$comment) {
             $conditions = array('id' => $comment['Comment']['name']);
-            $user = $this->user->find('first', array(
+            $user = $this->User->find('first', array(
                 'conditions' => $conditions,
                 'fields' => array('User.login', 'User.name', 'User.surname'),
                 'recursive' => -1
