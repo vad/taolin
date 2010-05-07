@@ -260,7 +260,8 @@ class TimelinesController extends AppController {
 
             $results = a();
             foreach($events as &$event){
-                $event['user_photo'] = $hash_photos[$event['user_id']];
+                if (array_key_exists($event['user_id'], $hash_photos))
+                    $event['user_photo'] = $hash_photos[$event['user_id']];
                 $event['event'] = $this->prepareevent($event);
 
                 if (empty($event['model_alias'])) {
@@ -268,9 +269,9 @@ class TimelinesController extends AppController {
                     $event['foreign_id'] = $event['id'];
                 }
 
-                if ($event['subevent']) {
+                if (isset($event['subevent'])) {
                     $event['event'] .= $event['subevent'];
-                    
+
                     //hack
                     $event['event'] .= sprintf(". <a href='javascript:void(0)' onclick=\"openCommentWindow('%s', %s, {source:'timeline',id:%s})\">View comments</a>",
                         $event['model_alias'],
@@ -279,7 +280,6 @@ class TimelinesController extends AppController {
                     );
                 }
 
-                
                 unset($event['param'], $event['temp']); // no need to send this parameter, hence unset it
                 $results[] = $event; #copy to this new array because of a cake bug (array indexes created by Set::extract are strings instead of integers...)
             }
