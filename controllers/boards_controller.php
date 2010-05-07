@@ -96,7 +96,7 @@ class BoardsController extends AppController {
             $this->paginate['conditions'] = $conditions;
         }
 
-        if($page)
+        if(isset($page))
             $this->paginate['page'] = $page + 1;
         
         $resboards = $this->paginate('Board');
