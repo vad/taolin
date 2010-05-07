@@ -322,17 +322,20 @@ class TimelinesController extends AppController {
             if (!array_key_exists('user', $eventparam))
                 $eventparam['user'] = array();
 
-            $eventparam['user']['id'] = $event['user_id'];
-            $eventparam['user']['name'] = $event['name'];
-            $eventparam['user']['surname'] = $event['surname'];
-            $eventparam['user']['login'] = $event['login'];
-            $eventparam['user']['adj'] = $adjective;
-            $eventparam['user']['deleted'] = $event['deleted'];
+            $vars = array(
+                    'id' => $event['user_id'],
+                    'name' => $event['name'],
+                    'surname' =>  $event['surname'],
+                    'login' => $event['login'],
+                    'adj' => $adjective,
+                    'commenter_id' => $event['commenter_id'],
+                    'deleted' => $event['deleted']
+                );
 
-            if(array_key_exists('commenter_id', $event))
-                $eventparam['user']['commenter_id'] = $event['commenter_id'];
-        }
-        
+            foreach($vars as $key => $var){
+                if(isset($var)) $eventparam['user'][$key] = $var;
+            }
+
         if(array_key_exists('timelineid', $event))
             $eventparam['timelineid'] = $event['timelineid'];
         else
