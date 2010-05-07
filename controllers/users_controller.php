@@ -73,12 +73,11 @@ class UsersController extends AppController {
             'mod_home_address AS home_address',
             'mod_carpooling AS carpooling', 'gender',
             'User.groups_description', 'User.mod_description',
-            'User.active', 'User.tags', 'Workplace.building_id',
+            'User.active', 'Workplace.building_id',
             'User.facebook', 'User.linkedin', 'User.twitter'
         );
 
         $conditions = array('User.id' => $id);
-        //$this->User->bindModel(array('hasMany' => array('ContentTag')));
         $user = $this->User->find('first', array(
             'conditions' => $conditions, 
             'recursive' => 0,
@@ -655,7 +654,7 @@ class UsersController extends AppController {
         echo $this->User->field('login');
         $this->User->addTags(array($tag), $u_id);
         
-        $this->set('json', '');       
+        $this->set('json', '');
     }
 */
 
