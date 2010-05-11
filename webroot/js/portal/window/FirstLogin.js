@@ -67,8 +67,8 @@ function openFirstLoginWizard(){
                         wizard_form.submit({ // submitting form 
                             success: function(){
                                 eventManager.fireEvent('newtimelineevent');
+                                eventManager.fireEvent('userprofilechange');
                                 showUserInfo(null, true); // reload user info
-                                Ext.getCmp('settings').items.first().form.load(); // reload user settings
                             }
                             ,scope: this
                         });

@@ -76,6 +76,7 @@ function application_init(){
             ,removecomment: true
             ,newtimelineevent: true
             ,userphotochange: true
+            ,userprofilechange: true
         }
         ,listeners:{
             addcomment: function(){
@@ -86,6 +87,9 @@ function application_init(){
             }
             ,userphotochange: function(){
                 this.fireEvent('newtimelineevent');
+            }
+            ,userprofilechange: function(){
+                Ext.getCmp('user_edit_profile').form.load();
             }
         }
     });
