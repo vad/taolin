@@ -90,7 +90,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                             '</tpl>',
                         '</span>',
                     '</div>',
-                    '<span><b>{name}</b></span><br />',
+                    '<span><b>{name:ellipseOnBreak(25)}</b></span><br />',
                     '<span style="padding-bottom:5px;color:gray;font-size:90%;">{created:naturalDate(false)}</span><br />',
                  '</div>',
             '</tpl>',
