@@ -52,7 +52,7 @@ Ext.ux.fbk.sonet.UserPublications = Ext.extend(Ext.Panel, {
                         ,user_surname = su.surname
                         ,user_email = get(su, 'email', su.login+'@fbk');
                     
-                    var emptytext = '<div style="padding:10px 5px;font-size:100%"><div class="warning-msg border_radius_5px">No publications for this user</div><br />You might <span class="a" onclick="new SendToWindow(\'I would like to suggest you to add your publications to FBK publik repository at http://u-gov.fbk.eu\', \[\[\''+user_email+'\',\''+user_name+' '+user_surname+'\'\]\],  {source: \'user profile publik tab\',user_id:'+user_id+'})">suggest '+user_name+' to add publications</span> using FBK publik repository.<br /><br /><br />But did you remember to add your publications at the website <a href="http://u-gov.fbk.eu/" target="_blank" />http://u-gov.fbk.eu/</a> ?</div>';
+                    var emptytext = '<div style="padding:10px 5px;font-size:100%"><div class="warning-msg border_radius_5px">No publications for this user</div><br />You might <span class="a" onclick="new SendToWindow(\'I would like to suggest you to add your publications to FBK publik repository at http://researchassessment.fbk.eu/publications\', \[\[\''+user_email+'\',\''+user_name+' '+user_surname+'\'\]\],  {source: \'user profile publik tab\',user_id:'+user_id+'})">suggest '+user_name+' to add publications</span> using FBK publik repository.<br /><br /><br />But did you remember to add your publications at the website <a href="http://researchassessment.fbk.eu/publications" target="_blank" />http://researchassessment.fbk.eu/publications</a> ?</div>';
 
                     this.parent.items.first().emptyText = emptytext;
                 }

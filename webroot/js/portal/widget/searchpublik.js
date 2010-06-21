@@ -97,10 +97,10 @@ SearchPublik = Ext.extend(Ext.Panel, {
         this.view = new Ext.DataView({
             tpl: new Ext.XTemplate(
                      '<tpl for=".">',
-                        '<div style="padding:10px;" class="publik-wrapper">{STRINGA_AUTORI} <h3><a href="http://u-gov.fbk.eu/publications/author/{ID_ANAG_PROPRIETARIO}/all" target="_blank">{TITOLO}</a></h3></div>',
+                        '<div style="padding:10px;" class="publik-wrapper">{STRINGA_AUTORI} <h3><a href="http://researchassessment.fbk.eu/publications/author/{ID_ANAG_PROPRIETARIO}/all" target="_blank">{TITOLO}</a></h3></div>',
                     '</tpl>'
             ),
-            emptyText: '<div style="padding:10px 5px 10px 5px;">Search within <a href="http://u-gov.fbk.eu/" target="_blank">FBK publications repository</a></div>', 
+            emptyText: '<div style="padding:10px 5px 10px 5px;">Search within <a href="http://researchassessment.fbk.eu/publications" target="_blank">FBK publications repository</a></div>', 
             deferEmptyText: false,
             store: this.store,
             itemSelector: 'div.user-wrapper',
