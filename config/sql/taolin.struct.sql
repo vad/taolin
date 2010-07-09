@@ -308,6 +308,7 @@ CREATE TABLE "users" (
   "background_id" INTEGER NOT NULL default 1,
   "theme" character varying(200) DEFAULT NULL::character varying,
   "notification" boolean NOT NULL default true, -- whether a user allows Taolin to notify her/him or not
+  "institute_id" INTEGER NOT NULL default 1,
   "tsv" tsvector,
   PRIMARY KEY  ("id")
 );

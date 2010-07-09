@@ -318,21 +318,26 @@ class TimelinesController extends AppController {
             if($event['gender']==1) $adjective = 'his'; 
             else if($event['gender']==2) $adjective = 'her';
             else $adjective = 'her/his';
+            $event['adj'] = $adjective;
 
             if (!array_key_exists('user', $eventparam))
                 $eventparam['user'] = array();
 
-            $eventparam['user']['id'] = $event['user_id'];
-            $eventparam['user']['name'] = $event['name'];
-            $eventparam['user']['surname'] = $event['surname'];
-            $eventparam['user']['login'] = $event['login'];
-            $eventparam['user']['adj'] = $adjective;
-            $eventparam['user']['deleted'] = $event['deleted'];
+            $keys = array(
+                    'id' => 'user_id',
+                    'name' => 'name',
+                    'surname' => 'surname',
+                    'login' => 'login',
+                    'adj' => 'adj',
+                    'commenter_id' => 'commenter_id',
+                    'deleted' => 'deleted'
+                );
 
-            if(array_key_exists('commenter_id', $event))
-                $eventparam['user']['commenter_id'] = $event['commenter_id'];
+            foreach($keys as $k => $key){
+                if(isset($event[$key])) $eventparam['user'][$k] = $event[$key];
+            }
         }
-        
+
         if(array_key_exists('timelineid', $event))
             $eventparam['timelineid'] = $event['timelineid'];
         else

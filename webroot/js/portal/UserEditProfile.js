@@ -21,6 +21,7 @@ Ext.namespace( 'Ext.ux.fbk.sonet' );
 
 Ext.ux.fbk.sonet.UserEditProfile = Ext.extend(Ext.form.FormPanel, {
     cls: 'form_settings'
+    ,id: 'user_edit_profile'
     ,border: false
     ,autoScroll: true
     ,labelAlign: 'top'

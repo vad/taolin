@@ -90,7 +90,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
                             '</tpl>',
                         '</span>',
                     '</div>',
-                    '<span><b>{name}</b></span><br />',
+                    '<span><b>{name:ellipseOnBreak(25)}</b></span><br />',
                     '<span style="padding-bottom:5px;color:gray;font-size:90%;">{created:naturalDate(false)}</span><br />',
                  '</div>',
             '</tpl>',
@@ -119,7 +119,7 @@ Ext.ux.fbk.sonet.UserPhotos = Ext.extend(Ext.Panel, {
 
         var dv = new Ext.DataView({
             tpl: tpl,
-            emptyText: '<div style="padding:10px 5px;" class="warning-message border_radius_5px">No photos for this user</div>', 
+            emptyText: '<div style="padding:10px 5px;" class="warning-msg border_radius_5px">No photos for this user</div>', 
             store: this.store,
             loadingText: 'Please wait while loading...',
             itemSelector: 'div.thumb',
