@@ -27,14 +27,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=8" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <?php
-    
+
     $favicon = $conf->get('Site.favicon');
     $base = $this->base;
     if ($favicon) {
         echo "<link rel='shortcut icon' href='$base/$favicon' type='image/gif' />";
     }
 
-    echo $html->css('/extjs/resources/css/ext-all.css');
+    if ($isdebugactive >= 1) {
+        echo $html->css('/extjs/resources/css/ext-all.css');
+    } else {
+        echo $html->css('/extjs/resources/css/ext-all.min.css');
+    }
     echo $html->css('/ext-themes/css/xtheme-tp-sprite.css', null, array('id' => "theme-sprite"));
     echo $html->css('/ext-themes/css/xtheme-tp.css', null, array('id' => "theme"));
 
