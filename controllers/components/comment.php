@@ -163,7 +163,7 @@ class CommentComponent extends Object {
 
         foreach ($comments as &$comment) {
             $conditions = array('id' => $comment['Comment']['name']);
-            $user = $this->User->find('first', array(
+            $user = $this->user->find('first', array(
                 'conditions' => $conditions,
                 'fields' => array('User.login', 'User.name', 'User.surname'),
                 'recursive' => -1
