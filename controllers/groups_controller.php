@@ -52,7 +52,8 @@ class GroupsController extends AppController {
             $this->User->bindModel(array('hasMany' => array('Photo' => array('conditions'=>array('Photo.default_photo'=>1), 'fields'=>array('Photo.filename', 'Photo.is_hidden')))));
             $resusers = $this->User->find('all', array(
                                 'fields' => array('User.id', 'User.name', 'User.surname', 'User.login'),
-                                        'conditions'=>array('GroupsUser.group_id'=>$g_id) 
+                                        'conditions'=> array('GroupsUser.group_id'=>$g_id),
+                                        'order' => array('User.surname','User.name')
                         ), null, 1);
     
             $response['group'][] = $resgroup['Group'];
