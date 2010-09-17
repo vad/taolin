@@ -24,7 +24,7 @@
 <title> 
 <?php echo $title_for_layout ?> 
 </title>
-<meta http-equiv="X-UA-Compatible" content="IE=8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <?php
 
