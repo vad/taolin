@@ -24,6 +24,7 @@
 <title> 
 <?php echo $title_for_layout ?> 
 </title>
+<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame. Remove this if you use the .htaccess -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <?php
