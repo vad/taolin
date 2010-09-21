@@ -21,8 +21,8 @@
 uses('sanitize');
 
 class PhotosController extends AppController {
-	var $name = 'Photos';
-	var $helpers = array('Html','Form','Javascript');
+    var $name = 'Photos';
+    var $helpers = array('Html','Form','Javascript');
     var $components = array('PhotoUtil','Thumber', 'Comment');
 
     function beforeFilter()
@@ -286,7 +286,7 @@ class PhotosController extends AppController {
     }
        
     function setattribute(){
-		uses('Sanitize');
+        uses('Sanitize');
         Configure::write('debug', '0');     //turn debugging off; debugging breaks ajax
         $this->layout = 'ajax';
         
@@ -429,11 +429,12 @@ class PhotosController extends AppController {
                     'commenter' => $notification_data[0]['commenter']
                     ,'item' => 'photo'
                     ,'comment' => $tpl_params['comment']
+                    ,'owner' => $notification_data[0]['owner']
                 )
             );
 
             foreach($notification_data as $nd){
-                if($nd['owner'])
+                if($nd['is_owner'])
                     $this->_sendMail($nd['from'], $nd['to'], $nd['subject'], $tpl_params['comment'], null, null, 'owner_comment_notification', null);
                 else
                     $this->_sendMail($nd['from'], $nd['to'], $nd['subject'], $tpl_params['comment'], null, null, 'comment_notification', null);

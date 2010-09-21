@@ -441,11 +441,12 @@ class TimelinesController extends AppController {
                     'commenter' => $notification_data[0]['commenter']
                     ,'item' => 'action in '.$this->Conf->get('Site.name')
                     ,'comment' => $tpl_params['comment']
+                    ,'owner' => $notification_data[0]['owner']
                 )
             );
 
             foreach($notification_data as $nd){
-                if($nd['owner'])
+                if($nd['is_owner'])
                     $this->_sendMail($nd['from'], $nd['to'], $nd['subject'], $tpl_params['comment'], null, null, 'owner_comment_notification', null);
                 else
                     $this->_sendMail($nd['from'], $nd['to'], $nd['subject'], $tpl_params['comment'], null, null, 'comment_notification', null);
