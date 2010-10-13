@@ -140,10 +140,11 @@ ChatWindow = Ext.extend(Ext.Window, {
             ,chatId = 'chat' + id
             ,chat =  {
                 update: function(msg, scope) {
+                    msgclass = msg.username=='me' ? "chat-altsender" : "";
                     $(Ext.getDom('chatArea'+id)).find('.messages').append(
                         String.format(
-                            '<div class="msg"><b>{0}</b> ({1}): {2}</div>',
-                                msg.username, msg.time, msg.msg
+                            '<div class="msg"><span class="chat-sender {3}">{0}</span> ({1}): {2}</div>',
+                                msg.username, msg.time, msg.msg, msgclass
                     )).find('.msg:last a').oembed(null, {
                         embedMethod:'append'
                         ,maxWidth: 200

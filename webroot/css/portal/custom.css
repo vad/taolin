@@ -661,6 +661,12 @@ color:black;
 .chat-window .x-form-textarea .x-form-focus {
     background: #FFFFFF url(../../ext/resources/images/default/form/text-bg.gif) repeat-x !important;
 }
+.chat-window .chat-sender {
+    font-weight: bold;
+}
+.chat-window .chat-sender .chat-altsender {
+    color: #9B1315;
+}
 
 /* START user profile class */
 .user-profile-class {
