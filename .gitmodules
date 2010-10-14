@@ -16,3 +16,6 @@
 [submodule "webroot/js/strophejs"]
 	path = webroot/js/strophejs
 	url = git://github.com/metajack/strophejs
+[submodule "cakephp-commentable-behavior"]
+	path = cakephp-commentable-behavior
+	url = git://github.com/vad/cakephp-commentable-behavior.git
