@@ -24,8 +24,7 @@ function second_step_main(){
   $sql_scripts_path = "../../config/sql/";
   
   $sql_scripts = array(
-      "db_acl.sql"
-      ,"taolin.struct.sql"
+      "taolin.struct.sql"
       ,"taolin.struct.post.sql"
       ,"taolin.history.sql"
       ,"taolin.configs.sql"
