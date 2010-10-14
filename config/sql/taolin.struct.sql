@@ -110,7 +110,7 @@ CREATE TABLE "calendars" (
 
 DROP TABLE IF EXISTS "comments" CASCADE;
 CREATE TABLE comments (
-  "id" integer NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "class" character varying(128) NOT NULL,
   "foreign_id" integer NOT NULL,
   "name" character varying(255) NOT NULL,
@@ -118,8 +118,7 @@ CREATE TABLE comments (
   "body" text,
   "status" character varying(255) NOT NULL,
   "created" timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
-  "modified" timestamp(0) without time zone DEFAULT NULL::timestamp without time zone,
-  PRIMARY KEY  ("id")
+  "modified" timestamp(0) without time zone DEFAULT NULL::timestamp without time zone
 );
 
 -- # Table structure for table "events"
