@@ -257,7 +257,7 @@ CREATE TABLE "timelines" (
   model_alias character varying(100),
   foreign_id integer,
   comment_id integer default NULL,
-  comment_timeline_id integer default NULL,
+  comment_template_id integer default NULL,
   "created" TIMESTAMP(0) NOT NULL default now(),
   "modified" TIMESTAMP(0) default NULL,
   "deleted" SMALLINT NOT NULL default '0',
