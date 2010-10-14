@@ -12,7 +12,7 @@
 	url = git://github.com/marijnh/CodeMirror.git
 [submodule "plugins/commentable"]
 	path = plugins/commentable
-	url = git://github.com/vad/cakephp-commentable-behavior.git
+	url = http://github.com/josegonzalez/cakephp-commentable-behavior
 [submodule "webroot/js/strophejs"]
 	path = webroot/js/strophejs
 	url = git://github.com/metajack/strophejs
