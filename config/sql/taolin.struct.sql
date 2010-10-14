@@ -239,7 +239,7 @@ CREATE TABLE "templates" (
   "name" varchar(50) NOT NULL,
   "icon" varchar(100) default NULL,
   "is_unique" SMALLINT NOT NULL default '0',
-  "short_temp" character varying(500) DEFAULT NULL::character varying
+  "short_temp" character varying(500) DEFAULT NULL::character varying,
   PRIMARY KEY  ("id")
 );
 ALTER TABLE templates ADD CONSTRAINT templates_name_key UNIQUE (name);
