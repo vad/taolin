@@ -29,12 +29,15 @@ function first_step_main(){
   if(!file_exists(DB_CONFIG_FILE))
     db_configuration_form();
   else
-    print_database_config(DB_CONFIG_FILE);
+    db_configuration_form(DB_CONFIG_FILE);
+    //print_database_config(DB_CONFIG_FILE);
   
 }
 
 
-function db_configuration_form(){
+function db_configuration_form($db_ini=null){
+
+  $db = db_initial_value($db_ini);
 
 ?>
   <div class="inner">
@@ -45,31 +48,31 @@ function db_configuration_form(){
       <h3>Database configuration</h3>
       <div class="group">
         <label class="label" for="post_title">login</label>
-        <input type="text" class="text_field" name="db[login]" />
+        <input type="text" class="text_field" name="db[login]" value="<? echo $db['login'] ?>" />
         <span class="description">The username for the account</span>
 
         <label class="label" for="post_title">password</label>
-        <input type="password" class="text_field" name="db[password]" />
+        <input type="password" class="text_field" name="db[password]" value="<? echo $db['password'] ?>" />
         <span class="description">The password for the account</span>
 
         <label class="label" for="post_title">database</label>
-        <input type="text" class="text_field" name="db[database]" />
+        <input type="text" class="text_field" name="db[database]" value="<? echo $db['database'] ?>" />
         <span class="description">The name of the database</span>
 
         <label class="label" for="post_title">host</label>
-        <input type="text" class="text_field" name="db[host]" />
+        <input type="text" class="text_field" name="db[host]" value="<? echo $db['host'] ?>" />
         <span class="description">The database server’s hostname (or IP address)</span>
 
         <label class="label" for="post_title">port</label>
-        <input type="text" class="text_field" name="db[port]" />
+        <input type="text" class="text_field" name="db[port]" value="<? echo $db['port'] ?>" />
         <span class="description">(Optional) The TCP port or Unix socket used to connect to the server</span>
 
         <label class="label" for="post_title">persistent</label>
-        <input type="text" class="text_field" name="db[persistent]" />
+        <input type="text" class="text_field" name="db[persistent]" value="<? echo $db['persistent'] ?>" />
         <span class="description">True to use a persistent connection to the database. Otherwise false</span>
         
         <label class="label" for="post_title">encoding</label>
-        <input type="text" class="text_field" name="db[encoding]" value="utf-8" />
+        <input type="text" class="text_field" name="db[encoding]" value="<? echo $db['encoding'] ?>" />
       </div>
       
       <h3>Import demo data in taolin</h3>

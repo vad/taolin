@@ -38,6 +38,42 @@ function print_wizard_help(){
 }
 
 
+function db_initial_value($f=null){
+
+  $db = array(
+      'login' => null,
+      'password' => null,
+      'database' => null,
+      'port' => 5432,
+      'host' => 'localhost',
+      'persistent' => 'false',
+      'encoding' => 'utf8'
+      );
+
+  if(!file_exists($f)){
+    echo 'merda';
+    return $db;
+  }
+
+  $file = fopen($f, "r") or exit("Unable to open file!");
+
+  while(!feof($file)){
+    $r = null;
+    $s = fgets($file);
+    
+    preg_match_all('/\'?([\w\d.]+)\'/', $s, $r);
+    $key = substr($r[0][0],1,-1);
+    $value = substr($r[0][1],1,-1);
+
+    if($key && $value && array_key_exists($key, $db))
+      $db[$key] = $value;
+    
+  }
+
+  return $db;
+}
+
+
 function wizard_body($step){
 
   step_switcher($step);
