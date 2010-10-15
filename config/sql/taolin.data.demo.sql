@@ -61,6 +61,7 @@ INSERT INTO "photos" ("user_id","name","filename","caption","width","height","cr
 
 INSERT INTO comments (class, foreign_id, name, email, body, status, created, modified) VALUES ('Photo', 8, '905', 'abc@example.com', 'Yo buddy, you look great in this pic!!', 'approved', '2010-10-15 16:23:05', '2010-10-15 16:23:05');
 INSERT INTO comments (class, foreign_id, name, email, body, status, created, modified) VALUES ('Board', 2, '909', 'abc@example.com', 'Sorry but I really cannot understand what you are talking about!', 'approved', '2010-10-15 16:26:31', '2010-10-15 16:26:31');
+INSERT INTO comments (id, class, foreign_id, name, email, body, status, created, modified) VALUES (4, 'Timeline', 14, '907', 'abc@example.com', 'Glad to see you Marco', 'approved', '2009-07-10 15:12:47', '2009-07-10 15:12:47');
 
 -- # Importing demo user data into database: timelines table
 
@@ -82,6 +83,7 @@ INSERT INTO timelines (user_id, template_id, param, date, model_alias, foreign_i
 INSERT INTO timelines (user_id, template_id, param, date, model_alias, foreign_id, created, modified, deleted, deleted_date) VALUES (909, 7, '{"name":"Google","w_id":"30"}', '2009-07-10 15:21:01', NULL, NULL, '2009-07-10 15:21:01', '2009-07-10 15:21:01', 0, NULL);
 INSERT INTO timelines (id, user_id, login, template_id, param, date, model_alias, foreign_id, comment_id, comment_template_id, created, modified, deleted, deleted_date) VALUES (19, 905, NULL, 15, '{"id":"8","comment":"Yo buddy, you look great in this pic!!"}', '2010-10-15 16:23:05', 'Photo', 8, 2, 3, '2010-10-15 16:23:05', '2010-10-15 16:23:05', 0, NULL);
 INSERT INTO timelines (id, user_id, login, template_id, param, date, model_alias, foreign_id, comment_id, comment_template_id, created, modified, deleted, deleted_date) VALUES (20, 909, NULL, 15, '{"comment":"Sorry but I really cannot understand what you are talking about!"}', '2010-10-15 16:26:31', 'Board', 2, 3, 2, '2010-10-15 16:26:31', '2010-10-15 16:26:31', 0, NULL);
+INSERT INTO timelines (id, user_id, login, template_id, param, date, model_alias, foreign_id, comment_id, comment_template_id, created, modified, deleted, deleted_date) VALUES (18, 907, NULL, 15, '{"comment":"Glad to see you Marco"}', '2009-07-10 15:12:47', 'Timeline', 14, 4, 12, '2009-07-10 15:12:47', '2009-07-10 15:12:47', 0, NULL);
 
 
 -- # Updating tables: widgets and widgets_skel
