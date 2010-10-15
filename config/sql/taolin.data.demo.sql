@@ -57,6 +57,10 @@ INSERT INTO "photos" ("user_id","name","filename","caption","width","height","cr
 INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (908,'Painting','0578920928306838.jpg','By Rubens',400,576,NOW(),1,0,1);
 INSERT INTO "photos" ("user_id","name","filename","caption","width","height","created","default_photo","is_hidden","is_corporate_photo") VALUES (909,'Bust','be2166eea5c7caae.jpg',NULL,306,402,'2009-07-10 15:20:27',0,0,0);
 
+-- # Importing demo user data into database comments table
+
+INSERT INTO comments (class, foreign_id, name, email, body, status, created, modified) VALUES ('Photo', 8, '905', 'abc@example.com', 'Yo buddy, you look great in this pic!!', 'approved', '2010-10-15 16:23:05', '2010-10-15 16:23:05');
+INSERT INTO comments (class, foreign_id, name, email, body, status, created, modified) VALUES ('Board', 2, '909', 'abc@example.com', 'Sorry but I really cannot understand what you are talking about!', 'approved', '2010-10-15 16:26:31', '2010-10-15 16:26:31');
 
 -- # Importing demo user data into database: timelines table
 
@@ -76,6 +80,8 @@ INSERT INTO timelines (user_id, template_id, param, date, model_alias, foreign_i
 INSERT INTO timelines (user_id, template_id, param, date, model_alias, foreign_id, created, modified, deleted, deleted_date) VALUES (906, 12, NULL, '2009-07-10 14:51:53', NULL, NULL, '2009-07-10 14:51:53', '2009-07-10 14:51:53', 0, NULL);
 INSERT INTO timelines (user_id, template_id, param, date, model_alias, foreign_id, created, modified, deleted, deleted_date) VALUES (909, 4, '{"url":"\\/sonet\\/cake\\/taolin\\/img\\/be2166eea5c7caae.JPG","width":306,"height":402,"filename":"be2166eea5c7caae.JPG","caption":"","name":"Bust"}', '2009-07-10 15:20:27', 'Photo', 8, '2009-07-10 15:20:27', '2009-07-10 15:20:27', 0, NULL);
 INSERT INTO timelines (user_id, template_id, param, date, model_alias, foreign_id, created, modified, deleted, deleted_date) VALUES (909, 7, '{"name":"Google","w_id":"30"}', '2009-07-10 15:21:01', NULL, NULL, '2009-07-10 15:21:01', '2009-07-10 15:21:01', 0, NULL);
+INSERT INTO timelines (id, user_id, login, template_id, param, date, model_alias, foreign_id, comment_id, comment_template_id, created, modified, deleted, deleted_date) VALUES (19, 905, NULL, 15, '{"id":"8","comment":"Yo buddy, you look great in this pic!!"}', '2010-10-15 16:23:05', 'Photo', 8, 2, 3, '2010-10-15 16:23:05', '2010-10-15 16:23:05', 0, NULL);
+INSERT INTO timelines (id, user_id, login, template_id, param, date, model_alias, foreign_id, comment_id, comment_template_id, created, modified, deleted, deleted_date) VALUES (20, 909, NULL, 15, '{"comment":"Sorry but I really cannot understand what you are talking about!"}', '2010-10-15 16:26:31', 'Board', 2, 3, 2, '2010-10-15 16:26:31', '2010-10-15 16:26:31', 0, NULL);
 
 
 -- # Updating tables: widgets and widgets_skel

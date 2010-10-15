@@ -42,7 +42,7 @@ CREATE TABLE "aros_acos" (
   UNIQUE ("aro_id","aco_id")
 );
 
--- # Table structure for table "aros_acos"
+-- # Table structure for table "backgrounds"
 
 DROP TABLE IF EXISTS "backgrounds" CASCADE;
 CREATE TABLE "backgrounds" (
