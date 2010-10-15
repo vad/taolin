@@ -478,8 +478,8 @@ DROP TABLE IF EXISTS configs CASCADE;
 CREATE TABLE configs (
   id SERIAL,
   config_category_id integer NOT NULL,
-  key varchar(50) NOT NULL,
-  value varchar(50) NOT NULL,
+  key varchar(200) NOT NULL,
+  value varchar(200) NOT NULL,
   PRIMARY KEY  (id)
 );
 
