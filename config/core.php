@@ -147,14 +147,14 @@
  *
  * [Note: Session.table is deprecated as of CakePHP 1.3]
  */
-    //Configure::write('Session.table', 'cake_sessions');
+    Configure::write('Session.table', 'cake_sessions');
 
 /**
  * The DATABASE_CONFIG::$var to use for database session handling.
  *
  * 'Session.save' must be set to 'database' in order to utilize this constant.
  */
-    //Configure::write('Session.database', 'default');
+    Configure::write('Session.database', 'default');
 
 /**
  * The name of CakePHP's session cookie.
